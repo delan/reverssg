@@ -2053,7 +2053,7 @@ void FUN_00454168(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00454188(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,int param_6);
 void FUN_0045420c(undefined param_1,undefined param_2,undefined param_3,undefined *param_4,undefined *param_5);
 void FUN_00454224(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-uint FUN_00454254(void);
+uint Random(void);
 undefined4 FUN_004542a0(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004543d8(undefined param_1,undefined param_2,undefined param_3,int *param_4);
 undefined4 FUN_00454470(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,uint param_5);

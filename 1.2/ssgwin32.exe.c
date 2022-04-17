@@ -3130,7 +3130,7 @@ LAB_004136f1:
           iVar11 = 0;
         }
         else {
-          uVar13 = FUN_00454254();
+          uVar13 = Random();
           uVar10 = (int)(short)uVar17 - (int)(short)uVar1;
           iVar11 = (int)uVar13 % (int)uVar10;
         }
@@ -3216,7 +3216,7 @@ LAB_004136f1:
             iVar14 = 0;
           }
           else {
-            uVar13 = FUN_00454254();
+            uVar13 = Random();
             uVar10 = (uint)*(short *)(iVar11 + 8);
             iVar11 = (int)uVar13 / (int)uVar10;
             iVar14 = (int)uVar13 % (int)uVar10;
@@ -3332,7 +3332,7 @@ LAB_004132f8:
     uVar13 = 0;
   }
   else {
-    uVar13 = FUN_00454254();
+    uVar13 = Random();
     uVar10 = (uint)(short)uVar2;
     iVar14 = (int)uVar13 / (int)uVar10;
     uVar13 = (int)uVar13 % (int)uVar10;
@@ -5024,7 +5024,7 @@ void FUN_00414c5a(undefined param_1,undefined param_2,byte param_3,undefined4 pa
         iVar5 = 0;
       }
       else {
-        uVar2 = FUN_00454254();
+        uVar2 = Random();
         uVar4 = (int)DAT_00460278 - 1;
         iVar5 = (int)uVar2 % (int)uVar4;
       }
@@ -7885,7 +7885,7 @@ LAB_00417611:
             }
           }
           if (bVar4) {
-            uVar14 = FUN_00454254();
+            uVar14 = Random();
             uVar13 = 1000;
             uVar14 = (int)uVar14 % 1000;
             puVar10 = (undefined4 *)(int)psVar3[9];
@@ -8287,7 +8287,7 @@ void FUN_00417c69(void)
         local_e = 0x36;
       }
       if ((short)uVar4 == 0) {
-        uVar5 = FUN_00454254();
+        uVar5 = Random();
         *(short *)(puVar7 + 0x1c) = (short)((int)uVar5 % 3);
         *(short *)(puVar7 + 0x16) = *(short *)(puVar7 + 0x1c) * 100 + local_e;
         if ((uVar3 & 2) != 0) {
@@ -8295,13 +8295,13 @@ void FUN_00417c69(void)
         }
       }
       else {
-        uVar3 = FUN_00454254();
+        uVar3 = Random();
         *(short *)(puVar7 + 0x1c) = (short)((int)uVar3 % 6);
         *(short *)(puVar7 + 0x16) = *(short *)(puVar7 + 0x1c) * 0x32 + local_c;
       }
       *(undefined2 *)(puVar7 + 0x1e) = 0xffff;
       *(undefined2 *)(puVar7 + 0x18) = 0;
-      uVar3 = FUN_00454254();
+      uVar3 = Random();
       if ((int)uVar3 % 100 < 0x32) {
         *(undefined2 *)(puVar7 + 0x14) = 0x10;
         *(undefined4 *)(puVar7 + 0x96) = 2;
@@ -9724,7 +9724,7 @@ void FUN_0041a32f(undefined param_1,undefined param_2,undefined param_3,int para
       uVar10 = 0;
     }
     else {
-      uVar5 = FUN_00454254();
+      uVar5 = Random();
       iVar11 = (int)sVar12;
       iVar4 = (int)uVar5 / iVar11;
       uVar10 = (undefined2)((int)uVar5 % iVar11);
@@ -21241,9 +21241,9 @@ void FUN_0042b3d8(undefined param_1,undefined param_2,undefined param_3,undefine
         sVar5 = 0;
       }
       else {
-        uVar3 = FUN_00454254();
+        uVar3 = Random();
         sVar4 = (short)((int)uVar3 % (int)(short)param_4);
-        uVar3 = FUN_00454254();
+        uVar3 = Random();
         sVar5 = (short)((int)uVar3 % (int)(short)param_4);
       }
       sVar1 = param_5[sVar4];
@@ -26505,7 +26505,7 @@ void FUN_00432e65(void)
         DAT_0046847c = 0;
       }
       else {
-        uVar2 = FUN_00454254();
+        uVar2 = Random();
         DAT_0046847c = (short)((int)uVar2 % (int)DAT_00468480);
       }
     } while ((&DAT_00468496)[DAT_0046847c * 0xb] == 1);
@@ -34710,7 +34710,7 @@ void FUN_0043d275(void)
         sVar8 = 0;
         sVar2 = 0x32;
         do {
-          uVar3 = FUN_00454254();
+          uVar3 = Random();
           uVar7 = (undefined2)((uint)((int)uVar3 / 100) >> 0x10);
           if ((int)uVar3 % 100 < 0x32) {
             uVar4 = CONCAT22(uVar7,0x68a);
@@ -36803,7 +36803,7 @@ void FUN_0043fb8b(void)
         unaff_EDI = 0;
       }
       else {
-        uVar2 = FUN_00454254();
+        uVar2 = Random();
         unaff_EDI = (int)uVar2 % (int)sVar3;
       }
       bVar1 = true;
@@ -36887,7 +36887,7 @@ short FUN_0043fc79(void)
       iVar4 = 0;
     }
     else {
-      uVar2 = FUN_00454254();
+      uVar2 = Random();
       iVar4 = (int)uVar2 % (int)sVar5;
     }
     sVar6 = asStack20[iVar4];
@@ -36928,7 +36928,7 @@ int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined
     DAT_004698ec = 0;
   }
   else {
-    uVar3 = FUN_00454254();
+    uVar3 = Random();
     iVar2 = (int)uVar3 / (int)sVar1;
     DAT_004698ec = (undefined2)((int)uVar3 % (int)sVar1);
   }
@@ -56126,26 +56126,26 @@ void FUN_0045420c(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00454224(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
 
 {
-  DAT_004643cc = param_4;
-  DAT_004643d0 = 0;
+  _Random_p = param_4;
+  _Random_q = 0;
   return;
 }
 
 
 
-uint FUN_00454254(void)
+uint Random(void)
 
 {
   uint uVar1;
   
-  if (DAT_004643d0 != 0) {
-    DAT_004643d0 = DAT_004643d0 * 0x4e35;
+  if (_Random_q != 0) {
+    _Random_q = _Random_q * 0x4e35;
   }
-  uVar1 = (uint)((ulonglong)DAT_004643cc * 0x4e35);
-  DAT_004643d0 = (int)((ulonglong)DAT_004643cc * 0x4e35 >> 0x20) +
-                 DAT_004643cc * 0x15a4 + DAT_004643d0 + (uint)(0xfffffffe < uVar1);
-  DAT_004643cc = uVar1 + 1;
-  return DAT_004643d0 & 0x7fffffff;
+  uVar1 = (uint)((ulonglong)_Random_p * 0x4e35);
+  _Random_q = (int)((ulonglong)_Random_p * 0x4e35 >> 0x20) + _Random_p * 0x15a4 + _Random_q +
+              (uint)(0xfffffffe < uVar1);
+  _Random_p = uVar1 + 1;
+  return _Random_q & 0x7fffffff;
 }
 
 
