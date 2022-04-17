@@ -273,9 +273,7 @@ struct Rect16 {
     short h;
 };
 
-typedef struct World World, *PWorld;
-
-typedef struct Area Area, *PArea;
+typedef struct Room Room, *PRoom;
 
 typedef struct OtherEntity OtherEntity, *POtherEntity;
 
@@ -294,27 +292,6 @@ typedef struct DlistNode DlistNode, *PDlistNode;
 typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
 
 typedef short EntityType;
-
-struct Area {
-    byte flags; // bit 0 obverse
-    undefined field1_0x1;
-    short structuralEntityCounts[4];
-    short ladderEntityCounts[4];
-    short cEntityCounts?[6];
-    undefined4 cEntityGroups?[6];
-    short dEntityCounts?[6];
-    undefined4 dEntityGroups?[6];
-    short eEntityCounts?[6];
-    undefined4 eEntityGroups?[6];
-    struct OtherEntity * structuralEntityGroups[4];
-    struct LadderEntity * ladderEntityGroups[4];
-    short partEntityCount;
-    struct Dlist * partEntities;
-    undefined2 field14_0xa4[6];
-    undefined2 field15_0xb0[6];
-    undefined2 field16_0xbc[50];
-    undefined field17_0x120[468];
-};
 
 struct Dlist {
     struct DlistNode * head;
@@ -372,9 +349,32 @@ struct DlistNode {
     struct DlistNode * prev;
 };
 
-struct World {
-    short areaCount;
-    struct Area areas[16];
+struct Room {
+    byte flags; // bit 0 obverse
+    undefined field1_0x1;
+    short structuralEntityCounts[4];
+    short ladderEntityCounts[4];
+    short cEntityCounts?[6];
+    undefined4 cEntityGroups?[6];
+    short dEntityCounts?[6];
+    undefined4 dEntityGroups?[6];
+    short eEntityCounts?[6];
+    undefined4 eEntityGroups?[6];
+    struct OtherEntity * structuralEntityGroups[4];
+    struct LadderEntity * ladderEntityGroups[4];
+    short partEntityCount;
+    struct Dlist * partEntities;
+    undefined2 field14_0xa4[6];
+    undefined2 field15_0xb0[6];
+    undefined2 field16_0xbc[50];
+    undefined field17_0x120[468];
+};
+
+typedef struct Area Area, *PArea;
+
+struct Area {
+    short roomCount;
+    struct Room rooms[16];
     undefined field2_0x2f42[32928];
 };
 
@@ -1384,7 +1384,7 @@ void FUN_00414734(void);
 void FUN_00414739(void);
 void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_4,int param_5);
 void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short param_4,ushort param_5,short param_6,short param_7,short param_8);
-Area * FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4);
+Room * FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00414c5a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *param_4,short *param_5);
 void FUN_00414dc2(undefined param_1,undefined param_2,undefined param_3,char *param_4,short *param_5);

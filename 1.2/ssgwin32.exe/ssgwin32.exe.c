@@ -4050,21 +4050,21 @@ void FUN_004143a5(void)
   undefined extraout_DL_01;
   short sVar2;
   ushort *puVar3;
-  World *pWVar4;
+  Area *pAVar4;
   
-  for (sVar2 = 1; uVar1 = SUB41(in_ECX,0), sVar2 < _AreaCount; sVar2 = sVar2 + 1) {
-    in_ECX = _Areas[sVar2]->partEntities;
-    in_AL = FUN_00435302((char)_Areas[sVar2],in_DL,uVar1,in_ECX);
+  for (sVar2 = 1; uVar1 = SUB41(in_ECX,0), sVar2 < _RoomCount; sVar2 = sVar2 + 1) {
+    in_ECX = _Rooms[sVar2]->partEntities;
+    in_AL = FUN_00435302((char)_Rooms[sVar2],in_DL,uVar1,in_ECX);
     in_DL = extraout_DL;
   }
-  puVar3 = _InitialAreaPartsCounts;
-  uVar1 = FUN_0044073c(in_AL,in_DL,uVar1,_InitialAreaPartsCounts);
-  pWVar4 = _World;
-  FUN_0044073c(uVar1,extraout_DL_00,(char)puVar3,_World);
-  if (_TextResourceForBuilding != -1) {
-    FUN_004462e8((char)_TextResourceForBuilding,extraout_DL_01,(char)pWVar4,
-                 CONCAT22(extraout_var,_TextResourceForBuilding));
-    _TextResourceForBuilding = -1;
+  puVar3 = _RoomInitialPartsCounts;
+  uVar1 = FUN_0044073c(in_AL,in_DL,uVar1,_RoomInitialPartsCounts);
+  pAVar4 = _Area;
+  FUN_0044073c(uVar1,extraout_DL_00,(char)puVar3,_Area);
+  if (_BuildingTextResourceId != -1) {
+    FUN_004462e8((char)_BuildingTextResourceId,extraout_DL_01,(char)pAVar4,
+                 CONCAT22(extraout_var,_BuildingTextResourceId));
+    _BuildingTextResourceId = -1;
   }
   return;
 }
@@ -4109,8 +4109,8 @@ void FUN_00414406(undefined param_1,undefined param_2,undefined param_3,short pa
   short sVar11;
   byte bVar12;
   
-  Memcpy(&DAT_0046027a,_Areas[param_4],0x120);
-  _AreaIndex = param_4;
+  Memcpy(&DAT_0046027a,_Rooms[param_4],0x120);
+  _RoomIndex = param_4;
   _DAT_00460274 = 1;
   sVar10 = 3;
   uVar6 = extraout_ECX;
@@ -4159,7 +4159,7 @@ void FUN_00414406(undefined param_1,undefined param_2,undefined param_3,short pa
     }
     sVar10 = sVar10 + -1;
   } while (-1 < sVar10);
-  pDVar7 = _Areas[_AreaIndex]->partEntities;
+  pDVar7 = _Rooms[_RoomIndex]->partEntities;
   pDVar4 = (Dlist *)DlistHead(pDVar7);
   uVar3 = extraout_EDX_04;
   for (sVar10 = 0; sVar10 < _DAT_00460318; sVar10 = sVar10 + 1) {
@@ -4176,15 +4176,15 @@ void FUN_00414406(undefined param_1,undefined param_2,undefined param_3,short pa
     pDVar4 = (Dlist *)DlistNext(pDVar4);
     uVar3 = extraout_EDX_05;
   }
-  uVar2 = (undefined)_TextResourceForBuilding;
+  uVar2 = (undefined)_BuildingTextResourceId;
   if (param_4 == 0) {
-    FUN_00446b4c(uVar2,(char)uVar3,(char)pDVar7,_TextResourceForBuilding);
+    FUN_00446b4c(uVar2,(char)uVar3,(char)pDVar7,_BuildingTextResourceId);
   }
   else {
-    uVar6 = FUN_0044701f(uVar2,(char)uVar3,(char)pDVar7,_TextResourceForBuilding);
+    uVar6 = FUN_0044701f(uVar2,(char)uVar3,(char)pDVar7,_BuildingTextResourceId);
     if ((short)uVar6 == 0) {
-      FUN_004466f9((char)_TextResourceForBuilding,extraout_DL_05,uVar2,
-                   uVar6 & 0xffff0000 | (uint)_TextResourceForBuilding,1);
+      FUN_004466f9((char)_BuildingTextResourceId,extraout_DL_05,uVar2,
+                   uVar6 & 0xffff0000 | (uint)_BuildingTextResourceId,1);
     }
   }
   return;
@@ -4232,7 +4232,7 @@ void FUN_004145e2(undefined4 param_1,undefined4 param_2,uint param_3)
       }
       sVar6 = sVar6 + 1;
     } while (sVar6 < 4);
-    pDVar4 = _Areas[_AreaIndex]->partEntities;
+    pDVar4 = _Rooms[_RoomIndex]->partEntities;
     pDVar2 = (Dlist *)DlistHead(pDVar4);
     uVar3 = extraout_EDX_01;
     for (sVar6 = 0; sVar6 < _DAT_00460318; sVar6 = sVar6 + 1) {
@@ -4255,17 +4255,17 @@ void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefine
 {
   OtherEntity *pOVar1;
   short sVar2;
-  Area *pAVar3;
+  Room *pRVar3;
   
   if ((short)param_4 < 0) {
-    pAVar3 = (Area *)&DAT_0046027a;
+    pRVar3 = (Room *)&DAT_0046027a;
   }
   else {
-    pAVar3 = _Areas[(short)param_4];
+    pRVar3 = _Rooms[(short)param_4];
   }
-  pOVar1 = pAVar3->structuralEntityGroups[0];
+  pOVar1 = pRVar3->structuralEntityGroups[0];
   sVar2 = 0;
-  if (0 < pAVar3->structuralEntityCounts[0]) {
+  if (0 < pRVar3->structuralEntityCounts[0]) {
     do {
       if (((6 < (pOVar1->base).type) && ((pOVar1->base).type < 0xc)) &&
          ((int)(uint)(ushort)pOVar1->partId >> 6 == (int)((short)param_5 >> 6))) {
@@ -4273,7 +4273,7 @@ void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefine
       }
       pOVar1 = pOVar1 + 1;
       sVar2 = sVar2 + 1;
-    } while (sVar2 < pAVar3->structuralEntityCounts[0]);
+    } while (sVar2 < pRVar3->structuralEntityCounts[0]);
   }
   return;
 }
@@ -4283,7 +4283,7 @@ void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefine
 uint FUN_00414700(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  return (uint)_Areas[param_4] & 0xffff0000 | (uint)*(ushort *)_Areas[param_4];
+  return (uint)_Rooms[param_4] & 0xffff0000 | (uint)*(ushort *)_Rooms[param_4];
 }
 
 
@@ -4291,7 +4291,7 @@ uint FUN_00414700(undefined param_1,undefined param_2,undefined param_3,short pa
 uint FUN_00414713(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  return (uint)_Areas[param_4] & 0xffff0000 | *(ushort *)_Areas[param_4] & 0xffff0001;
+  return (uint)_Rooms[param_4] & 0xffff0000 | *(ushort *)_Rooms[param_4] & 0xffff0001;
 }
 
 
@@ -4334,21 +4334,21 @@ void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_
 
 {
   short *psVar1;
-  Area *pAVar2;
+  Room *pRVar2;
   short sVar3;
   undefined4 uVar4;
   
   sVar3 = (short)param_4;
-  pAVar2 = _Areas[sVar3];
+  pRVar2 = _Rooms[sVar3];
   *(undefined2 *)(param_5 + 8) = 1;
-  psVar1 = &pAVar2->partEntityCount;
+  psVar1 = &pRVar2->partEntityCount;
   *psVar1 = *psVar1 + -1;
-  if (sVar3 == _AreaIndex) {
+  if (sVar3 == _RoomIndex) {
     uVar4 = FUN_00412d0c(param_4,(int)sVar3,param_3,*(uint *)(param_5 + 0x16));
     *(undefined4 *)(param_5 + 0x16) = uVar4;
     _DAT_00460318 = _DAT_00460318 + -1;
   }
-  DlistRemove(pAVar2->partEntities,(DlistNode *)param_5);
+  DlistRemove(pRVar2->partEntities,(DlistNode *)param_5);
   return;
 }
 
@@ -4361,7 +4361,7 @@ void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short pa
 
 {
   ushort uVar1;
-  Area *pAVar2;
+  Room *pRVar2;
   undefined uVar3;
   EntityNode *node;
   void *pvVar4;
@@ -4379,11 +4379,11 @@ void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined2 local_c;
   ushort local_6;
   
-  pAVar2 = _Areas[param_4];
+  pRVar2 = _Rooms[param_4];
   node = NextAvailableEntityNode();
   local_c = 0;
   local_14 = param_5;
-  if ((pAVar2->flags & 1) == 0) {
+  if ((pRVar2->flags & 1) == 0) {
     if (2 < param_6) {
       param_6 = param_6 + -3;
     }
@@ -4408,8 +4408,8 @@ void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short pa
   pvVar4 = Memcpy(&(node->inner).activation_,&local_14,10);
   (node->inner).activation_.mode = 0x800;
   if (param_8 == 0) {
-    pAVar2->partEntityCount = pAVar2->partEntityCount + 1;
-    if (param_4 == _AreaIndex) {
+    pRVar2->partEntityCount = pRVar2->partEntityCount + 1;
+    if (param_4 == _RoomIndex) {
       _DAT_00460318 = _DAT_00460318 + 1;
       uVar1 = (node->inner).base.spriteId;
       uVar5 = (uint)pvVar4 & 0xffff0000 | (uint)uVar1;
@@ -4424,16 +4424,16 @@ void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short pa
     }
   }
   node->available = 0;
-  DlistInsert(pAVar2->partEntities,&node->node,-1);
+  DlistInsert(pRVar2->partEntities,&node->node,-1);
   return;
 }
 
 
 
-Area * FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4)
+Room * FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4)
 
 {
-  return _Areas[*(short *)(param_4 + 0x1a)];
+  return _Rooms[*(short *)(param_4 + 0x1a)];
 }
 
 
@@ -4449,16 +4449,16 @@ void FUN_00414c5a(undefined param_1,undefined param_2,undefined param_3,undefine
   bVar1 = false;
   while (!bVar1) {
     do {
-      if (_AreaCount == 1) {
+      if (_RoomCount == 1) {
         sVar4 = 0;
       }
       else {
         iVar3 = Random();
-        sVar4 = (short)(iVar3 % (_AreaCount + -1));
+        sVar4 = (short)(iVar3 % (_RoomCount + -1));
       }
       sVar4 = sVar4 + 1;
-    } while ((sVar4 == _AreaIndex) || (_InitialAreaPartsCounts[sVar4] == 0));
-    uVar2 = PlacePartEntity(_Areas[sVar4],1,(PartId)param_4);
+    } while ((sVar4 == _RoomIndex) || (_RoomInitialPartsCounts[sVar4] == 0));
+    uVar2 = PlacePartEntity(_Rooms[sVar4],1,(PartId)param_4);
     if (uVar2 != 0) {
       bVar1 = true;
     }
@@ -4472,7 +4472,7 @@ void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *pa
                  )
 
 {
-  Area *pAVar1;
+  Room *pRVar1;
   short sVar2;
   short sVar3;
   OtherEntity *pOVar4;
@@ -4488,10 +4488,10 @@ void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *pa
   pDVar8 = (Dlist *)(uint)param_3;
   local_6 = 0;
   do {
-    pAVar1 = _Areas[local_6];
-    if (pAVar1 != (Area *)0x0) {
-      pOVar4 = pAVar1->structuralEntityGroups[0];
-      for (sVar2 = 0; sVar2 < pAVar1->structuralEntityCounts[0]; sVar2 = sVar2 + 1) {
+    pRVar1 = _Rooms[local_6];
+    if (pRVar1 != (Room *)0x0) {
+      pOVar4 = pRVar1->structuralEntityGroups[0];
+      for (sVar2 = 0; sVar2 < pRVar1->structuralEntityCounts[0]; sVar2 = sVar2 + 1) {
         if ((pOVar4->base).type == 7) {
           *param_4 = 7;
           param_4 = param_4 + 1;
@@ -4502,18 +4502,18 @@ void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *pa
         }
         pOVar4 = pOVar4 + 1;
       }
-      iVar5 = FUN_004352c9((char)pAVar1,(char)pAVar1,(char)pDVar8,pAVar1->partEntities);
+      iVar5 = FUN_004352c9((char)pRVar1,(char)pRVar1,(char)pDVar8,pRVar1->partEntities);
       sVar2 = (short)iVar5;
       *param_5 = sVar2;
       param_5 = param_5 + 1;
       sVar9 = 0;
-      pDVar8 = pAVar1->partEntities;
+      pDVar8 = pRVar1->partEntities;
       pDVar6 = (Dlist *)DlistHead(pDVar8);
       uVar7 = extraout_EDX;
       if (0 < sVar2) {
         do {
           *param_5 = *(short *)&pDVar6[1].tail;
-          if ((pAVar1->flags & 1) == 0) {
+          if ((pRVar1->flags & 1) == 0) {
             uVar7 = FUN_0041412e((char)&pDVar6[1].tail,(char)uVar7,(char)pDVar8,&pDVar6[1].tail);
             sVar3 = (short)uVar7;
           }
@@ -4545,7 +4545,7 @@ void FUN_00414dc2(undefined param_1,undefined param_2,undefined param_3,char *pa
 
 {
   ushort uVar1;
-  Area *pAVar2;
+  Room *pRVar2;
   OtherEntity *pOVar3;
   undefined uVar4;
   Dlist *extraout_ECX;
@@ -4563,11 +4563,11 @@ void FUN_00414dc2(undefined param_1,undefined param_2,undefined param_3,char *pa
   local_8 = 0;
   pDVar5 = extraout_ECX;
   do {
-    pAVar2 = _Areas[local_8._2_2_];
-    if (pAVar2 != (Area *)0x0) {
-      uVar1 = *(ushort *)pAVar2;
-      pOVar3 = pAVar2->structuralEntityGroups[0];
-      for (sVar7 = 0; sVar7 < pAVar2->structuralEntityCounts[0]; sVar7 = sVar7 + 1) {
+    pRVar2 = _Rooms[local_8._2_2_];
+    if (pRVar2 != (Room *)0x0) {
+      uVar1 = *(ushort *)pRVar2;
+      pOVar3 = pRVar2->structuralEntityGroups[0];
+      for (sVar7 = 0; sVar7 < pRVar2->structuralEntityCounts[0]; sVar7 = sVar7 + 1) {
         if (((pOVar3->base).type == 7) || ((pOVar3->base).type == 9)) {
           pDVar5 = (Dlist *)(int)*param_4;
           (pOVar3->base).type = (short)*param_4;
@@ -4586,10 +4586,10 @@ void FUN_00414dc2(undefined param_1,undefined param_2,undefined param_3,char *pa
         pOVar3 = pOVar3 + 1;
       }
       uVar4 = SUB41(pDVar5,0);
-      pDVar5 = pAVar2->partEntities;
-      FUN_00435315((char)pOVar3,(char)(uVar1 & 1),uVar4,pAVar2->partEntities);
+      pDVar5 = pRVar2->partEntities;
+      FUN_00435315((char)pOVar3,(char)(uVar1 & 1),uVar4,pRVar2->partEntities);
       sVar7 = *param_5;
-      pAVar2->partEntityCount = sVar7;
+      pRVar2->partEntityCount = sVar7;
       param_5 = param_5 + 1;
       sVar8 = 0;
       uVar6 = extraout_DX;
@@ -4621,7 +4621,7 @@ int FUN_00414eb6(undefined param_1,undefined param_2,undefined param_3,short par
   if ((short)param_5 == -1) {
     return 0;
   }
-  return (int)(_Areas[param_4]->structuralEntityGroups[0] + (short)param_5);
+  return (int)(_Rooms[param_4]->structuralEntityGroups[0] + (short)param_5);
 }
 
 
@@ -4629,7 +4629,7 @@ int FUN_00414eb6(undefined param_1,undefined param_2,undefined param_3,short par
 int FUN_00414edc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  return (int)(_Areas[param_4]->ladderEntityGroups[0] + param_5);
+  return (int)(_Rooms[param_4]->ladderEntityGroups[0] + param_5);
 }
 
 
@@ -4640,7 +4640,7 @@ void FUN_00414efe(undefined param_1,undefined param_2,undefined param_3,short pa
 {
   undefined3 in_register_00000009;
   
-  FUN_00435122((char)_Areas[param_4],(char)param_5,param_3,_Areas[param_4]->partEntities,
+  FUN_00435122((char)_Rooms[param_4],(char)param_5,param_3,_Rooms[param_4]->partEntities,
                CONCAT22((short)((uint3)in_register_00000009 >> 8),param_5));
   return;
 }
@@ -4651,7 +4651,7 @@ void FUN_00414f21(void)
 
 {
   ushort uVar1;
-  Area *pAVar2;
+  Room *pRVar2;
   OtherEntity *pOVar3;
   short sVar4;
   short sVar5;
@@ -4659,11 +4659,11 @@ void FUN_00414f21(void)
   
   sVar5 = 0;
   do {
-    pAVar2 = _Areas[sVar5];
-    if (pAVar2 != (Area *)0x0) {
-      uVar1 = *(ushort *)pAVar2;
-      pOVar3 = pAVar2->structuralEntityGroups[0];
-      for (sVar4 = 0; sVar4 < pAVar2->structuralEntityCounts[0]; sVar4 = sVar4 + 1) {
+    pRVar2 = _Rooms[sVar5];
+    if (pRVar2 != (Room *)0x0) {
+      uVar1 = *(ushort *)pRVar2;
+      pOVar3 = pRVar2->structuralEntityGroups[0];
+      for (sVar4 = 0; sVar4 < pRVar2->structuralEntityCounts[0]; sVar4 = sVar4 + 1) {
         if ((pOVar3->base).type == 7) {
           (pOVar3->base).type = 9;
           (pOVar3->activation_).mode = 4;
@@ -5196,7 +5196,7 @@ void FUN_00415bf3(undefined param_1,undefined param_2,undefined param_3,int para
       uVar4 = FUN_00417206((char)iVar6,extraout_DL_02,extraout_CL,iVar6,uVar8);
       uVar3 = extraout_CL_00;
       uVar7 = extraout_DL_03;
-      if (_AreaIndex != 0) {
+      if (_RoomIndex != 0) {
         uVar8 = 0xc9;
         iVar6 = FUN_00416e6d(uVar4,extraout_DL_03,extraout_CL_00,0x132,0x14a,0x23,0x2e,0x14,
                              FUN_004164da);
@@ -7916,12 +7916,12 @@ ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short 
   Rect16 local_18;
   ushort local_10;
   ushort local_e;
-  Area *local_c;
+  Room *local_c;
   undefined2 *local_8;
   
   iVar4 = (int)param_4;
   local_8 = &DAT_004685e8 + iVar4 * 0x54;
-  local_c = _Areas[(short)(&DAT_00468602)[iVar4 * 0x54]];
+  local_c = _Rooms[(short)(&DAT_00468602)[iVar4 * 0x54]];
   local_e = 0;
   sVar3 = (&DAT_00468604)[iVar4 * 0x54];
   if (((local_c->flags & 1) == 0) && (2 < sVar3)) {
@@ -7980,7 +7980,7 @@ LAB_00419140:
 void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  Area *pAVar1;
+  Room *pRVar1;
   short sVar2;
   ushort uVar3;
   short sVar4;
@@ -8001,16 +8001,16 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
   iVar6 = (int)param_4;
   iVar10 = iVar6 * 0xa8;
   q = (Rect16 *)(&DAT_004685e8 + iVar6 * 0x54);
-  pAVar1 = _Areas[(short)(&DAT_00468602)[iVar6 * 0x54]];
+  pRVar1 = _Rooms[(short)(&DAT_00468602)[iVar6 * 0x54]];
   sVar2 = (&DAT_00468604)[iVar6 * 0x54];
-  if (((pAVar1->flags & 1) == 0) && (2 < sVar2)) {
+  if (((pRVar1->flags & 1) == 0) && (2 < sVar2)) {
     sVar2 = sVar2 + -3;
   }
-  local_6 = pAVar1->field14_0xa4[sVar2];
-  local_8 = pAVar1->field15_0xb0[sVar2];
+  local_6 = pRVar1->field14_0xa4[sVar2];
+  local_8 = pRVar1->field15_0xb0[sVar2];
   (&DAT_00468630)[iVar6 * 0x54] = 0;
-  iVar7 = DlistHead(pAVar1->partEntities);
-  for (sVar2 = 0; sVar2 < pAVar1->partEntityCount; sVar2 = sVar2 + 1) {
+  iVar7 = DlistHead(pRVar1->partEntities);
+  for (sVar2 = 0; sVar2 < pRVar1->partEntityCount; sVar2 = sVar2 + 1) {
     local_c = (OtherEntity *)(iVar7 + 0xc);
     uVar8 = CheckCollision((Rect16 *)local_c,q);
     if ((short)uVar8 != 0) {
@@ -8047,19 +8047,19 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
       }
     }
   }
-  local_20 = pAVar1->field16_0xbc + local_8;
+  local_20 = pRVar1->field16_0xbc + local_8;
   sVar2 = 0;
   if (0 < local_6) {
     do {
       uVar3 = *local_20;
       if ((uVar3 & 0x8000) == 0) {
         if ((uVar3 & 0x4000) == 0) {
-          local_c = pAVar1->structuralEntityGroups[uVar3 & 3] + ((int)(uVar3 & 0x3fff) >> 2);
+          local_c = pRVar1->structuralEntityGroups[uVar3 & 3] + ((int)(uVar3 & 0x3fff) >> 2);
           Memcpy(&local_18,(RectEx *)((int)(&local_c->base + 1) + 4),10);
         }
         else {
           Memcpy(&local_18,
-                 &pAVar1->ladderEntityGroups[uVar3 & 3][(int)(uVar3 & 0x3fff) >> 2].collision_,10);
+                 &pRVar1->ladderEntityGroups[uVar3 & 3][(int)(uVar3 & 0x3fff) >> 2].collision_,10);
         }
         uVar8 = CheckCollision(&local_18,q);
         sVar4 = (short)uVar8;
@@ -9124,7 +9124,7 @@ void FUN_0041a70e(void)
       *(undefined2 *)&_GameState->field_0x2a = 1;
       unaff_SI = 0x21;
       _DAT_00461ab2 = 1;
-      unaff_DI = _AreaIndex;
+      unaff_DI = _RoomIndex;
       break;
     case 8:
       *(ushort *)&_GameState->field_0x1e = DAT_00468602;
@@ -26463,7 +26463,7 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
       psVar19 = psVar4;
       break;
     case (GameState *)0x9:
-      if ((&DAT_00468602)[iVar8 * 0x54] == _AreaIndex) {
+      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
         uVar1 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
         psVar19 = (short *)(uint)uVar1;
         FUN_00446b08((char)uVar1,(char)DAT_00461aa8,uVar13,uVar1);
@@ -26471,7 +26471,7 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
       (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
       break;
     case (GameState *)0xa:
-      if ((&DAT_00468602)[iVar8 * 0x54] == _AreaIndex) {
+      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
         uVar2 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
         psVar19 = (short *)(uint)uVar2;
         sVar15 = FUN_00446fc9((char)uVar2,(char)DAT_00461aa8,uVar13,uVar2);
@@ -26647,7 +26647,7 @@ LAB_00434a96:
       iVar11 = FUN_00414edc((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
                             (&DAT_00468602)[iVar8 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar16));
       psVar19 = extraout_ECX_05;
-      if ((&DAT_00468602)[iVar8 * 0x54] == _AreaIndex) {
+      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
         psVar19 = *(short **)(iVar11 + 10);
         FUN_00412e18((char)iVar11,(char)(&DAT_00468602)[iVar8 * 0x54],(char)extraout_ECX_05,psVar19)
         ;
@@ -26765,7 +26765,7 @@ void FUN_00434aa1(void)
   iVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),1);
   do {
     uVar1 = (undefined)in_ECX;
-    if (((puVar3[0x15] == 0) && (in_AX = puVar3[0xd], in_AX == _AreaIndex)) &&
+    if (((puVar3[0x15] == 0) && (in_AX = puVar3[0xd], in_AX == _RoomIndex)) &&
        (in_AX = puVar3[4], (in_AX & 0x8000) == 0)) {
       uVar2 = iVar4 + 10U & 0xffff0000;
       FUN_0041395c((char)*puVar3,in_DL,uVar1,*(undefined4 *)(puVar3 + 0x51),uVar2 | *puVar3,
@@ -26848,9 +26848,9 @@ void FUN_00434be3(uint param_1)
   undefined4 unaff_ESI;
   short sVar8;
   
-  uVar4 = param_1 & 0xffff0000 | (uint)_AreaIndex;
-  uVar2 = FUN_00414713((char)_AreaIndex,in_DL,in_CL,_AreaIndex);
-  if (_AreaIndex != 0) {
+  uVar4 = param_1 & 0xffff0000 | (uint)_RoomIndex;
+  uVar2 = FUN_00414713((char)_RoomIndex,in_DL,in_CL,_RoomIndex);
+  if (_RoomIndex != 0) {
     uVar3 = FUN_0041a823(uVar2,extraout_EDX,uVar4);
     uVar4 = FUN_004179b6(uVar3,extraout_EDX_00,extraout_ECX);
     _DAT_00462564 = 1;
@@ -26885,7 +26885,7 @@ void FUN_00434be3(uint param_1)
         FUN_004129d4((char)iVar7,extraout_DL_01,(char)uVar6,(&DAT_0046868a)[iVar5 * 0x2a],uVar2);
         uVar4 = extraout_ECX_01;
         uVar3 = extraout_EDX_05;
-        if (((&DAT_00468612)[iVar5 * 0x54] == 0) && ((&DAT_00468602)[iVar5 * 0x54] == _AreaIndex)) {
+        if (((&DAT_00468612)[iVar5 * 0x54] == 0) && ((&DAT_00468602)[iVar5 * 0x54] == _RoomIndex)) {
           uVar4 = uVar2;
           (*(&DAT_00468674)[iVar5 * 0x2a])();
           uVar3 = extraout_EDX_06;
@@ -26914,7 +26914,7 @@ void FUN_00434d2a(uint param_1,undefined4 param_2,uint param_3)
   short sVar4;
   uint uVar5;
   
-  if ((_AreaIndex != 0) && (_DAT_00462564 != 0)) {
+  if ((_RoomIndex != 0) && (_DAT_00462564 != 0)) {
     _DAT_00462564 = 0;
     uVar3 = DAT_00462554;
     DAT_00462554 = FUN_00412d0c(param_1,param_2,param_3,DAT_00462554);
@@ -33196,7 +33196,7 @@ uint FUN_0043d6f4(undefined4 param_1,undefined4 param_2,uint param_3)
   short sVar8;
   uint unaff_EDI;
   
-  _Level_partResource = (PartResource *)GetWinapiResource_(_GameState->level + 1000,&DAT_00462808);
+  _Level_partResource = (PartResource *)GetWinapiResource_(_GameState->level + 1000,&_PART);
   pPVar2 = _Level_partResource + 1;
   *(PartResource **)&_Level_partResource->field_0x24 = pPVar2;
   pPVar7 = (PartDefinition *)(&pPVar2->field_0x0 + _Level_partResource->criticalSlotCount * 2);

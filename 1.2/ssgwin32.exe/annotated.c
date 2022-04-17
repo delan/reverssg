@@ -17,99 +17,99 @@ void InitEntities(void)
 
 
 
-void WorldInitForVehicle(void)
+void LoadArea(void)
 
 {
   short sVar1;
   ushort uVar2;
   short sVar3;
   Dlist *list;
-  Area *pAVar4;
-  Area *area;
+  Room *pRVar4;
+  Room *room;
   short building;
-  short areaIndex;
+  short roomIndex;
   
   building = _GameState->building;
   if (building == 0) {
-    _TextResourceForBuilding = 0x177c;
+    _BuildingTextResourceId = 0x177c;
   }
   else if (building == 1) {
-    _TextResourceForBuilding = 0x1770;
+    _BuildingTextResourceId = 0x1770;
   }
   else if (building == 2) {
-    _TextResourceForBuilding = 0x177a;
+    _BuildingTextResourceId = 0x177a;
   }
-  FUN_00446186(_TextResourceForBuilding);
-  _World = (World *)GetWinapiResource_(_LevelAreaResourceIds[_GameState->level],&_AREA);
-  _AreaCount = _World->areaCount;
-  area = _World->areas;
+  FUN_00446186(_BuildingTextResourceId);
+  _Area = (Area *)GetWinapiResource_(_LevelAreaResourceIds[_GameState->level],&_AREA);
+  _RoomCount = _Area->roomCount;
+  room = _Area->rooms;
   InitEntities();
-  _InitialAreaPartsCounts = (ushort *)GetWinapiResource_(_GameState->level + 0x582,_pINTS);
-  GenInitialPartIds(*_InitialAreaPartsCounts);
-  _InitialBananaPartsCount = *_InitialAreaPartsCounts - _Level_partResource->definitionCount;
+  _RoomInitialPartsCounts = (ushort *)GetWinapiResource_(_GameState->level + 0x582,_pINTS);
+  GenInitialPartIds(*_RoomInitialPartsCounts);
+  _InitialBananaPartsCount = *_RoomInitialPartsCounts - _Level_partResource->definitionCount;
   _ActualBananaPartsCount = _InitialBananaPartsCount;
-  Memset(_Areas,0,0x40);
-  for (areaIndex = 0; areaIndex < _AreaCount; areaIndex = areaIndex + 1) {
-    _Areas[areaIndex] = area;
-    pAVar4 = (Area *)area->field17_0x120;
+  Memset(_Rooms,0,0x40);
+  for (roomIndex = 0; roomIndex < _RoomCount; roomIndex = roomIndex + 1) {
+    _Rooms[roomIndex] = room;
+    pRVar4 = (Room *)room->field17_0x120;
     sVar3 = 3;
     do {
-      sVar1 = area->structuralEntityCounts[sVar3];
+      sVar1 = room->structuralEntityCounts[sVar3];
       if (sVar1 != 0) {
-        area->structuralEntityGroups[sVar3] = (OtherEntity *)pAVar4;
-        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 0x10 + -1);
+        room->structuralEntityGroups[sVar3] = (OtherEntity *)pRVar4;
+        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 0x10 + -1);
       }
       sVar3 = sVar3 + -1;
     } while (-1 < sVar3);
     sVar3 = 0;
     do {
-      sVar1 = area->ladderEntityCounts[sVar3];
+      sVar1 = room->ladderEntityCounts[sVar3];
       if (sVar1 != 0) {
-        area->ladderEntityGroups[sVar3] = (LadderEntity *)pAVar4;
-        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 0x14 + -1);
+        room->ladderEntityGroups[sVar3] = (LadderEntity *)pRVar4;
+        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 0x14 + -1);
       }
       sVar3 = sVar3 + 1;
     } while (sVar3 < 4);
     sVar3 = 0;
     do {
-      sVar1 = area->cEntityCounts_[sVar3];
+      sVar1 = room->cEntityCounts_[sVar3];
       if (sVar1 != 0) {
-        area->cEntityGroups_[sVar3] = pAVar4;
-        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+        room->cEntityGroups_[sVar3] = pRVar4;
+        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
       }
       sVar3 = sVar3 + 1;
     } while (sVar3 < 6);
     sVar3 = 0;
     do {
-      sVar1 = area->dEntityCounts_[sVar3];
+      sVar1 = room->dEntityCounts_[sVar3];
       if (sVar1 != 0) {
-        area->dEntityGroups_[sVar3] = pAVar4;
-        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+        room->dEntityGroups_[sVar3] = pRVar4;
+        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
       }
       sVar3 = sVar3 + 1;
     } while (sVar3 < 6);
     sVar3 = 0;
     do {
-      sVar1 = area->eEntityCounts_[sVar3];
+      sVar1 = room->eEntityCounts_[sVar3];
       if (sVar1 != 0) {
-        area->eEntityGroups_[sVar3] = pAVar4;
-        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+        room->eEntityGroups_[sVar3] = pRVar4;
+        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
       }
       sVar3 = sVar3 + 1;
     } while (sVar3 < 6);
-    if (areaIndex != 0) {
+    if (roomIndex != 0) {
       list = DlistNew();
-      area->partEntities = list;
-      uVar2 = _InitialAreaPartsCounts[areaIndex];
-      area->partEntityCount = uVar2;
+      room->partEntities = list;
+      uVar2 = _RoomInitialPartsCounts[roomIndex];
+      room->partEntityCount = uVar2;
       if (uVar2 != 0) {
-        area->partEntityCount = 0;
-        PlacePartEntity(area,_InitialAreaPartsCounts[areaIndex],-1);
+        room->partEntityCount = 0;
+        PlacePartEntity(room,_RoomInitialPartsCounts[roomIndex],-1);
       }
     }
-    area = pAVar4;
+    room = pRVar4;
   }
-  _AreaIndex = 0;
+  _RoomIndex = 0;
   return;
 }
 
@@ -127,7 +127,7 @@ EntityNode * NextAvailableEntityNode(void)
 
 
 
-ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
+ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
 
 {
   short rows;
@@ -162,9 +162,9 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
   
   locationIndex = 0;
   result = 1;
-                    // is area obverse?
-  if ((area->flags & 1) == 0) {
-                    // areas #4 through #15, reverse side (big sprites), three floors
+                    // is room obverse?
+  if ((room->flags & 1) == 0) {
+                    // room #4 through #15, reverse side (big sprites), three floors
     rows = 3;
     firstPartX = 24;
     columns = 7;
@@ -176,7 +176,7 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
     partHeight = 24;
   }
   else {
-                    // areas #1 through #3, obverse side (small sprites), six floors
+                    // rooms #1 through #3, obverse side (small sprites), six floors
     rows = 6;
     firstPartX = 16;
     columns = 15;
@@ -215,8 +215,8 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
         rect.inner.h = partHeight;
         bad = false;
                     // 1. avoid intersecting other part entities
-        partCount = area->partEntityCount;
-        partNode = (EntityNode *)DlistHead(area->partEntities);
+        partCount = room->partEntityCount;
+        partNode = (EntityNode *)DlistHead(room->partEntities);
         for (j = 0; (!bad && (j < partCount)); j = j + 1) {
           collision = CheckCollision((Rect16 *)&rect,(Rect16 *)&partNode->inner);
           if ((short)collision != 0) {
@@ -225,8 +225,8 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
           partNode = (EntityNode *)DlistNext(partNode);
         }
                     // 2. avoid intersecting structural entities of type > 3 (e.g. gaps, doors)
-        entity = area->structuralEntityGroups[0];
-        structuralCount = area->structuralEntityCounts[0];
+        entity = room->structuralEntityGroups[0];
+        structuralCount = room->structuralEntityCounts[0];
         for (j = 0; (!bad && (j < structuralCount)); j = j + 1) {
           if ((3 < (entity->base).type) &&
              (collision = CheckCollision((Rect16 *)&rect,(Rect16 *)entity), (short)collision != 0))
@@ -236,8 +236,8 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
           entity = entity + 1;
         }
                     // 3. avoid intersecting ladder entities (vents, paddles, trampolines)
-        ladderCount = area->ladderEntityCounts[0];
-        ladder = area->ladderEntityGroups[0];
+        ladderCount = room->ladderEntityCounts[0];
+        ladder = room->ladderEntityGroups[0];
         for (j = 0; (!bad && (j < ladderCount)); j = j + 1) {
           collision = CheckCollision((Rect16 *)&rect,(Rect16 *)ladder);
           if ((short)collision != 0) {
@@ -281,9 +281,9 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
       *(undefined2 *)&entity->field_0x14 = 0;
       Memcpy(&entity->activation_,&rect,10);
       (entity->activation_).mode = 0x800;
-      area->partEntityCount = area->partEntityCount + 1;
+      room->partEntityCount = room->partEntityCount + 1;
       entityNode->available = 0;
-      DlistInsert(area->partEntities,&entityNode->node,-1);
+      DlistInsert(room->partEntities,&entityNode->node,-1);
       i = i + 1;
     } while (i < count);
   }

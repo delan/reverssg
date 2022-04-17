@@ -273,9 +273,7 @@ struct Rect16 {
     short h;
 };
 
-typedef struct World World, *PWorld;
-
-typedef struct Area Area, *PArea;
+typedef struct Room Room, *PRoom;
 
 typedef struct OtherEntity OtherEntity, *POtherEntity;
 
@@ -294,27 +292,6 @@ typedef struct DlistNode DlistNode, *PDlistNode;
 typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
 
 typedef short EntityType;
-
-struct Area {
-    byte flags; // bit 0 obverse
-    undefined field1_0x1;
-    short structuralEntityCounts[4];
-    short ladderEntityCounts[4];
-    short cEntityCounts?[6];
-    undefined4 cEntityGroups?[6];
-    short dEntityCounts?[6];
-    undefined4 dEntityGroups?[6];
-    short eEntityCounts?[6];
-    undefined4 eEntityGroups?[6];
-    struct OtherEntity * structuralEntityGroups[4];
-    struct LadderEntity * ladderEntityGroups[4];
-    short partEntityCount;
-    struct Dlist * partEntities;
-    undefined2 field14_0xa4[6];
-    undefined2 field15_0xb0[6];
-    undefined2 field16_0xbc[50];
-    undefined field17_0x120[468];
-};
 
 struct Dlist {
     struct DlistNode * head;
@@ -372,9 +349,32 @@ struct DlistNode {
     struct DlistNode * prev;
 };
 
-struct World {
-    short areaCount;
-    struct Area areas[16];
+struct Room {
+    byte flags; // bit 0 obverse
+    undefined field1_0x1;
+    short structuralEntityCounts[4];
+    short ladderEntityCounts[4];
+    short cEntityCounts?[6];
+    undefined4 cEntityGroups?[6];
+    short dEntityCounts?[6];
+    undefined4 dEntityGroups?[6];
+    short eEntityCounts?[6];
+    undefined4 eEntityGroups?[6];
+    struct OtherEntity * structuralEntityGroups[4];
+    struct LadderEntity * ladderEntityGroups[4];
+    short partEntityCount;
+    struct Dlist * partEntities;
+    undefined2 field14_0xa4[6];
+    undefined2 field15_0xb0[6];
+    undefined2 field16_0xbc[50];
+    undefined field17_0x120[468];
+};
+
+typedef struct Area Area, *PArea;
+
+struct Area {
+    short roomCount;
+    struct Room rooms[16];
     undefined field2_0x2f42[32928];
 };
 
@@ -1246,9 +1246,9 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 
 
 void InitEntities(void);
-void WorldInitForVehicle(void);
+void LoadArea(void);
 EntityNode * NextAvailableEntityNode(void);
-ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId);
+ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
 void __stdcall DonkeyShuffle(short len,short *result);
 undefined4 __stdcall DlistHead(undefined4 *param_1);
