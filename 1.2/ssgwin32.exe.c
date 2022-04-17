@@ -4276,10 +4276,8 @@ void FUN_0041416e(void)
   undefined4 uVar7;
   undefined in_CL;
   undefined extraout_CL;
-  undefined extraout_CL_00;
   uint extraout_ECX;
   undefined in_DL;
-  undefined extraout_DL;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   short *psVar8;
@@ -4316,10 +4314,10 @@ void FUN_0041416e(void)
                  FUN_004405fe(DAT_00461ab8 & 0xffff0000 | (uint)uVar3,extraout_EDX_00,extraout_ECX,
                               uVar3,PTR_DAT_00462b28);
   uVar6 = (uint)DAT_00465834 & 0xffff0000 | (uint)*DAT_00465834;
-  FUN_0043d8a5((char)*DAT_00465834,extraout_DL,extraout_CL,uVar6);
-  DAT_00465830 = *DAT_00465834 - *(short *)(DAT_00469540 + 2);
+  GenInitialPartIds(uVar6);
+  DAT_00465830 = *DAT_00465834 - _CurrentLevel_parts->definitionCount;
   _DAT_00465832 = DAT_00465830;
-  FUN_0044febc((char)DAT_00465830,(char)DAT_00469540,(char)uVar6,&DAT_004657f0,0,0x40);
+  FUN_0044febc((char)DAT_00465830,(char)_CurrentLevel_parts,(char)uVar6,&DAT_004657f0,0,0x40);
   for (sVar2 = 0; sVar2 < DAT_00460278; sVar2 = sVar2 + 1) {
     (&DAT_004657f0)[sVar2] = psVar9;
     psVar8 = psVar9 + 0x90;
@@ -4375,7 +4373,7 @@ void FUN_0041416e(void)
       psVar9[0x4f] = uVar3;
       if (uVar3 != 0) {
         psVar9[0x4f] = 0;
-        FUN_00414750((char)DAT_00465834[sVar2],(char)DAT_00465834,extraout_CL_00,psVar9,
+        FUN_00414750((char)DAT_00465834[sVar2],(char)DAT_00465834,extraout_CL,psVar9,
                      DAT_00465834[sVar2],0xffff);
       }
     }
@@ -23678,7 +23676,7 @@ void FUN_0042fbf7(void)
   
   psVar2 = &DAT_0046954c;
   iVar1 = DAT_0046953c;
-  for (sVar3 = 0; sVar3 < *(short *)(DAT_00469540 + 2); sVar3 = sVar3 + 1) {
+  for (sVar3 = 0; sVar3 < _CurrentLevel_parts->definitionCount; sVar3 = sVar3 + 1) {
     if ((*(short *)(iVar1 + 0xc) == 0) && ((*(byte *)(iVar1 + 0x37) & 0x80) != 0)) {
       *psVar2 = sVar3;
       psVar2 = psVar2 + 1;
@@ -34749,7 +34747,7 @@ uint FUN_0043d6f4(undefined4 param_1,undefined4 param_2,uint param_3)
 
 {
   ushort uVar1;
-  int iVar2;
+  PartResource *pPVar2;
   uint uVar3;
   uint uVar4;
   undefined2 extraout_var;
@@ -34761,40 +34759,42 @@ uint FUN_0043d6f4(undefined4 param_1,undefined4 param_2,uint param_3)
   int iVar6;
   undefined4 extraout_EDX;
   int extraout_EDX_00;
-  short sVar7;
+  undefined *puVar7;
+  short sVar8;
   uint unaff_EDI;
   
   uVar1 = *(short *)(DAT_00461ab8 + 0x2e) + 1000;
-  DAT_00469540 = FUN_004405fe(DAT_00461ab8 & 0xffff0000 | (uint)uVar1,param_2,param_3,uVar1,
-                              &DAT_00462808);
-  iVar2 = DAT_00469540 + 0x30;
-  *(int *)(DAT_00469540 + 0x24) = iVar2;
-  iVar2 = iVar2 + *(short *)(DAT_00469540 + 6) * 2;
-  *(int *)(DAT_00469540 + 0x28) = iVar2;
-  iVar6 = *(short *)(DAT_00469540 + 2) * 0x62;
-  DAT_00469548 = iVar2 + iVar6;
-  uVar1 = *(ushort *)(DAT_00469540 + 2);
-  sVar7 = 0;
+  _CurrentLevel_parts =
+       (PartResource *)
+       FUN_004405fe(DAT_00461ab8 & 0xffff0000 | (uint)uVar1,param_2,param_3,uVar1,&DAT_00462808);
+  pPVar2 = _CurrentLevel_parts + 6;
+  *(PartResource **)&_CurrentLevel_parts[4].slotCount = pPVar2;
+  puVar7 = &pPVar2->field_0x0 + _CurrentLevel_parts->criticalSlotCount * 2;
+  *(undefined **)(_CurrentLevel_parts + 5) = puVar7;
+  iVar6 = _CurrentLevel_parts->definitionCount * 0x62;
+  DAT_00469548 = puVar7 + iVar6;
+  uVar1 = _CurrentLevel_parts->definitionCount;
+  sVar8 = 0;
   uVar4 = extraout_ECX;
-  DAT_0046953c = iVar2;
+  DAT_0046953c = puVar7;
   if (0 < (short)uVar1) {
     do {
-      uVar3 = DAT_00469540 & 0xffff0000 | (uint)*(ushort *)(DAT_00469540 + 8);
-      uVar4 = FUN_00412ac4(uVar3,iVar6,uVar4,*(ushort *)(DAT_00469540 + 8));
-      *(uint *)(iVar2 + 0x56) = uVar4;
-      FUN_004129d4((char)*(ushort *)(iVar2 + 0x10),extraout_DL,(char)uVar3,
-                   *(undefined4 *)(iVar2 + 0x56),
-                   uVar4 & 0xffff0000 | (uint)*(ushort *)(iVar2 + 0x10));
-      *(short *)(iVar2 + 0x60) = sVar7;
-      uVar5 = FUN_004405fe(CONCAT22(extraout_var,*(ushort *)(iVar2 + 0x16)),extraout_EDX,
-                           extraout_ECX_00,*(ushort *)(iVar2 + 0x16),PTR_DAT_00462b24);
-      *(undefined4 *)(iVar2 + 0x5a) = uVar5;
-      *(undefined4 *)(iVar2 + 0x52) = 0;
-      iVar2 = iVar2 + 0x62;
-      sVar7 = sVar7 + 1;
+      uVar3 = (uint)_CurrentLevel_parts & 0xffff0000 | (uint)*(ushort *)(_CurrentLevel_parts + 1);
+      uVar4 = FUN_00412ac4(uVar3,iVar6,uVar4,*(ushort *)(_CurrentLevel_parts + 1));
+      *(uint *)(puVar7 + 0x56) = uVar4;
+      FUN_004129d4((char)*(ushort *)(puVar7 + 0x10),extraout_DL,(char)uVar3,
+                   *(undefined4 *)(puVar7 + 0x56),
+                   uVar4 & 0xffff0000 | (uint)*(ushort *)(puVar7 + 0x10));
+      *(short *)(puVar7 + 0x60) = sVar8;
+      uVar5 = FUN_004405fe(CONCAT22(extraout_var,*(ushort *)(puVar7 + 0x16)),extraout_EDX,
+                           extraout_ECX_00,*(ushort *)(puVar7 + 0x16),PTR_DAT_00462b24);
+      *(undefined4 *)(puVar7 + 0x5a) = uVar5;
+      *(undefined4 *)(puVar7 + 0x52) = 0;
+      puVar7 = puVar7 + 0x62;
+      sVar8 = sVar8 + 1;
       uVar4 = extraout_ECX_01;
       iVar6 = extraout_EDX_00;
-    } while (sVar7 < (short)uVar1);
+    } while (sVar8 < (short)uVar1);
   }
   return unaff_EDI & 0xffff0000 | (uint)uVar1;
 }
@@ -34806,34 +34806,35 @@ void FUN_0043d7c3(undefined4 param_1,undefined4 param_2,uint param_3)
 {
   short sVar1;
   uint uVar2;
+  PartResource *pPVar3;
   uint extraout_ECX;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
-  int iVar3;
-  short sVar4;
-  uint uVar5;
+  int iVar4;
+  short sVar5;
+  uint uVar6;
   
-  sVar1 = *(short *)(DAT_00469540 + 2);
-  sVar4 = 0;
-  uVar2 = DAT_00469540;
-  iVar3 = DAT_0046953c;
+  sVar1 = _CurrentLevel_parts->definitionCount;
+  sVar5 = 0;
+  pPVar3 = _CurrentLevel_parts;
+  iVar4 = DAT_0046953c;
   if (0 < sVar1) {
     do {
-      uVar5 = *(uint *)(iVar3 + 0x56);
-      uVar2 = FUN_00412d0c(uVar2,param_2,param_3,uVar5);
-      *(uint *)(iVar3 + 0x56) = uVar2;
-      FUN_00440695(uVar2 & 0xffff0000 | (uint)*(ushort *)(iVar3 + 0x16),extraout_EDX,uVar5,
-                   *(ushort *)(iVar3 + 0x16),PTR_DAT_00462b24);
-      uVar2 = 0;
-      *(undefined4 *)(iVar3 + 0x5a) = 0;
-      iVar3 = iVar3 + 0x62;
-      sVar4 = sVar4 + 1;
+      uVar6 = *(uint *)(iVar4 + 0x56);
+      uVar2 = FUN_00412d0c((uint)pPVar3,param_2,param_3,uVar6);
+      *(uint *)(iVar4 + 0x56) = uVar2;
+      FUN_00440695(uVar2 & 0xffff0000 | (uint)*(ushort *)(iVar4 + 0x16),extraout_EDX,uVar6,
+                   *(ushort *)(iVar4 + 0x16),PTR_DAT_00462b24);
+      pPVar3 = (PartResource *)0x0;
+      *(undefined4 *)(iVar4 + 0x5a) = 0;
+      iVar4 = iVar4 + 0x62;
+      sVar5 = sVar5 + 1;
       param_3 = extraout_ECX;
       param_2 = extraout_EDX_00;
-    } while (sVar4 < sVar1);
+    } while (sVar5 < sVar1);
   }
-  FUN_0044073c((char)uVar2,(char)param_2,(char)param_3,DAT_00469540);
-  DAT_00469540 = 0;
+  FUN_0044073c((char)pPVar3,(char)param_2,(char)param_3,_CurrentLevel_parts);
+  _CurrentLevel_parts = (PartResource *)0x0;
   return;
 }
 
@@ -34887,23 +34888,25 @@ int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short par
 
 
 
-void FUN_0043d8a5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
+void __stdcall GenInitialPartIds(uint count)
 
 {
-  short sVar1;
-  short sVar2;
+  short i;
+  short len;
+  short definitionCount;
   
-  sVar1 = *(short *)(DAT_00469540 + 2);
+  definitionCount = _CurrentLevel_parts->definitionCount;
   DAT_0046956a = 0;
-  DonkeyShuffle((short)param_4,&DAT_0046956c);
-  sVar2 = 0;
-  if (0 < (short)param_4) {
+  len = (short)count;
+  DonkeyShuffle(len,_InitialPartIds);
+  i = 0;
+  if (0 < len) {
     do {
-      if (sVar1 <= (short)(&DAT_0046956c)[sVar2]) {
-        (&DAT_0046956c)[sVar2] = 1000;
+      if (definitionCount <= _InitialPartIds[i]) {
+        _InitialPartIds[i] = 1000;
       }
-      sVar2 = sVar2 + 1;
-    } while (sVar2 < (short)param_4);
+      i = i + 1;
+    } while (i < len);
   }
   return;
 }
@@ -34917,7 +34920,7 @@ undefined4 FUN_0043d8f3(void)
   
   sVar1 = DAT_0046956a;
   DAT_0046956a = DAT_0046956a + 1;
-  return CONCAT22(sVar1 >> 0xf,(&DAT_0046956c)[sVar1]);
+  return CONCAT22(sVar1 >> 0xf,_InitialPartIds[sVar1]);
 }
 
 
@@ -35005,7 +35008,8 @@ int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined
 uint FUN_0043d9b6(void)
 
 {
-  return DAT_00469540 & 0xffff0000 | (uint)*(ushort *)(DAT_00469540 + 6);
+  return (uint)_CurrentLevel_parts & 0xffff0000 |
+         (uint)(ushort)_CurrentLevel_parts->criticalSlotCount;
 }
 
 
@@ -35059,7 +35063,7 @@ void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefine
 {
   short sVar1;
   
-  for (sVar1 = 0; sVar1 < *(short *)(DAT_00469540 + 2); sVar1 = sVar1 + 1) {
+  for (sVar1 = 0; sVar1 < _CurrentLevel_parts->definitionCount; sVar1 = sVar1 + 1) {
     *param_4 = *(undefined2 *)(DAT_0046953c + 0xc + sVar1 * 0x62);
     param_4[1] = *(undefined2 *)(DAT_0046953c + 0x36 + sVar1 * 0x62);
     param_4 = param_4 + 2;
@@ -35079,9 +35083,10 @@ void FUN_0043da4e(undefined4 param_1,int param_2,uint param_3,ushort *param_4)
   
   uVar2 = 0;
   while( true ) {
-    if (*(short *)(DAT_00469540 + 2) <= (short)uVar2) break;
+    if (_CurrentLevel_parts->definitionCount <= (short)uVar2) break;
     if (*param_4 != 0xffff) {
-      bVar1 = FUN_00434ddd(DAT_00469540 & 0xffff0000 | (uint)*param_4,param_2,param_3,*param_4);
+      bVar1 = FUN_00434ddd((uint)_CurrentLevel_parts & 0xffff0000 | (uint)*param_4,param_2,param_3,
+                           *param_4);
       param_3 = extraout_ECX;
       if (*param_4 == 0) {
         param_3 = uVar2;
@@ -35109,9 +35114,9 @@ void FUN_0043daa4(undefined4 param_1,undefined4 param_2,uint param_3)
   int iVar2;
   uint uVar3;
   
-  for (iVar2 = 0; (short)iVar2 < *(short *)(DAT_00469540 + 6); iVar2 = iVar2 + 1) {
+  for (iVar2 = 0; (short)iVar2 < _CurrentLevel_parts->criticalSlotCount; iVar2 = iVar2 + 1) {
     uVar3 = iVar2 << 2 & 0xffff0000U | (uint)(ushort)((short)(iVar2 << 2) + 3);
-    bVar1 = FUN_00434ddd(DAT_00469540,param_2,param_3,0);
+    bVar1 = FUN_00434ddd(_CurrentLevel_parts,param_2,param_3,0);
     param_3 = uVar3;
     FUN_004162de(bVar1,extraout_DL,extraout_CL,uVar3);
     DAT_004605b6 = DAT_004605b6 | 1;
@@ -48737,8 +48742,8 @@ void FUN_0044d92c(undefined param_1,undefined param_2,undefined param_3,short pa
   sVar5 = 0;
   uVar4 = DAT_00461ab8;
   if (DAT_0046a9e4 == 0) {
-    uVar3 = (uint)*(ushort *)(DAT_00469540 + 6);
-    if (*(ushort *)(DAT_00469540 + 6) == *(ushort *)(DAT_00461ab8 + 0x22)) {
+    uVar3 = (uint)(ushort)_CurrentLevel_parts->criticalSlotCount;
+    if (_CurrentLevel_parts->criticalSlotCount == *(ushort *)(DAT_00461ab8 + 0x22)) {
       sVar5 = 0x7de;
       uVar3 = DAT_00461ab8;
       unaff_ESI = uVar6;
@@ -48750,7 +48755,7 @@ void FUN_0044d92c(undefined param_1,undefined param_2,undefined param_3,short pa
     }
   }
   else {
-    uVar1 = *(ushort *)(DAT_00469540 + 6);
+    uVar1 = _CurrentLevel_parts->criticalSlotCount;
     uVar3 = (uint)uVar1;
     if (uVar1 != *(ushort *)(DAT_00461ab8 + 0x22)) {
       sVar5 = 0x7de;
@@ -48864,13 +48869,13 @@ void FUN_0044db32(undefined param_1,undefined param_2,undefined param_3,int para
   if (iVar2 < 0) {
     iVar2 = iVar2 + 3;
   }
-  if (*(char *)(DAT_00469540 + 0x14 + (int)(short)(iVar2 >> 2)) != '\0') {
+  if (*(char *)((int)&_CurrentLevel_parts[2].slotCount + (int)(short)(iVar2 >> 2)) != '\0') {
     uVar1 = *(undefined4 *)(param_4 + 0x16);
     if (param_6 != 0) {
-      FUN_00412998((char)uVar1,(char)(iVar2 >> 2),(char)DAT_00469540,uVar1,0);
+      FUN_00412998((char)uVar1,(char)(iVar2 >> 2),(char)_CurrentLevel_parts,uVar1,0);
       return;
     }
-    FUN_00412998((char)uVar1,(char)(param_5 + 1),(char)DAT_00469540,uVar1,param_5 + 1);
+    FUN_00412998((char)uVar1,(char)(param_5 + 1),(char)_CurrentLevel_parts,uVar1,param_5 + 1);
   }
   return;
 }
@@ -49214,7 +49219,7 @@ void FUN_0044df5a(void)
     _DAT_0046350a = -1;
     FUN_004171a7(uVar3,extraout_DL_04,uVar7,DAT_0046a978,1);
     iVar8 = DAT_00461ab8;
-    if ((*(short *)(DAT_00469540 + 6) == *(short *)(DAT_00461ab8 + 0x22)) &&
+    if ((_CurrentLevel_parts->criticalSlotCount == *(short *)(DAT_00461ab8 + 0x22)) &&
        (*(short *)(DAT_00461ab8 + 0x24) == 0)) {
       *(undefined2 *)(DAT_00461ab8 + 0x24) = 1;
       FUN_0042fc9c((char)iVar8,(char)iVar8,extraout_CL_02,100,0);

@@ -73,6 +73,209 @@ union IMAGE_RESOURCE_DIRECTORY_ENTRY_DirectoryUnion {
 };
 
 typedef unsigned short    wchar16;
+typedef struct _OVERLAPPED _OVERLAPPED, *P_OVERLAPPED;
+
+typedef ulong ULONG_PTR;
+
+typedef union _union_518 _union_518, *P_union_518;
+
+typedef void * HANDLE;
+
+typedef struct _struct_519 _struct_519, *P_struct_519;
+
+typedef void * PVOID;
+
+typedef ulong DWORD;
+
+struct _struct_519 {
+    DWORD Offset;
+    DWORD OffsetHigh;
+};
+
+union _union_518 {
+    struct _struct_519 s;
+    PVOID Pointer;
+};
+
+struct _OVERLAPPED {
+    ULONG_PTR Internal;
+    ULONG_PTR InternalHigh;
+    union _union_518 u;
+    HANDLE hEvent;
+};
+
+typedef struct _SECURITY_ATTRIBUTES _SECURITY_ATTRIBUTES, *P_SECURITY_ATTRIBUTES;
+
+typedef void * LPVOID;
+
+typedef int BOOL;
+
+struct _SECURITY_ATTRIBUTES {
+    DWORD nLength;
+    LPVOID lpSecurityDescriptor;
+    BOOL bInheritHandle;
+};
+
+typedef struct _TIME_ZONE_INFORMATION _TIME_ZONE_INFORMATION, *P_TIME_ZONE_INFORMATION;
+
+typedef struct _TIME_ZONE_INFORMATION * LPTIME_ZONE_INFORMATION;
+
+typedef long LONG;
+
+typedef wchar_t WCHAR;
+
+typedef struct _SYSTEMTIME _SYSTEMTIME, *P_SYSTEMTIME;
+
+typedef struct _SYSTEMTIME SYSTEMTIME;
+
+typedef ushort WORD;
+
+struct _SYSTEMTIME {
+    WORD wYear;
+    WORD wMonth;
+    WORD wDayOfWeek;
+    WORD wDay;
+    WORD wHour;
+    WORD wMinute;
+    WORD wSecond;
+    WORD wMilliseconds;
+};
+
+struct _TIME_ZONE_INFORMATION {
+    LONG Bias;
+    WCHAR StandardName[32];
+    SYSTEMTIME StandardDate;
+    LONG StandardBias;
+    WCHAR DaylightName[32];
+    SYSTEMTIME DaylightDate;
+    LONG DaylightBias;
+};
+
+typedef struct _OVERLAPPED * LPOVERLAPPED;
+
+typedef struct _SECURITY_ATTRIBUTES * LPSECURITY_ATTRIBUTES;
+
+typedef struct _STARTUPINFOA _STARTUPINFOA, *P_STARTUPINFOA;
+
+typedef char CHAR;
+
+typedef CHAR * LPSTR;
+
+typedef uchar BYTE;
+
+typedef BYTE * LPBYTE;
+
+struct _STARTUPINFOA {
+    DWORD cb;
+    LPSTR lpReserved;
+    LPSTR lpDesktop;
+    LPSTR lpTitle;
+    DWORD dwX;
+    DWORD dwY;
+    DWORD dwXSize;
+    DWORD dwYSize;
+    DWORD dwXCountChars;
+    DWORD dwYCountChars;
+    DWORD dwFillAttribute;
+    DWORD dwFlags;
+    WORD wShowWindow;
+    WORD cbReserved2;
+    LPBYTE lpReserved2;
+    HANDLE hStdInput;
+    HANDLE hStdOutput;
+    HANDLE hStdError;
+};
+
+typedef struct _STARTUPINFOA * LPSTARTUPINFOA;
+
+typedef struct _SYSTEMTIME * LPSYSTEMTIME;
+
+typedef struct _CONTEXT _CONTEXT, *P_CONTEXT;
+
+typedef struct _FLOATING_SAVE_AREA _FLOATING_SAVE_AREA, *P_FLOATING_SAVE_AREA;
+
+typedef struct _FLOATING_SAVE_AREA FLOATING_SAVE_AREA;
+
+struct _FLOATING_SAVE_AREA {
+    DWORD ControlWord;
+    DWORD StatusWord;
+    DWORD TagWord;
+    DWORD ErrorOffset;
+    DWORD ErrorSelector;
+    DWORD DataOffset;
+    DWORD DataSelector;
+    BYTE RegisterArea[80];
+    DWORD Cr0NpxState;
+};
+
+struct _CONTEXT {
+    DWORD ContextFlags;
+    DWORD Dr0;
+    DWORD Dr1;
+    DWORD Dr2;
+    DWORD Dr3;
+    DWORD Dr6;
+    DWORD Dr7;
+    FLOATING_SAVE_AREA FloatSave;
+    DWORD SegGs;
+    DWORD SegFs;
+    DWORD SegEs;
+    DWORD SegDs;
+    DWORD Edi;
+    DWORD Esi;
+    DWORD Ebx;
+    DWORD Edx;
+    DWORD Ecx;
+    DWORD Eax;
+    DWORD Ebp;
+    DWORD Eip;
+    DWORD SegCs;
+    DWORD EFlags;
+    DWORD Esp;
+    DWORD SegSs;
+    BYTE ExtendedRegisters[512];
+};
+
+typedef struct _EXCEPTION_RECORD _EXCEPTION_RECORD, *P_EXCEPTION_RECORD;
+
+struct _EXCEPTION_RECORD {
+    DWORD ExceptionCode;
+    DWORD ExceptionFlags;
+    struct _EXCEPTION_RECORD * ExceptionRecord;
+    PVOID ExceptionAddress;
+    DWORD NumberParameters;
+    ULONG_PTR ExceptionInformation[15];
+};
+
+typedef struct _EXCEPTION_POINTERS _EXCEPTION_POINTERS, *P_EXCEPTION_POINTERS;
+
+typedef struct _EXCEPTION_RECORD EXCEPTION_RECORD;
+
+typedef EXCEPTION_RECORD * PEXCEPTION_RECORD;
+
+typedef struct _CONTEXT CONTEXT;
+
+typedef CONTEXT * PCONTEXT;
+
+struct _EXCEPTION_POINTERS {
+    PEXCEPTION_RECORD ExceptionRecord;
+    PCONTEXT ContextRecord;
+};
+
+typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
+
+typedef struct PartResource PartResource, *PPartResource;
+
+struct PartResource {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    short definitionCount;
+    short slotCount;
+    short criticalSlotCount;
+};
+
+typedef short PartId;
+
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 
 typedef uint UINT;
@@ -106,8 +309,6 @@ typedef HICON HCURSOR;
 typedef struct HBRUSH__ HBRUSH__, *PHBRUSH__;
 
 typedef struct HBRUSH__ * HBRUSH;
-
-typedef char CHAR;
 
 typedef CHAR * LPCSTR;
 
@@ -144,13 +345,9 @@ typedef struct tagMSG tagMSG, *PtagMSG;
 
 typedef struct tagMSG MSG;
 
-typedef ulong DWORD;
-
 typedef struct tagPOINT tagPOINT, *PtagPOINT;
 
 typedef struct tagPOINT POINT;
-
-typedef long LONG;
 
 struct tagPOINT {
     LONG x;
@@ -197,13 +394,9 @@ typedef struct HDC__ HDC__, *PHDC__;
 
 typedef struct HDC__ * HDC;
 
-typedef int BOOL;
-
 typedef struct tagRECT tagRECT, *PtagRECT;
 
 typedef struct tagRECT RECT;
-
-typedef uchar BYTE;
 
 struct HDC__ {
     int unused;
@@ -254,8 +447,6 @@ typedef struct tagRGBQUAD tagRGBQUAD, *PtagRGBQUAD;
 
 typedef struct tagRGBQUAD RGBQUAD;
 
-typedef ushort WORD;
-
 struct tagBITMAPINFOHEADER {
     DWORD biSize;
     LONG biWidth;
@@ -296,174 +487,6 @@ struct tagLOGPALETTE {
 
 typedef struct tagPALETTEENTRY * LPPALETTEENTRY;
 
-typedef struct _OVERLAPPED _OVERLAPPED, *P_OVERLAPPED;
-
-typedef ulong ULONG_PTR;
-
-typedef union _union_518 _union_518, *P_union_518;
-
-typedef void * HANDLE;
-
-typedef struct _struct_519 _struct_519, *P_struct_519;
-
-typedef void * PVOID;
-
-struct _struct_519 {
-    DWORD Offset;
-    DWORD OffsetHigh;
-};
-
-union _union_518 {
-    struct _struct_519 s;
-    PVOID Pointer;
-};
-
-struct _OVERLAPPED {
-    ULONG_PTR Internal;
-    ULONG_PTR InternalHigh;
-    union _union_518 u;
-    HANDLE hEvent;
-};
-
-typedef struct _SECURITY_ATTRIBUTES _SECURITY_ATTRIBUTES, *P_SECURITY_ATTRIBUTES;
-
-typedef void * LPVOID;
-
-struct _SECURITY_ATTRIBUTES {
-    DWORD nLength;
-    LPVOID lpSecurityDescriptor;
-    BOOL bInheritHandle;
-};
-
-typedef struct _TIME_ZONE_INFORMATION _TIME_ZONE_INFORMATION, *P_TIME_ZONE_INFORMATION;
-
-typedef struct _TIME_ZONE_INFORMATION * LPTIME_ZONE_INFORMATION;
-
-typedef wchar_t WCHAR;
-
-typedef struct _SYSTEMTIME _SYSTEMTIME, *P_SYSTEMTIME;
-
-typedef struct _SYSTEMTIME SYSTEMTIME;
-
-struct _SYSTEMTIME {
-    WORD wYear;
-    WORD wMonth;
-    WORD wDayOfWeek;
-    WORD wDay;
-    WORD wHour;
-    WORD wMinute;
-    WORD wSecond;
-    WORD wMilliseconds;
-};
-
-struct _TIME_ZONE_INFORMATION {
-    LONG Bias;
-    WCHAR StandardName[32];
-    SYSTEMTIME StandardDate;
-    LONG StandardBias;
-    WCHAR DaylightName[32];
-    SYSTEMTIME DaylightDate;
-    LONG DaylightBias;
-};
-
-typedef struct _OVERLAPPED * LPOVERLAPPED;
-
-typedef struct _SECURITY_ATTRIBUTES * LPSECURITY_ATTRIBUTES;
-
-typedef struct _STARTUPINFOA _STARTUPINFOA, *P_STARTUPINFOA;
-
-typedef CHAR * LPSTR;
-
-typedef BYTE * LPBYTE;
-
-struct _STARTUPINFOA {
-    DWORD cb;
-    LPSTR lpReserved;
-    LPSTR lpDesktop;
-    LPSTR lpTitle;
-    DWORD dwX;
-    DWORD dwY;
-    DWORD dwXSize;
-    DWORD dwYSize;
-    DWORD dwXCountChars;
-    DWORD dwYCountChars;
-    DWORD dwFillAttribute;
-    DWORD dwFlags;
-    WORD wShowWindow;
-    WORD cbReserved2;
-    LPBYTE lpReserved2;
-    HANDLE hStdInput;
-    HANDLE hStdOutput;
-    HANDLE hStdError;
-};
-
-typedef struct _STARTUPINFOA * LPSTARTUPINFOA;
-
-typedef struct _SYSTEMTIME * LPSYSTEMTIME;
-
-typedef struct _CONTEXT _CONTEXT, *P_CONTEXT;
-
-typedef struct _CONTEXT CONTEXT;
-
-typedef struct _FLOATING_SAVE_AREA _FLOATING_SAVE_AREA, *P_FLOATING_SAVE_AREA;
-
-typedef struct _FLOATING_SAVE_AREA FLOATING_SAVE_AREA;
-
-struct _FLOATING_SAVE_AREA {
-    DWORD ControlWord;
-    DWORD StatusWord;
-    DWORD TagWord;
-    DWORD ErrorOffset;
-    DWORD ErrorSelector;
-    DWORD DataOffset;
-    DWORD DataSelector;
-    BYTE RegisterArea[80];
-    DWORD Cr0NpxState;
-};
-
-struct _CONTEXT {
-    DWORD ContextFlags;
-    DWORD Dr0;
-    DWORD Dr1;
-    DWORD Dr2;
-    DWORD Dr3;
-    DWORD Dr6;
-    DWORD Dr7;
-    FLOATING_SAVE_AREA FloatSave;
-    DWORD SegGs;
-    DWORD SegFs;
-    DWORD SegEs;
-    DWORD SegDs;
-    DWORD Edi;
-    DWORD Esi;
-    DWORD Ebx;
-    DWORD Edx;
-    DWORD Ecx;
-    DWORD Eax;
-    DWORD Ebp;
-    DWORD Eip;
-    DWORD SegCs;
-    DWORD EFlags;
-    DWORD Esp;
-    DWORD SegSs;
-    BYTE ExtendedRegisters[512];
-};
-
-typedef struct _EXCEPTION_RECORD _EXCEPTION_RECORD, *P_EXCEPTION_RECORD;
-
-typedef struct _EXCEPTION_RECORD EXCEPTION_RECORD;
-
-typedef EXCEPTION_RECORD * PEXCEPTION_RECORD;
-
-struct _EXCEPTION_RECORD {
-    DWORD ExceptionCode;
-    DWORD ExceptionFlags;
-    struct _EXCEPTION_RECORD * ExceptionRecord;
-    PVOID ExceptionAddress;
-    DWORD NumberParameters;
-    ULONG_PTR ExceptionInformation[15];
-};
-
 typedef LONG * PLONG;
 
 typedef CHAR * LPCH;
@@ -480,8 +503,6 @@ struct _OSVERSIONINFOA {
 };
 
 typedef struct _OSVERSIONINFOA * LPOSVERSIONINFOA;
-
-typedef CONTEXT * PCONTEXT;
 
 typedef short SHORT;
 
@@ -513,13 +534,6 @@ struct IMAGE_DOS_HEADER {
 typedef ULONG_PTR DWORD_PTR;
 
 typedef ULONG_PTR SIZE_T;
-
-typedef struct _EXCEPTION_POINTERS _EXCEPTION_POINTERS, *P_EXCEPTION_POINTERS;
-
-struct _EXCEPTION_POINTERS {
-    PEXCEPTION_RECORD ExceptionRecord;
-    PCONTEXT ContextRecord;
-};
 
 typedef struct tagPOINT * LPPOINT;
 
@@ -827,8 +841,6 @@ struct StringInfo {
     word wValueLength;
     word wType;
 };
-
-typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
 typedef struct HWAVEOUT__ HWAVEOUT__, *PHWAVEOUT__;
 
@@ -1571,7 +1583,7 @@ uint FUN_0043d84e(undefined param_1,undefined param_2,undefined param_3,short pa
 uint FUN_0043d865(undefined param_1,undefined param_2,undefined param_3,short param_4);
 uint FUN_0043d87c(undefined param_1,undefined param_2,undefined param_3,short param_4);
 int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short param_4);
-void FUN_0043d8a5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void __stdcall GenInitialPartIds(uint count);
 undefined4 FUN_0043d8f3(void);
 int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined2 *param_6);
 uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,uint param_4,undefined4 param_5);
