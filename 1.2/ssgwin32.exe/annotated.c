@@ -2,6 +2,24 @@
 
 
 
+void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id)
+
+{
+  int iVar1;
+  CHAR error [256];
+  
+  iVar1 = LoadStringA(hInstance_0046485c,id,error,0xfe);
+  if (iVar1 == 0) {
+    FUN_00452a74(error,s_Cannot_Load_Resource___d___missi_00460170,(char)id);
+    MessageBoxA((HWND)0x0,error,(LPCSTR)&lpCaption_0046019c,0x10);
+    DoSomethingThenExit_(1);
+  }
+  Strcpy(result,error);
+  return;
+}
+
+
+
 void InitEntities(void)
 
 {
@@ -17,7 +35,7 @@ void InitEntities(void)
 
 
 
-void LoadArea(void)
+void StartLevel(void)
 
 {
   short sVar1;
@@ -334,6 +352,22 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
+void __stdcall ShowAlertMessage(undefined4 param_1,undefined param_2)
+
+{
+  char *lpCaption;
+  CHAR text [500];
+  
+  GetSomeStringIntoBuffer_(text,param_1,&param_2);
+                    // 20102 = "Alert"
+  lpCaption = TryWinapiLoadString(20102);
+  MessageBoxA((HWND)0x0,text,lpCaption,0x30);
+  TurboFree_(lpCaption);
+  return;
+}
+
+
+
 void __stdcall DonkeyShuffle(short len,short *result)
 
 {
@@ -575,6 +609,39 @@ void * __stdcall Memset(void *result,byte value,uint len)
 
 
 
+char * __stdcall Strcpy(char *dest,char *src)
+
+{
+  uint len;
+  uint uVar1;
+  char *pSrc;
+  void *pDest;
+  char c;
+  
+  len = 0xffffffff;
+  pSrc = src;
+  do {
+    if (len == 0) break;
+    len = len - 1;
+    c = *pSrc;
+    pSrc = pSrc + 1;
+  } while (c != '\0');
+  pDest = dest;
+  for (uVar1 = ~len >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
+    *(undefined4 *)pDest = *(undefined4 *)src;
+    src = (char *)((int)src + 4);
+    pDest = (undefined4 *)((int)pDest + 4);
+  }
+  for (len = ~len & 3; len != 0; len = len - 1) {
+    *(char *)pDest = *src;
+    src = (char *)((int)src + 1);
+    pDest = (void *)((int)pDest + 1);
+  }
+  return dest;
+}
+
+
+
 int Random(void)
 
 {
@@ -588,6 +655,15 @@ int Random(void)
               (uint)(0xfffffffe < uVar1);
   _Random_p = uVar1 + 1;
   return _Random_q & 0x7fffffff;
+}
+
+
+
+void __stdcall WinapiExitProcess(UINT exitCode)
+
+{
+                    // WARNING: Subroutine does not return
+  ExitProcess(exitCode);
 }
 
 

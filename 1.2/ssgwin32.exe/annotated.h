@@ -1245,11 +1245,13 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 
 
 
+void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id);
 void InitEntities(void);
-void LoadArea(void);
+void StartLevel(void);
 EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
+void __stdcall ShowAlertMessage(undefined4 param_1,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
 undefined4 __stdcall DlistHead(undefined4 *param_1);
 undefined4 __stdcall DlistNext(undefined4 *param_1);
@@ -1261,5 +1263,7 @@ void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
+char * __stdcall Strcpy(char *dest,char *src);
 int Random(void);
+void __stdcall WinapiExitProcess(UINT exitCode);
 
