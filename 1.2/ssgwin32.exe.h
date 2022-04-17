@@ -264,6 +264,103 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
+typedef struct Rect16 Rect16, *PRect16;
+
+struct Rect16 {
+    short x;
+    short y;
+    short w;
+    short h;
+};
+
+typedef struct Dlist Dlist, *PDlist;
+
+typedef struct DlistNode DlistNode, *PDlistNode;
+
+struct Dlist {
+    struct DlistNode * head;
+    struct DlistNode * tail;
+};
+
+struct DlistNode {
+    struct DlistNode * next;
+    struct DlistNode * prev;
+};
+
+typedef struct Area Area, *PArea;
+
+typedef struct EntityNode EntityNode, *PEntityNode;
+
+typedef struct OtherEntity OtherEntity, *POtherEntity;
+
+typedef struct EntityBase? EntityBase?, *PEntityBase?;
+
+typedef short PartId;
+
+typedef struct RectEx RectEx, *PRectEx;
+
+typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
+
+typedef short EntityType;
+
+struct Area {
+    byte flags; // bit 0 obverse
+    undefined field1_0x1;
+    undefined2 structuralEntityCounts[4];
+    undefined2 ladderEntityCounts[4];
+    undefined2 field4_0x12[6];
+    undefined4 field5_0x1e[6];
+    undefined2 field6_0x36[6];
+    undefined4 field7_0x42[6];
+    undefined2 field8_0x5a[6];
+    undefined4 field9_0x66[6];
+    undefined4 structuralEntityGroups[4];
+    undefined4 ladderEntityGroups[4];
+    short partEntityCount;
+    struct EntityNode * partEntities;
+    undefined2 field14_0xa4[6];
+    undefined2 field15_0xb0[6];
+    undefined2 field16_0xbc[50];
+    undefined field17_0x120[468];
+};
+
+struct RectEx {
+    struct Rect16 rect;
+    undefined2 mode;
+};
+
+struct EntityBaseBase? {
+    struct Rect16 inner;
+    undefined field1_0x8;
+    undefined field2_0x9;
+    undefined field3_0xa;
+    undefined field4_0xb;
+    undefined field5_0xc;
+    undefined field6_0xd;
+};
+
+struct EntityBase? {
+    struct EntityBaseBase? rect;
+    ushort spriteId;
+    EntityType type;
+};
+
+struct OtherEntity {
+    struct EntityBase? base;
+    PartId partId;
+    undefined field2_0x14;
+    undefined field3_0x15;
+    struct RectEx activation?;
+};
+
+struct EntityNode {
+    struct DlistNode node;
+    undefined2 available;
+    undefined field2_0xa;
+    undefined field3_0xb;
+    struct OtherEntity inner;
+};
+
 typedef struct PartResource PartResource, *PPartResource;
 
 struct PartResource {
@@ -272,9 +369,161 @@ struct PartResource {
     short definitionCount;
     short slotCount;
     short criticalSlotCount;
+    undefined field5_0x8;
+    undefined field6_0x9;
+    undefined field7_0xa;
+    undefined field8_0xb;
+    undefined field9_0xc;
+    undefined field10_0xd;
+    undefined field11_0xe;
+    undefined field12_0xf;
+    undefined field13_0x10;
+    undefined field14_0x11;
+    undefined field15_0x12;
+    undefined field16_0x13;
+    undefined field17_0x14;
+    undefined field18_0x15;
+    undefined field19_0x16;
+    undefined field20_0x17;
+    undefined field21_0x18;
+    undefined field22_0x19;
+    undefined field23_0x1a;
+    undefined field24_0x1b;
+    undefined field25_0x1c;
+    undefined field26_0x1d;
+    undefined field27_0x1e;
+    undefined field28_0x1f;
+    undefined field29_0x20;
+    undefined field30_0x21;
+    undefined field31_0x22;
+    undefined field32_0x23;
+    undefined field33_0x24;
+    undefined field34_0x25;
+    undefined field35_0x26;
+    undefined field36_0x27;
+    undefined field37_0x28;
+    undefined field38_0x29;
+    undefined field39_0x2a;
+    undefined field40_0x2b;
+    undefined field41_0x2c;
+    undefined field42_0x2d;
+    undefined field43_0x2e;
+    undefined field44_0x2f;
 };
 
-typedef short PartId;
+typedef struct LadderEntity LadderEntity, *PLadderEntity;
+
+struct LadderEntity {
+    struct EntityBase? base;
+    undefined field1_0x12;
+    undefined field2_0x13;
+    undefined field3_0x14;
+    undefined field4_0x15;
+    undefined field5_0x16;
+    undefined field6_0x17;
+    undefined field7_0x18;
+    undefined field8_0x19;
+    undefined field9_0x1a;
+    undefined field10_0x1b;
+    undefined field11_0x1c;
+    undefined field12_0x1d;
+    struct RectEx collision?;
+};
+
+typedef struct PartDefinition PartDefinition, *PPartDefinition;
+
+struct PartDefinition {
+    struct DlistNode field0_0x0;
+    short slotId;
+    undefined field2_0xa;
+    undefined field3_0xb;
+    undefined field4_0xc;
+    undefined field5_0xd;
+    undefined field6_0xe;
+    undefined field7_0xf;
+    undefined field8_0x10;
+    undefined field9_0x11;
+    undefined field10_0x12;
+    undefined field11_0x13;
+    undefined field12_0x14;
+    undefined field13_0x15;
+    undefined field14_0x16;
+    undefined field15_0x17;
+    undefined field16_0x18;
+    undefined field17_0x19;
+    undefined field18_0x1a;
+    undefined field19_0x1b;
+    undefined field20_0x1c;
+    undefined field21_0x1d;
+    undefined field22_0x1e;
+    undefined field23_0x1f;
+    undefined field24_0x20;
+    undefined field25_0x21;
+    undefined field26_0x22;
+    undefined field27_0x23;
+    undefined field28_0x24;
+    undefined field29_0x25;
+    undefined field30_0x26;
+    undefined field31_0x27;
+    undefined field32_0x28;
+    undefined field33_0x29;
+    undefined field34_0x2a;
+    undefined field35_0x2b;
+    undefined field36_0x2c;
+    undefined field37_0x2d;
+    undefined field38_0x2e;
+    undefined field39_0x2f;
+    undefined field40_0x30;
+    undefined field41_0x31;
+    undefined field42_0x32;
+    undefined field43_0x33;
+    undefined field44_0x34;
+    undefined field45_0x35;
+    undefined field46_0x36;
+    byte flags;
+    undefined field48_0x38;
+    undefined field49_0x39;
+    undefined field50_0x3a;
+    undefined field51_0x3b;
+    undefined field52_0x3c;
+    undefined field53_0x3d;
+    undefined field54_0x3e;
+    undefined field55_0x3f;
+    undefined field56_0x40;
+    undefined field57_0x41;
+    undefined field58_0x42;
+    undefined field59_0x43;
+    undefined field60_0x44;
+    undefined field61_0x45;
+    undefined field62_0x46;
+    undefined field63_0x47;
+    undefined field64_0x48;
+    undefined field65_0x49;
+    undefined field66_0x4a;
+    undefined field67_0x4b;
+    undefined field68_0x4c;
+    undefined field69_0x4d;
+    undefined field70_0x4e;
+    undefined field71_0x4f;
+    undefined field72_0x50;
+    undefined field73_0x51;
+    undefined field74_0x52;
+    undefined field75_0x53;
+    undefined field76_0x54;
+    undefined field77_0x55;
+    undefined field78_0x56;
+    undefined field79_0x57;
+    undefined field80_0x58;
+    undefined field81_0x59;
+    undefined field82_0x5a;
+    undefined field83_0x5b;
+    undefined field84_0x5c;
+    undefined field85_0x5d;
+    undefined field86_0x5e;
+    undefined field87_0x5f;
+    undefined field88_0x60;
+    undefined field89_0x61;
+};
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 
@@ -536,6 +785,15 @@ typedef ULONG_PTR DWORD_PTR;
 typedef ULONG_PTR SIZE_T;
 
 typedef struct tagPOINT * LPPOINT;
+
+typedef struct tagPOINTS tagPOINTS, *PtagPOINTS;
+
+struct tagPOINTS {
+    SHORT x;
+    SHORT y;
+};
+
+typedef struct tagPOINTS POINTS;
 
 typedef struct HPALETTE__ HPALETTE__, *PHPALETTE__;
 
@@ -988,9 +1246,9 @@ uint FUN_004122bc(undefined param_1,undefined param_2,undefined param_3,int para
 undefined4 FUN_004122d0(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
 uint FUN_0041233c(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
 int FUN_00412404(void);
-void FUN_00412434(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_00412434(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00412468(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,short param_6);
-void FUN_00412490(undefined param_1,byte param_2,byte param_3,int param_4);
+void FUN_00412490(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004125a8(void);
 undefined4 FUN_00412784(void);
 void FUN_004127bc(void);
@@ -1039,7 +1297,7 @@ void FUN_00413e74(undefined param_1,undefined param_2,undefined param_3,undefine
 uint FUN_00413e84(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 int FUN_00413ebc(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined2 FUN_00413ed0(undefined param_1,undefined param_2,undefined param_3,int param_4);
-uint FUN_00413ee8(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5);
+uint FUN_00413ee8(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4,short param_5);
 void FUN_00413f88(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 undefined4 FUN_00413fdc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00414088(void);
@@ -1058,12 +1316,12 @@ void FUN_0041472a(void);
 void FUN_0041472f(void);
 void FUN_00414734(void);
 void FUN_00414739(void);
-void FUN_0041473e(void);
-uint FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short param_5,short param_6);
+EntityNode * NextAvailableEntityNode(void);
+ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId);
 void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_4,int param_5);
-void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,ushort param_4,ushort param_5,short param_6,short param_7,short param_8);
+void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,short param_4,ushort param_5,short param_6,short param_7,short param_8);
 undefined4 FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00414c5a(undefined param_1,undefined param_2,byte param_3,undefined4 param_4);
+void FUN_00414c5a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *param_4,short *param_5);
 void FUN_00414dc2(undefined param_1,undefined param_2,undefined param_3,char *param_4,ushort *param_5);
 int FUN_00414eb6(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5);
@@ -1089,7 +1347,7 @@ void FUN_00415d3e(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00415e4f(void);
 void FUN_00415ea2(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_00415ed6(void);
-void FUN_00415f35(byte param_1,byte param_2,byte param_3,uint param_4,short param_5);
+void FUN_00415f35(byte param_1,undefined param_2,byte param_3,PartDefinition *param_4,short param_5);
 void FUN_004160e5(void);
 void FUN_00416115(void);
 void FUN_00416236(undefined param_1,undefined param_2,undefined param_3,ushort param_4,short param_5);
@@ -1122,8 +1380,8 @@ uint FUN_00416c3e(undefined param_1,undefined param_2,undefined param_3,uint par
 int FUN_00416c51(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,short param_6,short param_7,short param_8,uint param_9);
 void FUN_00416d19(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00416d57(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00416d95(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00416dd3(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_00416d95(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
+void FUN_00416dd3(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00416e11(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00416e35(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00416e51(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1164,9 +1422,9 @@ void FUN_00417eba(uint param_1,undefined4 param_2,uint param_3);
 void FUN_004180c2(void);
 void FUN_0041879f(uint param_1,undefined4 param_2,uint param_3,ushort param_4);
 void FUN_00418c0d(undefined4 param_1,undefined4 param_2,undefined4 param_3,short *param_4);
-byte FUN_00418e08(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
-uint FUN_00418ea1(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5,short param_6);
-ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5);
+uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
+uint FUN_00418ea1(undefined param_1,undefined param_2,undefined param_3,short param_4,Rect16 *param_5,short param_6);
+ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short param_4,Rect16 *param_5);
 void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_00419548(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7);
 int FUN_00419589(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
@@ -1376,7 +1634,7 @@ undefined4 FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3
 void FUN_0043078c(void);
 void FUN_00430810(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,byte param_6);
 void FUN_00430908(void);
-undefined4 FUN_00430928(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+undefined4 FUN_00430928(undefined param_1,undefined param_2,undefined param_3,void *param_4);
 void FUN_0043095c(undefined param_1,undefined param_2,undefined param_3,short *param_4);
 void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *param_4);
 void FUN_00430abc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7);
@@ -1457,15 +1715,15 @@ bool FUN_00434ddd(undefined4 param_1,undefined4 param_2,undefined4 param_3,short
 int FUN_00434e8a(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,short param_6);
 uint FUN_00434fa3(uint param_1);
 void FUN_00435017(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00435050(undefined param_1,byte param_2,byte param_3,int param_4);
+void FUN_00435050(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004350be(void);
-undefined4 FUN_004350e8(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4);
+undefined4 __stdcall DlistHead(undefined4 *param_1);
 undefined4 FUN_004350fa(undefined param_1,undefined param_2,undefined param_3,int param_4);
-undefined4 FUN_0043510d(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4);
+undefined4 __stdcall DlistNext(undefined4 *param_1);
 undefined4 FUN_00435117(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 *FUN_00435122(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,undefined4 param_5);
-void FUN_00435151(undefined param_1,undefined param_2,undefined param_3,int *param_4,undefined4 *param_5,code *param_6);
-void FUN_004351c7(undefined param_1,undefined param_2,undefined param_3,int *param_4,undefined4 *param_5,ushort param_6);
+void FUN_00435151(undefined param_1,undefined param_2,undefined param_3,Dlist *param_4,DlistNode *param_5,code *param_6);
+void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
 void FUN_0043524a(undefined param_1,undefined param_2,undefined param_3,int *param_4,int *param_5);
 int ** FUN_0043527b(undefined param_1,undefined param_2,undefined param_3,int **param_4,undefined4 param_5);
 int FUN_004352c9(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1521,7 +1779,7 @@ short FUN_0043ad75(undefined param_1,undefined param_2,undefined param_3,ushort 
 undefined4 FUN_0043aed8(undefined4 param_1,undefined4 param_2,undefined4 param_3,ushort param_4);
 undefined4 FUN_0043afa5(void);
 undefined4 FUN_0043afac(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,ushort param_5);
-short FUN_0043b012(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,short param_5,LPCSTR param_6,undefined4 param_7);
+short FUN_0043b012(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,short param_5,LPCSTR param_6,DlistNode *param_7);
 undefined4 FUN_0043b0b8(undefined4 param_1,undefined4 param_2,undefined4 param_3,ushort param_4);
 undefined4 FUN_0043b115(undefined4 param_1,undefined4 param_2,undefined4 param_3,ushort param_4);
 void FUN_0043b1cc(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1557,8 +1815,8 @@ void FUN_0043bfee(undefined param_1,undefined param_2,byte param_3,byte param_4,
 uint FUN_0043c1a2(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_0043c1c0(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 void FUN_0043c249(void);
-undefined4 FUN_0043c273(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_0043c2ba(undefined param_1,undefined param_2,undefined param_3,int param_4);
+DlistNode * FUN_0043c273(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void FUN_0043c2ba(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_0043c323(void);
 void FUN_0043c324(void);
 void FUN_0043c325(void);
@@ -1585,11 +1843,11 @@ uint FUN_0043d87c(undefined param_1,undefined param_2,undefined param_3,short pa
 int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void __stdcall GenInitialPartIds(uint count);
 PartId NextInitialPartId(void);
-int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined2 *param_6);
-uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,uint param_4,undefined4 param_5);
+int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined2 *param_6);
+uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 uint FUN_0043d9b6(void);
-void FUN_0043d9c0(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_0043d9c0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043d9e3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4);
 void FUN_0043da4e(undefined4 param_1,int param_2,uint param_3,ushort *param_4);
@@ -1635,12 +1893,12 @@ void FUN_00440342(void);
 undefined4 FUN_004403be(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0044040c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 uint FUN_00440472(undefined4 param_1,undefined4 param_2,uint param_3,undefined *param_4);
-undefined4 FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,LPCSTR param_5);
+DlistNode *FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,LPCSTR param_5);
 void FUN_004405fe(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5);
 void FUN_00440615(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5);
 void FUN_0044062c(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00440695(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,undefined *param_5);
-void FUN_0044073c(undefined param_1,undefined param_2,undefined param_3,uint param_4);
+void FUN_0044073c(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_004407d3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_0044080d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,LPCSTR param_5);
 void FUN_0044086e(void);
@@ -1727,7 +1985,7 @@ void FUN_004466f9(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00446778(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_00446803(void);
 void FUN_00446808(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_00446846(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_00446846(undefined param_1,undefined param_2,undefined param_3,void *param_4);
 void FUN_004468a4(void);
 void FUN_004468ed(void);
 void FUN_00446967(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1879,7 +2137,7 @@ void FUN_0044dd69(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_0044de74(void);
 void FUN_0044df5a(void);
 void FUN_0044e0bb(undefined4 param_1,int param_2,uint param_3,int param_4);
-uint FUN_0044e278(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
+undefined4 FUN_0044e278(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_0044e33f(void);
 void FUN_0044e3aa(void);
 void FUN_0044e3e3(void);
@@ -1918,7 +2176,7 @@ void FUN_0044fde8(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_0044fdfa(undefined param_1,undefined param_2,undefined param_3,undefined *param_4);
 void FUN_0044fe0c(undefined param_1,undefined param_2,undefined param_3,undefined *param_4);
 char * FUN_0044fe2c(undefined param_1,undefined param_2,undefined param_3,char *param_4,char param_5,int param_6);
-undefined4 *FUN_0044fe4c(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,undefined4 *param_5,uint param_6);
+void * __stdcall Memcpy(void *dest,void *src,uint len);
 undefined4 *FUN_0044fe70(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,undefined4 *param_5,uint param_6);
 undefined4 *FUN_0044febc(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,undefined param_5,uint param_6);
 char * FUN_0044feec(undefined param_1,undefined param_2,undefined param_3,char *param_4,char *param_5);
@@ -1928,10 +2186,10 @@ undefined4 *FUN_0044ff7c(undefined param_1,undefined param_2,undefined param_3,u
 int FUN_0044ffac(undefined param_1,undefined param_2,undefined param_3,char *param_4);
 char * FUN_0044ffc8(undefined param_1,undefined param_2,undefined param_3,char *param_4,char *param_5,uint param_6);
 int FUN_00450048(undefined param_1,undefined param_2,undefined param_3,byte *param_4,byte *param_5,int param_6);
-int FUN_0045008c(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,uint param_6);
+void * FUN_0045008c(undefined param_1,undefined param_2,undefined param_3,void *param_4,void *param_5,uint param_6);
 char * FUN_004500dc(undefined param_1,undefined param_2,undefined param_3,char *param_4,undefined4 param_5);
 int FUN_00450108(undefined param_1,undefined param_2,undefined param_3,int param_4,char *param_5);
-int FUN_004501ac(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5);
+int FUN_004501ac(undefined param_1,undefined param_2,undefined param_3,void *param_4,void *param_5);
 void FUN_004501d8(undefined *UNRECOVERED_JUMPTABLE);
 char * FUN_004501df(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_004501f8(undefined param_1,undefined param_2,undefined param_3,int *param_4,int *param_5);
@@ -1943,7 +2201,7 @@ bool FUN_004504de(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_0045059f(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,code *param_6,uint param_7);
 void FUN_00450623(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,code *param_5,uint param_6,int param_7);
 void FUN_00450670(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,code *param_5,uint param_6);
-void FUN_004506aa(undefined param_1,undefined param_2,undefined param_3,int **param_4,undefined4 param_5,int *param_6,int *param_7,int *param_8,int *param_9,int *param_10,int *param_11,undefined4 param_12,int param_13);
+void FUN_004506aa(undefined param_1,undefined param_2,undefined param_3,int **param_4,void *param_5,int *param_6,int *param_7,int *param_8,int *param_9,int *param_10,int *param_11,undefined4 param_12,int param_13);
 void FUN_004508b0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9,undefined4 param_10,undefined4 param_11);
 void FUN_004508dd(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 void FUN_0045092e(undefined param_1,undefined param_2,undefined param_3,PVOID param_4,PEXCEPTION_RECORD param_5);
@@ -2028,13 +2286,13 @@ int FUN_004532b8(undefined4 param_1,undefined4 param_2,LPCVOID *param_3);
 uint FUN_00453304(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 char * FUN_00453390(undefined param_1,undefined param_2,byte param_3,char *param_4,int param_5);
 char * FUN_004533fc(undefined4 param_1,undefined4 param_2,DWORD param_3,uint *param_4,LPVOID param_5,char *param_6);
-int FUN_0045352c(undefined param_1,undefined param_2,undefined param_3,int param_4,char **param_5,undefined *param_6,int param_7);
+int FUN_0045352c(undefined param_1,undefined param_2,undefined param_3,void *param_4,char **param_5,undefined *param_6,int param_7);
 DWORD FUN_004535e4(undefined4 param_1,undefined4 param_2,DWORD param_3,uint param_4,LPCVOID param_5,DWORD param_6);
 int ** FUN_004536c4(undefined param_1,undefined param_2,undefined param_3,uint param_4,int **param_5,uint param_6);
 int FUN_00453824(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 uint FUN_00453864(undefined param_1,undefined param_2,undefined param_3,uint param_4,uint param_5,undefined4 param_6);
 void FUN_004538cc(undefined param_1,undefined param_2,undefined param_3,uint param_4);
-int FUN_004538e8(undefined param_1,undefined param_2,byte param_3,int *param_4);
+int FUN_004538e8(undefined param_1,undefined param_2,undefined param_3,int *param_4);
 void FUN_0045397c(void);
 undefined4 FUN_00453ac0(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00453b24(void);
