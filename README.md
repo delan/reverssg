@@ -21,5 +21,5 @@ how the sausage is made
 * export Ghidra Zip File, default options
 * export HTML, default options
 * export C/C++, Create Header File on, Function Tags = annotated
-    * Function Tags Excluded off → ssgwin32.exe.annotated{.c,.h}
     * Function Tags Excluded on → ssgwin32.exe{.c,.h}
+    * Function Tags Excluded off → annotated{.c,.h}

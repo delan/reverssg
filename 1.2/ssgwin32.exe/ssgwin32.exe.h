@@ -289,9 +289,9 @@ struct DlistNode {
 
 typedef struct Area Area, *PArea;
 
-typedef struct EntityNode EntityNode, *PEntityNode;
-
 typedef struct OtherEntity OtherEntity, *POtherEntity;
+
+typedef struct LadderEntity LadderEntity, *PLadderEntity;
 
 typedef struct EntityBase? EntityBase?, *PEntityBase?;
 
@@ -306,18 +306,18 @@ typedef short EntityType;
 struct Area {
     byte flags; // bit 0 obverse
     undefined field1_0x1;
-    undefined2 structuralEntityCounts[4];
-    undefined2 ladderEntityCounts[4];
+    short structuralEntityCounts[4];
+    short ladderEntityCounts[4];
     undefined2 field4_0x12[6];
     undefined4 field5_0x1e[6];
     undefined2 field6_0x36[6];
     undefined4 field7_0x42[6];
     undefined2 field8_0x5a[6];
     undefined4 field9_0x66[6];
-    undefined4 structuralEntityGroups[4];
-    undefined4 ladderEntityGroups[4];
+    struct OtherEntity * structuralEntityGroups[4];
+    struct LadderEntity * ladderEntityGroups[4];
     short partEntityCount;
-    struct EntityNode * partEntities;
+    struct Dlist * partEntities;
     undefined2 field14_0xa4[6];
     undefined2 field15_0xb0[6];
     undefined2 field16_0xbc[50];
@@ -353,12 +353,21 @@ struct OtherEntity {
     struct RectEx activation?;
 };
 
-struct EntityNode {
-    struct DlistNode node;
-    undefined2 available;
-    undefined field2_0xa;
-    undefined field3_0xb;
-    struct OtherEntity inner;
+struct LadderEntity {
+    struct EntityBase? base;
+    undefined field1_0x12;
+    undefined field2_0x13;
+    undefined field3_0x14;
+    undefined field4_0x15;
+    undefined field5_0x16;
+    undefined field6_0x17;
+    undefined field7_0x18;
+    undefined field8_0x19;
+    undefined field9_0x1a;
+    undefined field10_0x1b;
+    undefined field11_0x1c;
+    undefined field12_0x1d;
+    struct RectEx collision?;
 };
 
 typedef struct PartResource PartResource, *PPartResource;
@@ -411,23 +420,14 @@ struct PartResource {
     undefined field44_0x2f;
 };
 
-typedef struct LadderEntity LadderEntity, *PLadderEntity;
+typedef struct EntityNode EntityNode, *PEntityNode;
 
-struct LadderEntity {
-    struct EntityBase? base;
-    undefined field1_0x12;
-    undefined field2_0x13;
-    undefined field3_0x14;
-    undefined field4_0x15;
-    undefined field5_0x16;
-    undefined field6_0x17;
-    undefined field7_0x18;
-    undefined field8_0x19;
-    undefined field9_0x1a;
-    undefined field10_0x1b;
-    undefined field11_0x1c;
-    undefined field12_0x1d;
-    struct RectEx collision?;
+struct EntityNode {
+    struct DlistNode node;
+    undefined2 available;
+    undefined field2_0xa;
+    undefined field3_0xb;
+    struct OtherEntity inner;
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;

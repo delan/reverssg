@@ -4105,7 +4105,7 @@ void FUN_0041416e(void)
   short sVar4;
   int iVar5;
   uint uVar6;
-  EntityNode *pEVar7;
+  Dlist *pDVar7;
   undefined in_CL;
   uint extraout_ECX;
   undefined in_DL;
@@ -4156,7 +4156,7 @@ void FUN_0041416e(void)
     do {
       sVar1 = area->structuralEntityCounts[sVar4];
       if (sVar1 != 0) {
-        area->structuralEntityGroups[sVar4] = pAVar8;
+        area->structuralEntityGroups[sVar4] = (OtherEntity *)pAVar8;
         pAVar8 = (Area *)(pAVar8->structuralEntityCounts + sVar1 * 0x10 + -1);
       }
       sVar4 = sVar4 + -1;
@@ -4165,7 +4165,7 @@ void FUN_0041416e(void)
     do {
       sVar1 = area->ladderEntityCounts[sVar4];
       if (sVar1 != 0) {
-        area->ladderEntityGroups[sVar4] = pAVar8;
+        area->ladderEntityGroups[sVar4] = (LadderEntity *)pAVar8;
         pAVar8 = (Area *)(pAVar8->structuralEntityCounts + sVar1 * 0x14 + -1);
       }
       sVar4 = sVar4 + 1;
@@ -4198,8 +4198,8 @@ void FUN_0041416e(void)
       sVar4 = sVar4 + 1;
     } while (sVar4 < 6);
     if (sVar2 != 0) {
-      pEVar7 = (EntityNode *)FUN_004352f2();
-      area->partEntities = pEVar7;
+      pDVar7 = (Dlist *)FUN_004352f2();
+      area->partEntities = pDVar7;
       uVar3 = DAT_00465834[sVar2];
       area->partEntityCount = uVar3;
       if (uVar3 != 0) {

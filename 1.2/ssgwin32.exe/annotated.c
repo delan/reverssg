@@ -27,7 +27,7 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
   OtherEntity *entity;
   ushort result;
   LadderEntity *ladder;
-  EntityNode *part;
+  EntityNode *partNode;
   EntityNode *entityNode;
   short done;
   short partHeight;
@@ -103,16 +103,16 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
         bad = false;
                     // 1. avoid intersecting other part entities
         partCount = area->partEntityCount;
-        part = (EntityNode *)DlistHead(area->partEntities);
+        partNode = (EntityNode *)DlistHead(area->partEntities);
         for (j = 0; (!bad && (j < partCount)); j = j + 1) {
-          collision = CheckCollision((Rect16 *)&rect,(Rect16 *)&part->inner);
+          collision = CheckCollision((Rect16 *)&rect,(Rect16 *)&partNode->inner);
           if ((short)collision != 0) {
             bad = true;
           }
-          part = (EntityNode *)DlistNext(part);
+          partNode = (EntityNode *)DlistNext(partNode);
         }
                     // 2. avoid intersecting structural entities of type > 3 (e.g. gaps, doors)
-        entity = (OtherEntity *)area->structuralEntityGroups[0];
+        entity = area->structuralEntityGroups[0];
         structuralCount = area->structuralEntityCounts[0];
         for (j = 0; (!bad && (j < structuralCount)); j = j + 1) {
           if ((3 < (entity->base).type) &&
@@ -124,7 +124,7 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
         }
                     // 3. avoid intersecting ladder entities (vents, paddles, trampolines)
         ladderCount = area->ladderEntityCounts[0];
-        ladder = (LadderEntity *)area->ladderEntityGroups[0];
+        ladder = area->ladderEntityGroups[0];
         for (j = 0; (!bad && (j < ladderCount)); j = j + 1) {
           collision = CheckCollision((Rect16 *)&rect,(Rect16 *)ladder);
           if ((short)collision != 0) {
@@ -170,7 +170,7 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
       (entity->activation_).mode = 0x800;
       area->partEntityCount = area->partEntityCount + 1;
       entityNode->available = 0;
-      DlistInsert((Dlist *)area->partEntities,&entityNode->node,-1);
+      DlistInsert(area->partEntities,&entityNode->node,-1);
       i = i + 1;
     } while (i < count);
   }
@@ -182,7 +182,7 @@ ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId)
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 {
-  uint uVar1;
+  uint result;
   short pRight;
   short pBottom;
   short qBottom;
@@ -192,7 +192,7 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
   short qLeft;
   short qTop;
   
-  uVar1 = 0;
+  result = 0;
   pLeft = p->x;
   pRight = pLeft + p->w;
   pTop = p->y;
@@ -202,21 +202,21 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
   qTop = q->y;
   qBottom = qTop + q->h;
   if ((((pLeft < qRight) && (qLeft < pRight)) && (pTop < qBottom)) && (qTop < pBottom)) {
-    uVar1 = (uint)(pLeft < qLeft);
+    result = (uint)(pLeft < qLeft);
     if (qRight < pRight) {
-      uVar1 = uVar1 | 2;
+      result = result | 2;
     }
     if (pTop < qTop) {
-      uVar1 = uVar1 | 4;
+      result = result | 4;
     }
     if (qBottom < pBottom) {
-      uVar1 = uVar1 | 8;
+      result = result | 8;
     }
-    if ((short)uVar1 == 0) {
-      uVar1 = 0xf;
+    if ((short)result == 0) {
+      result = 0xf;
     }
   }
-  return uVar1;
+  return result;
 }
 
 
