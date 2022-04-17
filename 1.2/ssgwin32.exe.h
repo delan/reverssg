@@ -480,7 +480,7 @@ struct PartDefinition {
     undefined field44_0x34;
     undefined field45_0x35;
     undefined field46_0x36;
-    byte flags;
+    byte flags; // bit 6 = recycled
     undefined field48_0x38;
     undefined field49_0x39;
     undefined field50_0x3a;
