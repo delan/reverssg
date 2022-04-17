@@ -1584,7 +1584,7 @@ uint FUN_0043d865(undefined param_1,undefined param_2,undefined param_3,short pa
 uint FUN_0043d87c(undefined param_1,undefined param_2,undefined param_3,short param_4);
 int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void __stdcall GenInitialPartIds(uint count);
-undefined4 FUN_0043d8f3(void);
+PartId NextInitialPartId(void);
 int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined2 *param_6);
 uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,uint param_4,undefined4 param_5);
 int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
