@@ -1047,7 +1047,7 @@ void FUN_0041472f(void);
 void FUN_00414734(void);
 void FUN_00414739(void);
 void FUN_0041473e(void);
-undefined4 FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short param_5,short param_6);
+uint FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short param_5,short param_6);
 void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_4,int param_5);
 void FUN_00414af8(undefined param_1,undefined param_2,undefined param_3,ushort param_4,ushort param_5,short param_6,short param_7,short param_8);
 undefined4 FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1301,7 +1301,7 @@ bool FUN_0042b199(undefined4 param_1,undefined4 param_2,byte **param_3,undefined
 void FUN_0042b1cb(uint param_1,undefined4 param_2,DWORD param_3);
 void FUN_0042b1d8(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
 bool FUN_0042b260(void);
-void FUN_0042b3d8(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short *param_5);
+void __stdcall DonkeyShuffle(short len,short *result);
 undefined4 *FUN_0042b476(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,ushort param_5,ushort param_6);
 void FUN_0042b4e4(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);

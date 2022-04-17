@@ -4692,22 +4692,20 @@ void FUN_0041473e(void)
 
 
 
-undefined4
-FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short param_5,
-            short param_6)
+uint FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short param_5,
+                 short param_6)
 
 {
-  bool bVar1;
-  byte bVar2;
-  short sVar3;
-  undefined2 extraout_var_02;
+  short sVar1;
+  bool bVar2;
+  byte bVar3;
   undefined3 extraout_var;
   undefined3 extraout_var_00;
   undefined3 extraout_var_01;
   int iVar4;
   undefined4 uVar5;
-  undefined2 extraout_var_03;
-  undefined2 uVar6;
+  undefined2 extraout_var_02;
+  uint uVar6;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
@@ -4724,8 +4722,7 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
   undefined4 extraout_EDX_01;
   undefined4 extraout_EDX_02;
   undefined4 extraout_EDX_03;
-  uint uVar9;
-  short sVar10;
+  short sVar9;
   short local_f4;
   short local_f2;
   short local_f0;
@@ -4734,7 +4731,7 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
   undefined4 local_ea;
   short local_e4 [90];
   uint local_30;
-  undefined2 local_2a;
+  ushort local_2a;
   int local_28;
   int local_24;
   int local_20;
@@ -4748,13 +4745,13 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
   short local_e;
   short local_c;
   short local_a;
-  ushort local_8;
+  short local_8;
   short local_6;
   
   local_6 = 0;
   local_2a = 1;
   if ((*param_4 & 1) == 0) {
-    sVar3 = 3;
+    local_8 = 3;
     local_c = 0x18;
     local_e = 7;
     local_10 = 0x58;
@@ -4765,7 +4762,7 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
     local_1a = 0x18;
   }
   else {
-    sVar3 = 6;
+    local_8 = 6;
     local_c = 0x10;
     local_e = 0xf;
     local_10 = 0x34;
@@ -4775,10 +4772,11 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
     local_18 = 0x20;
     local_1a = 0xd;
   }
-  local_8 = sVar3 * local_e;
-  FUN_0042b3d8((char)local_8,0,param_3,(uint)local_e4 & 0xffff0000 | (uint)local_8,local_e4);
+  local_8 = local_8 * local_e;
+  uVar6 = (uint)local_e4 & 0xffff0000;
+  DonkeyShuffle(local_8,local_e4);
   local_a = 0;
-  uVar6 = extraout_var_02;
+  uVar6 = uVar6 & 0xffff0000;
   if (0 < param_5) {
     do {
       local_20 = FUN_0041473e();
@@ -4791,48 +4789,48 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
         local_f2 = (local_e4[local_6] / local_e) * local_12 + local_10;
         local_f4 = (local_e4[local_6] % local_e) * local_18 + local_c;
         local_6 = local_6 + 1;
-        if ((short)local_8 <= local_6) {
+        if (local_8 <= local_6) {
           return 0;
         }
         local_f0 = local_18;
         local_ee = local_1a;
-        bVar1 = false;
-        sVar3 = *(short *)(param_4 + 0x9e);
+        bVar2 = false;
+        sVar1 = *(short *)(param_4 + 0x9e);
         iVar8 = *(int *)(param_4 + 0xa0);
         local_24 = FUN_004350e8((char)param_4,(char)local_f4,(char)local_e,iVar8);
         uVar5 = extraout_EDX_00;
-        for (sVar10 = 0; (!bVar1 && (sVar10 < sVar3)); sVar10 = sVar10 + 1) {
-          bVar2 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_24 + 0xc);
-          if ((short)CONCAT31(extraout_var,bVar2) != 0) {
-            bVar1 = true;
+        for (sVar9 = 0; (!bVar2 && (sVar9 < sVar1)); sVar9 = sVar9 + 1) {
+          bVar3 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_24 + 0xc);
+          if ((short)CONCAT31(extraout_var,bVar3) != 0) {
+            bVar2 = true;
           }
           iVar8 = local_24;
-          local_24 = FUN_0043510d(bVar2,extraout_DL,extraout_CL,local_24);
+          local_24 = FUN_0043510d(bVar3,extraout_DL,extraout_CL,local_24);
           uVar5 = extraout_EDX_01;
         }
         local_30 = *(uint *)(param_4 + 0x7e);
-        sVar3 = *(short *)(param_4 + 2);
-        for (sVar10 = 0; (!bVar1 && (sVar10 < sVar3)); sVar10 = sVar10 + 1) {
+        sVar1 = *(short *)(param_4 + 2);
+        for (sVar9 = 0; (!bVar2 && (sVar9 < sVar1)); sVar9 = sVar9 + 1) {
           if ((3 < *(short *)(local_30 + 0x10)) &&
-             (bVar2 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_30),
+             (bVar3 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_30),
              iVar8 = extraout_ECX_00, uVar5 = extraout_EDX_02,
-             (short)CONCAT31(extraout_var_00,bVar2) != 0)) {
-            bVar1 = true;
+             (short)CONCAT31(extraout_var_00,bVar3) != 0)) {
+            bVar2 = true;
           }
           local_30 = local_30 + 0x20;
         }
-        sVar3 = *(short *)(param_4 + 10);
+        sVar1 = *(short *)(param_4 + 10);
         local_28 = *(int *)(param_4 + 0x8e);
-        for (sVar10 = 0; (!bVar1 && (sVar10 < sVar3)); sVar10 = sVar10 + 1) {
-          bVar2 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_28);
-          if ((short)CONCAT31(extraout_var_01,bVar2) != 0) {
-            bVar1 = true;
+        for (sVar9 = 0; (!bVar2 && (sVar9 < sVar1)); sVar9 = sVar9 + 1) {
+          bVar3 = FUN_00418e08((char)&local_f4,(char)uVar5,(char)iVar8,&local_f4,local_28);
+          if ((short)CONCAT31(extraout_var_01,bVar3) != 0) {
+            bVar2 = true;
           }
           local_28 = local_28 + 0x28;
           iVar8 = extraout_ECX_01;
           uVar5 = extraout_EDX_03;
         }
-        if (!bVar1) {
+        if (!bVar2) {
           local_1c = 1;
         }
       }
@@ -4845,7 +4843,7 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
       local_ea = 0;
       local_30 = local_20 + 0xc;
       FUN_0044fe4c((char)&local_f4,(char)uVar5,(char)iVar8,local_30,&local_f4,0xe);
-      uVar9 = (uint)local_14;
+      uVar6 = (uint)local_14;
       *(ushort *)(local_30 + 0xe) = local_14;
       uVar7 = extraout_CL_00;
       if (param_6 == 1000) {
@@ -4854,28 +4852,28 @@ FUN_00414750(undefined param_1,undefined param_2,undefined param_3,byte *param_4
       else if (param_6 == -1) {
         uVar5 = FUN_0043d8f3();
         *(short *)(local_30 + 0x12) = (short)uVar5;
-        uVar9 = local_30;
+        uVar6 = local_30;
         uVar7 = extraout_CL_01;
       }
       else {
         *(short *)(local_30 + 0x12) = param_6;
-        uVar9 = DAT_0046953c;
+        uVar6 = DAT_0046953c;
         if ((*(byte *)(DAT_0046953c + 0x37 + param_6 * 0x62) & 0x40) != 0) {
           *(short *)(local_30 + 0xe) = *(short *)(local_30 + 0xe) + 1;
         }
       }
       *(undefined2 *)(local_30 + 0x14) = 0;
-      FUN_0044fe4c((char)(local_30 + 0x16),(char)uVar9,uVar7,local_30 + 0x16,&local_f4,10);
+      FUN_0044fe4c((char)(local_30 + 0x16),(char)uVar6,uVar7,local_30 + 0x16,&local_f4,10);
       *(undefined2 *)(local_30 + 0x1e) = 0x800;
       *(short *)(param_4 + 0x9e) = *(short *)(param_4 + 0x9e) + 1;
       *(undefined2 *)(local_20 + 8) = 0;
       FUN_004351c7((char)param_4,extraout_DL_00,extraout_CL_02,*(undefined4 *)(param_4 + 0xa0),
                    local_20,0xffff);
       local_a = local_a + 1;
-      uVar6 = extraout_var_03;
+      uVar6 = CONCAT22(extraout_var_02,local_a);
     } while (local_a < param_5);
   }
-  return CONCAT22(uVar6,local_2a);
+  return uVar6 & 0xffff0000 | (uint)local_2a;
 }
 
 
@@ -21213,44 +21211,43 @@ bool FUN_0042b260(void)
 
 
 
-void FUN_0042b3d8(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,
-                 short *param_5)
+void __stdcall DonkeyShuffle(short len,short *result)
 
 {
-  short sVar1;
-  short *psVar2;
-  uint uVar3;
-  short sVar4;
-  short sVar5;
-  short sVar6;
+  short *current;
+  uint random;
+  short p;
+  short q;
+  short i;
+  short scratch;
   
-  sVar6 = 0;
-  psVar2 = param_5;
-  if (0 < (short)param_4) {
+  i = 0;
+  current = result;
+  if (0 < len) {
     do {
-      *psVar2 = sVar6;
-      psVar2 = psVar2 + 1;
-      sVar6 = sVar6 + 1;
-    } while (sVar6 < (short)param_4);
+      *current = i;
+      current = current + 1;
+      i = i + 1;
+    } while (i < len);
   }
-  sVar6 = 0;
-  if (0 < (short)((short)param_4 * 10)) {
+  i = 0;
+  if (0 < (short)(len * 10)) {
     do {
-      if ((short)param_4 == 0) {
-        sVar4 = 0;
-        sVar5 = 0;
+      if (len == 0) {
+        p = 0;
+        q = 0;
       }
       else {
-        uVar3 = Random();
-        sVar4 = (short)((int)uVar3 % (int)(short)param_4);
-        uVar3 = Random();
-        sVar5 = (short)((int)uVar3 % (int)(short)param_4);
+        random = Random();
+        p = (short)((int)random % (int)len);
+        random = Random();
+        q = (short)((int)random % (int)len);
       }
-      sVar1 = param_5[sVar4];
-      param_5[sVar4] = param_5[sVar5];
-      param_5[sVar5] = sVar1;
-      sVar6 = sVar6 + 1;
-    } while (sVar6 < (short)((short)param_4 * 10));
+      scratch = result[p];
+      result[p] = result[q];
+      result[q] = scratch;
+      i = i + 1;
+    } while (i < (short)(len * 10));
   }
   return;
 }
@@ -34898,7 +34895,7 @@ void FUN_0043d8a5(undefined param_1,undefined param_2,undefined param_3,undefine
   
   sVar1 = *(short *)(DAT_00469540 + 2);
   DAT_0046956a = 0;
-  FUN_0042b3d8((char)DAT_00469540,param_2,param_3,param_4,&DAT_0046956c);
+  DonkeyShuffle((short)param_4,&DAT_0046956c);
   sVar2 = 0;
   if (0 < (short)param_4) {
     do {
