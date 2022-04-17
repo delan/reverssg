@@ -273,19 +273,7 @@ struct Rect16 {
     short h;
 };
 
-typedef struct Dlist Dlist, *PDlist;
-
-typedef struct DlistNode DlistNode, *PDlistNode;
-
-struct Dlist {
-    struct DlistNode * head;
-    struct DlistNode * tail;
-};
-
-struct DlistNode {
-    struct DlistNode * next;
-    struct DlistNode * prev;
-};
+typedef struct World World, *PWorld;
 
 typedef struct Area Area, *PArea;
 
@@ -293,11 +281,15 @@ typedef struct OtherEntity OtherEntity, *POtherEntity;
 
 typedef struct LadderEntity LadderEntity, *PLadderEntity;
 
+typedef struct Dlist Dlist, *PDlist;
+
 typedef struct EntityBase? EntityBase?, *PEntityBase?;
 
 typedef short PartId;
 
 typedef struct RectEx RectEx, *PRectEx;
+
+typedef struct DlistNode DlistNode, *PDlistNode;
 
 typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
 
@@ -308,12 +300,12 @@ struct Area {
     undefined field1_0x1;
     short structuralEntityCounts[4];
     short ladderEntityCounts[4];
-    undefined2 field4_0x12[6];
-    undefined4 field5_0x1e[6];
-    undefined2 field6_0x36[6];
-    undefined4 field7_0x42[6];
-    undefined2 field8_0x5a[6];
-    undefined4 field9_0x66[6];
+    short cEntityCounts?[6];
+    undefined4 cEntityGroups?[6];
+    short dEntityCounts?[6];
+    undefined4 dEntityGroups?[6];
+    short eEntityCounts?[6];
+    undefined4 eEntityGroups?[6];
     struct OtherEntity * structuralEntityGroups[4];
     struct LadderEntity * ladderEntityGroups[4];
     short partEntityCount;
@@ -322,6 +314,11 @@ struct Area {
     undefined2 field15_0xb0[6];
     undefined2 field16_0xbc[50];
     undefined field17_0x120[468];
+};
+
+struct Dlist {
+    struct DlistNode * head;
+    struct DlistNode * tail;
 };
 
 struct RectEx {
@@ -368,6 +365,24 @@ struct LadderEntity {
     undefined field11_0x1c;
     undefined field12_0x1d;
     struct RectEx collision?;
+};
+
+struct DlistNode {
+    struct DlistNode * next;
+    struct DlistNode * prev;
+};
+
+struct World {
+    short areaCount;
+    struct Area areas[16];
+    undefined field2_0x2f42[32928];
+};
+
+typedef struct HeapNode HeapNode, *PHeapNode;
+
+struct HeapNode {
+    struct DlistNode node;
+    void * heap;
 };
 
 typedef struct PartResource PartResource, *PPartResource;
@@ -428,6 +443,59 @@ struct EntityNode {
     undefined field2_0xa;
     undefined field3_0xb;
     struct OtherEntity inner;
+};
+
+typedef struct GameState GameState, *PGameState;
+
+struct GameState {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    undefined field16_0x10;
+    undefined field17_0x11;
+    undefined field18_0x12;
+    undefined field19_0x13;
+    undefined field20_0x14;
+    undefined field21_0x15;
+    undefined field22_0x16;
+    undefined field23_0x17;
+    undefined field24_0x18;
+    undefined field25_0x19;
+    undefined field26_0x1a;
+    undefined field27_0x1b;
+    undefined field28_0x1c;
+    undefined field29_0x1d;
+    undefined field30_0x1e;
+    undefined field31_0x1f;
+    undefined field32_0x20;
+    undefined field33_0x21;
+    undefined field34_0x22;
+    undefined field35_0x23;
+    undefined field36_0x24;
+    undefined field37_0x25;
+    undefined field38_0x26;
+    undefined field39_0x27;
+    undefined field40_0x28;
+    undefined field41_0x29;
+    undefined field42_0x2a;
+    undefined field43_0x2b;
+    undefined field44_0x2c;
+    undefined field45_0x2d;
+    short level; // 0,1,1,2,2,3,4,4,5,5,6,7,7,8,9
+    short building;
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -1177,6 +1245,8 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 
 
 
+void InitEntities(void);
+void WorldInitForVehicle(void);
 EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Area *area,short count,PartId partId);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
@@ -1184,8 +1254,12 @@ void __stdcall DonkeyShuffle(short len,short *result);
 undefined4 __stdcall DlistHead(undefined4 *param_1);
 undefined4 __stdcall DlistNext(undefined4 *param_1);
 void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
-void __stdcall GenInitialPartIds(uint count);
+void __stdcall DlistRemove(Dlist *list,DlistNode *node);
+Dlist * DlistNew(void);
+void * __stdcall PoolAlloc(uint len);
+void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
+void * __stdcall Memset(void *result,byte value,uint len);
 int Random(void);
 

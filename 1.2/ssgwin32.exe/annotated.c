@@ -1,4 +1,117 @@
-#include "ssgwin32.exe.annotated.h"
+#include "annotated.h"
+
+
+
+void InitEntities(void)
+
+{
+  short i;
+  
+  i = 0;
+  do {
+    _Entities[i].available = 1;
+    i = i + 1;
+  } while (i < 0x3c);
+  return;
+}
+
+
+
+void WorldInitForVehicle(void)
+
+{
+  short sVar1;
+  ushort uVar2;
+  short sVar3;
+  Dlist *list;
+  Area *pAVar4;
+  Area *area;
+  short building;
+  short areaIndex;
+  
+  building = _GameState->building;
+  if (building == 0) {
+    _TextResourceForBuilding = 0x177c;
+  }
+  else if (building == 1) {
+    _TextResourceForBuilding = 0x1770;
+  }
+  else if (building == 2) {
+    _TextResourceForBuilding = 0x177a;
+  }
+  FUN_00446186(_TextResourceForBuilding);
+  _World = (World *)GetWinapiResource_(_LevelAreaResourceIds[_GameState->level],&_AREA);
+  _AreaCount = _World->areaCount;
+  area = _World->areas;
+  InitEntities();
+  _InitialAreaPartsCounts = (ushort *)GetWinapiResource_(_GameState->level + 0x582,_pINTS);
+  GenInitialPartIds(*_InitialAreaPartsCounts);
+  _InitialBananaPartsCount = *_InitialAreaPartsCounts - _Level_partResource->definitionCount;
+  _ActualBananaPartsCount = _InitialBananaPartsCount;
+  Memset(_Areas,0,0x40);
+  for (areaIndex = 0; areaIndex < _AreaCount; areaIndex = areaIndex + 1) {
+    _Areas[areaIndex] = area;
+    pAVar4 = (Area *)area->field17_0x120;
+    sVar3 = 3;
+    do {
+      sVar1 = area->structuralEntityCounts[sVar3];
+      if (sVar1 != 0) {
+        area->structuralEntityGroups[sVar3] = (OtherEntity *)pAVar4;
+        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 0x10 + -1);
+      }
+      sVar3 = sVar3 + -1;
+    } while (-1 < sVar3);
+    sVar3 = 0;
+    do {
+      sVar1 = area->ladderEntityCounts[sVar3];
+      if (sVar1 != 0) {
+        area->ladderEntityGroups[sVar3] = (LadderEntity *)pAVar4;
+        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 0x14 + -1);
+      }
+      sVar3 = sVar3 + 1;
+    } while (sVar3 < 4);
+    sVar3 = 0;
+    do {
+      sVar1 = area->cEntityCounts_[sVar3];
+      if (sVar1 != 0) {
+        area->cEntityGroups_[sVar3] = pAVar4;
+        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      }
+      sVar3 = sVar3 + 1;
+    } while (sVar3 < 6);
+    sVar3 = 0;
+    do {
+      sVar1 = area->dEntityCounts_[sVar3];
+      if (sVar1 != 0) {
+        area->dEntityGroups_[sVar3] = pAVar4;
+        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      }
+      sVar3 = sVar3 + 1;
+    } while (sVar3 < 6);
+    sVar3 = 0;
+    do {
+      sVar1 = area->eEntityCounts_[sVar3];
+      if (sVar1 != 0) {
+        area->eEntityGroups_[sVar3] = pAVar4;
+        pAVar4 = (Area *)(pAVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      }
+      sVar3 = sVar3 + 1;
+    } while (sVar3 < 6);
+    if (areaIndex != 0) {
+      list = DlistNew();
+      area->partEntities = list;
+      uVar2 = _InitialAreaPartsCounts[areaIndex];
+      area->partEntityCount = uVar2;
+      if (uVar2 != 0) {
+        area->partEntityCount = 0;
+        PlacePartEntity(area,_InitialAreaPartsCounts[areaIndex],-1);
+      }
+    }
+    area = pAVar4;
+  }
+  _AreaIndex = 0;
+  return;
+}
 
 
 
@@ -332,25 +445,74 @@ void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex)
 
 
 
-void __stdcall GenInitialPartIds(uint count)
+void __stdcall DlistRemove(Dlist *list,DlistNode *node)
+
+{
+  DlistNode *prev;
+  
+  prev = node->prev;
+  if (prev == (DlistNode *)0x0) {
+    list->head = node->next;
+  }
+  else {
+    prev->next = node->next;
+  }
+  if (node->next != (DlistNode *)0x0) {
+    node->next->prev = prev;
+    return;
+  }
+  list->tail = node->prev;
+  return;
+}
+
+
+
+Dlist * DlistNew(void)
+
+{
+  Dlist *result;
+  
+  result = (Dlist *)PoolAlloc(8);
+  result->tail = (DlistNode *)0x0;
+  result->head = (DlistNode *)0x0;
+  return result;
+}
+
+
+
+void * __stdcall PoolAlloc(uint len)
+
+{
+  HeapNode *node;
+  void *result;
+  
+  node = (HeapNode *)DlistHead(_Pool_freeNodes);
+  DlistRemove(_Pool_freeNodes,(DlistNode *)node);
+  result = TurboAlloc_(len);
+  node->heap = result;
+  DlistInsert(_Pool_usedNodes,(DlistNode *)node,-1);
+  return node->heap;
+}
+
+
+
+void __stdcall GenInitialPartIds(ushort count)
 
 {
   short i;
-  short len;
   short definitionCount;
   
   definitionCount = _Level_partResource->definitionCount;
   _InitialPartIds_index = 0;
-  len = (short)count;
-  DonkeyShuffle(len,_InitialPartIds);
+  DonkeyShuffle(count,_InitialPartIds);
   i = 0;
-  if (0 < len) {
+  if (0 < (short)count) {
     do {
       if (definitionCount <= _InitialPartIds[i]) {
         _InitialPartIds[i] = 1000;
       }
       i = i + 1;
-    } while (i < len);
+    } while (i < (short)count);
   }
   return;
 }
@@ -389,6 +551,26 @@ void * __stdcall Memcpy(void *dest,void *src,uint len)
     current = (void *)((int)current + 1);
   }
   return dest;
+}
+
+
+
+void * __stdcall Memset(void *result,byte value,uint len)
+
+{
+  uint i;
+  void *current;
+  
+  current = result;
+  for (i = len >> 2; i != 0; i = i - 1) {
+    *(uint *)current = CONCAT22(CONCAT11(value,value),CONCAT11(value,value));
+    current = (undefined4 *)((int)current + 4);
+  }
+  for (i = len & 3; i != 0; i = i - 1) {
+    *(byte *)current = value;
+    current = (void *)((int)current + 1);
+  }
+  return result;
 }
 
 
