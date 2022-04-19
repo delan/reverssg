@@ -367,7 +367,7 @@ struct Room {
     undefined2 field14_0xa4[6];
     undefined2 field15_0xb0[6];
     undefined2 field16_0xbc[50];
-    undefined field17_0x120[468];
+    undefined entities[468];
 };
 
 typedef struct Area Area, *PArea;

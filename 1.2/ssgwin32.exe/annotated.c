@@ -38,13 +38,13 @@ void InitEntities(void)
 void StartLevel(void)
 
 {
-  short sVar1;
-  ushort uVar2;
-  short sVar3;
+  short i;
   Dlist *list;
-  Room *pRVar4;
+  void *current;
   Room *room;
   short building;
+  short count;
+  ushort partsCount;
   short roomIndex;
   
   building = _GameState->building;
@@ -69,63 +69,63 @@ void StartLevel(void)
   Memset(_Rooms,0,0x40);
   for (roomIndex = 0; roomIndex < _RoomCount; roomIndex = roomIndex + 1) {
     _Rooms[roomIndex] = room;
-    pRVar4 = (Room *)room->field17_0x120;
-    sVar3 = 3;
+    current = room->entities;
+    i = 3;
     do {
-      sVar1 = room->structuralEntityCounts[sVar3];
-      if (sVar1 != 0) {
-        room->structuralEntityGroups[sVar3] = (OtherEntity *)pRVar4;
-        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 0x10 + -1);
+      count = room->structuralEntityCounts[i];
+      if (count != 0) {
+        room->structuralEntityGroups[i] = (OtherEntity *)current;
+        current = (void *)((int)(EntityBase_ *)current + count * 0x20);
       }
-      sVar3 = sVar3 + -1;
-    } while (-1 < sVar3);
-    sVar3 = 0;
+      i = i + -1;
+    } while (-1 < i);
+    i = 0;
     do {
-      sVar1 = room->ladderEntityCounts[sVar3];
-      if (sVar1 != 0) {
-        room->ladderEntityGroups[sVar3] = (LadderEntity *)pRVar4;
-        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 0x14 + -1);
+      count = room->ladderEntityCounts[i];
+      if (count != 0) {
+        room->ladderEntityGroups[i] = (LadderEntity *)current;
+        current = (void *)((int)current + count * 0x28);
       }
-      sVar3 = sVar3 + 1;
-    } while (sVar3 < 4);
-    sVar3 = 0;
+      i = i + 1;
+    } while (i < 4);
+    i = 0;
     do {
-      sVar1 = room->cEntityCounts_[sVar3];
-      if (sVar1 != 0) {
-        room->cEntityGroups_[sVar3] = pRVar4;
-        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      count = room->cEntityCounts_[i];
+      if (count != 0) {
+        room->cEntityGroups_[i] = current;
+        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
       }
-      sVar3 = sVar3 + 1;
-    } while (sVar3 < 6);
-    sVar3 = 0;
+      i = i + 1;
+    } while (i < 6);
+    i = 0;
     do {
-      sVar1 = room->dEntityCounts_[sVar3];
-      if (sVar1 != 0) {
-        room->dEntityGroups_[sVar3] = pRVar4;
-        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      count = room->dEntityCounts_[i];
+      if (count != 0) {
+        room->dEntityGroups_[i] = current;
+        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
       }
-      sVar3 = sVar3 + 1;
-    } while (sVar3 < 6);
-    sVar3 = 0;
+      i = i + 1;
+    } while (i < 6);
+    i = 0;
     do {
-      sVar1 = room->eEntityCounts_[sVar3];
-      if (sVar1 != 0) {
-        room->eEntityGroups_[sVar3] = pRVar4;
-        pRVar4 = (Room *)(pRVar4->structuralEntityCounts + sVar1 * 5 + -1);
+      count = room->eEntityCounts_[i];
+      if (count != 0) {
+        room->eEntityGroups_[i] = current;
+        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
       }
-      sVar3 = sVar3 + 1;
-    } while (sVar3 < 6);
+      i = i + 1;
+    } while (i < 6);
     if (roomIndex != 0) {
       list = DlistNew();
       room->partEntities = list;
-      uVar2 = _RoomInitialPartsCounts[roomIndex];
-      room->partEntityCount = uVar2;
-      if (uVar2 != 0) {
+      partsCount = _RoomInitialPartsCounts[roomIndex];
+      room->partEntityCount = partsCount;
+      if (partsCount != 0) {
         room->partEntityCount = 0;
         PlacePartEntity(room,_RoomInitialPartsCounts[roomIndex],-1);
       }
     }
-    room = pRVar4;
+    room = (Room *)current;
   }
   _RoomIndex = 0;
   return;
