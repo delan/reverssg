@@ -5144,8 +5144,8 @@ void FUN_00415f35(byte param_1,undefined param_2,byte param_3,PartDefinition *pa
   sVar11 = 0x20;
   DAT_0046634c = 0;
   DAT_00466350 = 0;
-  iVar5 = DAT_0046865a;
-  iVar6 = DlistHead(DAT_0046865a);
+  iVar5 = _Actors[0]._114_4_;
+  iVar6 = DlistHead(_Actors[0]._114_4_);
   uVar10 = extraout_EDX;
   while (iVar12 = iVar6, iVar12 != 0) {
     uVar7 = (undefined)uVar10;
@@ -5184,8 +5184,8 @@ void FUN_004160e5(void)
   int iVar3;
   int iVar4;
   
-  iVar3 = DAT_0046865a;
-  iVar2 = DlistHead(DAT_0046865a);
+  iVar3 = _Actors[0]._114_4_;
+  iVar2 = DlistHead(_Actors[0]._114_4_);
   uVar1 = extraout_DL;
   while (iVar4 = iVar2, iVar4 != 0) {
     FUN_00412f04((char)iVar4,uVar1,(char)iVar3,*(undefined4 *)(iVar4 + 0x44));
@@ -5223,8 +5223,8 @@ void FUN_00416115(void)
   undefined2 uVar5;
   undefined4 uVar6;
   
-  uVar6 = DAT_0046865a;
-  uVar2 = DlistHead(DAT_0046865a);
+  uVar6 = _Actors[0]._114_4_;
+  uVar2 = DlistHead(_Actors[0]._114_4_);
   FUN_00431b20((char)uVar2,extraout_DL,(char)uVar6,0x20,0x13e,0xfc,0x42,900);
   uVar3 = 0;
   _DAT_004605b8 = 0;
@@ -5276,8 +5276,8 @@ void FUN_00416236(undefined param_1,undefined param_2,undefined param_3,ushort p
   undefined4 uVar6;
   undefined uVar7;
   
-  uVar6 = DAT_0046865a;
-  uVar2 = DlistHead(DAT_0046865a);
+  uVar6 = _Actors[0]._114_4_;
+  uVar2 = DlistHead(_Actors[0]._114_4_);
   uVar5 = (uint)param_4;
   uVar3 = FUN_0043d820((char)param_4,extraout_DL,(char)uVar6,param_4);
   uVar4 = uVar3;
@@ -5331,8 +5331,8 @@ void __stdcall FUN_004162de(undefined4 param_1)
   undefined extraout_DL_01;
   undefined4 uVar4;
   
-  uVar4 = DAT_0046865a;
-  iVar3 = FUN_004350fa(in_AL,in_DL,in_CL,DAT_0046865a);
+  uVar4 = _Actors[0]._114_4_;
+  iVar3 = FUN_004350fa(in_AL,in_DL,in_CL,_Actors[0]._114_4_);
   FUN_00417255((char)iVar3,extraout_DL,(char)uVar4,200);
   *(undefined2 *)(iVar3 + 0x42) = 0;
   *(undefined4 *)(iVar3 + 0x44) = *(undefined4 *)&_Level_partDefinitions[(short)param_1].field_0x56;
@@ -6641,13 +6641,14 @@ void FUN_004174d3(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_DL;
   
   iVar1 = (int)(short)param_4;
-  puVar2 = FUN_0042b476((char)(short)param_4,param_2,param_3,(&DAT_0046865a)[iVar1 * 0x2a],
-                        (short)param_4,0);
+  puVar2 = FUN_0042b476((char)(short)param_4,param_2,param_3,
+                        *(undefined4 *)&_Actors[iVar1].field_0x72,(short)param_4,0);
   if (puVar2 != (undefined4 *)0x0) {
     FUN_00434e8a((char)*(undefined2 *)(puVar2 + 0x18),extraout_DL,extraout_CL,(short)param_4,
                  *(undefined2 *)(puVar2 + 0x18),1);
-    LoadPartEntity((&DAT_00468602)[iVar1 * 0x54],(&DAT_004685fc)[iVar1 * 0x54],
-                   (&DAT_00468604)[iVar1 * 0x54],*(undefined2 *)(puVar2 + 0x18),0);
+    LoadPartEntity(*(undefined2 *)&_Actors[iVar1].field_0x1a,
+                   *(undefined2 *)&_Actors[iVar1].field_0x14,
+                   *(undefined2 *)&_Actors[iVar1].field_0x1c,*(undefined2 *)(puVar2 + 0x18),0);
   }
   return;
 }
@@ -6682,9 +6683,8 @@ undefined4 FUN_00417532(undefined param_1,byte param_2,byte param_3,short param_
   uint extraout_EDX;
   uint uVar15;
   short *psVar16;
-  int iVar17;
-  void **ppvVar18;
-  undefined4 uVar19;
+  void **ppvVar17;
+  undefined4 uVar18;
   short local_14;
   short local_10 [2];
   short local_c;
@@ -6693,21 +6693,20 @@ undefined4 FUN_00417532(undefined param_1,byte param_2,byte param_3,short param_
   uVar15 = (uint)param_2;
   uVar14 = (uint)param_3;
   iVar9 = (int)param_4;
-  iVar17 = iVar9 * 0xa8;
-  ppvVar18 = (void **)0x0;
+  ppvVar17 = (void **)0x0;
   bVar5 = false;
   local_14 = -1;
   bVar6 = false;
-  sVar2 = (&DAT_00468630)[param_4 * 0x54];
-  if (-1 < *(short *)(&DAT_0046860c + iVar17)) {
-    *(short *)(&DAT_0046860c + iVar17) = *(short *)(&DAT_0046860c + iVar17) + -1;
+  sVar2 = *(short *)&_Actors[param_4].field_0x48;
+  if (-1 < *(short *)&_Actors[iVar9].field_0x24) {
+    *(short *)&_Actors[iVar9].field_0x24 = *(short *)&_Actors[iVar9].field_0x24 + -1;
   }
-  psVar3 = (short *)(&PTR_DAT_00460840)[(short)(&DAT_00468600)[iVar9 * 0x54]];
+  psVar3 = (short *)(&PTR_DAT_00460840)[*(short *)&_Actors[iVar9].field_0x18];
   pvVar10 = (void *)0x0;
-  *(undefined4 *)(&DAT_0046867e + iVar17) = 0;
+  *(undefined4 *)&_Actors[iVar9].field_0x96 = 0;
   if (psVar3 != (short *)0x0) {
     if ((int)*psVar3 + 2U == 0) {
-      local_14 = (&DAT_00468600)[iVar9 * 0x54];
+      local_14 = *(short *)&_Actors[iVar9].field_0x18;
       pvVar10 = (void *)0x0;
     }
     else {
@@ -6721,7 +6720,7 @@ undefined4 FUN_00417532(undefined param_1,byte param_2,byte param_3,short param_
         psVar16 = psVar3 + 6;
         if ((bVar5) || (pvVar10 = (void *)((uint)pvVar10 & 0xffff0000), sVar1 <= local_6)) break;
         bVar4 = false;
-        pvVar10 = Memcpy(local_10,&DAT_004685e8 + iVar9 * 0x54,10);
+        pvVar10 = Memcpy(local_10,_Actors + iVar9,10);
         uVar14 = extraout_ECX;
         uVar15 = extraout_EDX;
         if (psVar3[7] == 4) {
@@ -6732,7 +6731,7 @@ undefined4 FUN_00417532(undefined param_1,byte param_2,byte param_3,short param_
           pvVar10 = (void *)(uVar11 & 0xffff0000);
           local_10[0] = (short)uVar11 + local_10[0] + -2;
           local_c = 4;
-          if (*(short *)(&DAT_0046860c + iVar17) < 0) goto LAB_00417611;
+          if (*(short *)&_Actors[iVar9].field_0x24 < 0) goto LAB_00417611;
         }
         else {
 LAB_00417611:
@@ -6740,7 +6739,7 @@ LAB_00417611:
             bVar4 = true;
           }
           else {
-            if ((short)(&DAT_00468634)[param_4 * 0x54] < 0) {
+            if (*(short *)&_Actors[param_4].field_0x4c < 0) {
               local_10[0] = local_10[0] - *psVar16;
             }
             else {
@@ -6773,47 +6772,49 @@ LAB_00417611:
     }
   }
   if (local_14 == 0x1c) {
-    uVar7 = FUN_00414efe((char)(&DAT_00468602)[iVar9 * 0x54],param_2,param_3,
-                         (&DAT_00468602)[iVar9 * 0x54],(&DAT_00468628)[iVar9 * 0x54]);
-    uVar19 = (&DAT_0046865a)[iVar9 * 0x2a];
-    pvVar10 = (void *)FUN_004352c9(uVar7,extraout_DL,extraout_CL,uVar19);
-    param_3 = (byte)uVar19;
+    uVar7 = FUN_00414efe((char)*(undefined2 *)&_Actors[iVar9].field_0x1a,param_2,param_3,
+                         *(undefined2 *)&_Actors[iVar9].field_0x1a,
+                         *(undefined2 *)&_Actors[iVar9].field_0x40);
+    uVar18 = *(undefined4 *)&_Actors[iVar9].field_0x72;
+    pvVar10 = (void *)FUN_004352c9(uVar7,extraout_DL,extraout_CL,uVar18);
+    param_3 = (byte)uVar18;
     param_2 = extraout_DL_00;
     if ((short)pvVar10 != 0) {
       local_14 = 2;
     }
   }
   if (local_14 == 0x1d) {
-    uVar7 = FUN_00414efe((char)(&DAT_00468602)[iVar9 * 0x54],param_2,param_3,
-                         (&DAT_00468602)[iVar9 * 0x54],(&DAT_00468628)[iVar9 * 0x54]);
-    pvVar10 = (void *)FUN_004352c9(uVar7,extraout_DL_01,extraout_CL_00,(&DAT_0046865a)[iVar9 * 0x2a]
-                                  );
+    uVar7 = FUN_00414efe((char)*(undefined2 *)&_Actors[iVar9].field_0x1a,param_2,param_3,
+                         *(undefined2 *)&_Actors[iVar9].field_0x1a,
+                         *(undefined2 *)&_Actors[iVar9].field_0x40);
+    pvVar10 = (void *)FUN_004352c9(uVar7,extraout_DL_01,extraout_CL_00,
+                                   *(undefined4 *)&_Actors[iVar9].field_0x72);
     if ((short)pvVar10 != 0) {
       local_14 = 3;
     }
   }
   if (local_14 != -1) {
     pvVar10 = (void *)(int)local_14;
-    ppvVar18 = *(void ***)((int)pvVar10 * 4 + 0x460a78);
+    ppvVar17 = *(void ***)((int)pvVar10 * 4 + 0x460a78);
   }
   uVar13 = (undefined2)((uint)pvVar10 >> 0x10);
-  if (ppvVar18 != (void **)0x0) {
+  if (ppvVar17 != (void **)0x0) {
     for (; (uVar13 = (undefined2)((uint)pvVar10 >> 0x10), !bVar6 &&
-           (*ppvVar18 != (void *)0xffffffff)); ppvVar18 = ppvVar18 + 3) {
-      pvVar10 = (void *)(~(uint)ppvVar18[1] & (int)sVar2 << 0x10);
-      if ((pvVar10 == *ppvVar18) || (*ppvVar18 == (void *)0x0)) {
+           (*ppvVar17 != (void *)0xffffffff)); ppvVar17 = ppvVar17 + 3) {
+      pvVar10 = (void *)(~(uint)ppvVar17[1] & (int)sVar2 << 0x10);
+      if ((pvVar10 == *ppvVar17) || (*ppvVar17 == (void *)0x0)) {
         bVar6 = true;
-        local_14 = *(short *)(ppvVar18 + 2);
+        local_14 = *(short *)(ppvVar17 + 2);
       }
     }
   }
-  if ((local_14 == 2) && ((short)(&DAT_0046861a)[iVar9 * 0x54] < 0)) {
+  if ((local_14 == 2) && (*(short *)&_Actors[iVar9].field_0x32 < 0)) {
     local_14 = 10;
   }
-  if ((local_14 == 3) && (0 < (short)(&DAT_0046861a)[iVar9 * 0x54])) {
+  if ((local_14 == 3) && (0 < *(short *)&_Actors[iVar9].field_0x32)) {
     local_14 = 0xb;
   }
-  *(undefined2 *)(&DAT_00468680 + iVar17) = (&DAT_00468630)[iVar9 * 0x54];
+  *(undefined2 *)&_Actors[iVar9].field_0x98 = *(undefined2 *)&_Actors[iVar9].field_0x48;
   return CONCAT22(uVar13,local_14);
 }
 
@@ -6825,7 +6826,7 @@ void FUN_00417792(undefined param_1,undefined param_2,undefined param_3,undefine
   ushort uVar1;
   short sVar2;
   bool bVar3;
-  ushort ushort;
+  ushort obverse;
   short sVar4;
   int iVar5;
   uint uVar6;
@@ -6845,36 +6846,36 @@ void FUN_00417792(undefined param_1,undefined param_2,undefined param_3,undefine
   
   iVar5 = (int)(short)param_4;
   bVar3 = _GameState->levelInBuilding < 3;
-  *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) =
-       *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) + 1;
-  ushort = RoomIsObverse((&DAT_00468602)[iVar5 * 0x54]);
-  uVar6 = (uint)ushort;
-  FUN_00434334((short)param_4,ushort);
-  if ((&DAT_00468614)[iVar5 * 0x54] != -1) {
-    uVar1 = (&DAT_00468614)[iVar5 * 0x54];
+  *(short *)(&DAT_00466398 + *(short *)&_Actors[iVar5].field_0x1a * 2) =
+       *(short *)(&DAT_00466398 + *(short *)&_Actors[iVar5].field_0x1a * 2) + 1;
+  obverse = RoomIsObverse(*(short *)&_Actors[iVar5].field_0x1a);
+  uVar6 = (uint)obverse;
+  ActorUpdateDynamics((short)param_4,obverse);
+  if (*(short *)&_Actors[iVar5].field_0x2c != -1) {
+    uVar1 = *(ushort *)&_Actors[iVar5].field_0x2c;
     uVar8 = extraout_CL;
     uVar9 = extraout_DL;
     if (uVar1 == 0x15) {
       uVar8 = 5;
       uVar6 = FUN_0044ca1c((char)uVar6,extraout_DL,extraout_CL,5);
-      *(short *)(&DAT_0046860c + iVar5 * 0xa8) = (short)uVar6;
+      *(short *)&_Actors[iVar5].field_0x24 = (short)uVar6;
       uVar9 = extraout_DL_00;
     }
-    (&DAT_00468614)[iVar5 * 0x54] = 0xffff;
-    (&DAT_004685f8)[iVar5 * 0x54] = 0;
-    (&DAT_00468600)[iVar5 * 0x54] = uVar1;
+    *(undefined2 *)&_Actors[iVar5].field_0x2c = 0xffff;
+    *(undefined2 *)&_Actors[iVar5].field_0x10 = 0;
+    *(ushort *)&_Actors[iVar5].field_0x18 = uVar1;
     FUN_0043426d((char)uVar6,uVar9,uVar8,(short)param_4,unaff_ESI & 0xffff0000 | (uint)uVar1);
-    (&DAT_0046860a)[iVar5 * 0x54] = 0;
+    *(undefined2 *)&_Actors[iVar5].field_0x22 = 0;
     if (((uVar1 == 0x15) || (uVar1 == 0x18)) || (uVar1 == 0x19)) {
-      uVar6 = FUN_00414eb6((char)(&DAT_00468624)[iVar5 * 0x54],extraout_DL_01,extraout_CL_00,
-                           (&DAT_00468624)[iVar5 * 0x54],
-                           CONCAT22(extraout_var,(&DAT_0046861e)[iVar5 * 0x54]));
-      psVar7 = (short *)FUN_0041469e((char)(&DAT_00468602)[iVar5 * 0x54],extraout_DL_02,
+      uVar6 = FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar5].field_0x3c,extraout_DL_01,
+                           extraout_CL_00,*(undefined2 *)&_Actors[iVar5].field_0x3c,
+                           CONCAT22(extraout_var,*(undefined2 *)&_Actors[iVar5].field_0x36));
+      psVar7 = (short *)FUN_0041469e((char)*(ushort *)&_Actors[iVar5].field_0x1a,extraout_DL_02,
                                      extraout_CL_01,
                                      uVar6 & 0xffff0000 |
-                                     (uint)(ushort)(&DAT_00468602)[iVar5 * 0x54],
+                                     (uint)*(ushort *)&_Actors[iVar5].field_0x1a,
                                      uVar6 & 0xffff0000 | (uint)*(ushort *)(uVar6 + 0x12));
-      if (ushort == 0) {
+      if (obverse == 0) {
         if (bVar3) {
           sVar4 = 0x10;
           sVar10 = 0x23;
@@ -6893,11 +6894,11 @@ void FUN_00417792(undefined param_1,undefined param_2,undefined param_3,undefine
         sVar10 = 10;
       }
       sVar2 = *psVar7;
-      (&DAT_004685fc)[iVar5 * 0x54] = sVar4 + sVar2;
-      (&DAT_004685e8)[iVar5 * 0x54] = sVar4 + sVar2;
+      *(short *)&_Actors[iVar5].field_0x14 = sVar4 + sVar2;
+      *(short *)(_Actors + iVar5) = sVar4 + sVar2;
       sVar4 = psVar7[1];
-      (&DAT_004685fe)[iVar5 * 0x54] = sVar10 + sVar4;
-      (&DAT_004685ea)[iVar5 * 0x54] = sVar10 + sVar4;
+      *(short *)&_Actors[iVar5].field_0x16 = sVar10 + sVar4;
+      *(short *)&_Actors[iVar5].field_0x2 = sVar10 + sVar4;
     }
   }
   return;
@@ -6920,30 +6921,30 @@ void FUN_004178b8(undefined4 param_1,undefined4 param_2,uint param_3,short param
   undefined4 local_8;
   
   iVar5 = (int)param_4;
-  iVar6 = FUN_00414eb6((char)(&DAT_00468602)[iVar5 * 0x54],(undefined)param_2,(char)param_3,
-                       (&DAT_00468602)[iVar5 * 0x54],
-                       CONCAT22(param_4 >> 0xf,(&DAT_0046861e)[iVar5 * 0x54]));
+  iVar6 = FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar5].field_0x1a,(undefined)param_2,
+                       (char)param_3,*(undefined2 *)&_Actors[iVar5].field_0x1a,
+                       CONCAT22(param_4 >> 0xf,*(undefined2 *)&_Actors[iVar5].field_0x36));
   sVar1 = *(short *)(iVar6 + 0x10);
   iVar7 = (int)sVar1;
   if (iVar7 == 6) {
     uVar3 = *(undefined2 *)(iVar6 + 0x12);
-    (&DAT_0046860a)[param_4 * 0x54] = 0;
+    *(undefined2 *)&_Actors[param_4].field_0x22 = 0;
     uVar4 = 0x23;
-    if ((short)(&DAT_00468634)[param_4 * 0x54] < 0) {
+    if (*(short *)&_Actors[param_4].field_0x4c < 0) {
       uVar4 = 0x22;
     }
     local_8 = CONCAT22(uVar4,uVar3);
   }
   else if (iVar7 == 9) {
     uVar2 = *(ushort *)(iVar6 + 0x12);
-    (&DAT_0046860a)[param_4 * 0x54] = 0;
+    *(undefined2 *)&_Actors[param_4].field_0x22 = 0;
     local_8 = CONCAT22(0x15,uVar2 & 0xf);
   }
   else {
     local_8 = param_3;
     if (iVar7 - 10U < 2) {
       uVar3 = *(undefined2 *)(iVar6 + 0x12);
-      (&DAT_0046860a)[param_4 * 0x54] = 0;
+      *(undefined2 *)&_Actors[param_4].field_0x22 = 0;
       uVar4 = 0x19;
       if (sVar1 != 10) {
         uVar4 = 0x18;
@@ -6951,13 +6952,13 @@ void FUN_004178b8(undefined4 param_1,undefined4 param_2,uint param_3,short param
       local_8 = CONCAT22(uVar4,uVar3) & 0xffff000f;
     }
   }
-  *(undefined4 *)(&DAT_0046867e + iVar5 * 0xa8) = 0;
-  (&DAT_00468608)[iVar5 * 0x54] = local_8._2_2_;
-  (&DAT_00468614)[iVar5 * 0x54] = local_8._2_2_;
-  *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) =
-       *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) + -1;
-  (&DAT_00468624)[iVar5 * 0x54] = (&DAT_00468602)[iVar5 * 0x54];
-  (&DAT_00468602)[iVar5 * 0x54] = (undefined2)local_8;
+  *(undefined4 *)&_Actors[iVar5].field_0x96 = 0;
+  *(undefined2 *)&_Actors[iVar5].field_0x20 = local_8._2_2_;
+  *(undefined2 *)&_Actors[iVar5].field_0x2c = local_8._2_2_;
+  *(short *)(&DAT_00466398 + *(short *)&_Actors[iVar5].field_0x1a * 2) =
+       *(short *)(&DAT_00466398 + *(short *)&_Actors[iVar5].field_0x1a * 2) + -1;
+  *(undefined2 *)&_Actors[iVar5].field_0x3c = *(undefined2 *)&_Actors[iVar5].field_0x1a;
+  *(undefined2 *)&_Actors[iVar5].field_0x1a = (undefined2)local_8;
   return;
 }
 
@@ -6989,10 +6990,10 @@ void __stdcall DoSomethingWithEseqResources_(void)
   }
   sVar3 = 2;
   do {
-    *(undefined4 *)(&DAT_0046865e + sVar3 * 0xa8) = DAT_004663c0;
-    *(undefined4 *)(&DAT_00468662 + sVar3 * 0xa8) = DAT_004663b8;
-    *(undefined4 *)(&DAT_00468666 + sVar3 * 0xa8) = DAT_004663c4;
-    *(undefined4 *)(&DAT_0046866a + sVar3 * 0xa8) = DAT_004663bc;
+    *(undefined4 *)&_Actors[sVar3].field_0x76 = DAT_004663c0;
+    *(undefined4 *)&_Actors[sVar3].field_0x7a = DAT_004663b8;
+    *(undefined4 *)&_Actors[sVar3].field_0x7e = DAT_004663c4;
+    *(undefined4 *)&_Actors[sVar3].field_0x82 = DAT_004663bc;
     sVar3 = sVar3 + 1;
   } while (sVar3 < 0xc);
   return;
@@ -7036,34 +7037,34 @@ void FUN_00417abd(void)
   DoSomethingWithEseqResources_();
   sVar2 = 2;
   do {
-    (&DAT_0046862a)[sVar2 * 0x54] = sVar2;
-    (&DAT_004685f8)[sVar2 * 0x54] = 0;
-    (&DAT_00468626)[sVar2 * 0x54] = 0;
-    (&DAT_004685fa)[sVar2 * 0x54] = 2;
-    (&DAT_0046864e)[sVar2 * 0x2a] = &LAB_00417454;
-    (&DAT_00468616)[sVar2 * 0x54] = 1;
-    (&DAT_00468618)[sVar2 * 0x54] = 1;
-    (&DAT_0046865a)[sVar2 * 0x2a] = DAT_00466394;
-    (&DAT_0046863e)[sVar2 * 0x2a] = &DAT_004663d0;
-    (&DAT_00468642)[sVar2 * 0x2a] = &DAT_0046647c;
+    *(short *)&_Actors[sVar2].field_0x42 = sVar2;
+    *(undefined2 *)&_Actors[sVar2].field_0x10 = 0;
+    *(undefined2 *)&_Actors[sVar2].field_0x3e = 0;
+    *(undefined2 *)&_Actors[sVar2].field_0x12 = 2;
+    *(undefined **)&_Actors[sVar2].field_0x66 = &LAB_00417454;
+    *(undefined2 *)&_Actors[sVar2].field_0x2e = 1;
+    *(undefined2 *)&_Actors[sVar2].field_0x30 = 1;
+    *(Dlist **)&_Actors[sVar2].field_0x72 = DAT_00466394;
+    _Actors[sVar2].obverseDynamics = &DAT_004663d0;
+    _Actors[sVar2].reverseDynamics = &DAT_0046647c;
     uVar3 = 0x119a;
     if (sVar1 < 3) {
       uVar3 = 0x1198;
     }
-    (&DAT_00468682)[sVar2 * 0x54] = uVar3;
-    *(undefined4 *)(&DAT_0046865e + sVar2 * 0xa8) = DAT_004663c0;
-    *(undefined4 *)(&DAT_00468662 + sVar2 * 0xa8) = DAT_004663b8;
-    *(undefined4 *)(&DAT_00468666 + sVar2 * 0xa8) = DAT_004663c4;
-    *(undefined4 *)(&DAT_0046866a + sVar2 * 0xa8) = DAT_004663bc;
-    (&DAT_00468670)[sVar2 * 0x2a] = FUN_004178b8;
-    (&DAT_00468608)[sVar2 * 0x54] = 0xffff;
-    (&DAT_004685f6)[sVar2 * 0x54] = 0xffff;
-    (&DAT_00468614)[sVar2 * 0x54] = 0xffff;
-    (&DAT_00468674)[sVar2 * 0x2a] = FUN_00417792;
-    (&DAT_00468678)[sVar2 * 0x2a] = 0;
-    (&DAT_0046864a)[sVar2 * 0x2a] = FUN_00417532;
-    *(undefined2 *)(&DAT_0046860c + sVar2 * 0xa8) = 0xffff;
-    (&DAT_00468652)[sVar2 * 0x2a] = 0;
+    *(undefined2 *)&_Actors[sVar2].field_0x9a = uVar3;
+    *(undefined4 *)&_Actors[sVar2].field_0x76 = DAT_004663c0;
+    *(undefined4 *)&_Actors[sVar2].field_0x7a = DAT_004663b8;
+    *(undefined4 *)&_Actors[sVar2].field_0x7e = DAT_004663c4;
+    *(undefined4 *)&_Actors[sVar2].field_0x82 = DAT_004663bc;
+    *(code **)&_Actors[sVar2].field_0x88 = FUN_004178b8;
+    *(undefined2 *)&_Actors[sVar2].field_0x20 = 0xffff;
+    *(undefined2 *)&_Actors[sVar2].field_0xe = 0xffff;
+    *(undefined2 *)&_Actors[sVar2].field_0x2c = 0xffff;
+    *(code **)&_Actors[sVar2].field_0x8c = FUN_00417792;
+    *(undefined4 *)&_Actors[sVar2].field_0x90 = 0;
+    *(code **)&_Actors[sVar2].field_0x62 = FUN_00417532;
+    *(undefined2 *)&_Actors[sVar2].field_0x24 = 0xffff;
+    *(undefined4 *)&_Actors[sVar2].field_0x6a = 0;
     sVar2 = sVar2 + 1;
   } while (sVar2 < 0xc);
   return;
@@ -7091,47 +7092,47 @@ void FUN_00417c69(void)
 
 {
   short sVar1;
-  ushort ushort;
+  ushort obverse;
   int iVar2;
   uint uVar3;
   undefined4 extraout_ECX;
   undefined4 extraout_ECX_00;
   undefined4 uVar4;
-  undefined *puVar5;
-  short sVar6;
-  short *psVar7;
+  int iVar5;
+  short actorIndex;
+  short *psVar6;
   short local_e;
   short local_c;
   
-  puVar5 = &DAT_00468738;
+  iVar5 = 0x468738;
   sVar1 = *(short *)_LevelLut1_[_GameState->level];
-  psVar7 = (short *)((int)_LevelLut1_[_GameState->level] + 2);
+  psVar6 = (short *)((int)_LevelLut1_[_GameState->level] + 2);
   if (_DAT_00467cf0 == 2) {
-    iVar2 = (int)*psVar7 >> 1;
+    iVar2 = (int)*psVar6 >> 1;
     if (iVar2 < 0) {
-      iVar2 = iVar2 + (uint)(((int)*psVar7 & 1U) != 0);
+      iVar2 = iVar2 + (uint)(((int)*psVar6 & 1U) != 0);
     }
-    *psVar7 = (short)iVar2;
+    *psVar6 = (short)iVar2;
   }
   Memset(&DAT_00466398,0,0x20);
-  sVar6 = 2;
+  actorIndex = 2;
   uVar4 = extraout_ECX;
   do {
-    if (sVar6 + -2 < (int)sVar1) {
-      *(ushort *)(puVar5 + 0x2a) = (ushort)(*(short *)&_GameState->field_0x16 == 0);
-      *(undefined2 *)(puVar5 + 0x48) = 0;
-      *(undefined2 *)(puVar5 + 0x22) = 0;
-      *(undefined2 *)(puVar5 + 0x70) = 0;
-      *(undefined4 *)(puVar5 + 0x96) = 0;
-      *(undefined2 *)(puVar5 + 0x6e) = 0xffff;
-      *(undefined2 *)(puVar5 + 0x3c) = 0xffff;
-      *(short *)(&DAT_00466398 + *psVar7 * 2) = *(short *)(&DAT_00466398 + *psVar7 * 2) + 1;
-      *(short *)(puVar5 + 0x1a) = *psVar7;
-      psVar7 = psVar7 + 1;
-      uVar3 = FUN_00414700((char)*(undefined2 *)(puVar5 + 0x1a),(char)sVar1,(char)uVar4,
-                           *(undefined2 *)(puVar5 + 0x1a));
-      ushort = RoomIsObverse(*(short *)(puVar5 + 0x1a));
-      if (*(short *)(puVar5 + 0x9a) == 0x119a) {
+    if (actorIndex + -2 < (int)sVar1) {
+      *(ushort *)(iVar5 + 0x2a) = (ushort)(*(short *)&_GameState->field_0x16 == 0);
+      *(undefined2 *)(iVar5 + 0x48) = 0;
+      *(undefined2 *)(iVar5 + 0x22) = 0;
+      *(undefined2 *)(iVar5 + 0x70) = 0;
+      *(undefined4 *)(iVar5 + 0x96) = 0;
+      *(undefined2 *)(iVar5 + 0x6e) = 0xffff;
+      *(undefined2 *)(iVar5 + 0x3c) = 0xffff;
+      *(short *)(&DAT_00466398 + *psVar6 * 2) = *(short *)(&DAT_00466398 + *psVar6 * 2) + 1;
+      *(short *)(iVar5 + 0x1a) = *psVar6;
+      psVar6 = psVar6 + 1;
+      uVar3 = FUN_00414700((char)*(undefined2 *)(iVar5 + 0x1a),(char)sVar1,(char)uVar4,
+                           *(undefined2 *)(iVar5 + 0x1a));
+      obverse = RoomIsObverse(*(short *)(iVar5 + 0x1a));
+      if (*(short *)(iVar5 + 0x9a) == 0x119a) {
         local_c = 0x1b;
         local_e = 0x2e;
       }
@@ -7139,39 +7140,39 @@ void FUN_00417c69(void)
         local_c = 0x1d;
         local_e = 0x36;
       }
-      if (ushort == 0) {
+      if (obverse == 0) {
         iVar2 = Random();
-        *(short *)(puVar5 + 0x1c) = (short)(iVar2 % 3);
-        *(short *)(puVar5 + 0x16) = *(short *)(puVar5 + 0x1c) * 100 + local_e;
+        *(short *)(iVar5 + 0x1c) = (short)(iVar2 % 3);
+        *(short *)(iVar5 + 0x16) = *(short *)(iVar5 + 0x1c) * 100 + local_e;
         if ((uVar3 & 2) != 0) {
-          *(short *)(puVar5 + 0x1c) = *(short *)(puVar5 + 0x1c) + 3;
+          *(short *)(iVar5 + 0x1c) = *(short *)(iVar5 + 0x1c) + 3;
         }
       }
       else {
         iVar2 = Random();
-        *(short *)(puVar5 + 0x1c) = (short)(iVar2 % 6);
-        *(short *)(puVar5 + 0x16) = *(short *)(puVar5 + 0x1c) * 0x32 + local_c;
+        *(short *)(iVar5 + 0x1c) = (short)(iVar2 % 6);
+        *(short *)(iVar5 + 0x16) = *(short *)(iVar5 + 0x1c) * 0x32 + local_c;
       }
-      *(undefined2 *)(puVar5 + 0x1e) = 0xffff;
-      *(undefined2 *)(puVar5 + 0x18) = 0;
+      *(undefined2 *)(iVar5 + 0x1e) = 0xffff;
+      *(undefined2 *)(iVar5 + 0x18) = 0;
       iVar2 = Random();
       if (iVar2 % 100 < 0x32) {
-        *(undefined2 *)(puVar5 + 0x14) = 0x10;
-        *(undefined4 *)(puVar5 + 0x96) = 2;
+        *(undefined2 *)(iVar5 + 0x14) = 0x10;
+        *(undefined4 *)(iVar5 + 0x96) = 2;
       }
       else {
-        *(undefined2 *)(puVar5 + 0x14) = 0x1e0;
-        *(undefined4 *)(puVar5 + 0x96) = 1;
+        *(undefined2 *)(iVar5 + 0x14) = 0x1e0;
+        *(undefined4 *)(iVar5 + 0x96) = 1;
       }
-      FUN_00434334(sVar6,ushort);
+      ActorUpdateDynamics(actorIndex,obverse);
       uVar4 = extraout_ECX_00;
     }
     else {
-      *(undefined2 *)(puVar5 + 0x2a) = 1;
+      *(undefined2 *)(iVar5 + 0x2a) = 1;
     }
-    puVar5 = puVar5 + 0xa8;
-    sVar6 = sVar6 + 1;
-  } while (sVar6 < 0xc);
+    iVar5 = iVar5 + 0xa8;
+    actorIndex = actorIndex + 1;
+  } while (actorIndex < 0xc);
   return;
 }
 
@@ -7375,81 +7376,79 @@ uint FUN_00418ea1(undefined param_1,undefined param_2,undefined param_3,short pa
   bool bVar1;
   short sVar2;
   int iVar3;
-  int iVar4;
-  undefined2 *puVar5;
-  byte *pbVar6;
-  uint uVar7;
-  ushort uVar8;
+  Actor *pAVar4;
+  byte *pbVar5;
+  uint uVar6;
+  ushort uVar7;
   Rect16 *q;
-  short sVar9;
+  short sVar8;
   short local_1e;
   ushort local_8;
   
   bVar1 = false;
   iVar3 = (int)param_4;
-  iVar4 = iVar3 * 0xa8;
-  puVar5 = &DAT_004685e8 + iVar3 * 0x54;
-  pbVar6 = (byte *)FUN_00414c47((char)puVar5,param_2,param_3,puVar5);
+  pAVar4 = _Actors + iVar3;
+  pbVar5 = (byte *)FUN_00414c47((char)pAVar4,param_2,param_3,pAVar4);
   local_8 = 0;
-  if ((&DAT_0046861a)[iVar3 * 0x54] == 0) {
-    local_1e = *(short *)(*(int *)((&DAT_0046863a)[iVar3 * 0x2a] +
-                                  (short)(&DAT_00468600)[iVar3 * 0x54] * 4) + 2);
+  if (*(short *)&_Actors[iVar3].field_0x32 == 0) {
+    local_1e = *(short *)(*(int *)(_Actors[iVar3].currentDynamics +
+                                  *(short *)&_Actors[iVar3].field_0x18 * 4) + 2);
   }
   else {
-    local_1e = (&DAT_0046861a)[iVar3 * 0x54];
+    local_1e = *(short *)&_Actors[iVar3].field_0x32;
   }
-  sVar2 = (&DAT_00468604)[iVar3 * 0x54];
-  if (((*pbVar6 & 1) == 0) && (2 < sVar2)) {
+  sVar2 = *(short *)&_Actors[iVar3].field_0x1c;
+  if (((*pbVar5 & 1) == 0) && (2 < sVar2)) {
     sVar2 = sVar2 + -3;
   }
-  q = *(Rect16 **)(pbVar6 + sVar2 * 4 + 0x1e);
-  sVar2 = *(short *)(pbVar6 + sVar2 * 2 + 0x12);
-  sVar9 = 0;
-  while ((sVar9 < sVar2 && (!bVar1))) {
-    uVar7 = CheckCollision(param_5,q);
-    if ((ushort)uVar7 != 0) {
-      uVar8 = (ushort)uVar7 & 3;
-      switch(uVar8) {
+  q = *(Rect16 **)(pbVar5 + sVar2 * 4 + 0x1e);
+  sVar2 = *(short *)(pbVar5 + sVar2 * 2 + 0x12);
+  sVar8 = 0;
+  while ((sVar8 < sVar2 && (!bVar1))) {
+    uVar6 = CheckCollision(param_5,q);
+    if ((ushort)uVar6 != 0) {
+      uVar7 = (ushort)uVar6 & 3;
+      switch(uVar7) {
       case 1:
         if (param_6 == 1) {
-          *(short *)(&DAT_00468636 + iVar4) = q->x;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x;
           bVar1 = true;
         }
         else {
-          *(short *)(&DAT_00468636 + iVar4) = q->x;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x;
           bVar1 = true;
         }
         break;
       case 2:
-        uVar8 = 2;
+        uVar7 = 2;
         if (param_6 == -1) {
-          *(short *)(&DAT_00468636 + iVar4) = q->x + q->w + -1;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x + q->w + -1;
           bVar1 = true;
         }
         else {
-          *(short *)(&DAT_00468636 + iVar4) = q->x;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x;
           bVar1 = true;
         }
         break;
       case 3:
         if (local_1e < 0) {
-          uVar8 = 2;
-          *(short *)(&DAT_00468636 + iVar4) = q->x + q->w + -1;
+          uVar7 = 2;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x + q->w + -1;
           bVar1 = true;
         }
         else {
-          uVar8 = 1;
-          *(short *)(&DAT_00468636 + iVar4) = q->x;
+          uVar7 = 1;
+          *(short *)&_Actors[iVar3].field_0x4e = q->x;
           bVar1 = true;
         }
       }
-      local_8 = local_8 | uVar8;
+      local_8 = local_8 | uVar7;
     }
     q = (Rect16 *)&q[1].y;
-    sVar9 = sVar9 + 1;
+    sVar8 = sVar8 + 1;
   }
-  *(ushort *)(iVar4 + 0x468632) = local_8;
-  return (uint)puVar5 & 0xffff0000 | (uint)local_8;
+  *(ushort *)&_Actors[iVar3].field_0x4a = local_8;
+  return (uint)pAVar4 & 0xffff0000 | (uint)local_8;
 }
 
 
@@ -7469,13 +7468,13 @@ ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short 
   ushort local_10;
   ushort local_e;
   Room *local_c;
-  undefined2 *local_8;
+  Actor *local_8;
   
   iVar4 = (int)param_4;
-  local_8 = &DAT_004685e8 + iVar4 * 0x54;
-  local_c = _Rooms[(short)(&DAT_00468602)[iVar4 * 0x54]];
+  local_8 = _Actors + iVar4;
+  local_c = _Rooms[*(short *)&_Actors[iVar4].field_0x1a];
   local_e = 0;
-  sVar3 = (&DAT_00468604)[iVar4 * 0x54];
+  sVar3 = *(short *)&_Actors[iVar4].field_0x1c;
   if (((*(byte *)&local_c->flags & 1) == 0) && (2 < sVar3)) {
     sVar3 = sVar3 + -3;
   }
@@ -7504,7 +7503,7 @@ LAB_00419140:
             }
             uVar5 = CheckCollision(&local_18,param_5);
             if (((short)uVar5 != 0) && (local_e = local_e | local_10, (local_10 & 0x780) != 0)) {
-              local_8[0x1c] = (short)((int)(uVar2 & 0x3fff) >> 2);
+              *(short *)&local_8->field_0x38 = (short)((int)(uVar2 & 0x3fff) >> 2);
             }
           }
           local_1c = local_1c + 1;
@@ -7515,9 +7514,9 @@ LAB_00419140:
     }
     uVar5 = CheckCollision((Rect16 *)(iVar4 + 0xc),param_5);
     if ((short)uVar5 != 0) {
-      local_8[0x24] = 0x800;
+      *(undefined2 *)&local_8->field_0x48 = 0x800;
       local_e = 0x800;
-      local_8[0x20] = sVar6;
+      *(short *)&local_8->field_0x40 = sVar6;
       goto LAB_00419140;
     }
     sVar6 = sVar6 + 1;
@@ -7541,8 +7540,7 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
   int iVar7;
   uint uVar8;
   short *psVar9;
-  int iVar10;
-  Rect16 *q;
+  Actor *q;
   ushort *local_20;
   Rect16 local_18;
   ushort local_10;
@@ -7551,28 +7549,27 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
   short local_6;
   
   iVar6 = (int)param_4;
-  iVar10 = iVar6 * 0xa8;
-  q = (Rect16 *)(&DAT_004685e8 + iVar6 * 0x54);
-  pRVar1 = _Rooms[(short)(&DAT_00468602)[iVar6 * 0x54]];
-  sVar2 = (&DAT_00468604)[iVar6 * 0x54];
+  q = _Actors + iVar6;
+  pRVar1 = _Rooms[*(short *)&_Actors[iVar6].field_0x1a];
+  sVar2 = *(short *)&_Actors[iVar6].field_0x1c;
   if (((*(byte *)&pRVar1->flags & 1) == 0) && (2 < sVar2)) {
     sVar2 = sVar2 + -3;
   }
   local_6 = pRVar1->field13_0xa4[sVar2];
   local_8 = pRVar1->field14_0xb0[sVar2];
-  (&DAT_00468630)[iVar6 * 0x54] = 0;
+  *(undefined2 *)&_Actors[iVar6].field_0x48 = 0;
   iVar7 = DlistHead(pRVar1->partEntities);
   for (sVar2 = 0; sVar2 < pRVar1->partEntityCount; sVar2 = sVar2 + 1) {
     local_c = (OtherEntity *)(iVar7 + 0xc);
-    uVar8 = CheckCollision((Rect16 *)local_c,q);
+    uVar8 = CheckCollision((Rect16 *)local_c,(Rect16 *)q);
     if ((short)uVar8 != 0) {
-      (&DAT_00468630)[iVar6 * 0x54] = (&DAT_00468630)[iVar6 * 0x54] | 0x800;
-      (&DAT_00468628)[iVar6 * 0x54] = sVar2;
+      *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 | 0x800;
+      *(short *)&_Actors[iVar6].field_0x40 = sVar2;
       break;
     }
     iVar7 = DlistNext(iVar7);
   }
-  if ((&DAT_00468618)[iVar6 * 0x54] != 0) {
+  if (*(short *)&_Actors[iVar6].field_0x30 != 0) {
     if (param_4 == 0) {
       psVar9 = &DAT_00460b70;
     }
@@ -7583,18 +7580,18 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
       psVar9 = &DAT_00460b9c;
     }
     for (; *psVar9 != -1; psVar9 = psVar9 + 1) {
-      iVar7 = (int)*psVar9;
-      if (((((&DAT_00468612)[iVar7 * 0x54] == 0) && ((&DAT_00468618)[iVar7 * 0x54] != 0)) &&
-          ((&DAT_00468602)[iVar7 * 0x54] == (&DAT_00468602)[iVar6 * 0x54])) &&
-         (((&DAT_00468604)[iVar7 * 0x54] == (&DAT_00468604)[iVar6 * 0x54] &&
-          (uVar8 = CheckCollision(q,(Rect16 *)(&DAT_004685e8 + iVar7 * 0x54)), (short)uVar8 != 0))))
-      {
+      sVar2 = *psVar9;
+      if ((((*(short *)&_Actors[sVar2].field_0x2a == 0) &&
+           (*(short *)&_Actors[sVar2].field_0x30 != 0)) &&
+          (*(short *)&_Actors[sVar2].field_0x1a == *(short *)&_Actors[iVar6].field_0x1a)) &&
+         ((*(short *)&_Actors[sVar2].field_0x1c == *(short *)&_Actors[iVar6].field_0x1c &&
+          (uVar8 = CheckCollision((Rect16 *)q,(Rect16 *)(_Actors + sVar2)), (short)uVar8 != 0)))) {
         uVar3 = 0x1000;
-        if (-1 < (short)(&DAT_00468634)[iVar7 * 0x54]) {
+        if (-1 < *(short *)&_Actors[sVar2].field_0x4c) {
           uVar3 = 0x2000;
         }
-        (&DAT_00468630)[iVar6 * 0x54] = (&DAT_00468630)[iVar6 * 0x54] | uVar3;
-        *(undefined2 *)(&DAT_00468656 + iVar10) = (&DAT_0046862a)[iVar7 * 0x54];
+        *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 | uVar3;
+        *(undefined2 *)&_Actors[iVar6].field_0x6e = *(undefined2 *)&_Actors[sVar2].field_0x42;
         break;
       }
     }
@@ -7613,39 +7610,39 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
           Memcpy(&local_18,
                  &pRVar1->ladderEntityGroups[uVar3 & 3][(int)(uVar3 & 0x3fff) >> 2].collision_,10);
         }
-        uVar8 = CheckCollision(&local_18,q);
+        uVar8 = CheckCollision(&local_18,(Rect16 *)q);
         sVar4 = (short)uVar8;
         if (sVar4 != 0) {
-          (&DAT_00468630)[iVar6 * 0x54] = (&DAT_00468630)[iVar6 * 0x54] | local_10;
+          *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 | local_10;
           if ((local_10 & 0x4c) != 0) {
-            (&DAT_0046861e)[iVar6 * 0x54] = (short)((int)(uVar3 & 0x3fff) >> 2);
+            *(short *)&_Actors[iVar6].field_0x36 = (short)((int)(uVar3 & 0x3fff) >> 2);
             return;
           }
           if ((local_10 & 0x30) != 0) {
-            (&DAT_0046861e)[iVar6 * 0x54] = (short)((int)(uVar3 & 0x3fff) >> 2);
+            *(short *)&_Actors[iVar6].field_0x36 = (short)((int)(uVar3 & 0x3fff) >> 2);
             return;
           }
           if ((local_10 & 0x780) != 0) {
-            *(short *)(&DAT_00468620 + iVar10) = (short)((int)(uVar3 & 0x3fff) >> 2);
+            *(short *)&_Actors[iVar6].field_0x38 = (short)((int)(uVar3 & 0x3fff) >> 2);
             return;
           }
           if ((local_10 & 1) != 0) {
-            *(short *)(&DAT_00468622 + iVar10) = (short)((int)(uVar3 & 0x3fff) >> 2);
-            if ((sVar4 != 2) || ((&DAT_00468634)[iVar6 * 0x54] != -1)) {
+            *(short *)&_Actors[iVar6].field_0x3a = (short)((int)(uVar3 & 0x3fff) >> 2);
+            if ((sVar4 != 2) || (*(short *)&_Actors[iVar6].field_0x4c != -1)) {
               if (sVar4 != 1) {
                 return;
               }
-              if ((&DAT_00468634)[iVar6 * 0x54] != 1) {
+              if (*(short *)&_Actors[iVar6].field_0x4c != 1) {
                 return;
               }
             }
-            (&DAT_00468630)[iVar6 * 0x54] = (&DAT_00468630)[iVar6 * 0x54] & 1;
+            *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 & 1;
             return;
           }
           if ((local_10 & 2) != 0) {
             uVar5 = (undefined2)((int)(uVar3 & 0x3fff) >> 2);
-            (&DAT_0046861e)[iVar6 * 0x54] = uVar5;
-            *(undefined2 *)(&DAT_00468622 + iVar10) = uVar5;
+            *(undefined2 *)&_Actors[iVar6].field_0x36 = uVar5;
+            *(undefined2 *)&_Actors[iVar6].field_0x3a = uVar5;
             return;
           }
         }
@@ -8291,7 +8288,7 @@ void FUN_0041a32f(undefined param_1,undefined param_2,undefined param_3,int para
   
   sVar1 = *(short *)(param_4 + 0x6e);
   uVar2 = FUN_00416815();
-  DAT_00468626 = 0x96;
+  _Actors[0]._62_2_ = 0x96;
   iVar12 = *(int *)(param_4 + 0x72);
   iVar4 = FUN_004352c9(uVar2,extraout_DL,extraout_CL,iVar12);
   sVar13 = (short)iVar4;
@@ -8401,8 +8398,8 @@ uint FUN_0041a491(void)
   uVar6 = 0xffffffff;
   local_c = FUN_004341b9();
   FUN_0041a42a((char)local_c,extraout_DL,extraout_CL,0);
-  if (DAT_00468626 != 0) {
-    DAT_00468626 = DAT_00468626 + -1;
+  if (_Actors[0]._62_2_ != 0) {
+    _Actors[0]._62_2_ = _Actors[0]._62_2_ + -1;
     local_c = local_c & 0xcfffffff;
   }
   if (_DAT_00461a9e != 0) {
@@ -8411,7 +8408,7 @@ uint FUN_0041a491(void)
   if (_GameState->field28_0x1c == 0) {
     local_c = local_c & 0xffffffdf;
   }
-  puVar7 = (uint *)(&PTR_DAT_004613d8)[DAT_00468600];
+  puVar7 = (uint *)(&PTR_DAT_004613d8)[_Actors[0]._24_2_];
   if (puVar7 != (uint *)0x0) {
     for (; (!bVar3 && (*puVar7 != 0xffffffff)); puVar7 = puVar7 + 3) {
       if ((*puVar7 == (~puVar7[1] & local_c)) || (*puVar7 == 0)) {
@@ -8421,13 +8418,13 @@ uint FUN_0041a491(void)
         uVar6 = uVar2 | uVar1;
         if (((short)uVar1 < 0xc) || (0xf < (short)uVar1)) {
           if ((uVar1 == 0x10) || (uVar1 == 0x11)) {
-            psVar4 = *(short **)(&DAT_004602e0 + DAT_00468604 * 4);
-            for (sVar5 = 0; sVar5 < *(short *)(&DAT_004602d4 + DAT_00468604 * 2); sVar5 = sVar5 + 1)
-            {
-              if (((uVar1 == psVar4[4]) && (DAT_004685e8 < (short)(*psVar4 + psVar4[2]))) &&
-                 (*psVar4 < (short)(DAT_004685e8 + _DAT_004685ec))) {
+            psVar4 = *(short **)(&DAT_004602e0 + _Actors[0]._28_2_ * 4);
+            for (sVar5 = 0; sVar5 < *(short *)(&DAT_004602d4 + _Actors[0]._28_2_ * 2);
+                sVar5 = sVar5 + 1) {
+              if (((uVar1 == psVar4[4]) && (_Actors[0]._0_2_ < (short)(*psVar4 + psVar4[2]))) &&
+                 (*psVar4 < (short)(_Actors[0]._0_2_ + _Actors[0]._4_2_))) {
                 uVar6 = uVar2 | (ushort)psVar4[1];
-                _DAT_00468620 = psVar4[3];
+                _Actors[0]._56_2_ = psVar4[3];
                 break;
               }
               psVar4 = psVar4 + 5;
@@ -8435,12 +8432,13 @@ uint FUN_0041a491(void)
           }
         }
         else {
-          psVar4 = *(short **)(&DAT_004602bc + DAT_00468604 * 4);
-          for (sVar5 = 0; sVar5 < *(short *)(&DAT_004602b0 + DAT_00468604 * 2); sVar5 = sVar5 + 1) {
-            if (((uVar1 == psVar4[4]) && (DAT_004685e8 < (short)(*psVar4 + psVar4[2]))) &&
-               (*psVar4 < (short)(DAT_004685e8 + _DAT_004685ec))) {
+          psVar4 = *(short **)(&DAT_004602bc + _Actors[0]._28_2_ * 4);
+          for (sVar5 = 0; sVar5 < *(short *)(&DAT_004602b0 + _Actors[0]._28_2_ * 2);
+              sVar5 = sVar5 + 1) {
+            if (((uVar1 == psVar4[4]) && (_Actors[0]._0_2_ < (short)(*psVar4 + psVar4[2]))) &&
+               (*psVar4 < (short)(_Actors[0]._0_2_ + _Actors[0]._4_2_))) {
               uVar6 = uVar2 | (ushort)psVar4[1];
-              _DAT_00468620 = psVar4[3];
+              _Actors[0]._56_2_ = psVar4[3];
               break;
             }
             psVar4 = psVar4 + 5;
@@ -8466,7 +8464,7 @@ void FUN_0041a633(void)
 
 {
   ushort uVar1;
-  ushort ushort;
+  ushort obverse;
   undefined2 extraout_var;
   uint uVar2;
   short *psVar3;
@@ -8480,25 +8478,25 @@ void FUN_0041a633(void)
   short sVar5;
   uint unaff_EBX;
   
-  ushort = RoomIsObverse(DAT_00468602);
+  obverse = RoomIsObverse(_Actors[0]._26_2_);
   DAT_00462550 = 0;
-  FUN_00434334(0,ushort);
-  uVar1 = DAT_00468614;
-  DAT_004685f8 = 0;
-  DAT_004686aa = DAT_00468602;
-  if (DAT_00468614 != 0xffff) {
-    uVar2 = (uint)DAT_00468614;
-    DAT_00468614 = 0xffff;
-    DAT_00468600 = uVar1;
-    FUN_0043426d((char)DAT_00468602,extraout_DL,extraout_CL,0,unaff_EBX & 0xffff0000 | uVar2);
-    DAT_0046860a = 0;
+  ActorUpdateDynamics(0,obverse);
+  uVar1 = _Actors[0]._44_2_;
+  _Actors[0]._16_2_ = 0;
+  _Actors[1]._26_2_ = _Actors[0]._26_2_;
+  if (_Actors[0]._44_2_ != 0xffff) {
+    uVar2 = (uint)_Actors[0]._44_2_;
+    _Actors[0]._44_2_ = 0xffff;
+    _Actors[0]._24_2_ = uVar1;
+    FUN_0043426d((char)_Actors[0]._26_2_,extraout_DL,extraout_CL,0,unaff_EBX & 0xffff0000 | uVar2);
+    _Actors[0]._34_2_ = 0;
     if (((uVar1 == 0x21) || (uVar1 == 0x2c)) || (uVar1 == 0x2d)) {
-      uVar2 = FUN_00414eb6((char)DAT_00468624,extraout_DL_00,extraout_CL_00,DAT_00468624,
-                           CONCAT22(extraout_var,DAT_0046861e));
-      psVar3 = (short *)FUN_0041469e((char)DAT_00468602,extraout_DL_01,extraout_CL_01,
-                                     uVar2 & 0xffff0000 | (uint)DAT_00468602,
+      uVar2 = FUN_00414eb6((char)_Actors[0]._60_2_,extraout_DL_00,extraout_CL_00,_Actors[0]._60_2_,
+                           CONCAT22(extraout_var,_Actors[0]._54_2_));
+      psVar3 = (short *)FUN_0041469e((char)_Actors[0]._26_2_,extraout_DL_01,extraout_CL_01,
+                                     uVar2 & 0xffff0000 | (uint)_Actors[0]._26_2_,
                                      uVar2 & 0xffff0000 | (uint)*(ushort *)(uVar2 + 0x12));
-      if (ushort == 0) {
+      if (obverse == 0) {
         sVar5 = 0x10;
         sVar4 = 0x1c;
       }
@@ -8506,13 +8504,13 @@ void FUN_0041a633(void)
         sVar5 = 5;
         sVar4 = 0xb;
       }
-      DAT_004685e8 = sVar5 + *psVar3;
-      DAT_004685ea = sVar4 + psVar3[1];
-      DAT_004685fc = DAT_004685e8;
-      DAT_004685fe = DAT_004685ea;
+      _Actors[0]._0_2_ = sVar5 + *psVar3;
+      _Actors[0]._2_2_ = sVar4 + psVar3[1];
+      _Actors[0]._20_2_ = _Actors[0]._0_2_;
+      _Actors[0]._22_2_ = _Actors[0]._2_2_;
     }
     if (uVar1 == 0x35) {
-      DAT_00468604 = 5;
+      _Actors[0]._28_2_ = 5;
     }
   }
   return;
@@ -8534,8 +8532,8 @@ void FUN_0041a70e(void)
   undefined2 unaff_SI;
   ushort unaff_DI;
   
-  iVar1 = FUN_00414eb6((char)DAT_00468602,in_DL,in_CL,DAT_00468602,
-                       in_EAX & 0xffff0000 | (uint)DAT_0046861e);
+  iVar1 = FUN_00414eb6((char)_Actors[0]._26_2_,in_DL,in_CL,_Actors[0]._26_2_,
+                       in_EAX & 0xffff0000 | (uint)_Actors[0]._54_2_);
   FUN_0041a42a((char)iVar1,extraout_DL,extraout_CL,1);
   if (iVar1 == 0) {
     unaff_DI = _GameState->field29_0x1e;
@@ -8547,7 +8545,7 @@ void FUN_0041a70e(void)
     case 6:
       unaff_DI = *(ushort *)(iVar1 + 0x12);
       unaff_SI = 0x29;
-      if (DAT_00468634 < 1) {
+      if (_Actors[0]._76_2_ < 1) {
         unaff_SI = 0x28;
       }
       break;
@@ -8558,7 +8556,7 @@ void FUN_0041a70e(void)
       unaff_DI = _RoomIndex;
       break;
     case 8:
-      _GameState->field29_0x1e = DAT_00468602;
+      _GameState->field29_0x1e = _Actors[0]._26_2_;
       unaff_DI = 0;
       unaff_SI = 0;
       break;
@@ -8576,16 +8574,14 @@ void FUN_0041a70e(void)
       }
     }
   }
-  DAT_00468624 = DAT_00468602;
-  DAT_00468602 = unaff_DI;
-  DAT_00468608 = unaff_SI;
-  DAT_00468614 = unaff_SI;
+  _Actors[0]._60_2_ = _Actors[0]._26_2_;
+  _Actors[0]._26_2_ = unaff_DI;
+  _Actors[0]._32_2_ = unaff_SI;
+  _Actors[0]._44_2_ = unaff_SI;
   return;
 }
 
 
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 void __stdcall FUN_0041a823(void)
 
@@ -8597,23 +8593,23 @@ void __stdcall FUN_0041a823(void)
   
   if (DAT_00460bec == (short *)0x0) {
     DAT_00460bec = GetEseqResource_(0x1194,(int)&DAT_00466904,&local_8,&local_c);
-    _DAT_00468662 = local_8;
-    _DAT_0046866a = local_c;
+    _Actors[0]._122_4_ = local_8;
+    _Actors[0]._130_4_ = local_c;
   }
   if (DAT_00460bf0 == (short *)0x0) {
     DAT_00460bf0 = GetEseqResource_(0x1195,(int)&DAT_004667f0,&local_10,&local_14);
-    _DAT_0046865e = local_10;
-    _DAT_00468666 = local_14;
+    _Actors[0]._118_4_ = local_10;
+    _Actors[0]._126_4_ = local_14;
   }
   if (DAT_00460bf4 == (short *)0x0) {
     DAT_00460bf4 = GetEseqResource_(0x1196,(int)&DAT_00466a2c,&local_8,&local_c);
-    _DAT_0046870a = local_8;
-    _DAT_00468712 = local_c;
+    _Actors[1]._122_4_ = local_8;
+    _Actors[1]._130_4_ = local_c;
   }
   if (DAT_00460bf8 == (short *)0x0) {
     DAT_00460bf8 = GetEseqResource_(0x1197,(int)&DAT_00466a18,&local_10,&local_14);
-    _DAT_00468706 = local_10;
-    _DAT_0046870e = local_14;
+    _Actors[1]._118_4_ = local_10;
+    _Actors[1]._126_4_ = local_14;
   }
   return;
 }
@@ -8647,11 +8643,11 @@ void FUN_0041a8fe(void)
 void FUN_0041a92e(void)
 
 {
-  ushort ushort;
+  ushort obverse;
   
-  ushort = RoomIsObverse(DAT_004686aa);
-  FUN_00434334(1,ushort);
-  DAT_004686a0 = 0;
+  obverse = RoomIsObverse(_Actors[1]._26_2_);
+  ActorUpdateDynamics(1,obverse);
+  _Actors[1]._16_2_ = 0;
   return;
 }
 
@@ -8660,48 +8656,48 @@ void FUN_0041a92e(void)
 void FUN_0041a954(void)
 
 {
-  DAT_0046862a = 0;
-  DAT_00468612 = 0;
-  DAT_004685f8 = 0;
-  DAT_00468602 = 0;
-  DAT_004685fa = 2;
-  DAT_0046864e = &LAB_0041a140;
-  DAT_00468616 = 1;
-  DAT_00468618 = 1;
-  DAT_0046865a = DlistNew();
-  DAT_0046863e = &DAT_00466904;
-  DAT_00468642 = &DAT_004667f0;
-  DAT_00468670 = FUN_0041a70e;
-  DAT_00468608 = 0xffff;
-  DAT_004685f6 = 0xffff;
-  DAT_00468614 = 0;
-  DAT_00468674 = FUN_0041a633;
-  DAT_0046861a = 0;
-  DAT_00468678 = &PTR_DAT_004613d8;
-  DAT_0046864a = FUN_0041a491;
-  DAT_00468682 = 0x1194;
-  DAT_00468652 = FUN_0041a32f;
-  FUN_00434334(0,0);
-  DAT_0046869e = 0xffff;
-  DAT_004686a0 = 0;
-  DAT_004686a2 = 2;
-  DAT_004686b0 = 0xffff;
-  DAT_004686ba = 1;
-  DAT_004686bc = 0xffff;
-  DAT_004686be = 1;
-  DAT_004686c0 = 1;
-  DAT_004686c2 = 0;
-  DAT_004686d2 = 1;
-  DAT_004686e6 = &DAT_00466a2c;
-  DAT_004686ea = &DAT_00466a18;
-  DAT_004686f2 = FUN_0041a62a;
-  DAT_004686f6 = 0;
-  DAT_004686fa = 0;
-  DAT_00468702 = 0;
-  DAT_00468718 = 0;
-  DAT_0046871c = FUN_0041a92e;
-  DAT_00468720 = &DAT_004613c8;
-  DAT_0046872a = 0x1196;
+  _Actors[0]._66_2_ = 0;
+  _Actors[0]._42_2_ = 0;
+  _Actors[0]._16_2_ = 0;
+  _Actors[0]._26_2_ = 0;
+  _Actors[0]._18_2_ = 2;
+  _Actors[0]._102_4_ = &LAB_0041a140;
+  _Actors[0]._46_2_ = 1;
+  _Actors[0]._48_2_ = 1;
+  _Actors[0]._114_4_ = DlistNew();
+  _Actors[0].obverseDynamics = &DAT_00466904;
+  _Actors[0].reverseDynamics = &DAT_004667f0;
+  _Actors[0]._136_4_ = FUN_0041a70e;
+  _Actors[0]._32_2_ = 0xffff;
+  _Actors[0]._14_2_ = 0xffff;
+  _Actors[0]._44_2_ = 0;
+  _Actors[0]._140_4_ = FUN_0041a633;
+  _Actors[0]._50_2_ = 0;
+  _Actors[0]._144_4_ = &PTR_DAT_004613d8;
+  _Actors[0]._98_4_ = FUN_0041a491;
+  _Actors[0]._154_2_ = 0x1194;
+  _Actors[0]._106_4_ = FUN_0041a32f;
+  ActorUpdateDynamics(0,0);
+  _Actors[1]._14_2_ = 0xffff;
+  _Actors[1]._16_2_ = 0;
+  _Actors[1]._18_2_ = 2;
+  _Actors[1]._32_2_ = 0xffff;
+  _Actors[1]._42_2_ = 1;
+  _Actors[1]._44_2_ = 0xffff;
+  _Actors[1]._46_2_ = 1;
+  _Actors[1]._48_2_ = 1;
+  _Actors[1]._50_2_ = 0;
+  _Actors[1]._66_2_ = 1;
+  _Actors[1].obverseDynamics = &DAT_00466a2c;
+  _Actors[1].reverseDynamics = &DAT_00466a18;
+  _Actors[1]._98_4_ = FUN_0041a62a;
+  _Actors[1]._102_4_ = 0;
+  _Actors[1]._106_4_ = 0;
+  _Actors[1]._114_4_ = 0;
+  _Actors[1]._136_4_ = 0;
+  _Actors[1]._140_4_ = FUN_0041a92e;
+  _Actors[1]._144_4_ = &DAT_004613c8;
+  _Actors[1]._154_2_ = 0x1196;
   return;
 }
 
@@ -8711,7 +8707,7 @@ void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,ushort p
                  )
 
 {
-  ushort ushort;
+  ushort obverse;
   undefined2 extraout_var;
   GameState *pGVar2;
   undefined extraout_CL;
@@ -8726,24 +8722,24 @@ void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,ushort p
   uint uVar1;
   
   if (_GameState->field28_0x1c != 0) {
-    DAT_004686ba = 0;
-    DAT_00468690 = DAT_004685fc + param_5;
-    DAT_004686a6 = DAT_004685fe;
-    DAT_004686ac = DAT_00468604;
-    DAT_004686b0 = 0xffff;
-    DAT_004686bc = 0xffff;
-    DAT_004686aa = DAT_00468602;
-    DAT_004686b2 = 0;
-    DAT_004686a0 = 0;
-    DAT_004686d8 = 0;
-    DAT_004686c2 = 0;
-    DAT_004686ae = 0xffff;
-    DAT_004686c4 = 0xffff;
-    DAT_004686c0 = 1;
-    DAT_004686a4 = DAT_00468690;
-    ushort = RoomIsObverse(DAT_00468602);
-    uVar1 = CONCAT22(extraout_var,ushort);
-    FUN_00434334(1,ushort);
+    _Actors[1]._42_2_ = 0;
+    _Actors[1]._0_2_ = _Actors[0]._20_2_ + param_5;
+    _Actors[1]._22_2_ = _Actors[0]._22_2_;
+    _Actors[1]._28_2_ = _Actors[0]._28_2_;
+    _Actors[1]._32_2_ = 0xffff;
+    _Actors[1]._44_2_ = 0xffff;
+    _Actors[1]._26_2_ = _Actors[0]._26_2_;
+    _Actors[1]._34_2_ = 0;
+    _Actors[1]._16_2_ = 0;
+    _Actors[1]._72_2_ = 0;
+    _Actors[1]._50_2_ = 0;
+    _Actors[1]._30_2_ = 0xffff;
+    _Actors[1]._52_2_ = 0xffff;
+    _Actors[1]._48_2_ = 1;
+    _Actors[1]._20_2_ = _Actors[1]._0_2_;
+    obverse = RoomIsObverse(_Actors[0]._26_2_);
+    uVar1 = CONCAT22(extraout_var,obverse);
+    ActorUpdateDynamics(1,obverse);
     FUN_0043426d((char)param_4,extraout_DL,extraout_CL,1,uVar1 & 0xffff0000 | (uint)param_4);
     _GameState->field28_0x1c = _GameState->field28_0x1c + -1;
     DAT_004605b6 = DAT_004605b6 | 8;
@@ -8771,14 +8767,14 @@ void FUN_0041abd6(void)
 
 {
   _DAT_00460bea = 0;
-  DAT_00468604 = 0;
-  DAT_00468626 = 0;
-  DAT_00468624 = 0xffff;
-  DAT_00468602 = 0;
-  DAT_004686ba = 1;
-  DAT_00468658 = 0;
-  DAT_00468630 = 0;
-  DlistInit(DAT_0046865a);
+  _Actors[0]._28_2_ = 0;
+  _Actors[0]._62_2_ = 0;
+  _Actors[0]._60_2_ = 0xffff;
+  _Actors[0]._26_2_ = 0;
+  _Actors[1]._42_2_ = 1;
+  _Actors[0]._112_2_ = 0;
+  _Actors[0]._72_2_ = 0;
+  DlistInit(_Actors[0]._114_4_);
   return;
 }
 
@@ -21206,8 +21202,8 @@ void FUN_0042fe4c(void)
   uVar3 = FUN_004143a5();
   uVar2 = FUN_00434d2a(uVar3,extraout_EDX_00,extraout_ECX_00);
   FUN_0043d7c3(uVar2,extraout_EDX_01,extraout_ECX_01);
-  pDVar4 = DAT_0046865a;
-  uVar1 = DlistInit(DAT_0046865a);
+  pDVar4 = _Actors[0]._114_4_;
+  uVar1 = DlistInit(_Actors[0]._114_4_);
   FUN_0044c950(uVar1,extraout_DL,(char)pDVar4,0);
   FUN_00447746();
   return;
@@ -24571,7 +24567,7 @@ uint FUN_004341b9(void)
     _DAT_00460be8 = 0;
     _DAT_004667ec = uVar1;
   }
-  return uVar3 | (int)DAT_00468630 << 0x10;
+  return uVar3 | (int)_Actors[0]._72_2_ << 0x10;
 }
 
 
@@ -24601,12 +24597,12 @@ void FUN_0043426d(undefined param_1,undefined param_2,undefined param_3,short pa
   int iVar2;
   
   iVar2 = (int)param_4;
-  *(undefined2 *)(&DAT_00468606 + iVar2 * 0xa8) = (&DAT_00468600)[iVar2 * 0x54];
-  (&DAT_00468600)[iVar2 * 0x54] = (short)param_5;
-  puVar1 = *(undefined2 **)((&DAT_0046863a)[iVar2 * 0x2a] + (short)param_5 * 4);
-  (&DAT_0046860a)[iVar2 * 0x54] = 0;
-  (&DAT_004685fa)[iVar2 * 0x54] = *puVar1;
-  (&DAT_00468634)[iVar2 * 0x54] = puVar1[1];
+  *(undefined2 *)&_Actors[iVar2].field_0x1e = *(undefined2 *)&_Actors[iVar2].field_0x18;
+  *(short *)&_Actors[iVar2].field_0x18 = (short)param_5;
+  puVar1 = *(undefined2 **)(_Actors[iVar2].currentDynamics + (short)param_5 * 4);
+  *(undefined2 *)&_Actors[iVar2].field_0x22 = 0;
+  *(undefined2 *)&_Actors[iVar2].field_0x12 = *puVar1;
+  *(undefined2 *)&_Actors[iVar2].field_0x4c = puVar1[1];
   return;
 }
 
@@ -24645,25 +24641,6 @@ short * __stdcall GetEseqResource_(ushort param_1,int param_2,short **param_3,sh
 
 
 
-void __stdcall FUN_00434334(short param_1,short ushort)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  
-  iVar1 = (int)param_1;
-  if (ushort == 1) {
-    uVar2 = (&DAT_0046863e)[iVar1 * 0x2a];
-  }
-  else {
-    uVar2 = (&DAT_00468642)[iVar1 * 0x2a];
-  }
-  (&DAT_0046863a)[iVar1 * 0x2a] = uVar2;
-  return;
-}
-
-
-
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 void FUN_0043435b(void)
@@ -24679,40 +24656,40 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
 
 {
   ushort uVar1;
-  ushort uVar2;
-  undefined2 uVar3;
-  short *psVar4;
-  int iVar5;
-  undefined uVar6;
-  ushort uVar7;
-  short sVar8;
-  int iVar9;
-  GameState *pGVar10;
+  undefined2 uVar2;
+  Actor *pAVar3;
+  int iVar4;
+  undefined uVar5;
+  ushort uVar6;
+  short sVar7;
+  int iVar8;
+  GameState *pGVar9;
+  Actor *pAVar10;
   int iVar11;
   undefined2 extraout_var;
   undefined2 *puVar12;
   uint uVar13;
   undefined extraout_CL;
   undefined uVar14;
-  short *extraout_ECX;
-  short *extraout_ECX_00;
-  short *extraout_ECX_01;
-  short *extraout_ECX_02;
-  short *extraout_ECX_03;
-  short *extraout_ECX_04;
-  short *extraout_ECX_05;
-  short *extraout_ECX_06;
-  short *extraout_ECX_07;
-  short *extraout_ECX_08;
-  short *extraout_ECX_09;
-  short *extraout_ECX_10;
-  short *extraout_ECX_11;
+  ushort uVar15;
+  Actor *extraout_ECX;
+  Actor *extraout_ECX_00;
+  Actor *extraout_ECX_01;
+  Actor *extraout_ECX_02;
+  Actor *extraout_ECX_03;
+  Actor *extraout_ECX_04;
+  Actor *extraout_ECX_05;
+  Actor *extraout_ECX_06;
+  Actor *extraout_ECX_07;
+  Actor *extraout_ECX_08;
+  Actor *extraout_ECX_09;
+  Actor *extraout_ECX_10;
+  Actor *extraout_ECX_11;
   char extraout_DL;
-  char cVar15;
+  char cVar16;
   char extraout_DL_00;
-  short sVar16;
-  int iVar17;
-  short *psVar18;
+  short sVar17;
+  Actor *pAVar18;
   int iVar19;
   short *psVar20;
   short local_14;
@@ -24722,349 +24699,351 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
   ushort local_8;
   ushort local_6;
   
-  iVar9 = (int)(short)param_4;
-  iVar17 = iVar9 * 0xa8;
-  psVar18 = &DAT_004685e8 + iVar9 * 0x54;
+  iVar8 = (int)(short)param_4;
+  pAVar18 = _Actors + iVar8;
   local_6 = 0;
-  psVar20 = (short *)(uint)(ushort)(&DAT_00468602)[iVar9 * 0x54];
-  uVar7 = RoomIsObverse((&DAT_00468602)[iVar9 * 0x54]);
-  psVar4 = *(short **)(&DAT_0046865e + (short)uVar7 * 4 + iVar17);
-  iVar5 = *(int *)(&DAT_00468666 + (short)uVar7 * 4 + iVar17);
-  iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
-                            (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
+  pAVar10 = (Actor *)(uint)*(ushort *)&_Actors[iVar8].field_0x1a;
+  uVar6 = RoomIsObverse(*(ushort *)&_Actors[iVar8].field_0x1a);
+  pAVar3 = *(Actor **)(iVar8 * 0xa8 + 0x46865e + (short)uVar6 * 4);
+  iVar4 = *(int *)(iVar8 * 0xa8 + 0x468666 + (short)uVar6 * 4);
+  iVar19 = *(int *)(*(int *)(_Actors[iVar8].currentDynamics +
+                            *(short *)&_Actors[iVar8].field_0x18 * 4) + 4);
   while( true ) {
-    sVar8 = (&DAT_0046860a)[iVar9 * 0x54];
-    uVar14 = SUB41(psVar20,0);
-    uVar6 = (undefined)param_4;
-    if (-1 < *(short *)(iVar19 + sVar8 * 10)) break;
-    local_8 = *(ushort *)(iVar19 + 2 + sVar8 * 10);
-    cVar15 = (char)sVar8 * '\x05';
-    uVar1 = *(ushort *)(iVar19 + 4 + sVar8 * 10);
-    pGVar10 = (GameState *)(*(short *)(iVar19 + sVar8 * 10) + 0x2e);
-    switch(pGVar10) {
+    sVar7 = *(short *)&_Actors[iVar8].field_0x22;
+    uVar14 = SUB41(pAVar10,0);
+    uVar5 = (undefined)param_4;
+    if (-1 < *(short *)(iVar19 + sVar7 * 10)) break;
+    local_8 = *(ushort *)(iVar19 + 2 + sVar7 * 10);
+    cVar16 = (char)sVar7 * '\x05';
+    uVar15 = *(ushort *)(iVar19 + 4 + sVar7 * 10);
+    pGVar9 = (GameState *)(*(short *)(iVar19 + sVar7 * 10) + 0x2e);
+    switch(pGVar9) {
     case (GameState *)0x0:
-      sVar8 = 0x1fe;
-      if (uVar7 == 0) {
-        sVar8 = 0x1fc;
+      sVar7 = 0x1fe;
+      if (uVar6 == 0) {
+        sVar7 = 0x1fc;
       }
-      psVar20 = (short *)(uint)(ushort)(sVar8 - psVar4[(short)local_8]);
-      (&DAT_004685fc)[iVar9 * 0x54] = sVar8 - psVar4[(short)local_8];
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      uVar15 = sVar7 - *(short *)((int)&pAVar3->field_0x0 + (short)local_8 * 2);
+      pAVar10 = (Actor *)(uint)uVar15;
+      *(ushort *)&_Actors[iVar8].field_0x14 = uVar15;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x3:
       if (local_8 == 0xffff) {
-        iVar11 = CONCAT22((short)((uint)pGVar10 >> 0x10),0x12);
+        iVar11 = CONCAT22((short)((uint)pGVar9 >> 0x10),0x12);
         if (*(short *)&_GameState->field_0x16 != 0) {
           iVar11 = iVar11 + -10;
         }
         FUN_0043c382((char)iVar11,(char)_GameState,uVar14,iVar11,5,0);
-        psVar20 = extraout_ECX_10;
+        pAVar10 = extraout_ECX_10;
       }
       else {
-        FUN_0043c382((char)local_8,cVar15,uVar14,(uint)pGVar10 & 0xffff0000 | (uint)local_8,0,0);
-        psVar20 = extraout_ECX_11;
+        FUN_0043c382((char)local_8,cVar16,uVar14,(uint)pGVar9 & 0xffff0000 | (uint)local_8,0,0);
+        pAVar10 = extraout_ECX_11;
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x4:
-      if ((*(byte *)(&DAT_00468630 + iVar9 * 0x54) & 1) == 0) {
-        (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      if ((_Actors[iVar8].field_0x48 & 1) == 0) {
+        *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       }
       else {
-        (&DAT_0046860a)[iVar9 * 0x54] = local_8;
+        *(ushort *)&_Actors[iVar8].field_0x22 = local_8;
       }
       break;
     case (GameState *)0x5:
-      psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                                      (&DAT_00468602)[iVar9 * 0x54],
-                                      (uint)pGVar10 & 0xffff0000 |
-                                      (uint)*(ushort *)(&DAT_00468622 + iVar17));
-      (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + 4;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      psVar20 = extraout_ECX_09;
+      psVar20 = (short *)FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,uVar14,
+                                      *(undefined2 *)&_Actors[iVar8].field_0x1a,
+                                      (uint)pGVar9 & 0xffff0000 |
+                                      (uint)*(ushort *)&_Actors[iVar8].field_0x3a);
+      *(short *)&_Actors[iVar8].field_0x14 = *psVar20 + 4;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      pAVar10 = extraout_ECX_09;
       break;
     case (GameState *)0x6:
-      psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                                      (&DAT_00468602)[iVar9 * 0x54],
-                                      (uint)pGVar10 & 0xffff0000 |
-                                      (uint)*(ushort *)(&DAT_00468622 + iVar17));
-      (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + psVar4[(short)local_8] + -7;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      psVar20 = psVar4;
+      psVar20 = (short *)FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,uVar14,
+                                      *(undefined2 *)&_Actors[iVar8].field_0x1a,
+                                      (uint)pGVar9 & 0xffff0000 |
+                                      (uint)*(ushort *)&_Actors[iVar8].field_0x3a);
+      *(short *)&_Actors[iVar8].field_0x14 =
+           *psVar20 + *(short *)((int)&pAVar3->field_0x0 + (short)local_8 * 2) + -7;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      pAVar10 = pAVar3;
       break;
     case (GameState *)0x9:
-      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
-        uVar1 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
-        psVar20 = (short *)(uint)uVar1;
-        FUN_00446b08((char)uVar1,(char)DAT_00461aa8,uVar14,uVar1);
+      if (*(short *)&_Actors[iVar8].field_0x1a == _RoomIndex) {
+        uVar15 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
+        pAVar10 = (Actor *)(uint)uVar15;
+        FUN_00446b08((char)uVar15,(char)DAT_00461aa8,uVar14,uVar15);
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0xa:
-      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
-        uVar2 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
-        psVar20 = (short *)(uint)uVar2;
-        sVar8 = FUN_00446fc9((char)uVar2,(char)DAT_00461aa8,uVar14,uVar2);
-        if (sVar8 == 0) {
-          uVar3 = *(undefined2 *)(DAT_00461aa8 + (short)local_8 * 2);
-          FUN_004465a5((char)uVar3,(char)DAT_00461aa8,(char)psVar20,uVar3,uVar1 & 0xff,
-                       (short)((uint)(int)(short)uVar1 >> 8));
-          psVar20 = extraout_ECX_08;
+      if (*(short *)&_Actors[iVar8].field_0x1a == _RoomIndex) {
+        uVar1 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
+        pAVar10 = (Actor *)(uint)uVar1;
+        sVar7 = FUN_00446fc9((char)uVar1,(char)DAT_00461aa8,uVar14,uVar1);
+        if (sVar7 == 0) {
+          uVar2 = *(undefined2 *)(DAT_00461aa8 + (short)local_8 * 2);
+          FUN_004465a5((char)uVar2,(char)DAT_00461aa8,(char)pAVar10,uVar2,uVar15 & 0xff,
+                       (short)((uint)(int)(short)uVar15 >> 8));
+          pAVar10 = extraout_ECX_08;
         }
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0xd:
-      psVar20 = (short *)((uint)pGVar10 & 0xffff0000 | (uint)param_4);
-      FUN_004174d3(uVar6,cVar15,uVar14,psVar20);
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      pAVar10 = (Actor *)((uint)pGVar9 & 0xffff0000 | (uint)param_4);
+      FUN_004174d3(uVar5,cVar16,uVar14,pAVar10);
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0xe:
-      *(short *)(&DAT_0046860e + iVar17) = *(short *)(&DAT_0046860e + iVar17) + -1;
-      if (*(short *)(&DAT_0046860e + iVar17) == 0) {
-        (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x26 = *(short *)&_Actors[iVar8].field_0x26 + -1;
+      if (*(short *)&_Actors[iVar8].field_0x26 == 0) {
+        *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       }
       else {
-        (&DAT_0046860a)[iVar9 * 0x54] = *(undefined2 *)(&DAT_00468610 + iVar17);
+        *(undefined2 *)&_Actors[iVar8].field_0x22 = *(undefined2 *)&_Actors[iVar8].field_0x28;
       }
       break;
     case (GameState *)0xf:
-      *(undefined2 *)(&DAT_0046860e + iVar17) =
+      *(undefined2 *)&_Actors[iVar8].field_0x26 =
            *(undefined2 *)(&DAT_00462558 + _GameState->levelInBuilding * 2);
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      *(undefined2 *)(&DAT_00468610 + iVar17) = (&DAT_0046860a)[iVar9 * 0x54];
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      *(undefined2 *)&_Actors[iVar8].field_0x28 = *(undefined2 *)&_Actors[iVar8].field_0x22;
       break;
     case (GameState *)0x10:
-      DAT_004686ba = 1;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      pGVar10 = _GameState;
+      _Actors[1]._42_2_ = 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      pGVar9 = _GameState;
       if (_GameState->field28_0x1c == 0) {
-        pGVar10 = (GameState *)FUN_0043c382((char)_GameState,cVar15,uVar14,0xe,0,0);
+        pGVar9 = (GameState *)FUN_0043c382((char)_GameState,cVar16,uVar14,0xe,0,0);
         uVar14 = extraout_CL;
-        cVar15 = extraout_DL_00;
+        cVar16 = extraout_DL_00;
       }
-      psVar20 = DAT_00468732;
-      FUN_00412f04((char)pGVar10,cVar15,uVar14,DAT_00468732);
+      pAVar10 = _Actors[1]._162_4_;
+      FUN_00412f04((char)pGVar9,cVar16,uVar14,_Actors[1]._162_4_);
       break;
     case (GameState *)0x11:
-      psVar20 = psVar18;
-      (*(code *)(&DAT_00468652)[iVar9 * 0x2a])();
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      pAVar10 = pAVar18;
+      (**(code **)&_Actors[iVar8].field_0x6a)();
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x12:
-      (&DAT_00468618)[iVar9 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x30 = local_8;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x13:
-      FUN_0041aab9((char)local_8,cVar15,uVar14,local_8,uVar1);
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      psVar20 = extraout_ECX_06;
+      FUN_0041aab9((char)local_8,cVar16,uVar14,local_8,uVar15);
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      pAVar10 = extraout_ECX_06;
       break;
     case (GameState *)0x14:
       puVar12 = (undefined2 *)
-                FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                             (&DAT_00468602)[iVar9 * 0x54],
-                             (uint)pGVar10 & 0xffff0000 |
-                             (uint)(ushort)(&DAT_0046861e)[iVar9 * 0x54]);
-      (&DAT_004685fc)[iVar9 * 0x54] = *puVar12;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      psVar20 = extraout_ECX_07;
+                FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,uVar14,
+                             *(undefined2 *)&_Actors[iVar8].field_0x1a,
+                             (uint)pGVar9 & 0xffff0000 | (uint)*(ushort *)&_Actors[iVar8].field_0x36
+                            );
+      *(undefined2 *)&_Actors[iVar8].field_0x14 = *puVar12;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      pAVar10 = extraout_ECX_07;
       break;
     case (GameState *)0x15:
-      (&DAT_00468612)[iVar9 * 0x54] = 1;
-      pGVar10 = _GameState;
+      *(undefined2 *)&_Actors[iVar8].field_0x2a = 1;
+      pGVar9 = _GameState;
       if (_GameState->field28_0x1c == 0) {
-        pGVar10 = (GameState *)FUN_0043c382((char)_GameState,cVar15,uVar14,0xe,0,0);
+        pGVar9 = (GameState *)FUN_0043c382((char)_GameState,cVar16,uVar14,0xe,0,0);
       }
 LAB_00434a96:
-      return (uint)pGVar10 & 0xffff0000 | (uint)local_6;
+      return (uint)pGVar9 & 0xffff0000 | (uint)local_6;
     case (GameState *)0x16:
-      (&DAT_004685fa)[iVar9 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x12 = local_8;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x17:
-      if (uVar1 == 0xffff) {
-        psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                                        (&DAT_00468602)[iVar9 * 0x54],
-                                        (uint)pGVar10 & 0xffff0000 |
-                                        (uint)*(ushort *)(&DAT_00468620 + iVar17));
+      if (uVar15 == 0xffff) {
+        pAVar10 = (Actor *)FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,
+                                        uVar14,*(undefined2 *)&_Actors[iVar8].field_0x1a,
+                                        (uint)pGVar9 & 0xffff0000 |
+                                        (uint)*(ushort *)&_Actors[iVar8].field_0x38);
         FUN_00414734();
       }
       else {
         FUN_0041472f();
-        psVar20 = extraout_ECX_03;
+        pAVar10 = extraout_ECX_03;
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x18:
-      if (uVar1 == 0xffff) {
-        psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                                        (&DAT_00468602)[iVar9 * 0x54],
-                                        (uint)pGVar10 & 0xffff0000 |
-                                        (uint)*(ushort *)(&DAT_00468620 + iVar17));
+      if (uVar15 == 0xffff) {
+        pAVar10 = (Actor *)FUN_00414eb6((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,
+                                        uVar14,*(undefined2 *)&_Actors[iVar8].field_0x1a,
+                                        (uint)pGVar9 & 0xffff0000 |
+                                        (uint)*(ushort *)&_Actors[iVar8].field_0x38);
         FUN_00414739();
       }
       else {
         FUN_0041472a();
-        psVar20 = extraout_ECX_04;
+        pAVar10 = extraout_ECX_04;
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x19:
       if (local_8 != 0x8000) {
-        psVar20 = (short *)FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                                        (&DAT_00468602)[iVar9 * 0x54],
-                                        *(undefined2 *)(&DAT_00468620 + iVar17));
-        (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + local_8;
-        psVar20 = extraout_ECX_01;
-        cVar15 = extraout_DL;
+        psVar20 = (short *)FUN_00414edc((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,
+                                        uVar14,*(undefined2 *)&_Actors[iVar8].field_0x1a,
+                                        *(undefined2 *)&_Actors[iVar8].field_0x38);
+        *(ushort *)&_Actors[iVar8].field_0x14 = *psVar20 + local_8;
+        pAVar10 = extraout_ECX_01;
+        cVar16 = extraout_DL;
       }
-      if (uVar1 != 0x8000) {
-        iVar11 = FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,(char)psVar20,
-                              (&DAT_00468602)[iVar9 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar17))
-        ;
-        (&DAT_004685fe)[iVar9 * 0x54] = uVar1 + *(short *)(iVar11 + 2);
-        psVar20 = extraout_ECX_02;
+      if (uVar15 != 0x8000) {
+        iVar11 = FUN_00414edc((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,(char)pAVar10,
+                              *(undefined2 *)&_Actors[iVar8].field_0x1a,
+                              *(undefined2 *)&_Actors[iVar8].field_0x38);
+        *(ushort *)&_Actors[iVar8].field_0x16 = uVar15 + *(short *)(iVar11 + 2);
+        pAVar10 = extraout_ECX_02;
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x1d:
-      (&DAT_00468616)[iVar9 * 0x54] = 0;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(undefined2 *)&_Actors[iVar8].field_0x2e = 0;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x1e:
-      (&DAT_00468616)[iVar9 * 0x54] = 1;
-      (&DAT_0046861a)[iVar9 * 0x54] = 0;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(undefined2 *)&_Actors[iVar8].field_0x2e = 1;
+      *(undefined2 *)&_Actors[iVar8].field_0x32 = 0;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x1f:
-      (&DAT_004685fe)[iVar9 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x16 = local_8;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x20:
-      (&DAT_004685fc)[iVar9 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x14 = local_8;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x21:
-      (&DAT_004685fe)[iVar9 * 0x54] = (&DAT_004685fe)[iVar9 * 0x54] + local_8;
-      (&DAT_00468604)[iVar9 * 0x54] = (&DAT_00468604)[iVar9 * 0x54] + uVar1;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x16 = *(short *)&_Actors[iVar8].field_0x16 + local_8;
+      *(ushort *)&_Actors[iVar8].field_0x1c = *(short *)&_Actors[iVar8].field_0x1c + uVar15;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x22:
-      (&DAT_004685fc)[iVar9 * 0x54] = (&DAT_004685fc)[iVar9 * 0x54] + local_8;
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(ushort *)&_Actors[iVar8].field_0x14 = *(short *)&_Actors[iVar8].field_0x14 + local_8;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x23:
-      (*(code *)(&DAT_00468670)[iVar9 * 0x2a])();
+      (**(code **)&_Actors[iVar8].field_0x88)();
       if (param_4 == 0) {
         local_6 = 1;
         DAT_00462550 = 1;
-        pGVar10 = (GameState *)CONCAT22(extraout_var,1);
+        pGVar9 = (GameState *)CONCAT22(extraout_var,1);
         goto LAB_00434a96;
       }
-      psVar20 = (short *)(uint)param_4;
-      (*(code *)(&DAT_00468674)[iVar9 * 0x2a])();
-      (&DAT_0046860a)[iVar9 * 0x54] = 0;
-      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
+      pAVar10 = (Actor *)(uint)param_4;
+      (**(code **)&_Actors[iVar8].field_0x8c)();
+      *(undefined2 *)&_Actors[iVar8].field_0x22 = 0;
+      iVar19 = *(int *)(*(int *)(_Actors[iVar8].currentDynamics +
+                                *(short *)&_Actors[iVar8].field_0x18 * 4) + 4);
       break;
     case (GameState *)0x24:
-      psVar20 = psVar18;
-      (*(code *)(&DAT_0046864e)[iVar9 * 0x2a])();
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      pAVar10 = pAVar18;
+      (**(code **)&_Actors[iVar8].field_0x66)();
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x25:
-      iVar11 = FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
-                            (&DAT_00468602)[iVar9 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar17));
-      psVar20 = extraout_ECX_05;
-      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
-        psVar20 = *(short **)(iVar11 + 10);
-        FUN_00412e18((char)iVar11,(char)(&DAT_00468602)[iVar9 * 0x54],(char)extraout_ECX_05,psVar20)
-        ;
+      iVar11 = FUN_00414edc((char)*(undefined2 *)&_Actors[iVar8].field_0x1a,cVar16,uVar14,
+                            *(undefined2 *)&_Actors[iVar8].field_0x1a,
+                            *(undefined2 *)&_Actors[iVar8].field_0x38);
+      pAVar10 = extraout_ECX_05;
+      if (*(short *)&_Actors[iVar8].field_0x1a == _RoomIndex) {
+        pAVar10 = *(Actor **)(iVar11 + 10);
+        FUN_00412e18((char)iVar11,(char)*(short *)&_Actors[iVar8].field_0x1a,(char)extraout_ECX_05,
+                     pAVar10);
       }
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
       break;
     case (GameState *)0x26:
-      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-      (&DAT_004685f0)[iVar9 * 0x54] = (&DAT_004685f0)[iVar9 * 0x54] | 0x8000;
+      *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+      *(ushort *)&_Actors[iVar8].field_0x8 = *(ushort *)&_Actors[iVar8].field_0x8 | 0x8000;
       goto LAB_00434a96;
     case (GameState *)0x27:
-      FUN_0043426d(uVar6,cVar15,uVar14,param_4,
-                   (uint)pGVar10 & 0xffff0000 | (uint)*(ushort *)(&DAT_00468606 + iVar17));
-      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
-      (&DAT_0046860a)[iVar9 * 0x54] = 0;
-      psVar20 = extraout_ECX;
+      FUN_0043426d(uVar5,cVar16,uVar14,param_4,
+                   (uint)pGVar9 & 0xffff0000 | (uint)*(ushort *)&_Actors[iVar8].field_0x1e);
+      iVar19 = *(int *)(*(int *)(_Actors[iVar8].currentDynamics +
+                                *(short *)&_Actors[iVar8].field_0x18 * 4) + 4);
+      *(undefined2 *)&_Actors[iVar8].field_0x22 = 0;
+      pAVar10 = extraout_ECX;
       break;
     case (GameState *)0x28:
-      FUN_0043426d(uVar6,cVar15,uVar14,param_4,(uint)pGVar10 & 0xffff0000 | (uint)local_8);
-      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
-      (&DAT_0046860a)[iVar9 * 0x54] = 0;
-      psVar20 = extraout_ECX_00;
+      FUN_0043426d(uVar5,cVar16,uVar14,param_4,(uint)pGVar9 & 0xffff0000 | (uint)local_8);
+      iVar19 = *(int *)(*(int *)(_Actors[iVar8].currentDynamics +
+                                *(short *)&_Actors[iVar8].field_0x18 * 4) + 4);
+      *(undefined2 *)&_Actors[iVar8].field_0x22 = 0;
+      pAVar10 = extraout_ECX_00;
       break;
     case (GameState *)0x2a:
-      (&DAT_0046860a)[iVar9 * 0x54] = local_8;
+      *(ushort *)&_Actors[iVar8].field_0x22 = local_8;
       break;
     case (GameState *)0x2d:
-      (&DAT_0046860a)[iVar9 * 0x54] = 0;
+      *(undefined2 *)&_Actors[iVar8].field_0x22 = 0;
     }
   }
-  psVar20 = (short *)(iVar19 + sVar8 * 10);
-  (&DAT_004685f0)[iVar9 * 0x54] = psVar20[3];
-  local_10 = psVar4[*psVar20];
-  *(short *)(&DAT_004685ec + iVar17) = local_10;
-  local_e = *(undefined2 *)(iVar5 + *psVar20 * 2);
-  *(undefined2 *)(&DAT_004685ee + iVar17) = local_e;
-  local_14 = (&DAT_004685fc)[iVar9 * 0x54];
-  sVar8 = psVar20[1];
-  sVar16 = (&DAT_004685fc)[iVar9 * 0x54] + sVar8;
-  *psVar18 = sVar16;
-  (&DAT_004685fc)[iVar9 * 0x54] = sVar16;
-  local_12 = psVar20[2] + (&DAT_004685fe)[iVar9 * 0x54];
-  (&DAT_004685ea)[iVar9 * 0x54] = local_12;
-  if ((&DAT_00468616)[iVar9 * 0x54] != 0) {
-    if ((short)(&DAT_004685fc)[iVar9 * 0x54] < local_14) {
-      local_10 = 1 - sVar8;
-      local_14 = (&DAT_004685fc)[iVar9 * 0x54];
+  psVar20 = (short *)(iVar19 + sVar7 * 10);
+  *(short *)&_Actors[iVar8].field_0x8 = psVar20[3];
+  local_10 = *(short *)((int)&pAVar3->field_0x0 + *psVar20 * 2);
+  *(short *)&_Actors[iVar8].field_0x4 = local_10;
+  local_e = *(undefined2 *)(iVar4 + *psVar20 * 2);
+  *(undefined2 *)&_Actors[iVar8].field_0x6 = local_e;
+  local_14 = *(short *)&_Actors[iVar8].field_0x14;
+  sVar7 = psVar20[1];
+  sVar17 = *(short *)&_Actors[iVar8].field_0x14 + sVar7;
+  *(short *)pAVar18 = sVar17;
+  *(short *)&_Actors[iVar8].field_0x14 = sVar17;
+  local_12 = psVar20[2] + *(short *)&_Actors[iVar8].field_0x16;
+  *(short *)&_Actors[iVar8].field_0x2 = local_12;
+  if (*(short *)&_Actors[iVar8].field_0x2e != 0) {
+    if (*(short *)&_Actors[iVar8].field_0x14 < local_14) {
+      local_10 = 1 - sVar7;
+      local_14 = *(short *)&_Actors[iVar8].field_0x14;
     }
     else {
-      local_10 = local_10 + ((&DAT_004685fc)[iVar9 * 0x54] - local_14);
+      local_10 = local_10 + (*(short *)&_Actors[iVar8].field_0x14 - local_14);
     }
-    uVar13 = FUN_00418ea1(uVar6,(char)(&DAT_004685fc)[iVar9 * 0x54],uVar14,param_4,&local_14,0xffff)
-    ;
+    uVar13 = FUN_00418ea1(uVar5,(char)*(short *)&_Actors[iVar8].field_0x14,uVar14,param_4,&local_14,
+                          0xffff);
     if ((short)uVar13 == 0) {
-      (&DAT_0046861a)[iVar9 * 0x54] = 0;
+      *(undefined2 *)&_Actors[iVar8].field_0x32 = 0;
     }
     else if ((short)uVar13 == 2) {
-      if ((short)(&DAT_00468634)[iVar9 * 0x54] < 2) {
-        sVar8 = *(short *)(&DAT_00468636 + iVar17);
-        *psVar18 = sVar8 + 1;
-        (&DAT_004685fc)[iVar9 * 0x54] = sVar8 + 1;
-        (&DAT_0046861a)[iVar9 * 0x54] = 0xffff;
+      if (*(short *)&_Actors[iVar8].field_0x4c < 2) {
+        sVar7 = *(short *)&_Actors[iVar8].field_0x4e + 1;
+        *(short *)pAVar18 = sVar7;
+        *(short *)&_Actors[iVar8].field_0x14 = sVar7;
+        *(undefined2 *)&_Actors[iVar8].field_0x32 = 0xffff;
       }
     }
-    else if (-2 < (short)(&DAT_00468634)[iVar9 * 0x54]) {
-      sVar8 = (*(short *)(&DAT_00468636 + iVar17) - *(short *)(&DAT_004685ec + iVar17)) + 1;
-      *psVar18 = sVar8;
-      (&DAT_004685fc)[iVar9 * 0x54] = sVar8;
-      (&DAT_0046861a)[iVar9 * 0x54] = 1;
+    else if (-2 < *(short *)&_Actors[iVar8].field_0x4c) {
+      sVar7 = (*(short *)&_Actors[iVar8].field_0x4e - *(short *)&_Actors[iVar8].field_0x4) + 1;
+      *(short *)pAVar18 = sVar7;
+      *(short *)&_Actors[iVar8].field_0x14 = sVar7;
+      *(undefined2 *)&_Actors[iVar8].field_0x32 = 1;
     }
   }
-  if ((short)(&DAT_004685fc)[iVar9 * 0x54] < 1) {
-    *psVar18 = 1;
-    (&DAT_004685fc)[iVar9 * 0x54] = 1;
+  if (*(short *)&_Actors[iVar8].field_0x14 < 1) {
+    *(short *)pAVar18 = 1;
+    *(undefined2 *)&_Actors[iVar8].field_0x14 = 1;
   }
-  uVar13 = (int)*psVar18 + (int)*(short *)(&DAT_004685ec + iVar17);
+  uVar13 = (int)*(short *)pAVar18 + (int)*(short *)&_Actors[iVar8].field_0x4;
   if (0x1ff < (int)uVar13) {
-    sVar8 = *(short *)(&DAT_004685ec + iVar17);
+    sVar7 = 0x1ff - *(short *)&_Actors[iVar8].field_0x4;
     uVar13 = uVar13 & 0xffff0000;
-    (&DAT_004685fc)[iVar9 * 0x54] = 0x1ff - sVar8;
-    *psVar18 = 0x1ff - sVar8;
+    *(short *)&_Actors[iVar8].field_0x14 = sVar7;
+    *(short *)pAVar18 = sVar7;
   }
-  (&DAT_0046868e)[iVar9 * 0x54] = *psVar20;
-  (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
-  pGVar10 = (GameState *)(uVar13 & 0xffff0000);
+  *(short *)&_Actors[iVar8].field_0xa6 = *psVar20;
+  *(short *)&_Actors[iVar8].field_0x22 = *(short *)&_Actors[iVar8].field_0x22 + 1;
+  pGVar9 = (GameState *)(uVar13 & 0xffff0000);
   goto LAB_00434a96;
 }
 
@@ -25088,48 +25067,50 @@ void FUN_00434aa1(void)
   undefined extraout_DL_02;
   undefined extraout_DL_03;
   undefined extraout_DL_04;
-  ushort *puVar3;
+  Actor *pAVar3;
   undefined4 unaff_ESI;
   int iVar4;
   
-  puVar3 = &DAT_00468690;
+  pAVar3 = _Actors;
   iVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),1);
   do {
-    if (((puVar3[0x15] == 0) && (in_AX = puVar3[0xd], in_AX == _RoomIndex)) &&
-       (in_AX = puVar3[4], (in_AX & 0x8000) == 0)) {
+    pAVar3 = pAVar3 + 1;
+    if (((*(short *)&pAVar3->field_0x2a == 0) &&
+        (in_AX = *(ushort *)&pAVar3->field_0x1a, in_AX == _RoomIndex)) &&
+       (in_AX = *(ushort *)&pAVar3->field_0x8, (in_AX & 0x8000) == 0)) {
       uVar2 = iVar4 + 10U & 0xffff0000;
-      FUN_0041395c(*(undefined4 *)(puVar3 + 0x51),uVar2 | *puVar3,uVar2 | puVar3[1],
-                   (short)(iVar4 + 10U));
-      uVar1 = FUN_00413d18((char)puVar3[0x53],extraout_DL,extraout_CL,*(undefined4 *)(puVar3 + 0x51)
-                           ,0,puVar3[0x53],(ushort)((*(byte *)(puVar3 + 4) & 2) != 0));
-      in_ECX = *(undefined4 *)(puVar3 + 0x51);
+      FUN_0041395c(*(undefined4 *)&pAVar3->field_0xa2,uVar2 | *(ushort *)pAVar3,
+                   uVar2 | *(ushort *)&pAVar3->field_0x2,(short)(iVar4 + 10U));
+      uVar1 = FUN_00413d18((char)*(undefined2 *)&pAVar3->field_0xa6,extraout_DL,extraout_CL,
+                           *(undefined4 *)&pAVar3->field_0xa2,0,*(undefined2 *)&pAVar3->field_0xa6,
+                           (ushort)((pAVar3->field_0x8 & 2) != 0));
+      in_ECX = *(undefined4 *)&pAVar3->field_0xa2;
       in_AX = FUN_00412e18(uVar1,extraout_DL_00,extraout_CL_00,in_ECX);
       in_DL = extraout_DL_01;
     }
     else {
       uVar1 = (undefined)in_ECX;
-      in_ECX = *(undefined4 *)(puVar3 + 0x51);
-      in_AX = FUN_00412f04((char)in_AX,in_DL,uVar1,*(undefined4 *)(puVar3 + 0x51));
+      in_ECX = *(undefined4 *)&pAVar3->field_0xa2;
+      in_AX = FUN_00412f04((char)in_AX,in_DL,uVar1,*(undefined4 *)&pAVar3->field_0xa2);
       in_DL = extraout_DL_02;
     }
-    puVar3 = puVar3 + 0x54;
     iVar4 = iVar4 + 1;
   } while ((short)iVar4 < 0xc);
-  if (DAT_00468626 == 0) {
+  if (_Actors[0]._62_2_ == 0) {
     DAT_00462562 = 0;
   }
-  if (((int)(short)DAT_004685f0 & 0x8000U) == 0) {
+  if (((int)(short)_Actors[0]._8_2_ & 0x8000U) == 0) {
     if (DAT_00462562 < 2) {
-      FUN_0041395c(DAT_0046868a,CONCAT22((short)DAT_004685f0 >> 0xf,DAT_004685e8),
-                   CONCAT22((short)DAT_004685f0 >> 0xf,DAT_004685ea),0xf);
-      uVar1 = FUN_00413d18((char)DAT_0046868e,extraout_DL_03,extraout_CL_01,DAT_0046868a,0,
-                           DAT_0046868e,(ushort)((DAT_004685f0 & 2) != 0));
-      FUN_00412e18(uVar1,extraout_DL_04,extraout_CL_02,DAT_0046868a);
+      FUN_0041395c(_Actors[0]._162_4_,CONCAT22((short)_Actors[0]._8_2_ >> 0xf,_Actors[0]._0_2_),
+                   CONCAT22((short)_Actors[0]._8_2_ >> 0xf,_Actors[0]._2_2_),0xf);
+      uVar1 = FUN_00413d18((char)_Actors[0]._166_2_,extraout_DL_03,extraout_CL_01,_Actors[0]._162_4_
+                           ,0,_Actors[0]._166_2_,(ushort)((_Actors[0]._8_2_ & 2) != 0));
+      FUN_00412e18(uVar1,extraout_DL_04,extraout_CL_02,_Actors[0]._162_4_);
     }
     else {
-      FUN_00412f04((char)DAT_004685f0,in_DL,(char)in_ECX,DAT_0046868a);
+      FUN_00412f04((char)_Actors[0]._8_2_,in_DL,(char)in_ECX,_Actors[0]._162_4_);
     }
-    if (DAT_00468626 != 0) {
+    if (_Actors[0]._62_2_ != 0) {
       DAT_00462562 = DAT_00462562 + 1;
       uVar2 = (int)DAT_00462562 & 0x80000003;
       if ((int)uVar2 < 0) {
@@ -25151,13 +25132,12 @@ void FUN_00434be3(uint param_1)
   undefined uVar1;
   ushort uVar2;
   ushort uVar3;
-  int iVar4;
-  undefined4 uVar5;
+  undefined4 uVar4;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  short sVar6;
+  short sVar5;
   
   uVar2 = RoomIsObverse(_RoomIndex);
   if (_RoomIndex != 0) {
@@ -25168,29 +25148,29 @@ void FUN_00434be3(uint param_1)
     uVar1 = FUN_004350be();
     uVar1 = FUN_00413b08(uVar1,extraout_DL,extraout_CL,DAT_00462554,FUN_0043435b,1);
     FUN_00412e18(uVar1,extraout_DL_00,extraout_CL_00,DAT_00462554);
-    DAT_004685f6 = DAT_00468682 + uVar2;
+    _Actors[0]._14_2_ = _Actors[0]._154_2_ + uVar2;
     uVar3 = 0x1195;
     if (uVar2 == 0) {
       uVar3 = 0x1194;
     }
-    DAT_0046868a = FUN_00412ac4(uVar3);
-    (*DAT_00468674)();
-    DAT_0046869e = DAT_0046872a + uVar2;
-    DAT_00468732 = FUN_00412ac4(DAT_0046869e);
-    (*DAT_0046871c)();
+    _Actors[0]._162_4_ = FUN_00412ac4(uVar3);
+    (*_Actors[0]._140_4_)();
+    _Actors[1]._14_2_ = _Actors[1]._154_2_ + uVar2;
+    _Actors[1]._162_4_ = FUN_00412ac4(_Actors[1]._14_2_);
+    (*_Actors[1]._140_4_)();
     if (*(short *)&_GameState->field_0x16 == 1) {
-      sVar6 = 2;
+      sVar5 = 2;
       do {
-        iVar4 = (int)sVar6;
-        (&DAT_004685f6)[iVar4 * 0x54] = (&DAT_00468682)[iVar4 * 0x54] + uVar2;
-        uVar5 = FUN_00412ac4((&DAT_004685f6)[iVar4 * 0x54]);
-        (&DAT_0046868a)[iVar4 * 0x2a] = uVar5;
-        FUN_004129d4((&DAT_0046868a)[iVar4 * 0x2a],sVar6);
-        if (((&DAT_00468612)[iVar4 * 0x54] == 0) && ((&DAT_00468602)[iVar4 * 0x54] == _RoomIndex)) {
-          (*(&DAT_00468674)[iVar4 * 0x2a])();
+        *(ushort *)&_Actors[sVar5].field_0xe = *(short *)&_Actors[sVar5].field_0x9a + uVar2;
+        uVar4 = FUN_00412ac4(*(ushort *)&_Actors[sVar5].field_0xe);
+        *(undefined4 *)&_Actors[sVar5].field_0xa2 = uVar4;
+        FUN_004129d4(*(undefined4 *)&_Actors[sVar5].field_0xa2,sVar5);
+        if ((*(short *)&_Actors[sVar5].field_0x2a == 0) &&
+           (*(short *)&_Actors[sVar5].field_0x1a == _RoomIndex)) {
+          (**(code **)&_Actors[sVar5].field_0x8c)();
         }
-        sVar6 = sVar6 + 1;
-      } while (sVar6 < 0xc);
+        sVar5 = sVar5 + 1;
+      } while (sVar5 < 0xc);
     }
   }
   return;
@@ -25217,22 +25197,22 @@ void FUN_00434d2a(uint param_1,undefined4 param_2,uint param_3)
     _DAT_00462564 = 0;
     uVar3 = DAT_00462554;
     DAT_00462554 = FUN_00412d0c(param_1,param_2,param_3,DAT_00462554);
-    uVar5 = DAT_0046868a;
-    DAT_0046868a = FUN_00412d0c(DAT_00462554,extraout_EDX,uVar3,DAT_0046868a);
-    DAT_004685f6 = 0xffff;
-    uVar3 = DAT_00468732;
-    DAT_00468732 = FUN_00412d0c(DAT_0046868a,extraout_EDX_00,uVar5,DAT_00468732);
-    DAT_0046869e = 0xffff;
+    uVar5 = _Actors[0]._162_4_;
+    _Actors[0]._162_4_ = FUN_00412d0c(DAT_00462554,extraout_EDX,uVar3,_Actors[0]._162_4_);
+    _Actors[0]._14_2_ = 0xffff;
+    uVar3 = _Actors[1]._162_4_;
+    _Actors[1]._162_4_ = FUN_00412d0c(_Actors[0]._162_4_,extraout_EDX_00,uVar5,_Actors[1]._162_4_);
+    _Actors[1]._14_2_ = 0xffff;
     if (*(short *)&_GameState->field_0x16 == 1) {
       sVar4 = 2;
       uVar2 = extraout_EDX_01;
       do {
         uVar1 = (uint)sVar4;
-        uVar5 = (&DAT_0046868a)[uVar1 * 0x2a];
-        uVar2 = FUN_00412d0c(uVar1,uVar2,uVar3,(&DAT_0046868a)[uVar1 * 0x2a]);
+        uVar5 = *(uint *)&_Actors[uVar1].field_0xa2;
+        uVar2 = FUN_00412d0c(uVar1,uVar2,uVar3,*(uint *)&_Actors[uVar1].field_0xa2);
         uVar3 = uVar5;
-        (&DAT_0046868a)[uVar1 * 0x2a] = uVar2;
-        (&DAT_004685f6)[uVar1 * 0x54] = 0xffff;
+        *(undefined4 *)&_Actors[uVar1].field_0xa2 = uVar2;
+        *(undefined2 *)&_Actors[uVar1].field_0xe = 0xffff;
         sVar4 = sVar4 + 1;
         uVar2 = extraout_EDX_02;
       } while (sVar4 < 0xc);
@@ -25269,7 +25249,7 @@ bool __stdcall FUN_00434ddd(short param_1)
   uVar3 = FUN_0043d820((char)param_1,in_DL,(char)in_ECX,(short)in_stack_00000008);
   bVar5 = false;
   iVar4 = FUN_0043d90c((char)uVar3,(char)((int)&uStack8 + 2),(char)uVar6,
-                       (&DAT_0046865a)[iVar2 * 0x2a],uVar3,(int)&uStack8 + 2);
+                       *(undefined4 *)&_Actors[iVar2].field_0x72,uVar3,(int)&uStack8 + 2);
   if ((short)iVar4 < 2) {
     node = (DlistNode *)FUN_0043d893((char)iVar4,extraout_DL,extraout_CL,(short)in_stack_00000008);
     puVar1 = (ushort *)((int)&node[6].prev + 2);
@@ -25284,8 +25264,8 @@ bool __stdcall FUN_00434ddd(short param_1)
       *(ushort *)&_Level_partDefinitions[uStack8._2_2_].field_0x1c =
            *(ushort *)&node[0xc].next | 0x8000;
     }
-    (&DAT_00468658)[iVar2 * 0x54] = (&DAT_00468658)[iVar2 * 0x54] + 1;
-    DlistInsert((Dlist *)(&DAT_0046865a)[iVar2 * 0x2a],node,-1);
+    *(short *)&_Actors[iVar2].field_0x70 = *(short *)&_Actors[iVar2].field_0x70 + 1;
+    DlistInsert(*(Dlist **)&_Actors[iVar2].field_0x72,node,-1);
   }
   return bVar5;
 }
@@ -25308,13 +25288,13 @@ int FUN_00434e8a(undefined param_1,undefined param_2,undefined param_3,short par
   undefined local_6 [2];
   
   iVar1 = (int)param_4;
-  uVar7 = (&DAT_0046865a)[iVar1 * 0x2a];
+  uVar7 = *(undefined4 *)&_Actors[iVar1].field_0x72;
   pPVar2 = (PartDefinition *)DlistHead(uVar7);
   uVar6 = (undefined)param_5;
   uVar3 = FUN_0043d820(uVar6,extraout_DL,(char)uVar7,param_5);
   pPVar4 = (PartDefinition *)
-           FUN_0043d90c((char)uVar3,(char)local_6,uVar6,(&DAT_0046865a)[iVar1 * 0x2a],uVar3,local_6)
-  ;
+           FUN_0043d90c((char)uVar3,(char)local_6,uVar6,*(undefined4 *)&_Actors[iVar1].field_0x72,
+                        uVar3,local_6);
   beforeIndex = 0;
   pPVar5 = pPVar4;
   do {
@@ -25324,10 +25304,10 @@ LAB_00434f7c:
     }
     if ((*(short *)&pPVar2->field_0x60 == param_5) &&
        ((*(short *)&pPVar2->field_0xc == param_4 || (param_6 == 0)))) {
-      (&DAT_00468658)[*(short *)&pPVar2->field_0xc * 0x54] =
-           (&DAT_00468658)[*(short *)&pPVar2->field_0xc * 0x54] + -1;
+      *(short *)&_Actors[*(short *)&pPVar2->field_0xc].field_0x70 =
+           *(short *)&_Actors[*(short *)&pPVar2->field_0xc].field_0x70 + -1;
       *(undefined2 *)&pPVar2->field_0xc = 0xffff;
-      DlistRemove((Dlist *)(&DAT_0046865a)[iVar1 * 0x2a],&pPVar2->field0_0x0);
+      DlistRemove(*(Dlist **)&_Actors[iVar1].field_0x72,&pPVar2->field0_0x0);
       if (*(short *)&pPVar2->field_0x1c != -1) {
         if ((pPVar2->field_0x1d & 0x80) == 0) {
           pPVar5 = _Level_partDefinitions + *(short *)&pPVar2->field_0x1c;
@@ -25336,8 +25316,8 @@ LAB_00434f7c:
         else {
           pPVar2 = _Level_partDefinitions + ((int)*(short *)&pPVar2->field_0x1c & 0x7fff);
           pPVar5 = pPVar2;
-          DlistRemove((Dlist *)(&DAT_0046865a)[iVar1 * 0x2a],&pPVar2->field0_0x0);
-          DlistInsert((Dlist *)(&DAT_0046865a)[iVar1 * 0x2a],&pPVar2->field0_0x0,beforeIndex);
+          DlistRemove(*(Dlist **)&_Actors[iVar1].field_0x72,&pPVar2->field0_0x0);
+          DlistInsert(*(Dlist **)&_Actors[iVar1].field_0x72,&pPVar2->field0_0x0,beforeIndex);
         }
         *(undefined2 *)&pPVar2->field_0x1c = 0xffff;
         goto LAB_00434f7c;
@@ -25364,38 +25344,39 @@ uint FUN_00434fa3(uint param_1)
   undefined uVar3;
   undefined extraout_DL_01;
   int iVar4;
-  undefined2 *puVar5;
+  Actor *pAVar5;
   short sVar6;
   undefined2 uVar7;
   int iVar8;
   
-  puVar5 = &DAT_004685e8;
+  pAVar5 = _Actors;
   iVar4 = 0;
   do {
-    if (puVar5[0x15] == 0) {
+    if (*(short *)&pAVar5->field_0x2a == 0) {
       uVar7 = (undefined2)iVar4;
       FUN_00419223((char)param_1,in_DL,(char)in_ECX,uVar7);
       iVar8 = iVar4;
-      uVar1 = (**(code **)(puVar5 + 0x31))();
+      uVar1 = (**(code **)&pAVar5->field_0x62)();
       uVar2 = (undefined)iVar8;
       sVar6 = (short)uVar1;
       uVar3 = extraout_DL;
-      if ((sVar6 != -1) && (uVar1 = uVar1 & 0xffff7fff, (short)uVar1 != puVar5[0xc])) {
+      if ((sVar6 != -1) &&
+         (uVar1 = uVar1 & 0xffff7fff, (short)uVar1 != *(short *)&pAVar5->field_0x18)) {
         FUN_0043426d((char)uVar1,extraout_DL,uVar2,uVar7,uVar1);
         uVar1 = (uint)sVar6;
         uVar3 = extraout_DL_00;
         uVar2 = extraout_CL;
         if ((uVar1 & 0x8000) == 0) {
           uVar1 = 0;
-          puVar5[0x11] = 0;
-          puVar5[8] = 0;
+          *(undefined2 *)&pAVar5->field_0x22 = 0;
+          *(undefined2 *)&pAVar5->field_0x10 = 0;
         }
       }
       in_ECX = iVar4;
       param_1 = FUN_00434369((char)uVar1,uVar3,uVar2,uVar7);
       in_DL = extraout_DL_01;
     }
-    puVar5 = puVar5 + 0x54;
+    pAVar5 = pAVar5 + 1;
     iVar4 = iVar4 + 1;
   } while ((short)iVar4 < 0xc);
   return param_1 & 0xffff0000 | (uint)DAT_00462550;
@@ -25407,13 +25388,13 @@ void FUN_00435017(undefined param_1,undefined param_2,undefined param_3,int para
 
 {
   short sVar1;
-  undefined2 *puVar2;
+  Actor *pAVar2;
   
-  puVar2 = &DAT_004685e8;
+  pAVar2 = _Actors;
   sVar1 = 0;
   do {
-    Memcpy((void *)(sVar1 * 0x2e + param_4),puVar2 + 10,0x2e);
-    puVar2 = puVar2 + 0x54;
+    Memcpy((void *)(sVar1 * 0x2e + param_4),&pAVar2->field_0x14,0x2e);
+    pAVar2 = pAVar2 + 1;
     sVar1 = sVar1 + 1;
   } while (sVar1 < 0xc);
   return;
@@ -25426,21 +25407,21 @@ void __stdcall FUN_00435050(int param_1)
 {
   undefined2 *puVar1;
   ushort obverse;
-  undefined2 *puVar2;
+  Actor *actor;
   short i;
   
-  puVar2 = &DAT_004685e8;
+  actor = _Actors;
   i = 0;
   do {
-    Memcpy(puVar2 + 10,(void *)(i * 0x2e + param_1),0x2e);
-    if (puVar2[0x15] == 0) {
-      obverse = RoomIsObverse(puVar2[0xd]);
-      FUN_00434334(i,obverse);
-      puVar1 = *(undefined2 **)(*(int *)(puVar2 + 0x29) + (short)puVar2[0xc] * 4);
-      puVar2[9] = *puVar1;
-      puVar2[0x26] = puVar1[1];
+    Memcpy(&actor->field_0x14,(void *)(i * 0x2e + param_1),0x2e);
+    if (*(short *)&actor->field_0x2a == 0) {
+      obverse = RoomIsObverse(*(short *)&actor->field_0x1a);
+      ActorUpdateDynamics(i,obverse);
+      puVar1 = *(undefined2 **)(actor->currentDynamics + *(short *)&actor->field_0x18 * 4);
+      *(undefined2 *)&actor->field_0x12 = *puVar1;
+      *(undefined2 *)&actor->field_0x4c = puVar1[1];
     }
-    puVar2 = puVar2 + 0x54;
+    actor = actor + 1;
     i = i + 1;
   } while (i < 0xc);
   return;
@@ -31386,7 +31367,7 @@ int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined
   int iVar1;
   int iVar2;
   
-  iVar1 = DlistHead((&DAT_0046865a)[(short)param_4 * 0x2a]);
+  iVar1 = DlistHead(*(undefined4 *)&_Actors[(short)param_4].field_0x72);
   iVar2 = 0;
   for (; iVar1 != 0; iVar1 = DlistNext(iVar1)) {
     if ((short)param_4 == *(short *)(iVar1 + 0xc)) {
@@ -43935,12 +43916,12 @@ void FUN_0044d87c(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar6;
   
   if (param_4 != 0) {
-    iVar3 = FUN_00414eb6((char)DAT_00468602,param_2,param_3,DAT_00468602,
-                         CONCAT22((short)((uint3)in_register_00000001 >> 8),DAT_0046861e));
+    iVar3 = FUN_00414eb6((char)_Actors[0]._26_2_,param_2,param_3,_Actors[0]._26_2_,
+                         CONCAT22((short)((uint3)in_register_00000001 >> 8),_Actors[0]._54_2_));
     if (*(short *)(iVar3 + 0x10) == 7) {
       uVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),0xbc0);
-      uVar6 = (undefined)DAT_00468602;
-      uVar2 = RoomIsObverse(DAT_00468602);
+      uVar6 = (undefined)_Actors[0]._26_2_;
+      uVar2 = RoomIsObverse(_Actors[0]._26_2_);
       if (uVar2 == 0) {
         uVar4 = uVar4 + 0x66;
       }
@@ -43949,7 +43930,7 @@ void FUN_0044d87c(undefined param_1,undefined param_2,undefined param_3,short pa
       uVar1 = *(ushort *)(iVar3 + 0x12) & 0xffff000f;
       roomIndex = (short)uVar1;
       if (_DAT_004697b2 != 0) {
-        DAT_00468602 = roomIndex;
+        _Actors[0]._26_2_ = roomIndex;
       }
       *(undefined2 *)(iVar3 + 0x1e) = 4;
       iVar3 = FUN_0041469e((char)*(undefined2 *)(iVar3 + 0x12),extraout_DL,uVar6,
@@ -44030,7 +44011,7 @@ void FUN_0044da2d(undefined param_1,undefined param_2,undefined param_3,undefine
   int iVar1;
   short sVar2;
   
-  iVar1 = DlistHead(DAT_0046865a);
+  iVar1 = DlistHead(_Actors[0]._114_4_);
   *param_4 = 0;
   sVar2 = 0;
   for (; iVar1 != 0; iVar1 = DlistNext(iVar1)) {
@@ -44126,8 +44107,8 @@ void FUN_0044db81(undefined param_1,undefined param_2,undefined param_3,undefine
   
   uVar9 = unaff_EDI & 0xffff0000 | (uint)param_5;
   DAT_0046a9ee = 0;
-  iVar10 = DAT_0046865a;
-  iVar2 = DlistHead(DAT_0046865a);
+  iVar10 = _Actors[0]._114_4_;
+  iVar2 = DlistHead(_Actors[0]._114_4_);
   uVar3 = extraout_EDX;
   while (iVar12 = iVar2, iVar12 != 0) {
     uVar6 = (undefined)uVar3;
@@ -44188,8 +44169,8 @@ void FUN_0044dc7c(void)
   uint uVar3;
   uint uVar4;
   
-  uVar3 = DAT_0046865a;
-  uVar1 = DlistHead(DAT_0046865a);
+  uVar3 = _Actors[0]._114_4_;
+  uVar1 = DlistHead(_Actors[0]._114_4_);
   uVar2 = extraout_EDX;
   while (uVar4 = uVar1, uVar4 != 0) {
     uVar2 = FUN_00412d0c(uVar4,uVar2,uVar3,*(uint *)(uVar4 + 0x52));
@@ -44662,8 +44643,8 @@ void FUN_0044e3e3(void)
   undefined2 local_8;
   undefined2 local_6;
   
-  iVar4 = DAT_0046865a;
-  iVar2 = DlistHead(DAT_0046865a);
+  iVar4 = _Actors[0]._114_4_;
+  iVar2 = DlistHead(_Actors[0]._114_4_);
   local_c = 0x93;
   local_a = 0;
   local_8 = 0xda;
@@ -44713,8 +44694,8 @@ undefined4 FUN_0044e473(void)
   undefined4 uVar9;
   undefined4 uVar10;
   
-  uVar9 = DAT_0046865a;
-  iVar3 = DlistHead(DAT_0046865a);
+  uVar9 = _Actors[0]._114_4_;
+  iVar3 = DlistHead(_Actors[0]._114_4_);
   uVar8 = 0xffffffff;
   uVar5 = (undefined)*(undefined2 *)(DAT_0046a97c + 8);
   sVar2 = FUN_00446fc9(uVar5,extraout_DL,(char)uVar9,*(undefined2 *)(DAT_0046a97c + 8));
@@ -44785,8 +44766,8 @@ bool FUN_0044e56e(void)
   undefined4 uVar9;
   undefined4 uVar10;
   
-  uVar9 = DAT_0046865a;
-  iVar3 = DlistHead(DAT_0046865a);
+  uVar9 = _Actors[0]._114_4_;
+  iVar3 = DlistHead(_Actors[0]._114_4_);
   uVar5 = (undefined)*(undefined2 *)(DAT_0046a97c + 8);
   sVar2 = FUN_00446fc9(uVar5,extraout_DL,(char)uVar9,*(undefined2 *)(DAT_0046a97c + 8));
   uVar6 = extraout_DL_00;
@@ -45320,8 +45301,8 @@ void FUN_0044ef41(void)
 
 {
   if ((_DAT_0046350e != 0) && (_DAT_0046350a == -1)) {
-    DAT_0046861e = 0xffff;
-    (*DAT_00468670)();
+    _Actors[0]._54_2_ = 0xffff;
+    (*_Actors[0]._136_4_)();
     _GameState->field34_0x28 = 1;
     DAT_0046a980 = 3;
     _DAT_0046350e = 0;
@@ -45488,8 +45469,8 @@ void FUN_0044efb6(void)
   DAT_0046a980 = 0;
   _DAT_0046350a = 0xffff;
   _DAT_0046aa34 = 0;
-  uVar9 = DAT_0046865a;
-  DAT_0046a98c = DlistHead(DAT_0046865a);
+  uVar9 = _Actors[0]._114_4_;
+  DAT_0046a98c = DlistHead(_Actors[0]._114_4_);
   uVar10 = DAT_0046a98c;
   DAT_0046a988 = FUN_0044da67((char)DAT_0046a98c,extraout_DL_21,(char)uVar9,DAT_0046a98c);
   uVar1 = FUN_004171a7((char)DAT_0046a988,extraout_DL_22,(char)uVar10,DAT_0046a978,1);
@@ -45501,8 +45482,8 @@ void FUN_0044efb6(void)
   uVar1 = 8;
   iVar4 = FUN_0044ca1c((char)puVar11,extraout_DL_25,uVar6,8);
   uVar1 = FUN_0043c382((char)iVar4,extraout_DL_26,uVar1,3,(short)iVar4,puVar11);
-  uVar9 = DAT_0046865a;
-  iVar4 = FUN_004352c9(uVar1,extraout_DL_27,extraout_CL_11,DAT_0046865a);
+  uVar9 = _Actors[0]._114_4_;
+  iVar4 = FUN_004352c9(uVar1,extraout_DL_27,extraout_CL_11,_Actors[0]._114_4_);
   if ((short)iVar4 != 0) {
     FUN_0043c382((char)iVar4,extraout_DL_28,(char)uVar9,2,0,0);
   }

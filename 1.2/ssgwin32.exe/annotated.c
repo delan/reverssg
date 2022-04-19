@@ -613,6 +613,25 @@ void __stdcall EnterBuilding(void)
 
 
 
+void __stdcall ActorUpdateDynamics(short actorIndex,short obverse)
+
+{
+  int i;
+  undefined *result;
+  
+  i = (int)actorIndex;
+  if (obverse == 1) {
+    result = _Actors[i].obverseDynamics;
+  }
+  else {
+    result = _Actors[i].reverseDynamics;
+  }
+  _Actors[i].currentDynamics = result;
+  return;
+}
+
+
+
 undefined4 __stdcall DlistHead(undefined4 *param_1)
 
 {
