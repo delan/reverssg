@@ -435,6 +435,13 @@ struct PartResource {
     undefined field44_0x2f;
 };
 
+typedef struct PuzzleState PuzzleState, *PPuzzleState;
+
+struct PuzzleState {
+    undefined2 completion[43];
+    undefined2 mode;
+};
+
 typedef struct EntityNode EntityNode, *PEntityNode;
 
 struct EntityNode {
@@ -480,22 +487,26 @@ struct GameState {
     undefined field29_0x1d;
     undefined field30_0x1e;
     undefined field31_0x1f;
-    undefined field32_0x20;
-    undefined field33_0x21;
-    undefined field34_0x22;
-    undefined field35_0x23;
-    undefined field36_0x24;
-    undefined field37_0x25;
-    undefined field38_0x26;
-    undefined field39_0x27;
-    undefined field40_0x28;
-    undefined field41_0x29;
-    undefined field42_0x2a;
-    undefined field43_0x2b;
-    undefined field44_0x2c;
-    undefined field45_0x2d;
-    short level; // 0,1,1,2,2,3,4,4,5,5,6,7,7,8,9
-    short building;
+    ushort missingCriticalSlots;
+    short installedParts;
+    undefined field34_0x24;
+    undefined field35_0x25;
+    undefined field36_0x26;
+    undefined field37_0x27;
+    undefined field38_0x28;
+    undefined field39_0x29;
+    undefined field40_0x2a;
+    undefined field41_0x2b;
+    undefined field42_0x2c;
+    undefined field43_0x2d;
+    short level; // [0,15)
+    short building; // [0,3)
+    short levelInBuilding; // [0,5)
+    short buildingCompletedLevels[3]; // [0,5) or -1
+    short everBeenInBuilding[3];
+    undefined field49_0x40[48];
+    struct PuzzleState puzzleState[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    undefined field51_0x330[5999];
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -592,6 +603,8 @@ struct PartDefinition {
     undefined field88_0x60;
     undefined field89_0x61;
 };
+
+typedef short PuzzleCategory;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 
@@ -1251,8 +1264,10 @@ void StartLevel(void);
 EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
+int __stdcall CountCompletedPuzzles(PuzzleCategory category);
 void __stdcall ShowAlertMessage(char *param_1,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
+void __stdcall EnterBuilding(void);
 undefined4 __stdcall DlistHead(undefined4 *param_1);
 undefined4 __stdcall DlistNext(undefined4 *param_1);
 void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
@@ -1261,6 +1276,7 @@ Dlist * DlistNew(void);
 void * __stdcall PoolAlloc(uint len);
 void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
+ushort GetCriticalSlotCount(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
 char * __stdcall Strcpy(char *dest,char *src);

@@ -435,6 +435,13 @@ struct PartResource {
     undefined field44_0x2f;
 };
 
+typedef struct PuzzleState PuzzleState, *PPuzzleState;
+
+struct PuzzleState {
+    undefined2 completion[43];
+    undefined2 mode;
+};
+
 typedef struct EntityNode EntityNode, *PEntityNode;
 
 struct EntityNode {
@@ -480,22 +487,26 @@ struct GameState {
     undefined field29_0x1d;
     undefined field30_0x1e;
     undefined field31_0x1f;
-    undefined field32_0x20;
-    undefined field33_0x21;
-    undefined field34_0x22;
-    undefined field35_0x23;
-    undefined field36_0x24;
-    undefined field37_0x25;
-    undefined field38_0x26;
-    undefined field39_0x27;
-    undefined field40_0x28;
-    undefined field41_0x29;
-    undefined field42_0x2a;
-    undefined field43_0x2b;
-    undefined field44_0x2c;
-    undefined field45_0x2d;
-    short level; // 0,1,1,2,2,3,4,4,5,5,6,7,7,8,9
-    short building;
+    ushort missingCriticalSlots;
+    short installedParts;
+    undefined field34_0x24;
+    undefined field35_0x25;
+    undefined field36_0x26;
+    undefined field37_0x27;
+    undefined field38_0x28;
+    undefined field39_0x29;
+    undefined field40_0x2a;
+    undefined field41_0x2b;
+    undefined field42_0x2c;
+    undefined field43_0x2d;
+    short level; // [0,15)
+    short building; // [0,3)
+    short levelInBuilding; // [0,5)
+    short buildingCompletedLevels[3]; // [0,5) or -1
+    short everBeenInBuilding[3];
+    undefined field49_0x40[48];
+    struct PuzzleState puzzleState[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    undefined field51_0x330[5999];
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -592,6 +603,8 @@ struct PartDefinition {
     undefined field88_0x60;
     undefined field89_0x61;
 };
+
+typedef short PuzzleCategory;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 
@@ -1376,7 +1389,7 @@ void FUN_00414406(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_004145e2(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 uint FUN_00414700(undefined param_1,undefined param_2,undefined param_3,short param_4);
-uint FUN_00414713(undefined param_1,undefined param_2,undefined param_3,short param_4);
+short __stdcall FUN_00414713(short param_1);
 void FUN_0041472a(void);
 void FUN_0041472f(void);
 void FUN_00414734(void);
@@ -1406,7 +1419,7 @@ void FUN_00415b77(undefined param_1,undefined param_2,undefined param_3,uint par
 void FUN_00415be4(void);
 void FUN_00415bf3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 int FUN_00415d01(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00415d3e(uint param_1,undefined4 param_2,uint param_3);
+void __stdcall FUN_00415d3e(void);
 void FUN_00415e4f(void);
 void FUN_00415ea2(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_00415ed6(void);
@@ -1475,7 +1488,7 @@ void FUN_004174d3(undefined param_1,undefined param_2,undefined param_3,undefine
 undefined4 FUN_00417532(undefined param_1,byte param_2,byte param_3,short param_4);
 void FUN_00417792(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004178b8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4);
-void FUN_004179b6(undefined4 param_1,undefined4 param_2,uint param_3);
+void __stdcall DoSomethingWithEseqResources?(void);
 void FUN_00417a84(void);
 void FUN_00417abd(void);
 void FUN_00417c57(void);
@@ -1488,8 +1501,7 @@ void FUN_00418c0d(undefined4 param_1,undefined4 param_2,undefined4 param_3,short
 uint FUN_00418ea1(undefined param_1,undefined param_2,undefined param_3,short param_4,Rect16 *param_5,short param_6);
 ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short param_4,Rect16 *param_5);
 void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short param_4);
-void FUN_00419548(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,short param_6,undefined2 param_7);
-int FUN_00419589(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void __stdcall FUN_00419548(undefined2 param_1,undefined2 param_2,short param_3,short param_4);
 void FUN_004195bd(void);
 void FUN_00419678(void);
 void FUN_004196ef(void);
@@ -1520,7 +1532,7 @@ void __stdcall FUN_0041a823(void);
 void FUN_0041a8fe(void);
 void FUN_0041a92e(void);
 void FUN_0041a954(void);
-void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,short param_5);
+void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,ushort param_4,short param_5);
 void FUN_0041abd6(void);
 void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,char *param_6,undefined param_7);
 void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *param_4,undefined param_5);
@@ -1673,9 +1685,8 @@ void FUN_0042f2ed(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_0042f348(void);
 void FUN_0042f355(void);
 undefined4 FUN_0042f440(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4,short param_5);
-void FUN_0042f4ab(uint param_1,undefined4 param_2,uint param_3);
+void __stdcall FUN_0042f4ab(void);
 void FUN_0042f4e7(void);
-void FUN_0042f548(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_0042fbf7(void);
 void FUN_0042fc9c(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_0042fcbd(undefined param_1,undefined param_2,undefined param_3,short param_4);
@@ -1730,7 +1741,7 @@ undefined4 FUN_00431cb8(undefined param_1,undefined param_2,undefined param_3,sh
 void FUN_00431d24(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7);
 bool FUN_00431d8e(void);
 bool FUN_00431d9d(void);
-uint __stdcall FUN_00431dad(uint param_1);
+ushort __stdcall FUN_00431dad(short param_1);
 void FUN_00431dc9(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 *param_5);
 int FUN_00431dde(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00431df5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
@@ -1765,8 +1776,8 @@ uint FUN_0043414c(void);
 uint FUN_004341b9(void);
 int FUN_00434250(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043426d(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5);
-short * __stdcall FUN_004342af(ushort param_1,int param_2,short **param_3,short **param_4);
-void FUN_00434334(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
+short * __stdcall GetEseqResource?(ushort param_1,int param_2,short **param_3,short **param_4);
+void __stdcall FUN_00434334(short param_1,short param_2);
 void FUN_0043435b(void);
 uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
 void FUN_00434aa1(void);
@@ -1776,7 +1787,7 @@ bool __stdcall FUN_00434ddd(short param_1);
 int FUN_00434e8a(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,short param_6);
 uint FUN_00434fa3(uint param_1);
 void FUN_00435017(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00435050(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void __stdcall FUN_00435050(int param_1);
 void FUN_004350be(void);
 undefined4 FUN_004350fa(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_00435117(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1828,7 +1839,7 @@ undefined4 *FUN_0043ab26(undefined param_1,undefined param_2,undefined param_3,u
 void FUN_0043ab87(void);
 void FUN_0043abad(void);
 undefined4 FUN_0043abbe(undefined param_1,undefined param_2,undefined param_3,LPCSTR param_4,undefined2 param_5,undefined4 param_6);
-undefined4 FUN_0043ac64(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined4 param_5);
+undefined4 __stdcall FUN_0043ac64(ushort param_1,undefined4 param_2);
 undefined4 FUN_0043acb4(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined4 param_5);
 undefined4 FUN_0043ad04(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined4 param_5,short param_6);
 short FUN_0043ad75(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
@@ -1867,7 +1878,7 @@ void FUN_0043bb3e(void);
 void FUN_0043bb89(void);
 void FUN_0043bc68(void);
 void FUN_0043be66(undefined param_1,undefined param_2,byte param_3,byte param_4,undefined4 param_5,undefined4 param_6);
-void FUN_0043bfee(undefined param_1,undefined param_2,byte param_3,byte param_4,undefined4 param_5,undefined4 param_6);
+void __stdcall FUN_0043bfee(byte param_1,undefined4 param_2,undefined4 param_3);
 uint FUN_0043c1a2(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_0043c1c0(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 void FUN_0043c249(void);
@@ -1899,7 +1910,6 @@ int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short par
 int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined2 *param_6);
 uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-uint FUN_0043d9b6(void);
 void FUN_0043d9c0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043d9e3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4);
@@ -2113,7 +2123,7 @@ void FUN_0044b0dc(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_0044b1c8(void);
 void FUN_0044b1d5(void);
 void FUN_0044b24d(void);
-void FUN_0044b38d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void __stdcall FUN_0044b38d(undefined4 param_1);
 void FUN_0044b3c6(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0044b3e5(void);
 void __stdcall FUN_0044b434(undefined4 param_1,undefined4 param_2);
@@ -2151,7 +2161,7 @@ undefined4 __stdcall FindNodeIn46A938h?(undefined4 param_1);
 void __stdcall FUN_0044cb20(ushort param_1);
 uint FUN_0044cb57(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 uint FUN_0044cb74(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
-uint FUN_0044cb93(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
+uint __stdcall FUN_0044cb93(ushort param_1);
 void __stdcall FUN_0044cbbb(undefined4 param_1);
 int __stdcall FUN_0044cc56(int param_1);
 int __stdcall FUN_0044cc6c(int param_1);
@@ -2159,18 +2169,18 @@ int FUN_0044cc99(undefined param_1,undefined param_2,undefined param_3,int param
 void __stdcall FUN_0044cca4(int param_1,int *param_2);
 short FUN_0044ccf5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,byte *param_5);
 void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,uint param_6,short param_7,undefined2 param_8);
-void FUN_0044cf2c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,byte *param_5,undefined4 param_6,ushort param_7,undefined2 param_8);
+void __stdcall FUN_0044cf2c(undefined4 param_1,byte *param_2,undefined4 param_3,ushort param_4,undefined2 param_5);
 uint FUN_0044cfcb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,uint param_5,ushort param_6,ushort param_7,ushort param_8);
 undefined FUN_0044d0fb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,byte param_5);
 void FUN_0044d120(void);
 void FUN_0044d121(undefined param_1,undefined param_2,undefined param_3,int param_4,ushort param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,short param_9,short param_10,undefined4 param_11,ushort param_12);
 undefined2 __stdcall FUN_0044d4eb(undefined2 param_1);
-uint __stdcall FUN_0044d501(undefined4 param_1);
+short __stdcall FUN_0044d501(short param_1);
 void FUN_0044d531(void);
 void FUN_0044d55a(void);
 int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort param_4,ushort param_5,short param_6,short param_7,char *param_8);
 uint FUN_0044d73f(undefined2 *param_1,byte param_2,byte param_3,undefined2 param_4,char *param_5,undefined2 *param_6,short *param_7);
-void FUN_0044d7e5(undefined param_1,undefined param_2,undefined param_3,ushort param_4,short param_5,undefined4 param_6);
+void __stdcall FUN_0044d7e5(ushort param_1,short param_2,undefined4 param_3);
 undefined2 FUN_0044d81a(void);
 undefined2 FUN_0044d821(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_0044d837(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);

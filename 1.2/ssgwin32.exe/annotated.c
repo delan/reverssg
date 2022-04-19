@@ -352,6 +352,25 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
+int __stdcall CountCompletedPuzzles(PuzzleCategory category)
+
+{
+  short i;
+  int result;
+  
+  result = 0;
+  i = 0;
+  do {
+    if (_GameState->puzzleState[category].completion[i] != 0) {
+      result = result + 1;
+    }
+    i = i + 1;
+  } while (i < 0x2b);
+  return result;
+}
+
+
+
 void __stdcall ShowAlertMessage(char *param_1,undefined param_2)
 
 {
@@ -406,6 +425,62 @@ void __stdcall DonkeyShuffle(short len,short *result)
       i = i + 1;
     } while (i < (short)(len * 10));
   }
+  return;
+}
+
+
+
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void __stdcall EnterBuilding(void)
+
+{
+  short sVar1;
+  GameState *pGVar2;
+  ushort criticalSlotCount;
+  int iVar3;
+  
+  _GameState->levelInBuilding = _GameState->buildingCompletedLevels[_GameState->building] + 1;
+  _GameState->level = _GameState->building * 5 + _GameState->levelInBuilding;
+  LoadPartDefinitions_();
+  StartLevel();
+  if (_GameState->everBeenInBuilding[_GameState->building] == 0) {
+    FUN_0041abd6();
+    criticalSlotCount = GetCriticalSlotCount();
+    _GameState->missingCriticalSlots = criticalSlotCount;
+    if (_GameState->levelInBuilding == 0) {
+      *(undefined2 *)&_GameState->field_0x28 = 0;
+      *(undefined2 *)&_GameState->field_0x1c = 10;
+    }
+    else {
+      *(undefined2 *)&_GameState->field_0x1c =
+           *(undefined2 *)(_GameState->field51_0x330 + _GameState->building * 0x6ba + 2);
+    }
+    iVar3 = Random();
+    *(ushort *)&_GameState->field_0x2c = (ushort)(iVar3 % 100 < 0x32);
+    FUN_00417abd();
+    *(undefined2 *)&_GameState->field_0x1a = 0;
+    *(undefined2 *)&_GameState->field_0x24 = 0;
+    *(undefined2 *)&_GameState->field_0x26 = 0xffff;
+    *(undefined2 *)&_GameState->field_0x1e =
+         *(undefined2 *)(&DAT_00461abc + _GameState->levelInBuilding * 2);
+    _GameState->installedParts = 0;
+    FUN_00417c69();
+  }
+  else {
+    FUN_0041a823();
+    FUN_00417abd();
+    pGVar2 = _GameState;
+    sVar1 = _GameState->building;
+    Memcpy(&_GameState->field_0x1a,_GameState->field51_0x330 + sVar1 * 0x6ba,0x14);
+    ezFUN_0043da4e((ushort *)(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x14));
+    FUN_00414dc2(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x26c,
+                 pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x302);
+    FUN_00435050(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x492);
+    _DAT_00461aae = 1;
+  }
+  FUN_0043bfee(2,0,1);
+  FUN_0044b38d(&PTR_LAB_00461b2c);
   return;
 }
 
@@ -561,6 +636,14 @@ PartId NextInitialPartId(void)
   i = _InitialPartIds_index;
   _InitialPartIds_index = _InitialPartIds_index + 1;
   return _InitialPartIds[i];
+}
+
+
+
+ushort GetCriticalSlotCount(void)
+
+{
+  return _Level_partResource->criticalSlotCount;
 }
 
 
