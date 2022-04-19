@@ -273,6 +273,14 @@ struct Rect16 {
     short h;
 };
 
+typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
+
+struct SavedPartEntity {
+    short x;
+    short row;
+    short partId;
+};
+
 typedef struct Room Room, *PRoom;
 
 typedef struct OtherEntity OtherEntity, *POtherEntity;
@@ -350,8 +358,7 @@ struct DlistNode {
 };
 
 struct Room {
-    byte flags; // bit 0 obverse
-    undefined field1_0x1;
+    ushort flags; // bit 0 obverse
     short structuralEntityCounts[4];
     short ladderEntityCounts[4];
     short cEntityCounts?[6];
@@ -364,9 +371,9 @@ struct Room {
     struct LadderEntity * ladderEntityGroups[4];
     short partEntityCount;
     struct Dlist * partEntities;
-    undefined2 field14_0xa4[6];
-    undefined2 field15_0xb0[6];
-    undefined2 field16_0xbc[50];
+    undefined2 field13_0xa4[6];
+    undefined2 field14_0xb0[6];
+    undefined2 field15_0xbc[50];
     undefined entities[468];
 };
 
@@ -454,6 +461,16 @@ struct EntityNode {
 
 typedef struct GameState GameState, *PGameState;
 
+typedef struct BuildingState BuildingState, *PBuildingState;
+
+struct BuildingState {
+    undefined field0_0x0[620];
+    char puzzleDoors[150];
+    short savedPartEntities;
+    undefined field3_0x304[398];
+    undefined field4_0x492[552];
+};
+
 struct GameState {
     undefined field0_0x0;
     undefined field1_0x1;
@@ -483,30 +500,25 @@ struct GameState {
     undefined field25_0x19;
     undefined field26_0x1a;
     undefined field27_0x1b;
-    undefined field28_0x1c;
-    undefined field29_0x1d;
-    undefined field30_0x1e;
-    undefined field31_0x1f;
+    undefined2 field28_0x1c;
+    undefined2 field29_0x1e;
     ushort missingCriticalSlots;
     short installedParts;
-    undefined field34_0x24;
-    undefined field35_0x25;
-    undefined field36_0x26;
-    undefined field37_0x27;
-    undefined field38_0x28;
-    undefined field39_0x29;
-    undefined field40_0x2a;
-    undefined field41_0x2b;
-    undefined field42_0x2c;
-    undefined field43_0x2d;
+    undefined2 everBeenReadyToRace?;
+    undefined2 field33_0x26;
+    undefined2 field34_0x28;
+    undefined field35_0x2a;
+    undefined field36_0x2b;
+    ushort field37_0x2c;
     short level; // [0,15)
     short building; // [0,3)
     short levelInBuilding; // [0,5)
     short buildingCompletedLevels[3]; // [0,5) or -1
-    short everBeenInBuilding[3];
-    undefined field49_0x40[48];
-    struct PuzzleState puzzleState[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
-    undefined field51_0x330[5999];
+    short buildingIsInitialised[3]; // true iff parts placement is done
+    undefined field43_0x40[48];
+    struct PuzzleState puzzles[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    struct BuildingState buildings[3];
+    undefined field46_0x175e[5999];
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -1261,8 +1273,11 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id);
 void InitEntities(void);
 void StartLevel(void);
+ushort __stdcall RoomIsObverse(short roomIndex);
 EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
+void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,short param_5);
+void __stdcall LoadEntities(char *puzzleEntityTypes,SavedPartEntity *partEntities);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
 int __stdcall CountCompletedPuzzles(PuzzleCategory category);
 void __stdcall ShowAlertMessage(char *param_1,undefined param_2);
@@ -1273,6 +1288,7 @@ undefined4 __stdcall DlistNext(undefined4 *param_1);
 void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
 void __stdcall DlistRemove(Dlist *list,DlistNode *node);
 Dlist * DlistNew(void);
+void __stdcall DlistInit(Dlist *list);
 void * __stdcall PoolAlloc(uint len);
 void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);

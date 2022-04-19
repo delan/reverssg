@@ -273,6 +273,14 @@ struct Rect16 {
     short h;
 };
 
+typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
+
+struct SavedPartEntity {
+    short x;
+    short row;
+    short partId;
+};
+
 typedef struct Room Room, *PRoom;
 
 typedef struct OtherEntity OtherEntity, *POtherEntity;
@@ -350,8 +358,7 @@ struct DlistNode {
 };
 
 struct Room {
-    byte flags; // bit 0 obverse
-    undefined field1_0x1;
+    ushort flags; // bit 0 obverse
     short structuralEntityCounts[4];
     short ladderEntityCounts[4];
     short cEntityCounts?[6];
@@ -364,9 +371,9 @@ struct Room {
     struct LadderEntity * ladderEntityGroups[4];
     short partEntityCount;
     struct Dlist * partEntities;
-    undefined2 field14_0xa4[6];
-    undefined2 field15_0xb0[6];
-    undefined2 field16_0xbc[50];
+    undefined2 field13_0xa4[6];
+    undefined2 field14_0xb0[6];
+    undefined2 field15_0xbc[50];
     undefined entities[468];
 };
 
@@ -454,6 +461,16 @@ struct EntityNode {
 
 typedef struct GameState GameState, *PGameState;
 
+typedef struct BuildingState BuildingState, *PBuildingState;
+
+struct BuildingState {
+    undefined field0_0x0[620];
+    char puzzleDoors[150];
+    short savedPartEntities;
+    undefined field3_0x304[398];
+    undefined field4_0x492[552];
+};
+
 struct GameState {
     undefined field0_0x0;
     undefined field1_0x1;
@@ -483,30 +500,25 @@ struct GameState {
     undefined field25_0x19;
     undefined field26_0x1a;
     undefined field27_0x1b;
-    undefined field28_0x1c;
-    undefined field29_0x1d;
-    undefined field30_0x1e;
-    undefined field31_0x1f;
+    undefined2 field28_0x1c;
+    undefined2 field29_0x1e;
     ushort missingCriticalSlots;
     short installedParts;
-    undefined field34_0x24;
-    undefined field35_0x25;
-    undefined field36_0x26;
-    undefined field37_0x27;
-    undefined field38_0x28;
-    undefined field39_0x29;
-    undefined field40_0x2a;
-    undefined field41_0x2b;
-    undefined field42_0x2c;
-    undefined field43_0x2d;
+    undefined2 everBeenReadyToRace?;
+    undefined2 field33_0x26;
+    undefined2 field34_0x28;
+    undefined field35_0x2a;
+    undefined field36_0x2b;
+    ushort field37_0x2c;
     short level; // [0,15)
     short building; // [0,3)
     short levelInBuilding; // [0,5)
     short buildingCompletedLevels[3]; // [0,5) or -1
-    short everBeenInBuilding[3];
-    undefined field49_0x40[48];
-    struct PuzzleState puzzleState[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
-    undefined field51_0x330[5999];
+    short buildingIsInitialised[3]; // true iff parts placement is done
+    undefined field43_0x40[48];
+    struct PuzzleState puzzles[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    struct BuildingState buildings[3];
+    undefined field46_0x175e[5999];
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -1389,17 +1401,14 @@ void FUN_00414406(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_004145e2(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 uint FUN_00414700(undefined param_1,undefined param_2,undefined param_3,short param_4);
-short __stdcall FUN_00414713(short param_1);
 void FUN_0041472a(void);
 void FUN_0041472f(void);
 void FUN_00414734(void);
 void FUN_00414739(void);
 void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_4,int param_5);
-void __stdcall FUN_00414af8(short param_1,ushort param_2,short param_3,short param_4,short param_5);
 Room * FUN_00414c47(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00414c5a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *param_4,short *param_5);
-void __stdcall FUN_00414dc2(char *param_1,short *param_2);
 int FUN_00414eb6(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5);
 int FUN_00414edc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00414efe(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined2 param_5);
@@ -1777,7 +1786,7 @@ uint FUN_004341b9(void);
 int FUN_00434250(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043426d(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5);
 short * __stdcall GetEseqResource?(ushort param_1,int param_2,short **param_3,short **param_4);
-void __stdcall FUN_00434334(short param_1,short param_2);
+void __stdcall FUN_00434334(short param_1,short ushort);
 void FUN_0043435b(void);
 uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
 void FUN_00434aa1(void);
@@ -1796,7 +1805,6 @@ void FUN_00435151(undefined param_1,undefined param_2,undefined param_3,Dlist *p
 int ** FUN_0043527b(undefined param_1,undefined param_2,undefined param_3,int **param_4,undefined4 param_5);
 int FUN_004352c9(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00435302(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void __stdcall ezFUN_00435315(undefined4 *param_1);
 void FUN_00435346(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 undefined2 FUN_00435355(void);
 void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3);

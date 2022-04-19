@@ -4133,15 +4133,7 @@ void FUN_0041469e(undefined param_1,undefined param_2,undefined param_3,undefine
 uint FUN_00414700(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  return (uint)_Rooms[param_4] & 0xffff0000 | (uint)*(ushort *)_Rooms[param_4];
-}
-
-
-
-short __stdcall FUN_00414713(short param_1)
-
-{
-  return *(ushort *)_Rooms[param_1] & 1;
+  return (uint)_Rooms[param_4] & 0xffff0000 | (uint)_Rooms[param_4]->flags;
 }
 
 
@@ -4199,67 +4191,6 @@ void FUN_00414aa7(undefined4 param_1,undefined4 param_2,uint param_3,uint param_
     _DAT_00460318 = _DAT_00460318 + -1;
   }
   DlistRemove(pRVar2->partEntities,(DlistNode *)param_5);
-  return;
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-void __stdcall FUN_00414af8(short param_1,ushort param_2,short param_3,short param_4,short param_5)
-
-{
-  Room *pRVar1;
-  EntityNode *node;
-  uint uVar2;
-  ushort local_14;
-  ushort local_12;
-  undefined2 local_10;
-  undefined2 local_e;
-  undefined2 local_c;
-  ushort local_6;
-  
-  pRVar1 = _Rooms[param_1];
-  node = NextAvailableEntityNode();
-  local_c = 0;
-  local_14 = param_2;
-  if ((pRVar1->flags & 1) == 0) {
-    if (2 < param_3) {
-      param_3 = param_3 + -3;
-    }
-    local_12 = param_3 * 100 + 0x58;
-    local_10 = 0x14;
-    local_e = 0xd;
-    local_6 = 0xc4a;
-  }
-  else {
-    local_12 = param_3 * 0x32 + 0x34;
-    local_10 = 10;
-    local_e = 7;
-    local_6 = 0xbc7;
-  }
-  if ((param_4 != 1000) && ((_Level_partDefinitions[param_4].flags & 0x40) != 0)) {
-    local_6 = local_6 + 1;
-  }
-  Memcpy(&node->inner,&local_14,0xe);
-  (node->inner).base.spriteId = local_6;
-  (node->inner).partId = param_4;
-  *(undefined2 *)&(node->inner).field_0x14 = 0;
-  Memcpy(&(node->inner).activation_,&local_14,10);
-  (node->inner).activation_.mode = 0x800;
-  if (param_5 == 0) {
-    pRVar1->partEntityCount = pRVar1->partEntityCount + 1;
-    if (param_1 == _RoomIndex) {
-      _DAT_00460318 = _DAT_00460318 + 1;
-      uVar2 = FUN_00412ac4((node->inner).base.spriteId);
-      *(uint *)&(node->inner).base.rect.field_0xa = uVar2;
-      FUN_0041395c(*(undefined4 *)&(node->inner).base.rect.field_0xa,
-                   uVar2 & 0xffff0000 | (uint)local_14,uVar2 & 0xffff0000 | (uint)local_12,0x14);
-      FUN_00412dc8(*(undefined4 *)&(node->inner).base.rect.field_0xa);
-    }
-  }
-  node->available = 0;
-  DlistInsert(pRVar1->partEntities,&node->node,-1);
   return;
 }
 
@@ -4348,7 +4279,7 @@ void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *pa
       if (0 < sVar2) {
         do {
           *param_5 = *(short *)&pDVar6[1].tail;
-          if ((pRVar1->flags & 1) == 0) {
+          if ((*(byte *)&pRVar1->flags & 1) == 0) {
             uVar7 = FUN_0041412e((char)&pDVar6[1].tail,(char)uVar7,(char)pDVar8,&pDVar6[1].tail);
             sVar3 = (short)uVar7;
           }
@@ -4364,65 +4295,6 @@ void FUN_00414ccd(undefined param_1,undefined param_2,byte param_3,undefined *pa
           sVar9 = sVar9 + 1;
           uVar7 = extraout_EDX_00;
         } while (sVar9 < sVar2);
-      }
-    }
-    local_6 = local_6 + 1;
-  } while (local_6 < 0x10);
-  return;
-}
-
-
-
-void __stdcall FUN_00414dc2(char *param_1,short *param_2)
-
-{
-  ushort uVar1;
-  Room *pRVar2;
-  OtherEntity *pOVar3;
-  ushort uVar4;
-  short sVar5;
-  short sVar6;
-  short local_6;
-  
-  InitEntities();
-  _ActualBananaPartsCount = 0;
-  local_6 = 0;
-  do {
-    pRVar2 = _Rooms[local_6];
-    if (pRVar2 != (Room *)0x0) {
-      uVar1 = *(ushort *)pRVar2;
-      pOVar3 = pRVar2->structuralEntityGroups[0];
-      for (sVar5 = 0; sVar5 < pRVar2->structuralEntityCounts[0]; sVar5 = sVar5 + 1) {
-        if (((pOVar3->base).type == 7) || ((pOVar3->base).type == 9)) {
-          (pOVar3->base).type = (short)*param_1;
-          param_1 = param_1 + 1;
-          if ((pOVar3->base).type == 9) {
-            (pOVar3->activation_).mode = 4;
-            if ((uVar1 & 1) == 0) {
-              uVar4 = 0xc26;
-            }
-            else {
-              uVar4 = 0xbc0;
-            }
-            (pOVar3->base).spriteId = uVar4;
-          }
-        }
-        pOVar3 = pOVar3 + 1;
-      }
-      ezFUN_00435315(pRVar2->partEntities);
-      sVar5 = *param_2;
-      pRVar2->partEntityCount = sVar5;
-      param_2 = param_2 + 1;
-      sVar6 = 0;
-      if (0 < sVar5) {
-        do {
-          FUN_00414af8(local_6,*param_2,param_2[1],param_2[2],1);
-          if (param_2[2] == 1000) {
-            _ActualBananaPartsCount = _ActualBananaPartsCount + 1;
-          }
-          param_2 = param_2 + 3;
-          sVar6 = sVar6 + 1;
-        } while (sVar6 < sVar5);
       }
     }
     local_6 = local_6 + 1;
@@ -4479,7 +4351,7 @@ void FUN_00414f21(void)
   do {
     pRVar2 = _Rooms[sVar5];
     if (pRVar2 != (Room *)0x0) {
-      uVar1 = *(ushort *)pRVar2;
+      uVar1 = pRVar2->flags;
       pOVar3 = pRVar2->structuralEntityGroups[0];
       for (sVar4 = 0; sVar4 < pRVar2->structuralEntityCounts[0]; sVar4 = sVar4 + 1) {
         if ((pOVar3->base).type == 7) {
@@ -5160,8 +5032,8 @@ void FUN_00415ed6(void)
   
   FUN_00415970((char)_GameState->missingCriticalSlots,in_DL,in_CL,0x1db,0x13d,
                (uint)_GameState->missingCriticalSlots,2,1);
-  FUN_00415970((char)*(ushort *)&_GameState->field_0x1c,extraout_DL,extraout_CL,0x1c9,0x153,
-               (uint)*(ushort *)&_GameState->field_0x1c,3,0);
+  FUN_00415970((char)_GameState->field28_0x1c,extraout_DL,extraout_CL,0x1c9,0x153,
+               (uint)(ushort)_GameState->field28_0x1c,3,0);
   FUN_00415970((char)_GameState,extraout_DL_00,extraout_CL_00,0x193,0x168,
                *(undefined4 *)&_GameState->field_0x10,6,2);
   return;
@@ -5750,8 +5622,8 @@ void FUN_004165c3(undefined param_1,undefined param_2,undefined param_3,ushort p
     }
     if ((DAT_004605b6 & 8) != 0) {
       FUN_004465a5((char)DAT_00466314[3],param_2,param_3,DAT_00466314[3],5,0);
-      FUN_00415970((char)*(ushort *)&_GameState->field_0x1c,extraout_DL_14,extraout_CL_08,0x1c9,
-                   0x153,(uint)*(ushort *)&_GameState->field_0x1c,3,0);
+      FUN_00415970((char)_GameState->field28_0x1c,extraout_DL_14,extraout_CL_08,0x1c9,0x153,
+                   (uint)(ushort)_GameState->field28_0x1c,3,0);
       DAT_004605b6 = DAT_004605b6 & 0xfff7;
       param_2 = extraout_DL_15;
       param_3 = extraout_CL_09;
@@ -6774,8 +6646,8 @@ void FUN_004174d3(undefined param_1,undefined param_2,undefined param_3,undefine
   if (puVar2 != (undefined4 *)0x0) {
     FUN_00434e8a((char)*(undefined2 *)(puVar2 + 0x18),extraout_DL,extraout_CL,(short)param_4,
                  *(undefined2 *)(puVar2 + 0x18),1);
-    FUN_00414af8((&DAT_00468602)[iVar1 * 0x54],(&DAT_004685fc)[iVar1 * 0x54],
-                 (&DAT_00468604)[iVar1 * 0x54],*(undefined2 *)(puVar2 + 0x18),0);
+    LoadPartEntity((&DAT_00468602)[iVar1 * 0x54],(&DAT_004685fc)[iVar1 * 0x54],
+                   (&DAT_00468604)[iVar1 * 0x54],*(undefined2 *)(puVar2 + 0x18),0);
   }
   return;
 }
@@ -6953,79 +6825,79 @@ void FUN_00417792(undefined param_1,undefined param_2,undefined param_3,undefine
   ushort uVar1;
   short sVar2;
   bool bVar3;
-  ushort uVar4;
-  short sVar5;
-  int iVar6;
-  uint uVar7;
+  ushort ushort;
+  short sVar4;
+  int iVar5;
+  uint uVar6;
   undefined2 extraout_var;
-  short *psVar8;
+  short *psVar7;
   undefined extraout_CL;
-  undefined uVar9;
+  undefined uVar8;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined uVar10;
+  undefined uVar9;
   undefined extraout_DL_01;
   undefined extraout_DL_02;
-  short sVar11;
+  short sVar10;
   uint unaff_ESI;
   
-  iVar6 = (int)(short)param_4;
+  iVar5 = (int)(short)param_4;
   bVar3 = _GameState->levelInBuilding < 3;
-  *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar6 * 0x54] * 2) =
-       *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar6 * 0x54] * 2) + 1;
-  uVar4 = FUN_00414713((&DAT_00468602)[iVar6 * 0x54]);
-  uVar7 = (uint)uVar4;
-  FUN_00434334((short)param_4,uVar4);
-  if ((&DAT_00468614)[iVar6 * 0x54] != -1) {
-    uVar1 = (&DAT_00468614)[iVar6 * 0x54];
-    uVar9 = extraout_CL;
-    uVar10 = extraout_DL;
+  *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) =
+       *(short *)(&DAT_00466398 + (short)(&DAT_00468602)[iVar5 * 0x54] * 2) + 1;
+  ushort = RoomIsObverse((&DAT_00468602)[iVar5 * 0x54]);
+  uVar6 = (uint)ushort;
+  FUN_00434334((short)param_4,ushort);
+  if ((&DAT_00468614)[iVar5 * 0x54] != -1) {
+    uVar1 = (&DAT_00468614)[iVar5 * 0x54];
+    uVar8 = extraout_CL;
+    uVar9 = extraout_DL;
     if (uVar1 == 0x15) {
-      uVar9 = 5;
-      uVar7 = FUN_0044ca1c((char)uVar7,extraout_DL,extraout_CL,5);
-      *(short *)(&DAT_0046860c + iVar6 * 0xa8) = (short)uVar7;
-      uVar10 = extraout_DL_00;
+      uVar8 = 5;
+      uVar6 = FUN_0044ca1c((char)uVar6,extraout_DL,extraout_CL,5);
+      *(short *)(&DAT_0046860c + iVar5 * 0xa8) = (short)uVar6;
+      uVar9 = extraout_DL_00;
     }
-    (&DAT_00468614)[iVar6 * 0x54] = 0xffff;
-    (&DAT_004685f8)[iVar6 * 0x54] = 0;
-    (&DAT_00468600)[iVar6 * 0x54] = uVar1;
-    FUN_0043426d((char)uVar7,uVar10,uVar9,(short)param_4,unaff_ESI & 0xffff0000 | (uint)uVar1);
-    (&DAT_0046860a)[iVar6 * 0x54] = 0;
+    (&DAT_00468614)[iVar5 * 0x54] = 0xffff;
+    (&DAT_004685f8)[iVar5 * 0x54] = 0;
+    (&DAT_00468600)[iVar5 * 0x54] = uVar1;
+    FUN_0043426d((char)uVar6,uVar9,uVar8,(short)param_4,unaff_ESI & 0xffff0000 | (uint)uVar1);
+    (&DAT_0046860a)[iVar5 * 0x54] = 0;
     if (((uVar1 == 0x15) || (uVar1 == 0x18)) || (uVar1 == 0x19)) {
-      uVar7 = FUN_00414eb6((char)(&DAT_00468624)[iVar6 * 0x54],extraout_DL_01,extraout_CL_00,
-                           (&DAT_00468624)[iVar6 * 0x54],
-                           CONCAT22(extraout_var,(&DAT_0046861e)[iVar6 * 0x54]));
-      psVar8 = (short *)FUN_0041469e((char)(&DAT_00468602)[iVar6 * 0x54],extraout_DL_02,
+      uVar6 = FUN_00414eb6((char)(&DAT_00468624)[iVar5 * 0x54],extraout_DL_01,extraout_CL_00,
+                           (&DAT_00468624)[iVar5 * 0x54],
+                           CONCAT22(extraout_var,(&DAT_0046861e)[iVar5 * 0x54]));
+      psVar7 = (short *)FUN_0041469e((char)(&DAT_00468602)[iVar5 * 0x54],extraout_DL_02,
                                      extraout_CL_01,
-                                     uVar7 & 0xffff0000 |
-                                     (uint)(ushort)(&DAT_00468602)[iVar6 * 0x54],
-                                     uVar7 & 0xffff0000 | (uint)*(ushort *)(uVar7 + 0x12));
-      if (uVar4 == 0) {
+                                     uVar6 & 0xffff0000 |
+                                     (uint)(ushort)(&DAT_00468602)[iVar5 * 0x54],
+                                     uVar6 & 0xffff0000 | (uint)*(ushort *)(uVar6 + 0x12));
+      if (ushort == 0) {
         if (bVar3) {
-          sVar5 = 0x10;
-          sVar11 = 0x23;
+          sVar4 = 0x10;
+          sVar10 = 0x23;
         }
         else {
-          sVar5 = 0x10;
-          sVar11 = 0x1b;
+          sVar4 = 0x10;
+          sVar10 = 0x1b;
         }
       }
       else if (bVar3) {
-        sVar5 = 6;
-        sVar11 = 0xc;
+        sVar4 = 6;
+        sVar10 = 0xc;
       }
       else {
-        sVar5 = 6;
-        sVar11 = 10;
+        sVar4 = 6;
+        sVar10 = 10;
       }
-      sVar2 = *psVar8;
-      (&DAT_004685fc)[iVar6 * 0x54] = sVar5 + sVar2;
-      (&DAT_004685e8)[iVar6 * 0x54] = sVar5 + sVar2;
-      sVar5 = psVar8[1];
-      (&DAT_004685fe)[iVar6 * 0x54] = sVar11 + sVar5;
-      (&DAT_004685ea)[iVar6 * 0x54] = sVar11 + sVar5;
+      sVar2 = *psVar7;
+      (&DAT_004685fc)[iVar5 * 0x54] = sVar4 + sVar2;
+      (&DAT_004685e8)[iVar5 * 0x54] = sVar4 + sVar2;
+      sVar4 = psVar7[1];
+      (&DAT_004685fe)[iVar5 * 0x54] = sVar10 + sVar4;
+      (&DAT_004685ea)[iVar5 * 0x54] = sVar10 + sVar4;
     }
   }
   return;
@@ -7219,47 +7091,47 @@ void FUN_00417c69(void)
 
 {
   short sVar1;
-  short sVar2;
-  int iVar3;
-  uint uVar4;
+  ushort ushort;
+  int iVar2;
+  uint uVar3;
   undefined4 extraout_ECX;
   undefined4 extraout_ECX_00;
-  undefined4 uVar5;
-  undefined *puVar6;
-  short sVar7;
-  short *psVar8;
+  undefined4 uVar4;
+  undefined *puVar5;
+  short sVar6;
+  short *psVar7;
   short local_e;
   short local_c;
   
-  puVar6 = &DAT_00468738;
-  sVar1 = *(short *)(&PTR_DAT_004606c0)[_GameState->level];
-  psVar8 = (short *)((int)(&PTR_DAT_004606c0)[_GameState->level] + 2);
+  puVar5 = &DAT_00468738;
+  sVar1 = *(short *)_LevelLut1_[_GameState->level];
+  psVar7 = (short *)((int)_LevelLut1_[_GameState->level] + 2);
   if (_DAT_00467cf0 == 2) {
-    iVar3 = (int)*psVar8 >> 1;
-    if (iVar3 < 0) {
-      iVar3 = iVar3 + (uint)(((int)*psVar8 & 1U) != 0);
+    iVar2 = (int)*psVar7 >> 1;
+    if (iVar2 < 0) {
+      iVar2 = iVar2 + (uint)(((int)*psVar7 & 1U) != 0);
     }
-    *psVar8 = (short)iVar3;
+    *psVar7 = (short)iVar2;
   }
   Memset(&DAT_00466398,0,0x20);
-  sVar7 = 2;
-  uVar5 = extraout_ECX;
+  sVar6 = 2;
+  uVar4 = extraout_ECX;
   do {
-    if (sVar7 + -2 < (int)sVar1) {
-      *(ushort *)(puVar6 + 0x2a) = (ushort)(*(short *)&_GameState->field_0x16 == 0);
-      *(undefined2 *)(puVar6 + 0x48) = 0;
-      *(undefined2 *)(puVar6 + 0x22) = 0;
-      *(undefined2 *)(puVar6 + 0x70) = 0;
-      *(undefined4 *)(puVar6 + 0x96) = 0;
-      *(undefined2 *)(puVar6 + 0x6e) = 0xffff;
-      *(undefined2 *)(puVar6 + 0x3c) = 0xffff;
-      *(short *)(&DAT_00466398 + *psVar8 * 2) = *(short *)(&DAT_00466398 + *psVar8 * 2) + 1;
-      *(short *)(puVar6 + 0x1a) = *psVar8;
-      psVar8 = psVar8 + 1;
-      uVar4 = FUN_00414700((char)*(undefined2 *)(puVar6 + 0x1a),(char)sVar1,(char)uVar5,
-                           *(undefined2 *)(puVar6 + 0x1a));
-      sVar2 = FUN_00414713(*(undefined2 *)(puVar6 + 0x1a));
-      if (*(short *)(puVar6 + 0x9a) == 0x119a) {
+    if (sVar6 + -2 < (int)sVar1) {
+      *(ushort *)(puVar5 + 0x2a) = (ushort)(*(short *)&_GameState->field_0x16 == 0);
+      *(undefined2 *)(puVar5 + 0x48) = 0;
+      *(undefined2 *)(puVar5 + 0x22) = 0;
+      *(undefined2 *)(puVar5 + 0x70) = 0;
+      *(undefined4 *)(puVar5 + 0x96) = 0;
+      *(undefined2 *)(puVar5 + 0x6e) = 0xffff;
+      *(undefined2 *)(puVar5 + 0x3c) = 0xffff;
+      *(short *)(&DAT_00466398 + *psVar7 * 2) = *(short *)(&DAT_00466398 + *psVar7 * 2) + 1;
+      *(short *)(puVar5 + 0x1a) = *psVar7;
+      psVar7 = psVar7 + 1;
+      uVar3 = FUN_00414700((char)*(undefined2 *)(puVar5 + 0x1a),(char)sVar1,(char)uVar4,
+                           *(undefined2 *)(puVar5 + 0x1a));
+      ushort = RoomIsObverse(*(short *)(puVar5 + 0x1a));
+      if (*(short *)(puVar5 + 0x9a) == 0x119a) {
         local_c = 0x1b;
         local_e = 0x2e;
       }
@@ -7267,39 +7139,39 @@ void FUN_00417c69(void)
         local_c = 0x1d;
         local_e = 0x36;
       }
-      if (sVar2 == 0) {
-        iVar3 = Random();
-        *(short *)(puVar6 + 0x1c) = (short)(iVar3 % 3);
-        *(short *)(puVar6 + 0x16) = *(short *)(puVar6 + 0x1c) * 100 + local_e;
-        if ((uVar4 & 2) != 0) {
-          *(short *)(puVar6 + 0x1c) = *(short *)(puVar6 + 0x1c) + 3;
+      if (ushort == 0) {
+        iVar2 = Random();
+        *(short *)(puVar5 + 0x1c) = (short)(iVar2 % 3);
+        *(short *)(puVar5 + 0x16) = *(short *)(puVar5 + 0x1c) * 100 + local_e;
+        if ((uVar3 & 2) != 0) {
+          *(short *)(puVar5 + 0x1c) = *(short *)(puVar5 + 0x1c) + 3;
         }
       }
       else {
-        iVar3 = Random();
-        *(short *)(puVar6 + 0x1c) = (short)(iVar3 % 6);
-        *(short *)(puVar6 + 0x16) = *(short *)(puVar6 + 0x1c) * 0x32 + local_c;
+        iVar2 = Random();
+        *(short *)(puVar5 + 0x1c) = (short)(iVar2 % 6);
+        *(short *)(puVar5 + 0x16) = *(short *)(puVar5 + 0x1c) * 0x32 + local_c;
       }
-      *(undefined2 *)(puVar6 + 0x1e) = 0xffff;
-      *(undefined2 *)(puVar6 + 0x18) = 0;
-      iVar3 = Random();
-      if (iVar3 % 100 < 0x32) {
-        *(undefined2 *)(puVar6 + 0x14) = 0x10;
-        *(undefined4 *)(puVar6 + 0x96) = 2;
+      *(undefined2 *)(puVar5 + 0x1e) = 0xffff;
+      *(undefined2 *)(puVar5 + 0x18) = 0;
+      iVar2 = Random();
+      if (iVar2 % 100 < 0x32) {
+        *(undefined2 *)(puVar5 + 0x14) = 0x10;
+        *(undefined4 *)(puVar5 + 0x96) = 2;
       }
       else {
-        *(undefined2 *)(puVar6 + 0x14) = 0x1e0;
-        *(undefined4 *)(puVar6 + 0x96) = 1;
+        *(undefined2 *)(puVar5 + 0x14) = 0x1e0;
+        *(undefined4 *)(puVar5 + 0x96) = 1;
       }
-      FUN_00434334(sVar7,sVar2);
-      uVar5 = extraout_ECX_00;
+      FUN_00434334(sVar6,ushort);
+      uVar4 = extraout_ECX_00;
     }
     else {
-      *(undefined2 *)(puVar6 + 0x2a) = 1;
+      *(undefined2 *)(puVar5 + 0x2a) = 1;
     }
-    puVar6 = puVar6 + 0xa8;
-    sVar7 = sVar7 + 1;
-  } while (sVar7 < 0xc);
+    puVar5 = puVar5 + 0xa8;
+    sVar6 = sVar6 + 1;
+  } while (sVar6 < 0xc);
   return;
 }
 
@@ -7380,7 +7252,7 @@ void FUN_00417eba(uint param_1,undefined4 param_2,uint param_3)
       _DAT_004666d2 = 1;
     }
     pGVar7 = _GameState;
-    if (*(short *)(_GameState->field51_0x330 + 0x142e) == 0xf) {
+    if (*(short *)_GameState->field46_0x175e == 0xf) {
       _DAT_004666d2 = 0;
       bVar1 = true;
     }
@@ -7604,17 +7476,17 @@ ushort FUN_0041907c(undefined param_1,undefined param_2,undefined param_3,short 
   local_c = _Rooms[(short)(&DAT_00468602)[iVar4 * 0x54]];
   local_e = 0;
   sVar3 = (&DAT_00468604)[iVar4 * 0x54];
-  if (((local_c->flags & 1) == 0) && (2 < sVar3)) {
+  if (((*(byte *)&local_c->flags & 1) == 0) && (2 < sVar3)) {
     sVar3 = sVar3 + -3;
   }
-  sVar1 = local_c->field14_0xa4[sVar3];
-  sVar3 = local_c->field15_0xb0[sVar3];
+  sVar1 = local_c->field13_0xa4[sVar3];
+  sVar3 = local_c->field14_0xb0[sVar3];
   iVar4 = DlistHead(local_c->partEntities);
   sVar6 = 0;
   do {
     if (local_c->partEntityCount <= sVar6) {
 LAB_00419140:
-      local_1c = local_c->field16_0xbc + sVar3;
+      local_1c = local_c->field15_0xbc + sVar3;
       sVar3 = 0;
       if (0 < sVar1) {
         do {
@@ -7683,11 +7555,11 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
   q = (Rect16 *)(&DAT_004685e8 + iVar6 * 0x54);
   pRVar1 = _Rooms[(short)(&DAT_00468602)[iVar6 * 0x54]];
   sVar2 = (&DAT_00468604)[iVar6 * 0x54];
-  if (((pRVar1->flags & 1) == 0) && (2 < sVar2)) {
+  if (((*(byte *)&pRVar1->flags & 1) == 0) && (2 < sVar2)) {
     sVar2 = sVar2 + -3;
   }
-  local_6 = pRVar1->field14_0xa4[sVar2];
-  local_8 = pRVar1->field15_0xb0[sVar2];
+  local_6 = pRVar1->field13_0xa4[sVar2];
+  local_8 = pRVar1->field14_0xb0[sVar2];
   (&DAT_00468630)[iVar6 * 0x54] = 0;
   iVar7 = DlistHead(pRVar1->partEntities);
   for (sVar2 = 0; sVar2 < pRVar1->partEntityCount; sVar2 = sVar2 + 1) {
@@ -7727,7 +7599,7 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
       }
     }
   }
-  local_20 = pRVar1->field16_0xbc + local_8;
+  local_20 = pRVar1->field15_0xbc + local_8;
   sVar2 = 0;
   if (0 < local_6) {
     do {
@@ -7860,7 +7732,7 @@ void FUN_004196ef(void)
   
   sVar1 = 0;
   do {
-    _GameState->puzzleState[sVar1].mode = (&DAT_00466750)[sVar1 * 7];
+    _GameState->puzzles[sVar1].mode = (&DAT_00466750)[sVar1 * 7];
     sVar1 = sVar1 + 1;
   } while (sVar1 < 8);
   return;
@@ -7967,7 +7839,7 @@ void FUN_004198f8(void)
     (&DAT_00466746)[sVar2 * 7] = (&DAT_00460bac)[sVar2];
     uVar1 = FUN_00412ac4(sVar2 + 0x4a39);
     *(undefined4 *)((int)&DAT_00466748 + sVar2 * 0xe) = uVar1;
-    (&DAT_00466750)[sVar2 * 7] = _GameState->puzzleState[sVar2].mode;
+    (&DAT_00466750)[sVar2 * 7] = _GameState->puzzles[sVar2].mode;
     FUN_0041395c(*(undefined4 *)((int)&DAT_00466748 + sVar2 * 0xe),
                  sVar2 * 7 & 0xffff0000U | (uint)(ushort)(&DAT_00466744)[sVar2 * 7],
                  sVar2 * 7 & 0xffff0000U | (uint)(ushort)(&DAT_00466746)[sVar2 * 7],0xcd);
@@ -8536,7 +8408,7 @@ uint FUN_0041a491(void)
   if (_DAT_00461a9e != 0) {
     local_c = local_c & 0xcfffffff;
   }
-  if (*(short *)&_GameState->field_0x1c == 0) {
+  if (_GameState->field28_0x1c == 0) {
     local_c = local_c & 0xffffffdf;
   }
   puVar7 = (uint *)(&PTR_DAT_004613d8)[DAT_00468600];
@@ -8594,47 +8466,48 @@ void FUN_0041a633(void)
 
 {
   ushort uVar1;
-  short sVar2;
+  ushort ushort;
   undefined2 extraout_var;
-  uint uVar3;
-  short *psVar4;
+  uint uVar2;
+  short *psVar3;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
+  short sVar4;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   short sVar5;
   uint unaff_EBX;
   
-  sVar2 = FUN_00414713(DAT_00468602);
+  ushort = RoomIsObverse(DAT_00468602);
   DAT_00462550 = 0;
-  FUN_00434334(0,sVar2);
+  FUN_00434334(0,ushort);
   uVar1 = DAT_00468614;
   DAT_004685f8 = 0;
   DAT_004686aa = DAT_00468602;
   if (DAT_00468614 != 0xffff) {
-    uVar3 = (uint)DAT_00468614;
+    uVar2 = (uint)DAT_00468614;
     DAT_00468614 = 0xffff;
     DAT_00468600 = uVar1;
-    FUN_0043426d((char)DAT_00468602,extraout_DL,extraout_CL,0,unaff_EBX & 0xffff0000 | uVar3);
+    FUN_0043426d((char)DAT_00468602,extraout_DL,extraout_CL,0,unaff_EBX & 0xffff0000 | uVar2);
     DAT_0046860a = 0;
     if (((uVar1 == 0x21) || (uVar1 == 0x2c)) || (uVar1 == 0x2d)) {
-      uVar3 = FUN_00414eb6((char)DAT_00468624,extraout_DL_00,extraout_CL_00,DAT_00468624,
+      uVar2 = FUN_00414eb6((char)DAT_00468624,extraout_DL_00,extraout_CL_00,DAT_00468624,
                            CONCAT22(extraout_var,DAT_0046861e));
-      psVar4 = (short *)FUN_0041469e((char)DAT_00468602,extraout_DL_01,extraout_CL_01,
-                                     uVar3 & 0xffff0000 | (uint)DAT_00468602,
-                                     uVar3 & 0xffff0000 | (uint)*(ushort *)(uVar3 + 0x12));
-      if (sVar2 == 0) {
+      psVar3 = (short *)FUN_0041469e((char)DAT_00468602,extraout_DL_01,extraout_CL_01,
+                                     uVar2 & 0xffff0000 | (uint)DAT_00468602,
+                                     uVar2 & 0xffff0000 | (uint)*(ushort *)(uVar2 + 0x12));
+      if (ushort == 0) {
         sVar5 = 0x10;
-        sVar2 = 0x1c;
+        sVar4 = 0x1c;
       }
       else {
         sVar5 = 5;
-        sVar2 = 0xb;
+        sVar4 = 0xb;
       }
-      DAT_004685e8 = sVar5 + *psVar4;
-      DAT_004685ea = sVar2 + psVar4[1];
+      DAT_004685e8 = sVar5 + *psVar3;
+      DAT_004685ea = sVar4 + psVar3[1];
       DAT_004685fc = DAT_004685e8;
       DAT_004685fe = DAT_004685ea;
     }
@@ -8665,7 +8538,7 @@ void FUN_0041a70e(void)
                        in_EAX & 0xffff0000 | (uint)DAT_0046861e);
   FUN_0041a42a((char)iVar1,extraout_DL,extraout_CL,1);
   if (iVar1 == 0) {
-    unaff_DI = *(ushort *)&_GameState->field_0x1e;
+    unaff_DI = _GameState->field29_0x1e;
     unaff_SI = 0x35;
   }
   else {
@@ -8685,7 +8558,7 @@ void FUN_0041a70e(void)
       unaff_DI = _RoomIndex;
       break;
     case 8:
-      *(ushort *)&_GameState->field_0x1e = DAT_00468602;
+      _GameState->field29_0x1e = DAT_00468602;
       unaff_DI = 0;
       unaff_SI = 0;
       break;
@@ -8774,10 +8647,10 @@ void FUN_0041a8fe(void)
 void FUN_0041a92e(void)
 
 {
-  short sVar1;
+  ushort ushort;
   
-  sVar1 = FUN_00414713(DAT_004686aa);
-  FUN_00434334(1,sVar1);
+  ushort = RoomIsObverse(DAT_004686aa);
+  FUN_00434334(1,ushort);
   DAT_004686a0 = 0;
   return;
 }
@@ -8838,20 +8711,21 @@ void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,ushort p
                  )
 
 {
-  short sVar1;
+  ushort ushort;
   undefined2 extraout_var;
-  GameState *pGVar3;
+  GameState *pGVar2;
   undefined extraout_CL;
-  undefined uVar4;
+  undefined uVar3;
   undefined4 extraout_ECX;
-  undefined4 uVar5;
+  undefined4 uVar4;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
-  undefined uVar6;
-  uint uVar2;
+  undefined uVar5;
+  short sVar6;
+  uint uVar1;
   
-  if (*(short *)&_GameState->field_0x1c != 0) {
+  if (_GameState->field28_0x1c != 0) {
     DAT_004686ba = 0;
     DAT_00468690 = DAT_004685fc + param_5;
     DAT_004686a6 = DAT_004685fe;
@@ -8867,21 +8741,21 @@ void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,ushort p
     DAT_004686c4 = 0xffff;
     DAT_004686c0 = 1;
     DAT_004686a4 = DAT_00468690;
-    sVar1 = FUN_00414713(DAT_00468602);
-    uVar2 = CONCAT22(extraout_var,sVar1);
-    FUN_00434334(1,sVar1);
-    FUN_0043426d((char)param_4,extraout_DL,extraout_CL,1,uVar2 & 0xffff0000 | (uint)param_4);
-    *(short *)&_GameState->field_0x1c = *(short *)&_GameState->field_0x1c + -1;
+    ushort = RoomIsObverse(DAT_00468602);
+    uVar1 = CONCAT22(extraout_var,ushort);
+    FUN_00434334(1,ushort);
+    FUN_0043426d((char)param_4,extraout_DL,extraout_CL,1,uVar1 & 0xffff0000 | (uint)param_4);
+    _GameState->field28_0x1c = _GameState->field28_0x1c + -1;
     DAT_004605b6 = DAT_004605b6 | 8;
-    if ((*(short *)&_GameState->field_0x1c == 0) && (_ActualBananaPartsCount == 0)) {
-      pGVar3 = _GameState;
-      uVar5 = extraout_ECX;
-      uVar6 = extraout_DL_00;
-      for (sVar1 = 0; sVar1 < _InitialBananaPartsCount; sVar1 = sVar1 + 1) {
-        uVar4 = (undefined)uVar5;
-        uVar5 = 1000;
-        pGVar3 = (GameState *)FUN_00414c5a((char)pGVar3,uVar6,uVar4,1000);
-        uVar6 = extraout_DL_01;
+    if ((_GameState->field28_0x1c == 0) && (_ActualBananaPartsCount == 0)) {
+      pGVar2 = _GameState;
+      uVar4 = extraout_ECX;
+      uVar5 = extraout_DL_00;
+      for (sVar6 = 0; sVar6 < _InitialBananaPartsCount; sVar6 = sVar6 + 1) {
+        uVar3 = (undefined)uVar4;
+        uVar4 = 1000;
+        pGVar2 = (GameState *)FUN_00414c5a((char)pGVar2,uVar5,uVar3,1000);
+        uVar5 = extraout_DL_01;
       }
       _ActualBananaPartsCount = _InitialBananaPartsCount;
     }
@@ -8904,7 +8778,7 @@ void FUN_0041abd6(void)
   DAT_004686ba = 1;
   DAT_00468658 = 0;
   DAT_00468630 = 0;
-  ezFUN_00435315(DAT_0046865a);
+  DlistInit(DAT_0046865a);
   return;
 }
 
@@ -18607,11 +18481,11 @@ void FUN_0042aec8(void)
   local_173e = 0xffff;
   local_1740 = 0xffff;
   sVar1 = FUN_0044713f();
-  *(ushort *)(_GameState->field49_0x40 + 0x2a) = (ushort)(sVar1 == 0);
+  *(ushort *)(_GameState->field43_0x40 + 0x2a) = (ushort)(sVar1 == 0);
   sVar1 = FUN_0044714d();
-  *(ushort *)(_GameState->field49_0x40 + 0x2c) = (ushort)(sVar1 == 0);
+  *(ushort *)(_GameState->field43_0x40 + 0x2c) = (ushort)(sVar1 == 0);
   DAT_00462790 = 0;
-  *(undefined2 *)_GameState->field49_0x40 = 0;
+  *(undefined2 *)_GameState->field43_0x40 = 0;
   Memcpy(_GameState,local_1774,5999);
   return;
 }
@@ -18829,10 +18703,10 @@ void FUN_0042b1d8(undefined param_1,undefined param_2,undefined param_3,ushort p
   uVar2 = FUN_0045253c(iVar1,extraout_EDX,extraout_ECX,DAT_00467a94,iVar1,0);
   uVar3 = FUN_0042b10a(uVar2,extraout_EDX_00,extraout_ECX_00,_GameState,5999,1);
   FUN_0042b1cb(uVar3,extraout_EDX_01,extraout_ECX_01);
-  DAT_00462790 = *(undefined2 *)_GameState->field49_0x40;
-  uVar4 = *(short *)(_GameState->field49_0x40 + 0x2a) == 0;
+  DAT_00462790 = *(undefined2 *)_GameState->field43_0x40;
+  uVar4 = *(short *)(_GameState->field43_0x40 + 0x2a) == 0;
   FUN_004470d1(uVar4,extraout_DL,extraout_CL,(ushort)(byte)uVar4);
-  bVar5 = *(short *)(_GameState->field49_0x40 + 0x2c) == 0;
+  bVar5 = *(short *)(_GameState->field43_0x40 + 0x2c) == 0;
   FUN_00447154(bVar5,extraout_DL_00,uVar4,(uint)bVar5);
   return;
 }
@@ -18877,24 +18751,24 @@ bool FUN_0042b260(void)
   undefined *puVar11;
   
   if (_DAT_004617c8 == 0) {
-    *(undefined2 *)_GameState->field49_0x40 = DAT_00462790;
+    *(undefined2 *)_GameState->field43_0x40 = DAT_00462790;
     sVar3 = FUN_0044713f();
-    *(ushort *)(_GameState->field49_0x40 + 0x2a) = (ushort)(sVar3 == 0);
+    *(ushort *)(_GameState->field43_0x40 + 0x2a) = (ushort)(sVar3 == 0);
     sVar3 = FUN_0044714d();
     pGVar5 = _GameState;
-    *(ushort *)(_GameState->field49_0x40 + 0x2c) = (ushort)(sVar3 == 0);
+    *(ushort *)(_GameState->field43_0x40 + 0x2c) = (ushort)(sVar3 == 0);
     uVar1 = extraout_CL;
     if (_DAT_00461aae != 0) {
-      _GameState->everBeenInBuilding[_GameState->building] = 1;
+      _GameState->buildingIsInitialised[_GameState->building] = 1;
       pGVar5 = _GameState;
       sVar3 = _GameState->building;
-      Memcpy(_GameState->field51_0x330 + sVar3 * 0x6ba,&_GameState->field_0x1a,0x14);
-      puVar11 = pGVar5->field51_0x330 + sVar3 * 0x6ba + 0x14;
+      Memcpy(_GameState->buildings + sVar3,&_GameState->field_0x1a,0x14);
+      puVar11 = pGVar5->buildings[sVar3].field0_0x0 + 0x14;
       FUN_0043da06((char)puVar11,extraout_DL,extraout_CL_00,puVar11);
-      uVar1 = FUN_00414ccd((char)(pGVar5->field51_0x330 + sVar3 * 0x6ba + 0x26c),extraout_DL_00,
-                           (char)puVar11,pGVar5->field51_0x330 + sVar3 * 0x6ba + 0x26c,
-                           pGVar5->field51_0x330 + sVar3 * 0x6ba + 0x302);
-      puVar11 = pGVar5->field51_0x330 + sVar3 * 0x6ba + 0x492;
+      pcVar4 = pGVar5->buildings[sVar3].puzzleDoors;
+      uVar1 = FUN_00414ccd((char)pcVar4,extraout_DL_00,(char)puVar11,pcVar4,
+                           &pGVar5->buildings[sVar3].savedPartEntities);
+      puVar11 = pGVar5->buildings[sVar3].field4_0x492;
       FUN_00435017(uVar1,extraout_DL_01,extraout_CL_01,puVar11);
       uVar1 = SUB41(puVar11,0);
       _DAT_00461aae = 0;
@@ -21230,7 +21104,7 @@ void FUN_0042fc9c(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_0042fcbd(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  *(short *)&_GameState->field_0x1c = *(short *)&_GameState->field_0x1c + param_4;
+  _GameState->field28_0x1c = _GameState->field28_0x1c + param_4;
   DAT_004605b6 = DAT_004605b6 | 8;
   return;
 }
@@ -21321,6 +21195,7 @@ void FUN_0042fe4c(void)
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
+  Dlist *pDVar4;
   
   FUN_0041a42a(in_AL,in_DL,in_CL,1);
   FUN_0041a8fe();
@@ -21331,9 +21206,9 @@ void FUN_0042fe4c(void)
   uVar3 = FUN_004143a5();
   uVar2 = FUN_00434d2a(uVar3,extraout_EDX_00,extraout_ECX_00);
   FUN_0043d7c3(uVar2,extraout_EDX_01,extraout_ECX_01);
-  uVar2 = DAT_0046865a;
-  uVar1 = ezFUN_00435315(DAT_0046865a);
-  FUN_0044c950(uVar1,extraout_DL,(char)uVar2,0);
+  pDVar4 = DAT_0046865a;
+  uVar1 = DlistInit(DAT_0046865a);
+  FUN_0044c950(uVar1,extraout_DL,(char)pDVar4,0);
   FUN_00447746();
   return;
 }
@@ -24770,14 +24645,14 @@ short * __stdcall GetEseqResource_(ushort param_1,int param_2,short **param_3,sh
 
 
 
-void __stdcall FUN_00434334(short param_1,short param_2)
+void __stdcall FUN_00434334(short param_1,short ushort)
 
 {
   int iVar1;
   undefined4 uVar2;
   
   iVar1 = (int)param_1;
-  if (param_2 == 1) {
+  if (ushort == 1) {
     uVar2 = (&DAT_0046863e)[iVar1 * 0x2a];
   }
   else {
@@ -24809,15 +24684,16 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
   short *psVar4;
   int iVar5;
   undefined uVar6;
-  short sVar7;
-  int iVar8;
-  GameState *pGVar9;
-  int iVar10;
+  ushort uVar7;
+  short sVar8;
+  int iVar9;
+  GameState *pGVar10;
+  int iVar11;
   undefined2 extraout_var;
-  undefined2 *puVar11;
-  uint uVar12;
+  undefined2 *puVar12;
+  uint uVar13;
   undefined extraout_CL;
-  undefined uVar13;
+  undefined uVar14;
   short *extraout_ECX;
   short *extraout_ECX_00;
   short *extraout_ECX_01;
@@ -24832,13 +24708,13 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
   short *extraout_ECX_10;
   short *extraout_ECX_11;
   char extraout_DL;
-  char cVar14;
+  char cVar15;
   char extraout_DL_00;
-  short sVar15;
-  int iVar16;
-  short *psVar17;
-  int iVar18;
-  short *psVar19;
+  short sVar16;
+  int iVar17;
+  short *psVar18;
+  int iVar19;
+  short *psVar20;
   short local_14;
   short local_12;
   short local_10;
@@ -24846,349 +24722,349 @@ uint FUN_00434369(undefined param_1,undefined param_2,undefined param_3,ushort p
   ushort local_8;
   ushort local_6;
   
-  iVar8 = (int)(short)param_4;
-  iVar16 = iVar8 * 0xa8;
-  psVar17 = &DAT_004685e8 + iVar8 * 0x54;
+  iVar9 = (int)(short)param_4;
+  iVar17 = iVar9 * 0xa8;
+  psVar18 = &DAT_004685e8 + iVar9 * 0x54;
   local_6 = 0;
-  psVar19 = (short *)(uint)(ushort)(&DAT_00468602)[iVar8 * 0x54];
-  sVar7 = FUN_00414713((&DAT_00468602)[iVar8 * 0x54]);
-  psVar4 = *(short **)(&DAT_0046865e + sVar7 * 4 + iVar16);
-  iVar5 = *(int *)(&DAT_00468666 + sVar7 * 4 + iVar16);
-  iVar18 = *(int *)(*(int *)((&DAT_0046863a)[iVar8 * 0x2a] +
-                            (short)(&DAT_00468600)[iVar8 * 0x54] * 4) + 4);
+  psVar20 = (short *)(uint)(ushort)(&DAT_00468602)[iVar9 * 0x54];
+  uVar7 = RoomIsObverse((&DAT_00468602)[iVar9 * 0x54]);
+  psVar4 = *(short **)(&DAT_0046865e + (short)uVar7 * 4 + iVar17);
+  iVar5 = *(int *)(&DAT_00468666 + (short)uVar7 * 4 + iVar17);
+  iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
+                            (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
   while( true ) {
-    sVar15 = (&DAT_0046860a)[iVar8 * 0x54];
-    uVar13 = SUB41(psVar19,0);
+    sVar8 = (&DAT_0046860a)[iVar9 * 0x54];
+    uVar14 = SUB41(psVar20,0);
     uVar6 = (undefined)param_4;
-    if (-1 < *(short *)(iVar18 + sVar15 * 10)) break;
-    local_8 = *(ushort *)(iVar18 + 2 + sVar15 * 10);
-    cVar14 = (char)sVar15 * '\x05';
-    uVar1 = *(ushort *)(iVar18 + 4 + sVar15 * 10);
-    pGVar9 = (GameState *)(*(short *)(iVar18 + sVar15 * 10) + 0x2e);
-    switch(pGVar9) {
+    if (-1 < *(short *)(iVar19 + sVar8 * 10)) break;
+    local_8 = *(ushort *)(iVar19 + 2 + sVar8 * 10);
+    cVar15 = (char)sVar8 * '\x05';
+    uVar1 = *(ushort *)(iVar19 + 4 + sVar8 * 10);
+    pGVar10 = (GameState *)(*(short *)(iVar19 + sVar8 * 10) + 0x2e);
+    switch(pGVar10) {
     case (GameState *)0x0:
-      sVar15 = 0x1fe;
-      if (sVar7 == 0) {
-        sVar15 = 0x1fc;
+      sVar8 = 0x1fe;
+      if (uVar7 == 0) {
+        sVar8 = 0x1fc;
       }
-      psVar19 = (short *)(uint)(ushort)(sVar15 - psVar4[(short)local_8]);
-      (&DAT_004685fc)[iVar8 * 0x54] = sVar15 - psVar4[(short)local_8];
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      psVar20 = (short *)(uint)(ushort)(sVar8 - psVar4[(short)local_8]);
+      (&DAT_004685fc)[iVar9 * 0x54] = sVar8 - psVar4[(short)local_8];
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x3:
       if (local_8 == 0xffff) {
-        iVar10 = CONCAT22((short)((uint)pGVar9 >> 0x10),0x12);
+        iVar11 = CONCAT22((short)((uint)pGVar10 >> 0x10),0x12);
         if (*(short *)&_GameState->field_0x16 != 0) {
-          iVar10 = iVar10 + -10;
+          iVar11 = iVar11 + -10;
         }
-        FUN_0043c382((char)iVar10,(char)_GameState,uVar13,iVar10,5,0);
-        psVar19 = extraout_ECX_10;
+        FUN_0043c382((char)iVar11,(char)_GameState,uVar14,iVar11,5,0);
+        psVar20 = extraout_ECX_10;
       }
       else {
-        FUN_0043c382((char)local_8,cVar14,uVar13,(uint)pGVar9 & 0xffff0000 | (uint)local_8,0,0);
-        psVar19 = extraout_ECX_11;
+        FUN_0043c382((char)local_8,cVar15,uVar14,(uint)pGVar10 & 0xffff0000 | (uint)local_8,0,0);
+        psVar20 = extraout_ECX_11;
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x4:
-      if ((*(byte *)(&DAT_00468630 + iVar8 * 0x54) & 1) == 0) {
-        (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      if ((*(byte *)(&DAT_00468630 + iVar9 * 0x54) & 1) == 0) {
+        (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       }
       else {
-        (&DAT_0046860a)[iVar8 * 0x54] = local_8;
+        (&DAT_0046860a)[iVar9 * 0x54] = local_8;
       }
       break;
     case (GameState *)0x5:
-      psVar19 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                                      (&DAT_00468602)[iVar8 * 0x54],
-                                      (uint)pGVar9 & 0xffff0000 |
-                                      (uint)*(ushort *)(&DAT_00468622 + iVar16));
-      (&DAT_004685fc)[iVar8 * 0x54] = *psVar19 + 4;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      psVar19 = extraout_ECX_09;
+      psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                                      (&DAT_00468602)[iVar9 * 0x54],
+                                      (uint)pGVar10 & 0xffff0000 |
+                                      (uint)*(ushort *)(&DAT_00468622 + iVar17));
+      (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + 4;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      psVar20 = extraout_ECX_09;
       break;
     case (GameState *)0x6:
-      psVar19 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                                      (&DAT_00468602)[iVar8 * 0x54],
-                                      (uint)pGVar9 & 0xffff0000 |
-                                      (uint)*(ushort *)(&DAT_00468622 + iVar16));
-      (&DAT_004685fc)[iVar8 * 0x54] = *psVar19 + psVar4[(short)local_8] + -7;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      psVar19 = psVar4;
+      psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                                      (&DAT_00468602)[iVar9 * 0x54],
+                                      (uint)pGVar10 & 0xffff0000 |
+                                      (uint)*(ushort *)(&DAT_00468622 + iVar17));
+      (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + psVar4[(short)local_8] + -7;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      psVar20 = psVar4;
       break;
     case (GameState *)0x9:
-      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
+      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
         uVar1 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
-        psVar19 = (short *)(uint)uVar1;
-        FUN_00446b08((char)uVar1,(char)DAT_00461aa8,uVar13,uVar1);
+        psVar20 = (short *)(uint)uVar1;
+        FUN_00446b08((char)uVar1,(char)DAT_00461aa8,uVar14,uVar1);
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0xa:
-      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
+      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
         uVar2 = *(ushort *)(DAT_00461aa8 + (short)local_8 * 2);
-        psVar19 = (short *)(uint)uVar2;
-        sVar15 = FUN_00446fc9((char)uVar2,(char)DAT_00461aa8,uVar13,uVar2);
-        if (sVar15 == 0) {
+        psVar20 = (short *)(uint)uVar2;
+        sVar8 = FUN_00446fc9((char)uVar2,(char)DAT_00461aa8,uVar14,uVar2);
+        if (sVar8 == 0) {
           uVar3 = *(undefined2 *)(DAT_00461aa8 + (short)local_8 * 2);
-          FUN_004465a5((char)uVar3,(char)DAT_00461aa8,(char)psVar19,uVar3,uVar1 & 0xff,
+          FUN_004465a5((char)uVar3,(char)DAT_00461aa8,(char)psVar20,uVar3,uVar1 & 0xff,
                        (short)((uint)(int)(short)uVar1 >> 8));
-          psVar19 = extraout_ECX_08;
+          psVar20 = extraout_ECX_08;
         }
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0xd:
-      psVar19 = (short *)((uint)pGVar9 & 0xffff0000 | (uint)param_4);
-      FUN_004174d3(uVar6,cVar14,uVar13,psVar19);
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      psVar20 = (short *)((uint)pGVar10 & 0xffff0000 | (uint)param_4);
+      FUN_004174d3(uVar6,cVar15,uVar14,psVar20);
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0xe:
-      *(short *)(&DAT_0046860e + iVar16) = *(short *)(&DAT_0046860e + iVar16) + -1;
-      if (*(short *)(&DAT_0046860e + iVar16) == 0) {
-        (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      *(short *)(&DAT_0046860e + iVar17) = *(short *)(&DAT_0046860e + iVar17) + -1;
+      if (*(short *)(&DAT_0046860e + iVar17) == 0) {
+        (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       }
       else {
-        (&DAT_0046860a)[iVar8 * 0x54] = *(undefined2 *)(&DAT_00468610 + iVar16);
+        (&DAT_0046860a)[iVar9 * 0x54] = *(undefined2 *)(&DAT_00468610 + iVar17);
       }
       break;
     case (GameState *)0xf:
-      *(undefined2 *)(&DAT_0046860e + iVar16) =
+      *(undefined2 *)(&DAT_0046860e + iVar17) =
            *(undefined2 *)(&DAT_00462558 + _GameState->levelInBuilding * 2);
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      *(undefined2 *)(&DAT_00468610 + iVar16) = (&DAT_0046860a)[iVar8 * 0x54];
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      *(undefined2 *)(&DAT_00468610 + iVar17) = (&DAT_0046860a)[iVar9 * 0x54];
       break;
     case (GameState *)0x10:
       DAT_004686ba = 1;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      pGVar9 = _GameState;
-      if (*(short *)&_GameState->field_0x1c == 0) {
-        pGVar9 = (GameState *)FUN_0043c382((char)_GameState,cVar14,uVar13,0xe,0,0);
-        uVar13 = extraout_CL;
-        cVar14 = extraout_DL_00;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      pGVar10 = _GameState;
+      if (_GameState->field28_0x1c == 0) {
+        pGVar10 = (GameState *)FUN_0043c382((char)_GameState,cVar15,uVar14,0xe,0,0);
+        uVar14 = extraout_CL;
+        cVar15 = extraout_DL_00;
       }
-      psVar19 = DAT_00468732;
-      FUN_00412f04((char)pGVar9,cVar14,uVar13,DAT_00468732);
+      psVar20 = DAT_00468732;
+      FUN_00412f04((char)pGVar10,cVar15,uVar14,DAT_00468732);
       break;
     case (GameState *)0x11:
-      psVar19 = psVar17;
-      (*(code *)(&DAT_00468652)[iVar8 * 0x2a])();
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      psVar20 = psVar18;
+      (*(code *)(&DAT_00468652)[iVar9 * 0x2a])();
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x12:
-      (&DAT_00468618)[iVar8 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_00468618)[iVar9 * 0x54] = local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x13:
-      FUN_0041aab9((char)local_8,cVar14,uVar13,local_8,uVar1);
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      psVar19 = extraout_ECX_06;
+      FUN_0041aab9((char)local_8,cVar15,uVar14,local_8,uVar1);
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      psVar20 = extraout_ECX_06;
       break;
     case (GameState *)0x14:
-      puVar11 = (undefined2 *)
-                FUN_00414eb6((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                             (&DAT_00468602)[iVar8 * 0x54],
-                             (uint)pGVar9 & 0xffff0000 | (uint)(ushort)(&DAT_0046861e)[iVar8 * 0x54]
-                            );
-      (&DAT_004685fc)[iVar8 * 0x54] = *puVar11;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      psVar19 = extraout_ECX_07;
+      puVar12 = (undefined2 *)
+                FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                             (&DAT_00468602)[iVar9 * 0x54],
+                             (uint)pGVar10 & 0xffff0000 |
+                             (uint)(ushort)(&DAT_0046861e)[iVar9 * 0x54]);
+      (&DAT_004685fc)[iVar9 * 0x54] = *puVar12;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      psVar20 = extraout_ECX_07;
       break;
     case (GameState *)0x15:
-      (&DAT_00468612)[iVar8 * 0x54] = 1;
-      pGVar9 = _GameState;
-      if (*(short *)&_GameState->field_0x1c == 0) {
-        pGVar9 = (GameState *)FUN_0043c382((char)_GameState,cVar14,uVar13,0xe,0,0);
+      (&DAT_00468612)[iVar9 * 0x54] = 1;
+      pGVar10 = _GameState;
+      if (_GameState->field28_0x1c == 0) {
+        pGVar10 = (GameState *)FUN_0043c382((char)_GameState,cVar15,uVar14,0xe,0,0);
       }
 LAB_00434a96:
-      return (uint)pGVar9 & 0xffff0000 | (uint)local_6;
+      return (uint)pGVar10 & 0xffff0000 | (uint)local_6;
     case (GameState *)0x16:
-      (&DAT_004685fa)[iVar8 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_004685fa)[iVar9 * 0x54] = local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x17:
       if (uVar1 == 0xffff) {
-        psVar19 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                                        (&DAT_00468602)[iVar8 * 0x54],
-                                        (uint)pGVar9 & 0xffff0000 |
-                                        (uint)*(ushort *)(&DAT_00468620 + iVar16));
+        psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                                        (&DAT_00468602)[iVar9 * 0x54],
+                                        (uint)pGVar10 & 0xffff0000 |
+                                        (uint)*(ushort *)(&DAT_00468620 + iVar17));
         FUN_00414734();
       }
       else {
         FUN_0041472f();
-        psVar19 = extraout_ECX_03;
+        psVar20 = extraout_ECX_03;
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x18:
       if (uVar1 == 0xffff) {
-        psVar19 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                                        (&DAT_00468602)[iVar8 * 0x54],
-                                        (uint)pGVar9 & 0xffff0000 |
-                                        (uint)*(ushort *)(&DAT_00468620 + iVar16));
+        psVar20 = (short *)FUN_00414eb6((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                                        (&DAT_00468602)[iVar9 * 0x54],
+                                        (uint)pGVar10 & 0xffff0000 |
+                                        (uint)*(ushort *)(&DAT_00468620 + iVar17));
         FUN_00414739();
       }
       else {
         FUN_0041472a();
-        psVar19 = extraout_ECX_04;
+        psVar20 = extraout_ECX_04;
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x19:
       if (local_8 != 0x8000) {
-        psVar19 = (short *)FUN_00414edc((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                                        (&DAT_00468602)[iVar8 * 0x54],
-                                        *(undefined2 *)(&DAT_00468620 + iVar16));
-        (&DAT_004685fc)[iVar8 * 0x54] = *psVar19 + local_8;
-        psVar19 = extraout_ECX_01;
-        cVar14 = extraout_DL;
+        psVar20 = (short *)FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                                        (&DAT_00468602)[iVar9 * 0x54],
+                                        *(undefined2 *)(&DAT_00468620 + iVar17));
+        (&DAT_004685fc)[iVar9 * 0x54] = *psVar20 + local_8;
+        psVar20 = extraout_ECX_01;
+        cVar15 = extraout_DL;
       }
       if (uVar1 != 0x8000) {
-        iVar10 = FUN_00414edc((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,(char)psVar19,
-                              (&DAT_00468602)[iVar8 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar16))
+        iVar11 = FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,(char)psVar20,
+                              (&DAT_00468602)[iVar9 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar17))
         ;
-        (&DAT_004685fe)[iVar8 * 0x54] = uVar1 + *(short *)(iVar10 + 2);
-        psVar19 = extraout_ECX_02;
+        (&DAT_004685fe)[iVar9 * 0x54] = uVar1 + *(short *)(iVar11 + 2);
+        psVar20 = extraout_ECX_02;
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x1d:
-      (&DAT_00468616)[iVar8 * 0x54] = 0;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_00468616)[iVar9 * 0x54] = 0;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x1e:
-      (&DAT_00468616)[iVar8 * 0x54] = 1;
-      (&DAT_0046861a)[iVar8 * 0x54] = 0;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_00468616)[iVar9 * 0x54] = 1;
+      (&DAT_0046861a)[iVar9 * 0x54] = 0;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x1f:
-      (&DAT_004685fe)[iVar8 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_004685fe)[iVar9 * 0x54] = local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x20:
-      (&DAT_004685fc)[iVar8 * 0x54] = local_8;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_004685fc)[iVar9 * 0x54] = local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x21:
-      (&DAT_004685fe)[iVar8 * 0x54] = (&DAT_004685fe)[iVar8 * 0x54] + local_8;
-      (&DAT_00468604)[iVar8 * 0x54] = (&DAT_00468604)[iVar8 * 0x54] + uVar1;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_004685fe)[iVar9 * 0x54] = (&DAT_004685fe)[iVar9 * 0x54] + local_8;
+      (&DAT_00468604)[iVar9 * 0x54] = (&DAT_00468604)[iVar9 * 0x54] + uVar1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x22:
-      (&DAT_004685fc)[iVar8 * 0x54] = (&DAT_004685fc)[iVar8 * 0x54] + local_8;
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_004685fc)[iVar9 * 0x54] = (&DAT_004685fc)[iVar9 * 0x54] + local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x23:
-      (*(code *)(&DAT_00468670)[iVar8 * 0x2a])();
+      (*(code *)(&DAT_00468670)[iVar9 * 0x2a])();
       if (param_4 == 0) {
         local_6 = 1;
         DAT_00462550 = 1;
-        pGVar9 = (GameState *)CONCAT22(extraout_var,1);
+        pGVar10 = (GameState *)CONCAT22(extraout_var,1);
         goto LAB_00434a96;
       }
-      psVar19 = (short *)(uint)param_4;
-      (*(code *)(&DAT_00468674)[iVar8 * 0x2a])();
-      (&DAT_0046860a)[iVar8 * 0x54] = 0;
-      iVar18 = *(int *)(*(int *)((&DAT_0046863a)[iVar8 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar8 * 0x54] * 4) + 4);
+      psVar20 = (short *)(uint)param_4;
+      (*(code *)(&DAT_00468674)[iVar9 * 0x2a])();
+      (&DAT_0046860a)[iVar9 * 0x54] = 0;
+      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
+                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
       break;
     case (GameState *)0x24:
-      psVar19 = psVar17;
-      (*(code *)(&DAT_0046864e)[iVar8 * 0x2a])();
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      psVar20 = psVar18;
+      (*(code *)(&DAT_0046864e)[iVar9 * 0x2a])();
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x25:
-      iVar10 = FUN_00414edc((char)(&DAT_00468602)[iVar8 * 0x54],cVar14,uVar13,
-                            (&DAT_00468602)[iVar8 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar16));
-      psVar19 = extraout_ECX_05;
-      if ((&DAT_00468602)[iVar8 * 0x54] == _RoomIndex) {
-        psVar19 = *(short **)(iVar10 + 10);
-        FUN_00412e18((char)iVar10,(char)(&DAT_00468602)[iVar8 * 0x54],(char)extraout_ECX_05,psVar19)
+      iVar11 = FUN_00414edc((char)(&DAT_00468602)[iVar9 * 0x54],cVar15,uVar14,
+                            (&DAT_00468602)[iVar9 * 0x54],*(undefined2 *)(&DAT_00468620 + iVar17));
+      psVar20 = extraout_ECX_05;
+      if ((&DAT_00468602)[iVar9 * 0x54] == _RoomIndex) {
+        psVar20 = *(short **)(iVar11 + 10);
+        FUN_00412e18((char)iVar11,(char)(&DAT_00468602)[iVar9 * 0x54],(char)extraout_ECX_05,psVar20)
         ;
       }
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
       break;
     case (GameState *)0x26:
-      (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-      (&DAT_004685f0)[iVar8 * 0x54] = (&DAT_004685f0)[iVar8 * 0x54] | 0x8000;
+      (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+      (&DAT_004685f0)[iVar9 * 0x54] = (&DAT_004685f0)[iVar9 * 0x54] | 0x8000;
       goto LAB_00434a96;
     case (GameState *)0x27:
-      FUN_0043426d(uVar6,cVar14,uVar13,param_4,
-                   (uint)pGVar9 & 0xffff0000 | (uint)*(ushort *)(&DAT_00468606 + iVar16));
-      iVar18 = *(int *)(*(int *)((&DAT_0046863a)[iVar8 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar8 * 0x54] * 4) + 4);
-      (&DAT_0046860a)[iVar8 * 0x54] = 0;
-      psVar19 = extraout_ECX;
+      FUN_0043426d(uVar6,cVar15,uVar14,param_4,
+                   (uint)pGVar10 & 0xffff0000 | (uint)*(ushort *)(&DAT_00468606 + iVar17));
+      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
+                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
+      (&DAT_0046860a)[iVar9 * 0x54] = 0;
+      psVar20 = extraout_ECX;
       break;
     case (GameState *)0x28:
-      FUN_0043426d(uVar6,cVar14,uVar13,param_4,(uint)pGVar9 & 0xffff0000 | (uint)local_8);
-      iVar18 = *(int *)(*(int *)((&DAT_0046863a)[iVar8 * 0x2a] +
-                                (short)(&DAT_00468600)[iVar8 * 0x54] * 4) + 4);
-      (&DAT_0046860a)[iVar8 * 0x54] = 0;
-      psVar19 = extraout_ECX_00;
+      FUN_0043426d(uVar6,cVar15,uVar14,param_4,(uint)pGVar10 & 0xffff0000 | (uint)local_8);
+      iVar19 = *(int *)(*(int *)((&DAT_0046863a)[iVar9 * 0x2a] +
+                                (short)(&DAT_00468600)[iVar9 * 0x54] * 4) + 4);
+      (&DAT_0046860a)[iVar9 * 0x54] = 0;
+      psVar20 = extraout_ECX_00;
       break;
     case (GameState *)0x2a:
-      (&DAT_0046860a)[iVar8 * 0x54] = local_8;
+      (&DAT_0046860a)[iVar9 * 0x54] = local_8;
       break;
     case (GameState *)0x2d:
-      (&DAT_0046860a)[iVar8 * 0x54] = 0;
+      (&DAT_0046860a)[iVar9 * 0x54] = 0;
     }
   }
-  psVar19 = (short *)(iVar18 + sVar15 * 10);
-  (&DAT_004685f0)[iVar8 * 0x54] = psVar19[3];
-  local_10 = psVar4[*psVar19];
-  *(short *)(&DAT_004685ec + iVar16) = local_10;
-  local_e = *(undefined2 *)(iVar5 + *psVar19 * 2);
-  *(undefined2 *)(&DAT_004685ee + iVar16) = local_e;
-  local_14 = (&DAT_004685fc)[iVar8 * 0x54];
-  sVar7 = psVar19[1];
-  sVar15 = (&DAT_004685fc)[iVar8 * 0x54] + sVar7;
-  *psVar17 = sVar15;
-  (&DAT_004685fc)[iVar8 * 0x54] = sVar15;
-  local_12 = psVar19[2] + (&DAT_004685fe)[iVar8 * 0x54];
-  (&DAT_004685ea)[iVar8 * 0x54] = local_12;
-  if ((&DAT_00468616)[iVar8 * 0x54] != 0) {
-    if ((short)(&DAT_004685fc)[iVar8 * 0x54] < local_14) {
-      local_10 = 1 - sVar7;
-      local_14 = (&DAT_004685fc)[iVar8 * 0x54];
+  psVar20 = (short *)(iVar19 + sVar8 * 10);
+  (&DAT_004685f0)[iVar9 * 0x54] = psVar20[3];
+  local_10 = psVar4[*psVar20];
+  *(short *)(&DAT_004685ec + iVar17) = local_10;
+  local_e = *(undefined2 *)(iVar5 + *psVar20 * 2);
+  *(undefined2 *)(&DAT_004685ee + iVar17) = local_e;
+  local_14 = (&DAT_004685fc)[iVar9 * 0x54];
+  sVar8 = psVar20[1];
+  sVar16 = (&DAT_004685fc)[iVar9 * 0x54] + sVar8;
+  *psVar18 = sVar16;
+  (&DAT_004685fc)[iVar9 * 0x54] = sVar16;
+  local_12 = psVar20[2] + (&DAT_004685fe)[iVar9 * 0x54];
+  (&DAT_004685ea)[iVar9 * 0x54] = local_12;
+  if ((&DAT_00468616)[iVar9 * 0x54] != 0) {
+    if ((short)(&DAT_004685fc)[iVar9 * 0x54] < local_14) {
+      local_10 = 1 - sVar8;
+      local_14 = (&DAT_004685fc)[iVar9 * 0x54];
     }
     else {
-      local_10 = local_10 + ((&DAT_004685fc)[iVar8 * 0x54] - local_14);
+      local_10 = local_10 + ((&DAT_004685fc)[iVar9 * 0x54] - local_14);
     }
-    uVar12 = FUN_00418ea1(uVar6,(char)(&DAT_004685fc)[iVar8 * 0x54],uVar13,param_4,&local_14,0xffff)
+    uVar13 = FUN_00418ea1(uVar6,(char)(&DAT_004685fc)[iVar9 * 0x54],uVar14,param_4,&local_14,0xffff)
     ;
-    if ((short)uVar12 == 0) {
-      (&DAT_0046861a)[iVar8 * 0x54] = 0;
+    if ((short)uVar13 == 0) {
+      (&DAT_0046861a)[iVar9 * 0x54] = 0;
     }
-    else if ((short)uVar12 == 2) {
-      if ((short)(&DAT_00468634)[iVar8 * 0x54] < 2) {
-        sVar7 = *(short *)(&DAT_00468636 + iVar16);
-        *psVar17 = sVar7 + 1;
-        (&DAT_004685fc)[iVar8 * 0x54] = sVar7 + 1;
-        (&DAT_0046861a)[iVar8 * 0x54] = 0xffff;
+    else if ((short)uVar13 == 2) {
+      if ((short)(&DAT_00468634)[iVar9 * 0x54] < 2) {
+        sVar8 = *(short *)(&DAT_00468636 + iVar17);
+        *psVar18 = sVar8 + 1;
+        (&DAT_004685fc)[iVar9 * 0x54] = sVar8 + 1;
+        (&DAT_0046861a)[iVar9 * 0x54] = 0xffff;
       }
     }
-    else if (-2 < (short)(&DAT_00468634)[iVar8 * 0x54]) {
-      sVar7 = (*(short *)(&DAT_00468636 + iVar16) - *(short *)(&DAT_004685ec + iVar16)) + 1;
-      *psVar17 = sVar7;
-      (&DAT_004685fc)[iVar8 * 0x54] = sVar7;
-      (&DAT_0046861a)[iVar8 * 0x54] = 1;
+    else if (-2 < (short)(&DAT_00468634)[iVar9 * 0x54]) {
+      sVar8 = (*(short *)(&DAT_00468636 + iVar17) - *(short *)(&DAT_004685ec + iVar17)) + 1;
+      *psVar18 = sVar8;
+      (&DAT_004685fc)[iVar9 * 0x54] = sVar8;
+      (&DAT_0046861a)[iVar9 * 0x54] = 1;
     }
   }
-  if ((short)(&DAT_004685fc)[iVar8 * 0x54] < 1) {
-    *psVar17 = 1;
-    (&DAT_004685fc)[iVar8 * 0x54] = 1;
+  if ((short)(&DAT_004685fc)[iVar9 * 0x54] < 1) {
+    *psVar18 = 1;
+    (&DAT_004685fc)[iVar9 * 0x54] = 1;
   }
-  uVar12 = (int)*psVar17 + (int)*(short *)(&DAT_004685ec + iVar16);
-  if (0x1ff < (int)uVar12) {
-    sVar7 = *(short *)(&DAT_004685ec + iVar16);
-    uVar12 = uVar12 & 0xffff0000;
-    (&DAT_004685fc)[iVar8 * 0x54] = 0x1ff - sVar7;
-    *psVar17 = 0x1ff - sVar7;
+  uVar13 = (int)*psVar18 + (int)*(short *)(&DAT_004685ec + iVar17);
+  if (0x1ff < (int)uVar13) {
+    sVar8 = *(short *)(&DAT_004685ec + iVar17);
+    uVar13 = uVar13 & 0xffff0000;
+    (&DAT_004685fc)[iVar9 * 0x54] = 0x1ff - sVar8;
+    *psVar18 = 0x1ff - sVar8;
   }
-  (&DAT_0046868e)[iVar8 * 0x54] = *psVar19;
-  (&DAT_0046860a)[iVar8 * 0x54] = (&DAT_0046860a)[iVar8 * 0x54] + 1;
-  pGVar9 = (GameState *)(uVar12 & 0xffff0000);
+  (&DAT_0046868e)[iVar9 * 0x54] = *psVar20;
+  (&DAT_0046860a)[iVar9 * 0x54] = (&DAT_0046860a)[iVar9 * 0x54] + 1;
+  pGVar10 = (GameState *)(uVar13 & 0xffff0000);
   goto LAB_00434a96;
 }
 
@@ -25273,7 +25149,7 @@ void FUN_00434be3(uint param_1)
 
 {
   undefined uVar1;
-  short sVar2;
+  ushort uVar2;
   ushort uVar3;
   int iVar4;
   undefined4 uVar5;
@@ -25283,7 +25159,7 @@ void FUN_00434be3(uint param_1)
   undefined extraout_DL_00;
   short sVar6;
   
-  sVar2 = FUN_00414713(_RoomIndex);
+  uVar2 = RoomIsObverse(_RoomIndex);
   if (_RoomIndex != 0) {
     FUN_0041a823();
     DoSomethingWithEseqResources_();
@@ -25292,21 +25168,21 @@ void FUN_00434be3(uint param_1)
     uVar1 = FUN_004350be();
     uVar1 = FUN_00413b08(uVar1,extraout_DL,extraout_CL,DAT_00462554,FUN_0043435b,1);
     FUN_00412e18(uVar1,extraout_DL_00,extraout_CL_00,DAT_00462554);
-    DAT_004685f6 = DAT_00468682 + sVar2;
+    DAT_004685f6 = DAT_00468682 + uVar2;
     uVar3 = 0x1195;
-    if (sVar2 == 0) {
+    if (uVar2 == 0) {
       uVar3 = 0x1194;
     }
     DAT_0046868a = FUN_00412ac4(uVar3);
     (*DAT_00468674)();
-    DAT_0046869e = DAT_0046872a + sVar2;
+    DAT_0046869e = DAT_0046872a + uVar2;
     DAT_00468732 = FUN_00412ac4(DAT_0046869e);
     (*DAT_0046871c)();
     if (*(short *)&_GameState->field_0x16 == 1) {
       sVar6 = 2;
       do {
         iVar4 = (int)sVar6;
-        (&DAT_004685f6)[iVar4 * 0x54] = (&DAT_00468682)[iVar4 * 0x54] + sVar2;
+        (&DAT_004685f6)[iVar4 * 0x54] = (&DAT_00468682)[iVar4 * 0x54] + uVar2;
         uVar5 = FUN_00412ac4((&DAT_004685f6)[iVar4 * 0x54]);
         (&DAT_0046868a)[iVar4 * 0x2a] = uVar5;
         FUN_004129d4((&DAT_0046868a)[iVar4 * 0x2a],sVar6);
@@ -25549,24 +25425,24 @@ void __stdcall FUN_00435050(int param_1)
 
 {
   undefined2 *puVar1;
-  short sVar2;
-  undefined2 *puVar3;
-  short sVar4;
+  ushort obverse;
+  undefined2 *puVar2;
+  short i;
   
-  puVar3 = &DAT_004685e8;
-  sVar4 = 0;
+  puVar2 = &DAT_004685e8;
+  i = 0;
   do {
-    Memcpy(puVar3 + 10,(void *)(sVar4 * 0x2e + param_1),0x2e);
-    if (puVar3[0x15] == 0) {
-      sVar2 = FUN_00414713(puVar3[0xd]);
-      FUN_00434334(sVar4,sVar2);
-      puVar1 = *(undefined2 **)(*(int *)(puVar3 + 0x29) + (short)puVar3[0xc] * 4);
-      puVar3[9] = *puVar1;
-      puVar3[0x26] = puVar1[1];
+    Memcpy(puVar2 + 10,(void *)(i * 0x2e + param_1),0x2e);
+    if (puVar2[0x15] == 0) {
+      obverse = RoomIsObverse(puVar2[0xd]);
+      FUN_00434334(i,obverse);
+      puVar1 = *(undefined2 **)(*(int *)(puVar2 + 0x29) + (short)puVar2[0xc] * 4);
+      puVar2[9] = *puVar1;
+      puVar2[0x26] = puVar1[1];
     }
-    puVar3 = puVar3 + 0x54;
-    sVar4 = sVar4 + 1;
-  } while (sVar4 < 0xc);
+    puVar2 = puVar2 + 0x54;
+    i = i + 1;
+  } while (i < 0xc);
   return;
 }
 
@@ -25744,18 +25620,6 @@ void FUN_00435302(undefined param_1,undefined param_2,undefined param_3,int para
 {
   if (param_4 != 0) {
     FUN_0043c2ba((char)param_4,param_2,param_3,param_4);
-  }
-  return;
-}
-
-
-
-void __stdcall ezFUN_00435315(undefined4 *param_1)
-
-{
-  if (param_1 != (undefined4 *)0x0) {
-    param_1[1] = 0;
-    *param_1 = 0;
   }
   return;
 }
@@ -30845,7 +30709,7 @@ void FUN_0043c382(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_CL;
   short sVar2;
   
-  if ((DAT_00462790 == 0) && (*(short *)(_GameState->field49_0x40 + (short)param_4 * 2 + 2) == 0)) {
+  if ((DAT_00462790 == 0) && (*(short *)(_GameState->field43_0x40 + (short)param_4 * 2 + 2) == 0)) {
     sVar2 = 0;
     do {
       if ((&DAT_0046936c)[sVar2 * 9] == -1) break;
@@ -30908,7 +30772,7 @@ undefined4 FUN_0043c435(void)
       }
       DlistRemove(DAT_004693c0,node);
       *(undefined2 *)&node[1].next = 0xffff;
-      *(undefined2 *)(_GameState->field49_0x40 + (short)uVar2 * 2 + 2) = 1;
+      *(undefined2 *)(_GameState->field43_0x40 + (short)uVar2 * 2 + 2) = 1;
     }
   }
   return uVar4;
@@ -30921,7 +30785,7 @@ void FUN_0043c49f(void)
 {
   short sVar1;
   
-  ezFUN_00435315(DAT_004693c0);
+  DlistInit(DAT_004693c0);
   sVar1 = 0;
   do {
     (&DAT_0046936c)[sVar1 * 9] = 0xffff;
@@ -30953,7 +30817,7 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined4 uVar9;
   char local_54 [80];
   
-  if ((DAT_00462790 == 0) && (*(short *)(_GameState->field49_0x40 + (short)param_4 * 2 + 2) == 0)) {
+  if ((DAT_00462790 == 0) && (*(short *)(_GameState->field43_0x40 + (short)param_4 * 2 + 2) == 0)) {
     puVar3 = (undefined2 *)FUN_0044c32f();
     *puVar3 = 0xffff;
     puVar3[1] = 0xffff;
@@ -30991,7 +30855,7 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
     }
     FUN_0043c2ba(uVar1,uVar6,uVar7,puVar3);
   }
-  *(undefined2 *)(_GameState->field49_0x40 + (short)param_4 * 2 + 2) = 1;
+  *(undefined2 *)(_GameState->field43_0x40 + (short)param_4 * 2 + 2) = 1;
   return;
 }
 
@@ -31587,20 +31451,20 @@ void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefine
 void __stdcall ezFUN_0043da4e(ushort *param_1)
 
 {
-  int iVar1;
+  int i;
   
-  iVar1 = 0;
+  i = 0;
   while( true ) {
-    if (_Level_partResource->definitionCount <= (short)iVar1) break;
+    if (_Level_partResource->definitionCount <= (short)i) break;
     if (*param_1 != 0xffff) {
       FUN_00434ddd(*param_1);
       if (*param_1 == 0) {
-        FUN_004162de(iVar1);
+        FUN_004162de(i);
       }
     }
-    *(ushort *)&_Level_partDefinitions[(short)iVar1].field_0x36 = param_1[1];
+    *(ushort *)&_Level_partDefinitions[(short)i].field_0x36 = param_1[1];
     param_1 = param_1 + 2;
-    iVar1 = iVar1 + 1;
+    i = i + 1;
   }
   return;
 }
@@ -32011,7 +31875,7 @@ void FUN_0043e096(undefined4 param_1,undefined4 param_2,uint param_3)
   }
   DAT_00469630 = (ushort *)
                  GetWinapiResource_(*(ushort *)(&DAT_00462848 + (short)DAT_00469600 * 2),&_RACE2);
-  uVar2 = (short)(char)_GameState->field51_0x330[_GameState->level + 0x1430] +
+  uVar2 = (short)(char)_GameState->field46_0x175e[_GameState->level + 2] +
           *(short *)(&DAT_00462834 + (short)DAT_00469600 * 2);
   uVar1 = (undefined)uVar2;
   DAT_00469654 = FUN_00412ac4(uVar2);
@@ -32366,8 +32230,7 @@ uint FUN_0043e65c(void)
         if ((_DAT_00461aca == 0) && (DAT_00467cf2 == 0)) {
           _GameState->buildingCompletedLevels[_GameState->building] =
                _GameState->buildingCompletedLevels[_GameState->building] + 1;
-          *(short *)(_GameState->field51_0x330 + 0x142e) =
-               *(short *)(_GameState->field51_0x330 + 0x142e) + 1;
+          *(short *)_GameState->field46_0x175e = *(short *)_GameState->field46_0x175e + 1;
         }
         if (_DAT_00461aca == 0) {
           ppuVar12 = &PTR_LAB_00460b24;
@@ -33197,7 +33060,7 @@ undefined4 FUN_0043fc05(void)
   sVar4 = 0;
   do {
     for (sVar1 = 0; sVar1 < (short)(&DAT_00462aec)[sVar4]; sVar1 = sVar1 + 1) {
-      if (_GameState->puzzleState[sVar4].completion[sVar1] == 0) {
+      if (_GameState->puzzles[sVar4].completion[sVar1] == 0) {
         sVar5 = sVar5 + 1;
       }
     }
@@ -33207,7 +33070,7 @@ undefined4 FUN_0043fc05(void)
     sVar5 = 0;
     do {
       iVar2 = (int)sVar5;
-      _GameState->puzzleState[iVar2].mode = 3;
+      _GameState->puzzles[iVar2].mode = 3;
       sVar5 = sVar5 + 1;
     } while (sVar5 < 8);
     _DAT_00462ac8 = 1;
@@ -33238,8 +33101,8 @@ short FUN_0043fc79(void)
   uVar2 = 0;
   do {
     sVar1 = (short)uVar2;
-    if ((_GameState->puzzleState[sVar1].mode == 0) ||
-       (uVar4 = sVar1 * 0xb, _GameState->puzzleState[sVar1].mode == 3)) {
+    if ((_GameState->puzzles[sVar1].mode == 0) ||
+       (uVar4 = sVar1 * 0xb, _GameState->puzzles[sVar1].mode == 3)) {
       uVar4 = (uint)sVar5;
       asStack20[uVar4] = sVar1;
       sVar5 = sVar5 + 1;
@@ -33284,7 +33147,7 @@ int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined
     iVar2 = 0;
     if (0 < sVar1) {
       do {
-        if (_GameState->puzzleState[(short)param_4].completion[(short)iVar2] == 0) {
+        if (_GameState->puzzles[(short)param_4].completion[(short)iVar2] == 0) {
           (&DAT_004698ec)[sVar4] = (short)iVar2;
           sVar4 = sVar4 + 1;
         }
@@ -33353,7 +33216,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   FUN_004103ee(10,0x148,&DAT_004697b8);
   sVar2 = DAT_00462afe;
   if ((_DAT_00462ac8 == 0) &&
-     (*(short *)(_GameState->field49_0x40 + DAT_00462afe * 2 + (short)DAT_00462afc * 0x58 + 0x2e) ==
+     (*(short *)(_GameState->field43_0x40 + DAT_00462afe * 2 + (short)DAT_00462afc * 0x58 + 0x2e) ==
       0)) {
     iVar3 = (int)(short)DAT_00462afc;
     psVar1 = _GameState->buildingCompletedLevels;
@@ -33361,7 +33224,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
     uVar4 = FUN_004401a3((char)DAT_00462afc,(char)sVar2,extraout_CL,
                          (uint)(psVar1 + iVar3 * 0x2c + -0x1a) & 0xffff0000 | (uint)DAT_00462afc);
     if ((short)uVar4 != 0) {
-      _GameState->puzzleState[(short)DAT_00462afc].mode = 2;
+      _GameState->puzzles[(short)DAT_00462afc].mode = 2;
       uVar5 = FUN_00440221();
       if ((short)uVar5 != 0) {
         FUN_0043ffe8(uVar5,extraout_EDX,extraout_ECX);
@@ -33566,7 +33429,7 @@ undefined4 FUN_004401a3(undefined param_1,undefined param_2,undefined param_3,un
   iVar1 = 0;
   while( true ) {
     if ((short)(&DAT_00462aec)[(short)param_4] <= (short)iVar1) break;
-    if (_GameState->puzzleState[(short)param_4].completion[(short)iVar1] == 0) {
+    if (_GameState->puzzles[(short)param_4].completion[(short)iVar1] == 0) {
       sVar3 = sVar3 + 1;
     }
     iVar1 = iVar1 + 1;
@@ -33589,8 +33452,8 @@ void FUN_004401eb(void)
   
   sVar1 = 0;
   do {
-    if (_GameState->puzzleState[sVar1].mode == 1) {
-      _GameState->puzzleState[sVar1].mode = 0;
+    if (_GameState->puzzles[sVar1].mode == 1) {
+      _GameState->puzzles[sVar1].mode = 0;
     }
     sVar1 = sVar1 + 1;
   } while (sVar1 < 8);
@@ -33605,8 +33468,8 @@ undefined4 FUN_00440221(void)
   int iVar1;
   
   iVar1 = 0;
-  while ((_GameState->puzzleState[(short)iVar1].mode != 0 &&
-         (_GameState->puzzleState[(short)iVar1].mode != 3))) {
+  while ((_GameState->puzzles[(short)iVar1].mode != 0 &&
+         (_GameState->puzzles[(short)iVar1].mode != 3))) {
     iVar1 = iVar1 + 1;
     if (7 < (short)iVar1) {
       return CONCAT22((short)((uint)iVar1 >> 0x10),1);
@@ -42179,7 +42042,7 @@ void FUN_0044b9e3(void)
     while( true ) {
       iVar8 = (int)sVar14;
       if (_GameState->buildingCompletedLevels[iVar8] < local_6) break;
-      uVar4 = (short)(char)_GameState->field51_0x330[sVar12 + 0x1430] + (&DAT_00463492)[sVar12];
+      uVar4 = (short)(char)_GameState->field46_0x175e[sVar12 + 2] + (&DAT_00463492)[sVar12];
       uVar3 = (undefined)uVar4;
       uVar17 = FUN_00412ac4(uVar4);
       uVar1 = *(undefined2 *)((int)pvVar6 + sVar12 * 2);
@@ -42221,7 +42084,7 @@ void FUN_0044b9e3(void)
     iVar11 = extraout_EDX_02;
   } while (sVar14 < 8);
   FUN_0043b9d2((char)uVar2,(char)extraout_EDX_02,(char)extraout_ECX_03,&DAT_004633fe,8);
-  bVar15 = *(short *)(_GameState->field51_0x330 + 0x142e) == 0xf;
+  bVar15 = *(short *)_GameState->field46_0x175e == 0xf;
   _DAT_004633fc = (ushort)bVar15;
   uVar3 = FUN_0041029e(bVar15,extraout_DL_01,extraout_CL,&LAB_0044b8d4);
   uVar16 = 0x84;
@@ -44060,44 +43923,44 @@ void FUN_0044d87c(undefined param_1,undefined param_2,undefined param_3,short pa
 
 {
   uint uVar1;
-  short sVar2;
+  ushort uVar2;
   undefined3 in_register_00000001;
   int iVar3;
   undefined2 extraout_var;
   undefined extraout_DL;
-  undefined2 uVar4;
+  short roomIndex;
   undefined4 unaff_ESI;
-  uint uVar5;
-  undefined2 uVar6;
-  undefined uVar7;
+  uint uVar4;
+  undefined2 uVar5;
+  undefined uVar6;
   
   if (param_4 != 0) {
     iVar3 = FUN_00414eb6((char)DAT_00468602,param_2,param_3,DAT_00468602,
                          CONCAT22((short)((uint3)in_register_00000001 >> 8),DAT_0046861e));
     if (*(short *)(iVar3 + 0x10) == 7) {
-      uVar5 = CONCAT22((short)((uint)unaff_ESI >> 0x10),0xbc0);
-      uVar7 = (undefined)DAT_00468602;
-      sVar2 = FUN_00414713(DAT_00468602);
-      if (sVar2 == 0) {
-        uVar5 = uVar5 + 0x66;
+      uVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),0xbc0);
+      uVar6 = (undefined)DAT_00468602;
+      uVar2 = RoomIsObverse(DAT_00468602);
+      if (uVar2 == 0) {
+        uVar4 = uVar4 + 0x66;
       }
-      *(short *)(iVar3 + 0xe) = (short)uVar5;
+      *(short *)(iVar3 + 0xe) = (short)uVar4;
       *(undefined2 *)(iVar3 + 0x10) = 9;
       uVar1 = *(ushort *)(iVar3 + 0x12) & 0xffff000f;
-      uVar4 = (undefined2)uVar1;
+      roomIndex = (short)uVar1;
       if (_DAT_004697b2 != 0) {
-        DAT_00468602 = uVar4;
+        DAT_00468602 = roomIndex;
       }
       *(undefined2 *)(iVar3 + 0x1e) = 4;
-      iVar3 = FUN_0041469e((char)*(undefined2 *)(iVar3 + 0x12),extraout_DL,uVar7,
-                           uVar5 & 0xffff0000 | uVar1,
+      iVar3 = FUN_0041469e((char)*(undefined2 *)(iVar3 + 0x12),extraout_DL,uVar6,
+                           uVar4 & 0xffff0000 | uVar1,
                            CONCAT22(extraout_var,*(undefined2 *)(iVar3 + 0x12)));
-      uVar6 = 0xbc0;
-      sVar2 = FUN_00414713(uVar4);
-      if (sVar2 == 0) {
-        uVar6 = 0xc26;
+      uVar5 = 0xbc0;
+      uVar2 = RoomIsObverse(roomIndex);
+      if (uVar2 == 0) {
+        uVar5 = 0xc26;
       }
-      *(undefined2 *)(iVar3 + 0xe) = uVar6;
+      *(undefined2 *)(iVar3 + 0xe) = uVar5;
       *(undefined2 *)(iVar3 + 0x10) = 9;
       *(undefined2 *)(iVar3 + 0x1e) = 4;
     }
@@ -44131,7 +43994,7 @@ void FUN_0044d92c(undefined param_1,undefined param_2,undefined param_3,short pa
     if (_Level_partResource->criticalSlotCount == _GameState->installedParts) {
       sVar1 = 0x7de;
       unaff_ESI = uVar2;
-      if (*(short *)&_GameState->field_0x24 != 0) {
+      if (_GameState->everBeenReadyToRace_ != 0) {
         FUN_0043c382((char)_GameState,(char)_GameState,param_3,0x10,0,0);
       }
     }
@@ -44530,12 +44393,12 @@ void FUN_0044df5a(void)
         uVar3 = FUN_004465a5((char)*(undefined2 *)(DAT_0046a97c + 0x16),(char)uVar10,(char)iVar8,
                              *(undefined2 *)(DAT_0046a97c + 0x16),1,0);
         FUN_0044db32(uVar3,extraout_DL,extraout_CL,iVar9,uVar1,0);
-        _GameState->field51_0x330[_GameState->level + 0x1430] = (char)uVar1;
+        _GameState->field46_0x175e[_GameState->level + 2] = (char)uVar1;
         iVar5 = DlistNext(iVar9);
         uVar10 = extraout_EDX_00;
         iVar8 = iVar9;
       }
-      *(undefined2 *)&_GameState->field_0x26 = uVar1;
+      _GameState->field33_0x26 = uVar1;
       *(ushort *)(DAT_0046a984 + 0x5e) = *(ushort *)(DAT_0046a984 + 0x5e) & 0xfffc;
       FUN_0043b6bf();
       uVar10 = *(undefined4 *)(DAT_0046a984 + 0x52);
@@ -44568,8 +44431,8 @@ void FUN_0044df5a(void)
     FUN_004171a7(uVar3,extraout_DL_03,uVar7,DAT_0046a978,1);
     pGVar2 = _GameState;
     if ((_Level_partResource->criticalSlotCount == _GameState->installedParts) &&
-       (*(short *)&_GameState->field_0x24 == 0)) {
-      *(undefined2 *)&_GameState->field_0x24 = 1;
+       (_GameState->everBeenReadyToRace_ == 0)) {
+      _GameState->everBeenReadyToRace_ = 1;
       FUN_0042fc9c((char)pGVar2,(char)pGVar2,extraout_CL_01,100,0);
     }
   }
@@ -44629,21 +44492,21 @@ joined_r0x0044e0f1:
                    uVar5 & 0xffff0000 | (uint)*(ushort *)(unaff_EBX + 0xe),
                    *(undefined2 *)(unaff_EBX + 10));
       pGVar3 = _GameState;
-      if (*(short *)&_GameState->field_0x26 == -1) {
+      if (_GameState->field33_0x26 == -1) {
         pGVar7 = extraout_EDX;
         uVar4 = extraout_CL;
         if (sVar1 < 4) {
           uVar4 = *(undefined *)(param_4 + 0x38);
-          _GameState->field51_0x330[_GameState->level + 0x1430] = uVar4;
+          _GameState->field46_0x175e[_GameState->level + 2] = uVar4;
           pGVar7 = pGVar3;
         }
       }
       else {
-        FUN_0044db32((char)*(undefined2 *)&_GameState->field_0x26,(char)extraout_EDX,extraout_CL,
-                     unaff_EBX,*(undefined2 *)&_GameState->field_0x26,0);
+        FUN_0044db32((char)_GameState->field33_0x26,(char)extraout_EDX,extraout_CL,unaff_EBX,
+                     _GameState->field33_0x26,0);
         pGVar7 = _GameState;
-        uVar4 = _GameState->field_0x26;
-        _GameState->field51_0x330[_GameState->level + 0x1430] = uVar4;
+        uVar4 = *(undefined *)&_GameState->field33_0x26;
+        _GameState->field46_0x175e[_GameState->level + 2] = uVar4;
       }
       iVar6 = unaff_EBX + 0xc;
       FUN_0044d850((char)iVar6,(char)pGVar7,uVar4,iVar6);
@@ -44702,12 +44565,12 @@ DlistNode * FUN_0044e278(undefined param_1,undefined param_2,undefined param_3,s
     if (*(short *)((int)&node[3].next + 2) == param_4) {
       pGVar3 = _GameState;
       uVar7 = extraout_DL_00;
-      if ((*(short *)&_GameState->field_0x26 != -1) &&
+      if ((_GameState->field33_0x26 != -1) &&
          (pGVar3 = (GameState *)(uint)*(ushort *)(iVar2 + 0x14),
          *(ushort *)(iVar2 + 0x14) == *(ushort *)(iVar2 + 0x12))) {
         pGVar3 = (GameState *)
-                 FUN_0044db32((char)*(undefined2 *)&_GameState->field_0x26,extraout_DL_00,uVar6,node
-                              ,*(undefined2 *)&_GameState->field_0x26,1);
+                 FUN_0044db32((char)_GameState->field33_0x26,extraout_DL_00,uVar6,node,
+                              _GameState->field33_0x26,1);
         uVar6 = extraout_CL;
         uVar7 = extraout_DL_01;
       }
@@ -45459,7 +45322,7 @@ void FUN_0044ef41(void)
   if ((_DAT_0046350e != 0) && (_DAT_0046350a == -1)) {
     DAT_0046861e = 0xffff;
     (*DAT_00468670)();
-    *(undefined2 *)&_GameState->field_0x28 = 1;
+    _GameState->field34_0x28 = 1;
     DAT_0046a980 = 3;
     _DAT_0046350e = 0;
   }
@@ -45529,7 +45392,7 @@ void FUN_0044efb6(void)
   int iVar8;
   undefined4 uVar9;
   undefined4 uVar10;
-  undefined *puVar11;
+  undefined2 *puVar11;
   short local_6;
   
   FUN_00411599();
@@ -45545,7 +45408,7 @@ void FUN_0044efb6(void)
   FUN_00413acc(uVar1,extraout_DL_01,uVar7,0x94,0xffff,0x16b,0xffff);
   DAT_00469544 = &LAB_0044e799;
   DAT_0046a9e4 = 0;
-  ezFUN_00435315(DAT_0046aa04);
+  DlistInit(DAT_0046aa04);
   DAT_0046a9e8 = PoolAlloc(0x438);
   sVar5 = 0;
   do {
@@ -45568,7 +45431,7 @@ void FUN_0044efb6(void)
   DAT_0046a948 = FUN_00412ac4(_GameState->building + 0x7df);
   FUN_0041395c(DAT_0046a948,8,0x38,5);
   FUN_00412dc8(DAT_0046a948);
-  DAT_0046a94c = FUN_00412ac4(*(short *)&_GameState->field_0x1e + 0x7e1);
+  DAT_0046a94c = FUN_00412ac4(_GameState->field29_0x1e + 0x7e1);
   FUN_0041395c(DAT_0046a94c,0xa6,0x36,5);
   uVar3 = DAT_0046a94c;
   uVar2 = FUN_00412dc8(DAT_0046a94c);
@@ -45634,7 +45497,7 @@ void FUN_0044efb6(void)
   uVar1 = FUN_0044e66a(uVar1,extraout_DL_23,extraout_CL_10,DAT_0046a98c);
   uVar6 = 0x90;
   FUN_0044da2d(uVar1,extraout_DL_24,(char)uVar9,&DAT_0046a990);
-  puVar11 = &_GameState->field_0x28;
+  puVar11 = &_GameState->field34_0x28;
   uVar1 = 8;
   iVar4 = FUN_0044ca1c((char)puVar11,extraout_DL_25,uVar6,8);
   uVar1 = FUN_0043c382((char)iVar4,extraout_DL_26,uVar1,3,(short)iVar4,puVar11);

@@ -133,6 +133,14 @@ void StartLevel(void)
 
 
 
+ushort __stdcall RoomIsObverse(short roomIndex)
+
+{
+  return _Rooms[roomIndex]->flags & 1;
+}
+
+
+
 EntityNode * NextAvailableEntityNode(void)
 
 {
@@ -181,7 +189,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
   locationIndex = 0;
   result = 1;
                     // is room obverse?
-  if ((room->flags & 1) == 0) {
+  if ((*(byte *)&room->flags & 1) == 0) {
                     // room #4 through #15, reverse side (big sprites), three floors
     rows = 3;
     firstPartX = 24;
@@ -310,6 +318,126 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,short param_5)
+
+{
+  EntityNode *node;
+  uint uVar1;
+  EntityBaseBase_ rect;
+  ushort spriteId;
+  Room *room;
+  
+  room = _Rooms[roomIndex];
+  node = NextAvailableEntityNode();
+  rect._8_2_ = 0;
+  rect.inner.x = x;
+  if ((*(byte *)&room->flags & 1) == 0) {
+    if (2 < row) {
+      row = row + -3;
+    }
+    rect.inner.y = row * 100 + 88;
+    rect.inner.w = 20;
+    rect.inner.h = 13;
+    spriteId = 0xc4a;
+  }
+  else {
+    rect.inner.y = row * 50 + 52;
+    rect.inner.w = 10;
+    rect.inner.h = 7;
+    spriteId = 0xbc7;
+  }
+  if ((partId != 1000) && ((_Level_partDefinitions[partId].flags & 0x40) != 0)) {
+    spriteId = spriteId + 1;
+  }
+  Memcpy(&node->inner,&rect,0xe);
+  (node->inner).base.spriteId = spriteId;
+  (node->inner).partId = partId;
+  *(undefined2 *)&(node->inner).field_0x14 = 0;
+  Memcpy(&(node->inner).activation_,&rect,10);
+  (node->inner).activation_.mode = 0x800;
+  if (param_5 == 0) {
+    room->partEntityCount = room->partEntityCount + 1;
+    if (roomIndex == _RoomIndex) {
+      _DAT_00460318 = _DAT_00460318 + 1;
+      uVar1 = FUN_00412ac4((node->inner).base.spriteId);
+      *(uint *)&(node->inner).base.rect.field_0xa = uVar1;
+      FUN_0041395c(*(undefined4 *)&(node->inner).base.rect.field_0xa,
+                   uVar1 & 0xffff0000 | (uint)(ushort)rect.inner.x,
+                   uVar1 & 0xffff0000 | (uint)(ushort)rect.inner.y,0x14);
+      FUN_00412dc8(*(undefined4 *)&(node->inner).base.rect.field_0xa);
+    }
+  }
+  node->available = 0;
+  DlistInsert(room->partEntities,&node->node,-1);
+  return;
+}
+
+
+
+void __stdcall LoadEntities(char *puzzleEntityTypes,SavedPartEntity *partEntities)
+
+{
+  OtherEntity *entity;
+  ushort spriteId;
+  short j;
+  short roomIndex;
+  short partEntityCount;
+  ushort flags;
+  Room *room;
+  
+  InitEntities();
+  _ActualBananaPartsCount = 0;
+  roomIndex = 0;
+  do {
+    room = _Rooms[roomIndex];
+    if (room != (Room *)0x0) {
+      flags = room->flags;
+      entity = room->structuralEntityGroups[0];
+      for (j = 0; j < room->structuralEntityCounts[0]; j = j + 1) {
+                    // is entity a puzzle door?
+        if (((entity->base).type == 7) || ((entity->base).type == 9)) {
+          (entity->base).type = (short)*puzzleEntityTypes;
+          puzzleEntityTypes = puzzleEntityTypes + 1;
+                    // is door unlocked?
+          if ((entity->base).type == 9) {
+            (entity->activation_).mode = 4;
+            if ((flags & 1) == 0) {
+              spriteId = 0xc26;
+            }
+            else {
+              spriteId = 0xbc0;
+            }
+            (entity->base).spriteId = spriteId;
+          }
+        }
+        entity = entity + 1;
+      }
+      DlistInit(room->partEntities);
+                    // FIXME this is a length field, like (ushort,SavedPartEntity[])
+      partEntityCount = partEntities->x;
+      room->partEntityCount = partEntityCount;
+      partEntities = (SavedPartEntity *)&partEntities->row;
+      j = 0;
+      if (0 < partEntityCount) {
+        do {
+          LoadPartEntity(roomIndex,partEntities->x,partEntities->row,partEntities->partId,1);
+          if (partEntities->partId == 1000) {
+            _ActualBananaPartsCount = _ActualBananaPartsCount + 1;
+          }
+          partEntities = partEntities + 1;
+          j = j + 1;
+        } while (j < partEntityCount);
+      }
+    }
+    roomIndex = roomIndex + 1;
+  } while (roomIndex < 0x10);
+  return;
+}
+
+
+
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 {
@@ -361,7 +489,7 @@ int __stdcall CountCompletedPuzzles(PuzzleCategory category)
   result = 0;
   i = 0;
   do {
-    if (_GameState->puzzleState[category].completion[i] != 0) {
+    if (_GameState->puzzles[category].completion[i] != 0) {
       result = result + 1;
     }
     i = i + 1;
@@ -444,26 +572,25 @@ void __stdcall EnterBuilding(void)
   _GameState->level = _GameState->building * 5 + _GameState->levelInBuilding;
   LoadPartDefinitions_();
   StartLevel();
-  if (_GameState->everBeenInBuilding[_GameState->building] == 0) {
+  if (_GameState->buildingIsInitialised[_GameState->building] == 0) {
     FUN_0041abd6();
     criticalSlotCount = GetCriticalSlotCount();
     _GameState->missingCriticalSlots = criticalSlotCount;
     if (_GameState->levelInBuilding == 0) {
-      *(undefined2 *)&_GameState->field_0x28 = 0;
-      *(undefined2 *)&_GameState->field_0x1c = 10;
+      _GameState->field34_0x28 = 0;
+      _GameState->field28_0x1c = 10;
     }
     else {
-      *(undefined2 *)&_GameState->field_0x1c =
-           *(undefined2 *)(_GameState->field51_0x330 + _GameState->building * 0x6ba + 2);
+      _GameState->field28_0x1c =
+           *(undefined2 *)(_GameState->buildings[_GameState->building].field0_0x0 + 2);
     }
     iVar3 = Random();
-    *(ushort *)&_GameState->field_0x2c = (ushort)(iVar3 % 100 < 0x32);
+    _GameState->field37_0x2c = (ushort)(iVar3 % 100 < 0x32);
     FUN_00417abd();
     *(undefined2 *)&_GameState->field_0x1a = 0;
-    *(undefined2 *)&_GameState->field_0x24 = 0;
-    *(undefined2 *)&_GameState->field_0x26 = 0xffff;
-    *(undefined2 *)&_GameState->field_0x1e =
-         *(undefined2 *)(&DAT_00461abc + _GameState->levelInBuilding * 2);
+    _GameState->everBeenReadyToRace_ = 0;
+    _GameState->field33_0x26 = 0xffff;
+    _GameState->field29_0x1e = *(undefined2 *)(&DAT_00461abc + _GameState->levelInBuilding * 2);
     _GameState->installedParts = 0;
     FUN_00417c69();
   }
@@ -472,11 +599,11 @@ void __stdcall EnterBuilding(void)
     FUN_00417abd();
     pGVar2 = _GameState;
     sVar1 = _GameState->building;
-    Memcpy(&_GameState->field_0x1a,_GameState->field51_0x330 + sVar1 * 0x6ba,0x14);
-    ezFUN_0043da4e((ushort *)(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x14));
-    FUN_00414dc2(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x26c,
-                 pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x302);
-    FUN_00435050(pGVar2->field51_0x330 + sVar1 * 0x6ba + 0x492);
+    Memcpy(&_GameState->field_0x1a,_GameState->buildings + sVar1,0x14);
+    ezFUN_0043da4e((ushort *)(pGVar2->buildings[sVar1].field0_0x0 + 0x14));
+    LoadEntities(pGVar2->buildings[sVar1].puzzleDoors,
+                 (SavedPartEntity *)&pGVar2->buildings[sVar1].savedPartEntities);
+    FUN_00435050(pGVar2->buildings[sVar1].field4_0x492);
     _DAT_00461aae = 1;
   }
   FUN_0043bfee(2,0,1);
@@ -585,6 +712,18 @@ Dlist * DlistNew(void)
   result->tail = (DlistNode *)0x0;
   result->head = (DlistNode *)0x0;
   return result;
+}
+
+
+
+void __stdcall DlistInit(Dlist *list)
+
+{
+  if (list != (Dlist *)0x0) {
+    list->tail = (DlistNode *)0x0;
+    list->head = (DlistNode *)0x0;
+  }
+  return;
 }
 
 
