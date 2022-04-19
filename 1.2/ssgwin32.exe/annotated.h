@@ -1251,7 +1251,7 @@ void StartLevel(void);
 EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
-void __stdcall ShowAlertMessage(undefined4 param_1,undefined param_2);
+void __stdcall ShowAlertMessage(char *param_1,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
 undefined4 __stdcall DlistHead(undefined4 *param_1);
 undefined4 __stdcall DlistNext(undefined4 *param_1);
@@ -1264,6 +1264,9 @@ PartId NextInitialPartId(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
 char * __stdcall Strcpy(char *dest,char *src);
+int __stdcall Sprintf1(char *dest,char *format,...);
+int __stdcall Sprintf2(char *dest,char *format,...);
+int __stdcall Sprintf3(char *dest,char *format,...);
 int Random(void);
 void __stdcall WinapiExitProcess(UINT exitCode);
 

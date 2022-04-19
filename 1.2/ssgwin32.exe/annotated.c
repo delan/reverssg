@@ -10,7 +10,7 @@ void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id)
   
   iVar1 = LoadStringA(hInstance_0046485c,id,error,0xfe);
   if (iVar1 == 0) {
-    FUN_00452a74(error,s_Cannot_Load_Resource___d___missi_00460170,(char)id);
+    Sprintf2(error,s_Cannot_Load_Resource___d___missi_00460170,id);
     MessageBoxA((HWND)0x0,error,(LPCSTR)&lpCaption_0046019c,0x10);
     DoSomethingThenExit_(1);
   }
@@ -352,13 +352,13 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
-void __stdcall ShowAlertMessage(undefined4 param_1,undefined param_2)
+void __stdcall ShowAlertMessage(char *param_1,undefined param_2)
 
 {
   char *lpCaption;
-  CHAR text [500];
+  char text [500];
   
-  GetSomeStringIntoBuffer_(text,param_1,&param_2);
+  Sprintf3(text,param_1,&param_2);
                     // 20102 = "Alert"
   lpCaption = TryWinapiLoadString(20102);
   MessageBoxA((HWND)0x0,text,lpCaption,0x30);
@@ -638,6 +638,48 @@ char * __stdcall Strcpy(char *dest,char *src)
     pDest = (void *)((int)pDest + 1);
   }
   return dest;
+}
+
+
+
+int __stdcall Sprintf1(char *dest,char *format,...)
+
+{
+  int iVar1;
+  undefined in_CL;
+  undefined in_DL;
+  
+  iVar1 = Sprintf0((char)dest,in_DL,in_CL,FUN_0045226c,dest,format,&stack0x0000000c);
+  return iVar1;
+}
+
+
+
+int __stdcall Sprintf2(char *dest,char *format,...)
+
+{
+  int iVar1;
+  undefined in_CL;
+  undefined in_DL;
+  
+  *dest = '\0';
+  iVar1 = Sprintf0((char)&dest,in_DL,in_CL,&LAB_00452a4c,&dest,format,&stack0x0000000c);
+  return iVar1;
+}
+
+
+
+int __stdcall Sprintf3(char *dest,char *format,...)
+
+{
+  int iVar1;
+  undefined in_CL;
+  undefined in_DL;
+  undefined4 in_stack_0000000c;
+  
+  *dest = '\0';
+  iVar1 = Sprintf0((char)&dest,in_DL,in_CL,&LAB_00452a4c,&dest,format,in_stack_0000000c);
+  return iVar1;
 }
 
 

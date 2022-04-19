@@ -198,13 +198,13 @@ char * __stdcall TryWinapiLoadString(UINT id)
   
   iVar1 = LoadStringA(hInstance_0046485c,id,local_104,0xfe);
   if (iVar1 == 0) {
-    FUN_00452a74(local_104,s_Cannot_Load_Resource___d___missi_00460112,(char)id);
+    Sprintf2(local_104,s_Cannot_Load_Resource___d___missi_00460112,id);
     MessageBoxA((HWND)0x0,local_104,(LPCSTR)&lpCaption_0046013e,0x10);
     DoSomethingThenExit_(1);
   }
   dest = (char *)TurboAlloc_(0xff);
   if (dest == (char *)0x0) {
-    FUN_00452a74(local_104,s_Cannot_Load_Resource___d___out_o_00460142,(char)id);
+    Sprintf2(local_104,s_Cannot_Load_Resource___d___out_o_00460142,id);
     MessageBoxA((HWND)0x0,local_104,(LPCSTR)&lpCaption_0046016c,0x10);
     DoSomethingThenExit_(1);
   }
@@ -8007,14 +8007,14 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
 
 
 void FUN_00419548(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5,undefined2 param_6,undefined2 param_7)
+                 undefined2 param_5,short param_6,undefined2 param_7)
 
 {
   undefined3 in_register_00000001;
-  undefined local_18 [20];
+  char local_18 [20];
   
   FUN_0044d501(CONCAT22((short)((uint3)in_register_00000001 >> 8),param_7));
-  FUN_00452a74(local_18,&DAT_00460bdc,(undefined1)param_6);
+  Sprintf2(local_18,&DAT_00460bdc,(int)param_6);
   FUN_004103ee(param_4,param_5,local_18);
   return;
 }
@@ -9248,16 +9248,16 @@ void FUN_0041abd6(void)
 
 
 void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,
-                 undefined4 param_6,undefined param_7)
+                 char *param_6,undefined param_7)
 
 {
   HDC hdc;
   int c;
   undefined extraout_CL;
   undefined extraout_DL;
-  CHAR local_1f8 [500];
+  char local_1f8 [500];
   
-  GetSomeStringIntoBuffer_(local_1f8,param_6,&param_7);
+  Sprintf3(local_1f8,param_6,&param_7);
   hdc = GetDC(hWnd_00464834);
   c = FUN_0044ffac((char)local_1f8,extraout_DL,extraout_CL,local_1f8);
   TextOutA(hdc,(int)param_4,(int)param_5,local_1f8,c);
@@ -9267,14 +9267,14 @@ void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short pa
 
 
 
-void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,
+void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *param_4,
                  undefined param_5)
 
 {
   char *lpCaption;
-  CHAR local_1f8 [500];
+  char local_1f8 [500];
   
-  GetSomeStringIntoBuffer_(local_1f8,param_4,&param_5);
+  Sprintf3(local_1f8,param_4,&param_5);
   lpCaption = TryWinapiLoadString(0x4e87);
   MessageBoxA((HWND)0x0,local_1f8,lpCaption,0x30);
   TurboFree_(lpCaption);
@@ -12327,7 +12327,7 @@ void FUN_0041f635(void)
   undefined extraout_DL;
   short sVar2;
   uint unaff_ESI;
-  undefined local_10 [12];
+  char local_10 [12];
   
   FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
   sVar2 = 0;
@@ -12335,7 +12335,7 @@ void FUN_0041f635(void)
     if (0 < (short)(&DAT_00466a54)[sVar2]) {
       unaff_ESI = unaff_ESI & 0xffff0000 | (uint)(ushort)(&DAT_004614fc)[sVar2 * 6];
       uVar1 = (&DAT_004614fe)[sVar2 * 6];
-      FUN_00452a74(local_10,&DAT_00461554,(char)(&DAT_00466a54)[sVar2]);
+      Sprintf2(local_10,&DAT_00461554,(int)(short)(&DAT_00466a54)[sVar2]);
       FUN_0044cf2c(0x98,extraout_DL,extraout_CL,(uint)local_10 & 0xffff0000 | 15000,local_10,
                    unaff_ESI,uVar1,0);
     }
@@ -14269,72 +14269,72 @@ void FUN_00422920(void)
   undefined uVar1;
   short sVar2;
   char *pcVar3;
-  char *pcVar4;
+  char *format;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
   undefined4 extraout_ECX;
-  undefined4 uVar5;
+  undefined4 uVar4;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   undefined extraout_DL_02;
   undefined2 extraout_var;
-  short sVar6;
-  int iVar7;
+  short sVar5;
+  int iVar6;
   undefined4 unaff_ESI;
-  undefined4 uVar8;
-  short sVar9;
-  undefined local_484 [256];
+  undefined4 uVar7;
+  short sVar8;
+  char local_484 [256];
   char local_384 [640];
-  undefined local_104 [250];
+  char local_104 [250];
   short local_a;
   char *local_8;
   
-  sVar9 = 0x46;
+  sVar8 = 0x46;
   pcVar3 = TryWinapiLoadString(0x4e3c);
-  FUN_00452a74(local_484,pcVar3,0x90);
+  Sprintf2(local_484,pcVar3,&DAT_00461590);
   TurboFree_(pcVar3);
-  iVar7 = 0;
+  iVar6 = 0;
   do {
-    TryWinapiLoadStringIntoBuffer(local_384 + iVar7 * 0x50,iVar7 + 0x4e3e);
-    iVar7 = iVar7 + 1;
-  } while (iVar7 < 9);
+    TryWinapiLoadStringIntoBuffer(local_384 + iVar6 * 0x50,iVar6 + 0x4e3e);
+    iVar6 = iVar6 + 1;
+  } while (iVar6 < 9);
   uVar1 = 0x5e;
   pcVar3 = TryWinapiLoadString(0x4e5e);
-  iVar7 = FUN_00454024((char)pcVar3,extraout_DL,uVar1,pcVar3);
-  local_a = (short)iVar7;
+  iVar6 = FUN_00454024((char)pcVar3,extraout_DL,uVar1,pcVar3);
+  local_a = (short)iVar6;
   TurboFree_(pcVar3);
   if ((10 < local_a) || (local_a < -10)) {
     local_a = 0;
   }
-  uVar8 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
-  uVar5 = uVar8;
-  FUN_0044cbbb(uVar8);
-  sVar6 = 0;
+  uVar7 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
+  uVar4 = uVar7;
+  FUN_0044cbbb(uVar7);
+  sVar5 = 0;
   do {
-    if ((&DAT_00467626)[sVar6 * 0xd] != -1) {
-      pcVar3 = local_384 + (short)(&DAT_00467626)[sVar6 * 0xd] * 0x50;
-      sVar2 = FUN_0044ccf5((char)pcVar3,(char)local_384,(char)uVar5,uVar8,pcVar3);
-      pcVar3 = local_384 + (short)(&DAT_00467626)[sVar6 * 0xd] * 0x50;
-      FUN_0044cf2c((char)pcVar3,(char)local_384,extraout_CL,uVar8,pcVar3,
-                   CONCAT22(extraout_var,(0xee - sVar2) - local_a),sVar9,0);
-      uVar5 = extraout_ECX;
+    if ((&DAT_00467626)[sVar5 * 0xd] != -1) {
+      pcVar3 = local_384 + (short)(&DAT_00467626)[sVar5 * 0xd] * 0x50;
+      sVar2 = FUN_0044ccf5((char)pcVar3,(char)local_384,(char)uVar4,uVar7,pcVar3);
+      pcVar3 = local_384 + (short)(&DAT_00467626)[sVar5 * 0xd] * 0x50;
+      FUN_0044cf2c((char)pcVar3,(char)local_384,extraout_CL,uVar7,pcVar3,
+                   CONCAT22(extraout_var,(0xee - sVar2) - local_a),sVar8,0);
+      uVar4 = extraout_ECX;
     }
-    sVar9 = sVar9 + 0x41;
-    sVar6 = sVar6 + 1;
-  } while (sVar6 < 4);
+    sVar8 = sVar8 + 0x41;
+    sVar5 = sVar5 + 1;
+  } while (sVar5 < 4);
   if (DAT_00461580 == 0) {
     pcVar3 = TryWinapiLoadString(0x4e46);
-    pcVar4 = TryWinapiLoadString(0x4e47);
+    format = TryWinapiLoadString(0x4e47);
     uVar1 = 0x48;
     local_8 = TryWinapiLoadString(0x4e48);
-    FUN_0044cf2c((char)local_8,extraout_DL_00,uVar1,uVar8,pcVar3,10,0x152,0);
-    FUN_00452a74(local_104,pcVar4,(char)DAT_0046776a);
-    uVar1 = FUN_0044cf2c((char)local_104,extraout_DL_01,extraout_CL_00,uVar8,local_104,10,0x166,0);
-    FUN_0044cf2c(uVar1,extraout_DL_02,extraout_CL_01,uVar8,local_8,10,0x17a,0);
+    FUN_0044cf2c((char)local_8,extraout_DL_00,uVar1,uVar7,pcVar3,10,0x152,0);
+    Sprintf2(local_104,format,(int)DAT_0046776a);
+    uVar1 = FUN_0044cf2c((char)local_104,extraout_DL_01,extraout_CL_00,uVar7,local_104,10,0x166,0);
+    FUN_0044cf2c(uVar1,extraout_DL_02,extraout_CL_01,uVar7,local_8,10,0x17a,0);
     TurboFree_(pcVar3);
-    TurboFree_(pcVar4);
+    TurboFree_(format);
     TurboFree_(local_8);
   }
   else {
@@ -16274,13 +16274,13 @@ void FUN_00425b7d(void)
   undefined extraout_DL;
   undefined4 unaff_EBX;
   undefined4 uVar1;
-  undefined local_10 [12];
+  char local_10 [12];
   
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(0x37,0x70,0x1a,0x1a);
   if (0 < DAT_00467768) {
-    FUN_00452a74(local_10,&DAT_00461593,(char)DAT_00467768);
+    Sprintf2(local_10,&DAT_00461593,(int)DAT_00467768);
     FUN_0044cf2c((char)local_10,extraout_DL,extraout_CL,uVar1,local_10,0x3b,0x82,0);
   }
   FUN_00430abc(0x37,0x70,0x1a,0x1a);
@@ -19895,24 +19895,23 @@ void FUN_0042b4e4(undefined param_1,undefined param_2,undefined param_3,uint par
 
 
 
-void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5)
+void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  undefined uVar1;
+  int iVar1;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined4 unaff_EBX;
   undefined4 uVar2;
-  undefined local_38 [52];
+  char local_38 [52];
   
   uVar2 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar2);
   FUN_00430de8(10,0x14a,0xfa,0x28);
-  uVar1 = FUN_00452a74(local_38,s_x__d_y__d_00461a77,(undefined1)param_4);
-  FUN_0044cf2c(uVar1,extraout_DL,extraout_CL,uVar2,PTR_s__00461a48,10,0x159,0);
+  iVar1 = Sprintf2(local_38,s_x__d_y__d_00461a77,(int)param_4,(int)param_5);
+  FUN_0044cf2c((char)iVar1,extraout_DL,extraout_CL,uVar2,PTR_s__00461a48,10,0x159,0);
   FUN_0044cf2c((char)local_38,extraout_DL_00,extraout_CL_00,uVar2,local_38,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
   FUN_0044cb20(15000);
@@ -22332,7 +22331,7 @@ bool FUN_0042fcd7(undefined param_1,undefined param_2,undefined param_3,ushort p
   pvVar3 = GetWinapiResource_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
   TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
-  FUN_00452a74(&DAT_00467cfa,local_54,0xaf);
+  Sprintf2(&DAT_00467cfa,local_54,&DAT_00461caf);
   *(undefined **)(puVar2 + 0xf) = &DAT_00467cfa;
   pvVar3 = GetWinapiResource_(param_5,_pTEXT);
   *(void **)(puVar2 + 0x11) = pvVar3;
@@ -24679,22 +24678,21 @@ void FUN_004324b1(void)
 
 
 
-void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5)
+void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
   undefined3 in_register_00000001;
-  char *pcVar1;
+  char *format;
   undefined2 extraout_var;
   undefined extraout_DL;
   
   DAT_004685be = 15000;
   FUN_0044cbbb(CONCAT22((short)((uint3)in_register_00000001 >> 8),15000));
   FUN_00430de8(10,200,0x96,0x14);
-  pcVar1 = TryWinapiLoadString(0x4e8e);
-  FUN_00452a74(&DAT_0046858c,pcVar1,(undefined1)param_4);
-  TurboFree_(pcVar1);
-  FUN_0044cf2c((char)DAT_004685be,extraout_DL,(char)pcVar1,CONCAT22(extraout_var,DAT_004685be),
+  format = TryWinapiLoadString(0x4e8e);
+  Sprintf2(&DAT_0046858c,format,(int)param_4,(int)param_5,(int)DAT_0046847c);
+  TurboFree_(format);
+  FUN_0044cf2c((char)DAT_004685be,extraout_DL,(char)format,CONCAT22(extraout_var,DAT_004685be),
                &DAT_0046858c,10,0xd2,0);
   FUN_00430abc(10,0xd2,0x96,0x14);
   FUN_0044cb20(DAT_004685be);
@@ -25001,13 +24999,13 @@ void FUN_00432f2f(void)
   undefined extraout_DL;
   undefined4 unaff_EBX;
   undefined4 uVar1;
-  undefined local_10 [12];
+  char local_10 [12];
   
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(0x3c,0xf5,0x1a,0x1a);
   if (0 < DAT_0046251c) {
-    FUN_00452a74(local_10,&DAT_00462549,(char)DAT_0046251c);
+    Sprintf2(local_10,&DAT_00462549,(int)DAT_0046251c);
     FUN_0044cf2c((char)local_10,extraout_DL,extraout_CL,uVar1,local_10,0x41,0x104,0);
   }
   FUN_00430abc(0x3c,0xf5,0x1a,0x1a);
@@ -27348,7 +27346,7 @@ void FUN_00435d8a(void)
   uint unaff_ESI;
   uint unaff_EDI;
   undefined4 uVar9;
-  undefined local_10 [12];
+  char local_10 [12];
   
   FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
   FUN_00430de8(0xd,0x5a,0x5d,0x90);
@@ -27371,7 +27369,7 @@ void FUN_00435d8a(void)
                    unaff_ESI & 0xffff0000 | (uint)uVar1,unaff_EDI | uVar2,5);
       unaff_ESI = unaff_ESI & 0xffff0000 | (uint)(ushort)(&DAT_00462584)[sVar8 * 2];
       uVar3 = (&DAT_00462586)[sVar8 * 2];
-      FUN_00452a74(local_10,&DAT_004626c2,(char)(&DAT_00462698)[sVar8]);
+      Sprintf2(local_10,&DAT_004626c2,(int)(short)(&DAT_00462698)[sVar8]);
       FUN_0044cf2c(0x98,extraout_DL_02,extraout_CL,(uint)local_10 & 0xffff0000 | 15000,local_10,
                    unaff_ESI,uVar3,0x996);
       uVar6 = extraout_ECX_00;
@@ -30341,67 +30339,53 @@ undefined4 FUN_0043a592(void)
 void FUN_0043a724(void)
 
 {
-  LPCVOID *ppvVar1;
-  uint uVar2;
+  LPCVOID *dest;
+  uint uVar1;
   undefined in_CL;
-  undefined extraout_CL;
-  undefined extraout_CL_00;
-  undefined extraout_CL_01;
-  undefined extraout_CL_02;
-  undefined4 extraout_ECX;
-  undefined4 extraout_ECX_00;
-  undefined4 uVar3;
-  DWORD extraout_ECX_01;
+  DWORD extraout_ECX;
   undefined in_DL;
-  undefined extraout_DL;
-  int extraout_EDX;
-  int iVar4;
-  undefined4 extraout_EDX_00;
-  short sVar5;
-  undefined4 unaff_EDI;
-  undefined uVar6;
+  undefined4 extraout_EDX;
+  short sVar2;
   
-  ppvVar1 = FUN_00452220(0xca,in_DL,in_CL,s_D_cordcode_c_004626ca,&DAT_004626d7);
-  FUN_0045224c(0xda,extraout_DL,extraout_CL,ppvVar1,s__case__d__004626da,(char)DAT_00462afe);
-  sVar5 = 0;
-  uVar3 = extraout_ECX;
+  dest = FUN_00452220(0xca,in_DL,in_CL,s_D_cordcode_c_004626ca,&DAT_004626d7);
+  Sprintf1((char *)dest,s__case__d__004626da,(int)DAT_00462afe);
+  sVar2 = 0;
   do {
-    iVar4 = DAT_00468f2c;
-    if (*(short *)(DAT_00468f2c + sVar5 * 0x1e) != -1) {
-      uVar6 = (undefined)sVar5;
-      FUN_0045224c(0xea,(char)DAT_00468f2c,(char)uVar3,ppvVar1,s__ii__d__type____d__004626ea,uVar6);
-      FUN_0045224c(6,(char)DAT_00468f2c,extraout_CL_00,ppvVar1,s__ii__d__rot____d__00462706,uVar6);
-      FUN_0045224c(0x22,(char)DAT_00468f2c,extraout_CL_01,ppvVar1,s__ii__d__x____d__00462722,uVar6);
-      FUN_0045224c(0x3e,(char)DAT_00468f2c,extraout_CL_02,ppvVar1,s__ii__d__y____d__0046273e,uVar6);
-      uVar3 = extraout_ECX_00;
-      iVar4 = extraout_EDX;
+    if (*(short *)(DAT_00468f2c + sVar2 * 0x1e) != -1) {
+      Sprintf1((char *)dest,s__ii__d__type____d__004626ea,(int)sVar2,
+               (int)*(short *)(DAT_00468f2c + sVar2 * 0x1e));
+      Sprintf1((char *)dest,s__ii__d__rot____d__00462706,(int)sVar2,
+               (int)*(short *)(DAT_00468f2c + 2 + sVar2 * 0x1e));
+      Sprintf1((char *)dest,s__ii__d__x____d__00462722,(int)sVar2,
+               (int)*(short *)(DAT_00468f2c + 4 + sVar2 * 0x1e));
+      Sprintf1((char *)dest,s__ii__d__y____d__0046273e,(int)sVar2,
+               (int)*(short *)(DAT_00468f2c + 6 + sVar2 * 0x1e));
     }
-    sVar5 = sVar5 + 1;
-  } while (sVar5 < 0x1e);
-  uVar2 = FUN_0045224c(0x5b,(char)iVar4,(char)uVar3,ppvVar1,s__break__0046275b,(char)unaff_EDI);
-  FUN_00451f00(uVar2,extraout_EDX_00,extraout_ECX_01,ppvVar1);
+    sVar2 = sVar2 + 1;
+  } while (sVar2 < 0x1e);
+  uVar1 = Sprintf1((char *)dest,s__break__0046275b);
+  FUN_00451f00(uVar1,extraout_EDX,extraout_ECX,dest);
   return;
 }
 
 
 
-void FUN_0043a834(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5)
+void FUN_0043a834(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  char *pcVar1;
+  char *format;
   undefined extraout_DL;
   undefined4 unaff_ESI;
-  undefined4 uVar2;
-  undefined local_54 [80];
+  undefined4 uVar1;
+  char local_54 [80];
   
-  uVar2 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
-  FUN_0044cbbb(uVar2);
+  uVar1 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
+  FUN_0044cbbb(uVar1);
   FUN_00430de8(10,0x15e,0xfa,0x14);
-  pcVar1 = TryWinapiLoadString(0x4ea4);
-  FUN_00452a74(local_54,pcVar1,(undefined1)param_4);
-  TurboFree_(pcVar1);
-  FUN_0044cf2c((char)local_54,extraout_DL,(char)pcVar1,uVar2,local_54,10,0x16d,0);
+  format = TryWinapiLoadString(0x4ea4);
+  Sprintf2(local_54,format,(int)param_4,(int)param_5,(int)DAT_00468f30,(int)DAT_00468f34);
+  TurboFree_(format);
+  FUN_0044cf2c((char)local_54,extraout_DL,(char)format,uVar1,local_54,10,0x16d,0);
   FUN_00430abc(10,0x15e,0x96,0x14);
   FUN_0044cb20(15000);
   return;
@@ -31679,7 +31663,7 @@ void FUN_0043ba8c(undefined param_1,undefined param_2,undefined param_3,ushort p
   pvVar3 = GetWinapiResource_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
   TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
-  FUN_00452a74(&DAT_00469040,local_54,0x8e);
+  Sprintf2(&DAT_00469040,local_54,&DAT_0046278e);
   *(undefined **)(puVar2 + 0xf) = &DAT_00469040;
   if (*param_7 != 0) {
     param_5 = param_6;
@@ -32283,7 +32267,7 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
     puVar3[1] = 0xffff;
     TryWinapiLoadStringIntoBuffer(&DAT_004690e0,0x4e5a);
     TryWinapiLoadStringIntoBuffer(local_54,0x4e5b);
-    FUN_00452a74(&DAT_00469220,local_54,0x94);
+    Sprintf2(&DAT_00469220,local_54,&DAT_00462794);
     *(undefined **)(puVar3 + 0xd) = &DAT_004690e0;
     *(undefined **)(puVar3 + 0xf) = &DAT_00469220;
     pvVar4 = GetWinapiResource_((short)param_4 + 0x4b0,&_TEXT27);
@@ -32330,9 +32314,9 @@ void FUN_0043c5ee(void)
   undefined in_CL;
   undefined in_DL;
   undefined4 unaff_ESI;
-  undefined *puVar3;
-  undefined uVar4;
-  undefined local_298 [500];
+  char *dest;
+  undefined uVar3;
+  char local_298 [500];
   char local_a4 [80];
   char local_54 [80];
   
@@ -32340,18 +32324,18 @@ void FUN_0043c5ee(void)
   if ((short)iVar1 != 0) {
     TryWinapiLoadStringIntoBuffer(local_54,0x4e8f);
     iVar1 = FUN_0044ca04();
-    iVar1 = FUN_00452a74(local_298,local_54,(char)iVar1);
-    puVar3 = local_298 + iVar1;
+    iVar1 = Sprintf2(local_298,local_54,iVar1);
+    dest = local_298 + iVar1;
     iVar1 = DlistHead(DAT_004693c0);
-    uVar4 = (undefined)unaff_ESI;
+    uVar3 = (undefined)unaff_ESI;
     while (iVar1 != 0) {
       TryWinapiLoadStringIntoBuffer(local_a4,0x4e90);
-      iVar2 = FUN_00452a74(puVar3,local_a4,(char)*(undefined2 *)(iVar1 + 8));
-      puVar3 = puVar3 + iVar2;
+      iVar2 = Sprintf2(dest,local_a4,(int)*(short *)(iVar1 + 8),*(undefined4 *)(iVar1 + 10));
+      dest = dest + iVar2;
       iVar1 = DlistNext(iVar1);
-      uVar4 = (undefined)unaff_ESI;
+      uVar3 = (undefined)unaff_ESI;
     }
-    ShowAlertMessage(local_298,uVar4);
+    ShowAlertMessage(local_298,uVar3);
   }
   return;
 }
@@ -34592,12 +34576,12 @@ void FUN_0043fae6(void)
   undefined extraout_DL;
   undefined4 unaff_EBX;
   undefined4 uVar1;
-  undefined local_c [8];
+  char local_c [8];
   
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(0x17,0x41,0x4f,0xf);
-  FUN_00452a74(local_c,&DAT_00462b0e,(char)DAT_00462afe);
+  Sprintf2(local_c,&DAT_00462b0e,(int)DAT_00462afe);
   FUN_0044cf2c((char)local_c,extraout_DL,extraout_CL,uVar1,local_c,0x1a,0x4d,0);
   FUN_00430abc(0x17,0x41,0x4f,0xf);
   FUN_0044cb20(15000);
@@ -34823,9 +34807,9 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
 
 {
   short sVar1;
-  char *pcVar2;
-  undefined4 uVar3;
-  uint uVar4;
+  char *format;
+  undefined4 uVar2;
+  uint uVar3;
   undefined extraout_CL;
   uint extraout_ECX;
   undefined4 extraout_EDX;
@@ -34834,22 +34818,22 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   FUN_00430de8(10,0x140,0x14e,0x3f);
   FUN_00430abc(10,0x140,0x14e,0x3f);
   FUN_0044d501(0);
-  pcVar2 = TryWinapiLoadString(0x4e3c);
-  FUN_00452a74(&DAT_004697b8,pcVar2,0x11);
-  TurboFree_(pcVar2);
+  format = TryWinapiLoadString(0x4e3c);
+  Sprintf2(&DAT_004697b8,format,&DAT_00462b11);
+  TurboFree_(format);
   FUN_004103ee(10,0x148,&DAT_004697b8);
   sVar1 = DAT_00462afe;
   if ((_DAT_00462ac8 == 0) &&
      (*(short *)((int)_GameState + DAT_00462afe * 2 + (short)DAT_00462afc * 0x58 + 0x6e) == 0)) {
-    uVar4 = (int)_GameState + (short)DAT_00462afc * 0x58;
-    *(undefined2 *)(uVar4 + 0x6e + DAT_00462afe * 2) = 1;
-    uVar3 = FUN_004401a3((char)DAT_00462afc,(char)sVar1,extraout_CL,
-                         uVar4 & 0xffff0000 | (uint)DAT_00462afc);
-    if ((short)uVar3 != 0) {
+    uVar3 = (int)_GameState + (short)DAT_00462afc * 0x58;
+    *(undefined2 *)(uVar3 + 0x6e + DAT_00462afe * 2) = 1;
+    uVar2 = FUN_004401a3((char)DAT_00462afc,(char)sVar1,extraout_CL,
+                         uVar3 & 0xffff0000 | (uint)DAT_00462afc);
+    if ((short)uVar2 != 0) {
       *(undefined2 *)((int)_GameState + (short)DAT_00462afc * 0x58 + 0xc6) = 2;
-      uVar4 = FUN_00440221();
-      if ((short)uVar4 != 0) {
-        FUN_0043ffe8(uVar4,extraout_EDX,extraout_ECX);
+      uVar3 = FUN_00440221();
+      if ((short)uVar3 != 0) {
+        FUN_0043ffe8(uVar3,extraout_EDX,extraout_ECX);
       }
     }
   }
@@ -35689,7 +35673,7 @@ undefined4 FUN_004408cd(undefined param_1,undefined param_2,undefined param_3,in
   int iVar1;
   undefined4 uVar2;
   undefined4 unaff_EDI;
-  undefined local_200 [500];
+  char local_200 [500];
   undefined local_c [4];
   undefined local_8;
   
@@ -35699,7 +35683,7 @@ undefined4 FUN_004408cd(undefined param_1,undefined param_2,undefined param_3,in
       uVar2 = 1;
       Memcpy(local_c,(void *)(iVar1 + 0xc),4);
       local_8 = 0;
-      FUN_00452a74(local_200,s_Rs32____s__d_00462c4e,0xf4);
+      Sprintf2(local_200,s_Rs32____s__d_00462c4e,local_c,(int)*(short *)(iVar1 + 8));
       ShowAlertMessage(local_200,(char)unaff_EDI);
     }
   }
@@ -36223,7 +36207,7 @@ void FUN_00441942(void)
   undefined4 unaff_ESI;
   undefined4 uVar4;
   undefined4 uVar5;
-  undefined local_10 [12];
+  char local_10 [12];
   
   uVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
   FUN_0044cbbb(uVar4);
@@ -36238,7 +36222,7 @@ void FUN_00441942(void)
       FUN_0041395c((char)sVar3,extraout_DL_00,(char)uVar5,(&DAT_00469978)[sVar3],
                    sVar3 * 9 & 0xffff0000U | (uint)(ushort)(&DAT_00462c6a)[sVar3 * 9],
                    sVar3 * 9 & 0xffff0000U | (uint)(ushort)(&DAT_00462c6c)[sVar3 * 9],0x14);
-      FUN_00452a74(local_10,&DAT_00462ecc,(char)(&DAT_004699d6)[sVar3]);
+      Sprintf2(local_10,&DAT_00462ecc,(int)(short)(&DAT_004699d6)[sVar3]);
       FUN_0044cf2c((char)local_10,extraout_DL_01,extraout_CL,uVar4,local_10,
                    sVar3 * 9 & 0xffff0000U | (uint)(ushort)(&DAT_00462c6e)[sVar3 * 9],
                    (&DAT_00462c70)[sVar3 * 9],0);
@@ -38922,15 +38906,16 @@ undefined4 FUN_0044571b(void)
   undefined uVar1;
   int iVar2;
   void *pvVar3;
-  undefined4 uVar4;
+  int iVar4;
+  undefined4 uVar5;
   undefined extraout_CL;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   undefined extraout_DL_02;
-  int iVar5;
-  undefined4 uVar6;
+  int iVar6;
   undefined4 uVar7;
+  undefined4 uVar8;
   char local_54 [80];
   
   iVar2 = FUN_0044c2df();
@@ -38939,16 +38924,16 @@ undefined4 FUN_0044571b(void)
   pvVar3 = GetWinapiResource_(0x3fc,_pTEXT);
   *(void **)(iVar2 + 0x22) = pvVar3;
   TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
-  uVar1 = FUN_00452a74(&DAT_00469ad4,local_54,0x3c);
+  iVar4 = Sprintf2(&DAT_00469ad4,local_54,&DAT_00462f3c);
   *(undefined **)(iVar2 + 0x1e) = &DAT_00469ad4;
-  iVar5 = iVar2;
-  uVar4 = FUN_0044c371(uVar1,extraout_DL,extraout_CL,iVar2);
-  uVar6 = *(undefined4 *)(iVar2 + 0x1a);
-  uVar1 = FUN_0044073c((char)uVar4,extraout_DL_00,(char)iVar5,uVar6);
-  uVar7 = *(undefined4 *)(iVar2 + 0x22);
-  uVar1 = FUN_0044073c(uVar1,extraout_DL_01,(char)uVar6,uVar7);
-  FUN_0043c2ba(uVar1,extraout_DL_02,(char)uVar7,iVar2);
-  return uVar4;
+  iVar6 = iVar2;
+  uVar5 = FUN_0044c371((char)iVar4,extraout_DL,extraout_CL,iVar2);
+  uVar7 = *(undefined4 *)(iVar2 + 0x1a);
+  uVar1 = FUN_0044073c((char)uVar5,extraout_DL_00,(char)iVar6,uVar7);
+  uVar8 = *(undefined4 *)(iVar2 + 0x22);
+  uVar1 = FUN_0044073c(uVar1,extraout_DL_01,(char)uVar7,uVar8);
+  FUN_0043c2ba(uVar1,extraout_DL_02,(char)uVar8,iVar2);
+  return uVar5;
 }
 
 
@@ -43246,7 +43231,7 @@ void FUN_0044a9f7(void)
   undefined extraout_DL;
   short sVar2;
   uint unaff_ESI;
-  undefined local_10 [12];
+  char local_10 [12];
   
   FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
   sVar2 = 0;
@@ -43254,7 +43239,7 @@ void FUN_0044a9f7(void)
     if ('\0' < (char)(&DAT_00469fbe)[sVar2]) {
       unaff_ESI = unaff_ESI & 0xffff0000 | (uint)*(ushort *)((int)&DAT_00463269 + sVar2 * 0xf);
       uVar1 = *(undefined2 *)((int)&DAT_0046326b + sVar2 * 0xf);
-      FUN_00452a74(local_10,&DAT_00463367,(&DAT_00469fbe)[sVar2]);
+      Sprintf2(local_10,&DAT_00463367,(int)(char)(&DAT_00469fbe)[sVar2]);
       FUN_0044cf2c(0x98,extraout_DL,extraout_CL,(uint)local_10 & 0xffff0000 | 15000,local_10,
                    unaff_ESI,uVar1,0);
     }
@@ -43530,8 +43515,7 @@ void FUN_0044b030(void)
 
 
 
-void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5)
+void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
   undefined extraout_CL;
@@ -43539,13 +43523,13 @@ void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined4 unaff_EBX;
   undefined4 uVar1;
   char local_a4 [80];
-  undefined local_54 [80];
+  char local_54 [80];
   
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(10,0x14a,0xfa,0x28);
   TryWinapiLoadStringIntoBuffer(local_a4,0x4ea0);
-  FUN_00452a74(local_54,local_a4,(undefined1)param_4);
+  Sprintf2(local_54,local_a4,(int)param_4,(int)param_5);
   FUN_0044cf2c((char)local_54,extraout_DL,extraout_CL,uVar1,local_54,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
   FUN_0044cb20(15000);
@@ -43885,7 +43869,7 @@ undefined4 FUN_0044b62f(void)
 
 
 
-void FUN_0044b858(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4)
+void FUN_0044b858(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
   undefined extraout_CL;
@@ -43893,12 +43877,12 @@ void FUN_0044b858(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_DL;
   undefined extraout_DL_00;
   CHAR local_114 [260];
-  CHAR local_10 [12];
+  char local_10 [12];
   
   FUN_00452654((char)local_114,param_2,param_3,local_114,0x104);
   FUN_0044feec((char)local_114,extraout_DL,extraout_CL,local_114,&DAT_004633df);
   FUN_0044feec((char)local_114,extraout_DL_00,extraout_CL_00,local_114,s_ssgwincd_ini_004633e1);
-  FUN_00452a74(local_10,&DAT_004633ee,(undefined1)param_4);
+  Sprintf2(local_10,&DAT_004633ee,(int)param_4);
   WritePrivateProfileStringA((LPCSTR)&lpAppName_0046a370,s_wavemix_004633f1,local_10,local_114);
   return;
 }
@@ -44673,7 +44657,7 @@ void FUN_0044c8f3(undefined param_1,undefined param_2,undefined param_3,undefine
   iVar1 = FUN_0044c32f();
   *(undefined4 *)(iVar1 + 0x22) = param_4;
   TryWinapiLoadStringIntoBuffer(local_54,0x4e5d);
-  FUN_00452a74(&DAT_0046a8bc,local_54,0xdc);
+  Sprintf2(&DAT_0046a8bc,local_54,&DAT_004634dc);
   *(undefined **)(iVar1 + 0x1e) = &DAT_0046a8bc;
   *(undefined2 *)(iVar1 + 2) = param_5;
   iVar3 = iVar1;
@@ -45209,7 +45193,7 @@ void FUN_0044cf2c(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined uVar4;
   undefined unaff_DI;
   char local_70 [52];
-  undefined local_3c [50];
+  char local_3c [50];
   short local_a;
   int local_8;
   
@@ -45217,7 +45201,7 @@ void FUN_0044cf2c(undefined param_1,undefined param_2,undefined param_3,undefine
   local_8 = FindNodeIn46A938h_(param_4);
   if (local_8 == 0) {
     TryWinapiLoadStringIntoBuffer(local_70,0x4ea2);
-    FUN_00452a74(local_3c,local_70,(char)param_4);
+    Sprintf2(local_3c,local_70,(int)(short)param_4);
     ShowAlertMessage(local_3c,unaff_DI);
   }
   else {
@@ -50672,16 +50656,6 @@ LPCVOID * FUN_00452220(undefined param_1,undefined param_2,undefined param_3,und
 
 
 
-void FUN_0045224c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,
-                 undefined4 param_5,undefined param_6)
-
-{
-  FUN_00452bfc((char)param_4,param_2,param_3,FUN_0045226c,param_4,param_5,&param_6);
-  return;
-}
-
-
-
 byte * FUN_0045226c(undefined4 param_1,uint param_2,byte **param_3,byte *param_4,byte *param_5,
                    byte **param_6)
 
@@ -51340,32 +51314,6 @@ FUN_004529e8(uint param_1,undefined4 param_2,DWORD param_3,LPCVOID *param_4,unde
 
 
 
-void __stdcall FUN_00452a74(undefined *param_1,undefined4 param_2,undefined param_3)
-
-{
-  undefined in_CL;
-  undefined in_DL;
-  
-  *param_1 = 0;
-  FUN_00452bfc((char)&param_1,in_DL,in_CL,&LAB_00452a4c,&param_1,param_2,&param_3);
-  return;
-}
-
-
-
-void __stdcall GetSomeStringIntoBuffer_(undefined *param_1,undefined4 param_2,undefined4 param_3)
-
-{
-  undefined in_CL;
-  undefined in_DL;
-  
-  *param_1 = 0;
-  FUN_00452bfc((char)&param_1,in_DL,in_CL,&LAB_00452a4c,&param_1,param_2,param_3);
-  return;
-}
-
-
-
 void FUN_00452b70(undefined param_1,undefined param_2,undefined param_3,int param_4)
 
 {
@@ -51427,8 +51375,8 @@ void FUN_00452bc8(undefined param_1,undefined param_2,undefined param_3,uint par
 // WARNING: Could not reconcile some variable overlaps
 
 undefined1 *
-FUN_00452bfc(undefined param_1,byte param_2,byte param_3,undefined4 param_4,undefined4 param_5,
-            byte *param_6,uint *param_7)
+Sprintf0(undefined param_1,byte param_2,byte param_3,undefined4 param_4,undefined4 param_5,
+        byte *param_6,uint *param_7)
 
 {
   uint *puVar1;
