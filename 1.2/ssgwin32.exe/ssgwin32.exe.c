@@ -153,23 +153,22 @@ void FUN_00410074(void)
   HGLOBAL hResData;
   LPVOID pvVar1;
   
-  hResData_004646b4 =
-       FindResourceA(hInstance_0046485c,(LPCSTR)&lpName_00460074,(LPCSTR)&lpType_0046007d);
+  hResData_004646b4 = FindResourceA(_Module,(LPCSTR)&lpName_00460074,(LPCSTR)&lpType_0046007d);
   if (hResData_004646b4 == (HRSRC)0x0) {
-    MessageBoxA((HWND)hInstance_0046485c,s_I_could_not_find_the_font_conver_00460082,
+    MessageBoxA((HWND)_Module,s_I_could_not_find_the_font_conver_00460082,
                 (LPCSTR)&lpCaption_004600ae,0x10);
     DoSomethingThenExit_(1);
   }
-  hResData = LoadResource(hInstance_0046485c,hResData_004646b4);
+  hResData = LoadResource(_Module,hResData_004646b4);
   if (hResData == (HGLOBAL)0x0) {
-    MessageBoxA((HWND)hInstance_0046485c,s_I_could_not_find_the_font_conver_004600b2,
+    MessageBoxA((HWND)_Module,s_I_could_not_find_the_font_conver_004600b2,
                 (LPCSTR)&lpCaption_004600de,0x10);
     DoSomethingThenExit_(1);
   }
   hResData_004646b0 = hResData;
   pvVar1 = LockResource(hResData);
   if (pvVar1 == (LPVOID)0x0) {
-    MessageBoxA((HWND)hInstance_0046485c,s_I_could_not_find_the_font_conver_004600e2,
+    MessageBoxA((HWND)_Module,s_I_could_not_find_the_font_conver_004600e2,
                 (LPCSTR)&lpCaption_0046010e,0x10);
     DoSomethingThenExit_(1);
   }
@@ -185,31 +184,6 @@ void FUN_00410126(void)
   FreeResource(hResData_004646b0);
   FreeResource(hResData_004646b4);
   return;
-}
-
-
-
-char * __stdcall TryWinapiLoadString(UINT id)
-
-{
-  int iVar1;
-  char *dest;
-  CHAR local_104 [256];
-  
-  iVar1 = LoadStringA(hInstance_0046485c,id,local_104,0xfe);
-  if (iVar1 == 0) {
-    Sprintf2(local_104,s_Cannot_Load_Resource___d___missi_00460112,id);
-    MessageBoxA((HWND)0x0,local_104,(LPCSTR)&lpCaption_0046013e,0x10);
-    DoSomethingThenExit_(1);
-  }
-  dest = (char *)TurboAlloc_(0xff);
-  if (dest == (char *)0x0) {
-    Sprintf2(local_104,s_Cannot_Load_Resource___d___out_o_00460142,id);
-    MessageBoxA((HWND)0x0,local_104,(LPCSTR)&lpCaption_0046016c,0x10);
-    DoSomethingThenExit_(1);
-  }
-  Strcpy(dest,local_104);
-  return dest;
 }
 
 
@@ -845,14 +819,14 @@ ATOM FUN_00410bde(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_DL;
   WNDCLASSEXA local_34;
   
-  TryWinapiLoadStringIntoBuffer((char *)&lpWindowName_00464880,0x4e21);
+  GetWinapiString((char *)&lpWindowName_00464880,0x4e21);
   local_34.lpszClassName = s_TLCSSG_004601be;
   local_34.lpszMenuName = (LPCSTR)0x100;
   local_34.style = 0x1040;
-  local_34.hInstance = hInstance_0046485c;
+  local_34.hInstance = _Module;
   local_34.lpfnWndProc = MainWndProc;
   local_34.hCursor = (HCURSOR)0x0;
-  local_34.hIcon = LoadIconA(hInstance_0046485c,(LPCSTR)0x80);
+  local_34.hIcon = LoadIconA(_Module,(LPCSTR)0x80);
   local_34.hbrBackground = (HBRUSH)GetStockObject(1);
   local_34.cbClsExtra = 0;
   local_34.cbWndExtra = 0;
@@ -861,15 +835,15 @@ ATOM FUN_00410bde(undefined param_1,undefined param_2,undefined param_3,undefine
     local_34.hIconSm = (HICON)0x0;
   }
   else {
-    local_34.hIconSm = LoadIconA(hInstance_0046485c,(LPCSTR)0x81);
+    local_34.hIconSm = LoadIconA(_Module,(LPCSTR)0x81);
   }
   AVar1 = RegisterClassExA(&local_34);
   FUN_00410bb0((char)AVar1,extraout_DL,extraout_CL,0);
   if (AVar1 != 0) {
     hWnd_00464834 =
          CreateWindowExA(0,s_TLCSSG_004601be,(LPCSTR)&lpWindowName_00464880,0xca0000,(int)X_00464848
-                         ,Y_0046484c,nWidth_00464850,nHeight_00464854,(HWND)0x0,(HMENU)0x0,
-                         hInstance_0046485c,(LPVOID)0x0);
+                         ,Y_0046484c,nWidth_00464850,nHeight_00464854,(HWND)0x0,(HMENU)0x0,_Module,
+                         (LPVOID)0x0);
     if (hWnd_00464834 == (HWND)0x0) {
       AVar1 = 0;
     }
@@ -893,7 +867,7 @@ void FUN_00410cfc(void)
   FUN_00410bb0(in_AL,in_DL,in_CL,1);
   if (hWnd_00464834 != (HWND)0x0) {
     DestroyWindow(hWnd_00464834);
-    UnregisterClassA(s_TLCSSG_004601be,hInstance_0046485c);
+    UnregisterClassA(s_TLCSSG_004601be,_Module);
     hWnd_00464834 = (HWND)0x0;
   }
   return;
@@ -975,7 +949,7 @@ FUN_00410df3(undefined param_1,undefined param_2,undefined param_3,HMODULE param
   local_98.dwOSVersionInfoSize = 0x94;
   GetVersionExA(&local_98);
   _DAT_00464860 = local_98.dwPlatformId;
-  hInstance_0046485c = param_4;
+  _Module = param_4;
   lpRect = &X_00464848;
   pHVar3 = GetDesktopWindow();
   GetWindowRect(pHVar3,(LPRECT)lpRect);
@@ -1333,7 +1307,7 @@ int FUN_004115b2(undefined param_1,undefined param_2,undefined param_3,undefined
     if (_DAT_004601c8 <= sVar2) {
       if (sVar2 != 10) {
         (&DAT_004648d4)[sVar2 * 3] = (ushort)param_4;
-        pHVar1 = LoadCursorA(hInstance_0046485c,(LPCSTR)(uint)(ushort)param_4);
+        pHVar1 = LoadCursorA(_Module,(LPCSTR)(uint)(ushort)param_4);
         *(HCURSOR *)((int)&hCursor_004648d0 + sVar2 * 6) = pHVar1;
         _DAT_004601c8 = _DAT_004601c8 + 1;
       }
@@ -1387,7 +1361,7 @@ void FUN_004116e1(undefined param_1,undefined param_2,undefined param_3,short pa
                  short param_6)
 
 {
-  LoadStringA(hInstance_0046485c,(int)param_4,param_5,(int)param_6);
+  LoadStringA(_Module,(int)param_4,param_5,(int)param_6);
   return;
 }
 
@@ -1712,7 +1686,7 @@ void FUN_0041227c(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_DL;
   char local_54 [80];
   
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e84);
+  GetWinapiString(local_54,0x4e84);
   FUN_0041acce((char)local_54,extraout_DL,extraout_CL,local_54,(undefined1)param_4);
   return;
 }
@@ -7184,8 +7158,8 @@ void FUN_00417e20(void)
   char local_a4 [80];
   char local_54 [80];
   
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e3a);
-  TryWinapiLoadStringIntoBuffer(local_a4,0x4e3b);
+  GetWinapiString(local_54,0x4e3a);
+  GetWinapiString(local_a4,0x4e3b);
   FUN_0044d501(0xfff);
   FUN_004103ee(8,0x3d,local_54);
   FUN_004103ee(8,0x4d,local_a4);
@@ -7243,7 +7217,7 @@ void FUN_00417eba(uint param_1,undefined4 param_2,uint param_3)
   uVar4 = FUN_00413b88((char)uVar3,extraout_DL,uVar2,uVar3,0,0,0,6);
   FUN_00412d0c(uVar4,extraout_EDX,extraout_ECX,uVar3);
   uVar3 = FUN_00412ac4(0x1008);
-  src = TryWinapiLoadString(0x4e39);
+  src = GetWinapiStringAlloc(0x4e39);
   Strcpy(&DAT_00466682,src);
   TurboFree_(src);
   if (DAT_00467cf2 == 0) {
@@ -8158,7 +8132,7 @@ undefined4 FUN_00419e02(undefined param_1,undefined param_2,undefined param_3,un
 void FUN_0041a068(undefined param_1,undefined param_2,undefined param_3,ushort param_4)
 
 {
-  DialogBoxParamA(hInstance_0046485c,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_00419ec4,0);
+  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_00419ec4,0);
   return;
 }
 
@@ -8808,7 +8782,7 @@ void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *pa
   char local_1f8 [500];
   
   Sprintf3(local_1f8,param_4,&param_5);
-  lpCaption = TryWinapiLoadString(0x4e87);
+  lpCaption = GetWinapiStringAlloc(0x4e87);
   MessageBoxA((HWND)0x0,local_1f8,lpCaption,0x30);
   TurboFree_(lpCaption);
   DoSomethingThenExit_(1);
@@ -13600,16 +13574,16 @@ void FUN_00422920(void)
   char *local_8;
   
   sVar7 = 0x46;
-  pcVar2 = TryWinapiLoadString(0x4e3c);
+  pcVar2 = GetWinapiStringAlloc(0x4e3c);
   Sprintf2(local_484,pcVar2,&DAT_00461590);
   TurboFree_(pcVar2);
   iVar5 = 0;
   do {
-    TryWinapiLoadStringIntoBuffer(local_384 + iVar5 * 0x50,iVar5 + 0x4e3e);
+    GetWinapiString(local_384 + iVar5 * 0x50,iVar5 + 0x4e3e);
     iVar5 = iVar5 + 1;
   } while (iVar5 < 9);
   uVar8 = 0x5e;
-  pcVar2 = TryWinapiLoadString(0x4e5e);
+  pcVar2 = GetWinapiStringAlloc(0x4e5e);
   iVar5 = FUN_00454024((char)pcVar2,extraout_DL,uVar8,pcVar2);
   local_a = (short)iVar5;
   TurboFree_(pcVar2);
@@ -13632,9 +13606,9 @@ void FUN_00422920(void)
     sVar4 = sVar4 + 1;
   } while (sVar4 < 4);
   if (DAT_00461580 == 0) {
-    pcVar2 = TryWinapiLoadString(0x4e46);
-    format = TryWinapiLoadString(0x4e47);
-    local_8 = TryWinapiLoadString(0x4e48);
+    pcVar2 = GetWinapiStringAlloc(0x4e46);
+    format = GetWinapiStringAlloc(0x4e47);
+    local_8 = GetWinapiStringAlloc(0x4e48);
     FUN_0044cf2c(uVar6,pcVar2,10,0x152,0);
     Sprintf2(local_104,format,(int)DAT_0046776a);
     FUN_0044cf2c(uVar6,local_104,10,0x166,0);
@@ -18617,7 +18591,7 @@ void FUN_0042b10a(undefined4 param_1,undefined *param_2,byte **param_3,undefined
   
   uVar1 = FUN_004524ac((uint)param_5,param_2,param_3,param_4,(uint)param_5,1,DAT_00467a94);
   if ((uVar1 != 1) && (param_6 != 0)) {
-    pcVar2 = TryWinapiLoadString(0x4e88);
+    pcVar2 = GetWinapiStringAlloc(0x4e88);
     ShowAlertMessage(pcVar2,unaff_BL);
     FUN_0044b38d(&PTR_LAB_00461b74);
     TurboFree_(pcVar2);
@@ -18773,7 +18747,7 @@ bool FUN_0042b260(void)
     uVar10 = SUB41(pGVar5,0);
     pGVar5 = _GameState;
     if ((*(char *)_GameState == '\0') && (_DAT_004617ca == 0)) {
-      pcVar4 = TryWinapiLoadString(0x4e89);
+      pcVar4 = GetWinapiStringAlloc(0x4e89);
       ShowAlertMessage(pcVar4,unaff_DI);
       pGVar5 = (GameState *)TurboFree_(pcVar4);
       uVar1 = SUB41(pcVar4,0);
@@ -21130,7 +21104,7 @@ bool FUN_0042fcd7(undefined param_1,undefined param_2,undefined param_3,ushort p
   puVar2[1] = 0xffff;
   pvVar3 = GetWinapiResource_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
+  GetWinapiString(local_54,0x4e59);
   Sprintf2(&DAT_00467cfa,local_54,&DAT_00461caf);
   *(undefined **)(puVar2 + 0xf) = &DAT_00467cfa;
   pvVar3 = GetWinapiResource_(param_5,_pTEXT);
@@ -21320,7 +21294,7 @@ undefined4 FUN_0042ffd7(void)
   uVar1 = FUN_0043ab87();
   uVar2 = FUN_004548e0(uVar1,extraout_DL,extraout_CL,&LAB_0042ff86);
   uVar1 = (undefined)uVar2;
-  TryWinapiLoadStringIntoBuffer(&DAT_00467d4a,0x4e22);
+  GetWinapiString(&DAT_00467d4a,0x4e22);
   FUN_004116a2(uVar1,extraout_DL_00,extraout_CL_00,&DAT_00467d4a);
   FUN_0043bc68();
   PTR_FUN_00460230 = &LAB_0042fe9d;
@@ -21656,7 +21630,7 @@ FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short para
     uVar3 = CONCAT22(uVar7,1);
   }
   else {
-    pcVar2 = TryWinapiLoadString(0x4e8a);
+    pcVar2 = GetWinapiStringAlloc(0x4e8a);
     ShowAlertMessage(pcVar2,unaff_DI);
     TurboFree_(pcVar2);
     uVar3 = 0;
@@ -21933,7 +21907,7 @@ void FUN_00430af0(undefined param_1,undefined param_2,undefined param_3,undefine
   DAT_00468428 = GetDC(hWnd_00464834);
   if (DAT_00468428 == (HDC)0x0) {
     uVar2 = 0x8b;
-    pcVar1 = TryWinapiLoadString(0x4e8b);
+    pcVar1 = GetWinapiStringAlloc(0x4e8b);
     FUN_0041acce((char)pcVar1,extraout_DL,uVar2,pcVar1,unaff_DI);
     TurboFree_(pcVar1);
   }
@@ -21978,7 +21952,7 @@ undefined4 FUN_00430bbc(void)
       DAT_00467e18 = 0x180;
       DAT_00468428 = GetDC(hWnd_00464834);
       if (DAT_00468428 == (HDC)0x0) {
-        pcVar2 = TryWinapiLoadString(0x4e8c);
+        pcVar2 = GetWinapiStringAlloc(0x4e8c);
         ShowAlertMessage(pcVar2,in_stack_ffffffe8);
         TurboFree_(pcVar2);
       }
@@ -22175,7 +22149,7 @@ void FUN_00430ef8(undefined param_1,undefined param_2,undefined param_3,short pa
   }
   UVar4 = SetPaletteEntries(DAT_0046811c,(int)param_4,(int)param_5,local_404);
   if (UVar4 == 0) {
-    pcVar5 = TryWinapiLoadString(0x4e8d);
+    pcVar5 = GetWinapiStringAlloc(0x4e8d);
     ShowAlertMessage(pcVar5,unaff_SI);
     TurboFree_(pcVar5);
   }
@@ -23449,7 +23423,7 @@ void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short pa
   DAT_004685be = 15000;
   FUN_0044cbbb(CONCAT22((short)((uint3)in_register_00000001 >> 8),15000));
   FUN_00430de8(10,200,0x96,0x14);
-  format = TryWinapiLoadString(0x4e8e);
+  format = GetWinapiStringAlloc(0x4e8e);
   Sprintf2(&DAT_0046858c,format,(int)param_4,(int)param_5,(int)DAT_0046847c);
   TurboFree_(format);
   FUN_0044cf2c(CONCAT22(extraout_var,DAT_004685be),&DAT_0046858c,10,0xd2,0);
@@ -28934,7 +28908,7 @@ void FUN_0043a834(undefined param_1,undefined param_2,undefined param_3,short pa
   uVar1 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(10,0x15e,0xfa,0x14);
-  format = TryWinapiLoadString(0x4ea4);
+  format = GetWinapiStringAlloc(0x4ea4);
   Sprintf2(local_54,format,(int)param_4,(int)param_5,(int)DAT_00468f30,(int)DAT_00468f34);
   TurboFree_(format);
   FUN_0044cf2c(uVar1,local_54,10,0x16d,0);
@@ -29315,7 +29289,7 @@ short FUN_0043ad75(undefined param_1,undefined param_2,undefined param_3,ushort 
   pDVar1 = DlistNew();
   node[3].next = (DlistNode *)pDVar1;
   *(undefined2 *)&node[1].next = 1;
-  hMenu = LoadMenuA(hInstance_0046485c,(LPCSTR)(uint)param_4);
+  hMenu = LoadMenuA(_Module,(LPCSTR)(uint)param_4);
   *(HMENU *)((int)&node[2].next + 2) = hMenu;
   local_c = GetSubMenu(hMenu,0);
   if (local_c == (HMENU)0x0) {
@@ -30213,7 +30187,7 @@ void FUN_0043ba8c(undefined param_1,undefined param_2,undefined param_3,ushort p
   puVar2[1] = 0xffff;
   pvVar3 = GetWinapiResource_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
+  GetWinapiString(local_54,0x4e59);
   Sprintf2(&DAT_00469040,local_54,&DAT_0046278e);
   *(undefined **)(puVar2 + 0xf) = &DAT_00469040;
   if (*param_7 != 0) {
@@ -30802,8 +30776,8 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
     puVar3 = (undefined2 *)FUN_0044c32f();
     *puVar3 = 0xffff;
     puVar3[1] = 0xffff;
-    TryWinapiLoadStringIntoBuffer(&DAT_004690e0,0x4e5a);
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e5b);
+    GetWinapiString(&DAT_004690e0,0x4e5a);
+    GetWinapiString(local_54,0x4e5b);
     Sprintf2(&DAT_00469220,local_54,&DAT_00462794);
     *(undefined **)(puVar3 + 0xd) = &DAT_004690e0;
     *(undefined **)(puVar3 + 0xf) = &DAT_00469220;
@@ -30859,14 +30833,14 @@ void FUN_0043c5ee(void)
   
   iVar1 = FUN_004352c9(in_AL,in_DL,in_CL,DAT_004693c0);
   if ((short)iVar1 != 0) {
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e8f);
+    GetWinapiString(local_54,0x4e8f);
     iVar1 = FUN_0044ca04();
     iVar1 = Sprintf2(local_298,local_54,iVar1);
     dest = local_298 + iVar1;
     iVar1 = DlistHead(DAT_004693c0);
     uVar3 = (undefined)unaff_ESI;
     while (iVar1 != 0) {
-      TryWinapiLoadStringIntoBuffer(local_a4,0x4e90);
+      GetWinapiString(local_a4,0x4e90);
       iVar2 = Sprintf2(dest,local_a4,(int)*(short *)(iVar1 + 8),*(undefined4 *)(iVar1 + 10));
       dest = dest + iVar2;
       iVar1 = DlistNext(iVar1);
@@ -32540,7 +32514,7 @@ void FUN_0043f27a(undefined param_1,undefined param_2,undefined param_3,undefine
   
   iVar1 = FUN_0043f193();
   *(undefined4 *)(iVar1 + 0x26) = param_4;
-  TryWinapiLoadStringIntoBuffer(&DAT_004696b0,0x4e5c);
+  GetWinapiString(&DAT_004696b0,0x4e5c);
   *(undefined **)(iVar1 + 0x1e) = &DAT_004696b0;
   *(undefined **)(iVar1 + 0x22) = &DAT_00462a9e;
   *(undefined2 *)(iVar1 + 4) = 8;
@@ -33191,7 +33165,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   FUN_00430de8(10,0x140,0x14e,0x3f);
   FUN_00430abc(10,0x140,0x14e,0x3f);
   FUN_0044d501(0);
-  format = TryWinapiLoadString(0x4e3c);
+  format = GetWinapiStringAlloc(0x4e3c);
   Sprintf2(&DAT_004697b8,format,&DAT_00462b11);
   TurboFree_(format);
   FUN_004103ee(10,0x148,&DAT_004697b8);
@@ -33492,7 +33466,7 @@ bool FUN_00440260(undefined param_1,undefined param_2,undefined param_3,int para
   iVar3 = FUN_0044ff50((char)pcVar2,extraout_DL_01,extraout_CL_01,pcVar2,&DAT_00462c49);
   if (iVar3 == 0) {
     *(undefined2 *)(param_4 + 0x1c) = 5;
-    *(HMODULE *)(param_4 + 0x1e) = hInstance_0046485c;
+    *(HMODULE *)(param_4 + 0x1e) = _Module;
     bVar1 = false;
   }
   else {
@@ -36384,7 +36358,7 @@ void FUN_004444bf(void)
   
   iVar3 = 0;
   do {
-    TryWinapiLoadStringIntoBuffer(&DAT_00467a98 + iVar3 * 0x32,0x4e4a);
+    GetWinapiString(&DAT_00467a98 + iVar3 * 0x32,0x4e4a);
     iVar3 = iVar3 + 1;
   } while (iVar3 < 7);
   if (-1 < in_stack_00000004) {
@@ -36420,7 +36394,7 @@ void FUN_004444c5(void)
   iVar2 = *(int *)(unaff_EBP + 8);
   iVar6 = 0;
   do {
-    TryWinapiLoadStringIntoBuffer(&DAT_00467a98 + iVar6 * 0x32,0x4e4a);
+    GetWinapiString(&DAT_00467a98 + iVar6 * 0x32,0x4e4a);
     iVar6 = iVar6 + 1;
   } while (iVar6 < 7);
   if (-1 < iVar2) {
@@ -37055,7 +37029,7 @@ void FUN_0044510a(undefined4 param_1,undefined4 param_2,uint param_3)
                  *(undefined4 *)((int)&DAT_00462ee0 + sVar6 * 0x12));
     sVar6 = sVar6 + 1;
   } while (sVar6 < 3);
-  LoadStringA(hInstance_0046485c,0x4e27,local_10,10);
+  LoadStringA(_Module,0x4e27,local_10,10);
   iVar3 = FUN_00454024((char)local_10,extraout_DL_02,extraout_CL_03,local_10);
   DAT_00469aa8 = (char)iVar3;
   return;
@@ -37211,7 +37185,7 @@ undefined4 FUN_0044571b(void)
   *(void **)(iVar2 + 0x1a) = pvVar3;
   pvVar3 = GetWinapiResource_(0x3fc,_pTEXT);
   *(void **)(iVar2 + 0x22) = pvVar3;
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e59);
+  GetWinapiString(local_54,0x4e59);
   iVar4 = Sprintf2(&DAT_00469ad4,local_54,&DAT_00462f3c);
   *(undefined **)(iVar2 + 0x1e) = &DAT_00469ad4;
   iVar6 = iVar2;
@@ -37235,31 +37209,31 @@ void FUN_004457b0(undefined param_1,undefined param_2,undefined param_3,undefine
   case 0:
     goto switchD_004457c8_caseD_0;
   case 1:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e94);
+    GetWinapiString(local_54,0x4e94);
     break;
   case 2:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e98);
+    GetWinapiString(local_54,0x4e98);
     break;
   default:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e9a);
+    GetWinapiString(local_54,0x4e9a);
     break;
   case 4:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e92);
+    GetWinapiString(local_54,0x4e92);
     break;
   case 5:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e97);
+    GetWinapiString(local_54,0x4e97);
     break;
   case 7:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e93);
+    GetWinapiString(local_54,0x4e93);
     break;
   case 0xb:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e99);
+    GetWinapiString(local_54,0x4e99);
     break;
   case 0x20:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e95);
+    GetWinapiString(local_54,0x4e95);
     break;
   case 0x23:
-    TryWinapiLoadStringIntoBuffer(local_54,0x4e96);
+    GetWinapiString(local_54,0x4e96);
   }
   FUN_004478cf();
 switchD_004457c8_caseD_0:
@@ -37276,7 +37250,7 @@ void FUN_004458d8(undefined param_1,undefined param_2,undefined param_3,MMRESULT
   
   if (param_4 != 0) {
     waveOutGetErrorTextA(param_4,local_104,0x100);
-    pcVar1 = TryWinapiLoadString(0x4e9b);
+    pcVar1 = GetWinapiStringAlloc(0x4e9b);
     ShowAlertMessage(pcVar1,0xfc);
     TurboFree_(pcVar1);
   }
@@ -37553,7 +37527,7 @@ uint FUN_00445d1d(uint param_1)
     local_38.lpfnWndProc = SoundWndProc;
     local_38.cbClsExtra = 0;
     local_38.cbWndExtra = 0;
-    local_38.hInstance = hInstance_0046485c;
+    local_38.hInstance = _Module;
     local_38.hIcon = (HICON)0x0;
     local_38.hCursor = (HCURSOR)0x0;
     local_38.hbrBackground = (HBRUSH)0x0;
@@ -37562,8 +37536,8 @@ uint FUN_00445d1d(uint param_1)
     RegisterClassA(&local_38);
     dwCallback_00469e44 =
          CreateWindowExA(0,lpClassName_00463068,&lpWindowName_00463162,0x40000000,-0x80000000,
-                         -0x80000000,-0x80000000,-0x80000000,hWnd_00464834,(HMENU)0x0,
-                         hInstance_0046485c,(LPVOID)0x0);
+                         -0x80000000,-0x80000000,-0x80000000,hWnd_00464834,(HMENU)0x0,_Module,
+                         (LPVOID)0x0);
     if (DAT_00462f48 == 0) {
       _DAT_00469d96 = 2;
     }
@@ -37582,7 +37556,7 @@ uint FUN_00445d1d(uint param_1)
       _DAT_00469d96 = 5;
       iVar2 = (**(code **)(*DAT_00469e48 + 0x18))();
       if (iVar2 != 0) {
-        pcVar3 = TryWinapiLoadString(0x4e9c);
+        pcVar3 = GetWinapiStringAlloc(0x4e9c);
         ShowAlertMessage(pcVar3,unaff_BL);
         TurboFree_(pcVar3);
       }
@@ -37660,7 +37634,7 @@ void FUN_00445eea(undefined4 param_1,undefined4 param_2,undefined4 param_3)
       FUN_00445924((char)MVar5,extraout_DL_01,extraout_CL_00,(short)MVar5);
     }
     DestroyWindow(dwCallback_00469e44);
-    BVar6 = UnregisterClassA(lpClassName_00463068,hInstance_0046485c);
+    BVar6 = UnregisterClassA(lpClassName_00463068,_Module);
     FUN_00435302((char)BVar6,extraout_DL_02,extraout_CL_01,DAT_00469d84);
     _DAT_00469d8a = 0;
   }
@@ -37727,7 +37701,7 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
         pcVar7 = extraout_ECX;
         uVar5 = extraout_EDX;
         if (*(int *)((int)&node[5].prev + 2) == 0) {
-          pcVar7 = TryWinapiLoadString(0x4e9d);
+          pcVar7 = GetWinapiStringAlloc(0x4e9d);
           ShowAlertMessage(pcVar7,unaff_DI);
           uVar6 = TurboFree_(pcVar7);
           uVar5 = extraout_EDX_00;
@@ -38040,13 +38014,13 @@ void FUN_0044639c(undefined param_1,undefined param_2,undefined param_3,int para
       uVar6 = (undefined)*(undefined4 *)(&DAT_00469e54 + iVar5);
       iVar3 = (**(code **)(**(int **)(&DAT_00469e54 + iVar5) + 0x30))();
       if (iVar3 != 0) {
-        pcVar4 = TryWinapiLoadString(0x4e9e);
+        pcVar4 = GetWinapiStringAlloc(0x4e9e);
         ShowAlertMessage(pcVar4,uVar6);
         TurboFree_(pcVar4);
       }
     }
     else {
-      pcVar4 = TryWinapiLoadString(0x4ea5);
+      pcVar4 = GetWinapiStringAlloc(0x4ea5);
       ShowAlertMessage(pcVar4,uVar6);
       TurboFree_(pcVar4);
     }
@@ -39518,7 +39492,7 @@ void FUN_004478cf(void)
   uint uVar9;
   
   uVar6 = unaff_EDI;
-  pcVar4 = TryWinapiLoadString(0x4e9f);
+  pcVar4 = GetWinapiStringAlloc(0x4e9f);
   ShowAlertMessage(pcVar4,(char)uVar6);
   uVar3 = TurboFree_(pcVar4);
   uVar9 = DAT_00469d84;
@@ -41592,7 +41566,7 @@ void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,short pa
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(10,0x14a,0xfa,0x28);
-  TryWinapiLoadStringIntoBuffer(local_a4,0x4ea0);
+  GetWinapiString(local_a4,0x4ea0);
   Sprintf2(local_54,local_a4,(int)param_4,(int)param_5);
   FUN_0044cf2c(uVar1,local_54,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
@@ -41802,7 +41776,7 @@ void FUN_0044b4ba(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_0044b60a(undefined param_1,undefined param_2,undefined param_3,ushort param_4)
 
 {
-  DialogBoxParamA(hInstance_0046485c,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_0044b504,0);
+  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_0044b504,0);
   return;
 }
 
@@ -41860,7 +41834,7 @@ undefined4 FUN_0044b62f(void)
   FUN_0044feec((char)local_110,extraout_DL,extraout_CL,local_110,&DAT_004633ad);
   FUN_0044feec((char)local_110,extraout_DL_00,extraout_CL_00,local_110,s_ssgwincd_ini_004633af);
   GetVersion();
-  TryWinapiLoadStringIntoBuffer((char *)&lpAppName_0046a370,0x4e28);
+  GetWinapiString((char *)&lpAppName_0046a370,0x4e28);
   uVar8 = 0;
   uVar9 = 1;
   UVar2 = GetPrivateProfileIntA((LPCSTR)&lpAppName_0046a370,lpKeyName_00463384,3,local_110);
@@ -42688,7 +42662,7 @@ void FUN_0044c8f3(undefined param_1,undefined param_2,undefined param_3,undefine
   
   iVar1 = FUN_0044c32f();
   *(undefined4 *)(iVar1 + 0x22) = param_4;
-  TryWinapiLoadStringIntoBuffer(local_54,0x4e5d);
+  GetWinapiString(local_54,0x4e5d);
   Sprintf2(&DAT_0046a8bc,local_54,&DAT_004634dc);
   *(undefined **)(iVar1 + 0x1e) = &DAT_0046a8bc;
   *(undefined2 *)(iVar1 + 2) = param_5;
@@ -42733,7 +42707,7 @@ void FUN_0044c970(undefined param_1,undefined param_2,undefined param_3,undefine
   if (_DAT_004634e0 == 0) {
     MVar1 = timeGetDevCaps(&local_c,8);
     if (MVar1 == 0x61) {
-      pcVar2 = TryWinapiLoadString(0x4ea1);
+      pcVar2 = GetWinapiStringAlloc(0x4ea1);
       ShowAlertMessage(pcVar2,unaff_SI);
       TurboFree_(pcVar2);
     }
@@ -43016,7 +42990,7 @@ void __stdcall FUN_0044cbbb(undefined4 param_1)
     pDVar2 = (DlistNode *)GetWinapiResource_((ushort)param_1,&_NFNT);
     if (pDVar2 == (DlistNode *)0x0) {
                     // 20136 = "Font resource not available."
-      TryWinapiLoadStringIntoBuffer(local_54,20136);
+      GetWinapiString(local_54,20136);
       ShowAlertMessage(local_54,unaff_DI);
       DoSomethingThenExit_(1);
     }
@@ -43229,7 +43203,7 @@ FUN_0044cf2c(undefined4 param_1,byte *param_2,undefined4 param_3,ushort param_4,
   local_a = (short)param_3;
   local_8 = FindNodeIn46A938h_(param_1);
   if (local_8 == 0) {
-    TryWinapiLoadStringIntoBuffer(local_70,0x4ea2);
+    GetWinapiString(local_70,0x4ea2);
     Sprintf2(local_3c,local_70,(int)(short)param_1);
     ShowAlertMessage(local_3c,unaff_DI);
   }
@@ -45142,7 +45116,7 @@ void FUN_0044ebef(void)
   *(undefined2 *)&_GameState->field_0x1a = 1;
   sVar3 = FUN_0044d501(0xfff);
   uVar2 = (undefined)sVar3;
-  TryWinapiLoadStringIntoBuffer(&DAT_0046aa3a,0x4e3d);
+  GetWinapiString(&DAT_0046aa3a,0x4e3d);
   puVar6 = &DAT_0046aa3a;
   iVar4 = FUN_0044ffac(uVar2,extraout_DL,extraout_CL,&DAT_0046aa3a);
   uVar1 = (uint)_GameState & 0xffffff00;

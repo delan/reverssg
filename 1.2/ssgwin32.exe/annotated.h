@@ -1434,7 +1434,8 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 
 
 
-void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id);
+char * __stdcall GetWinapiStringAlloc(UINT id);
+void __stdcall GetWinapiString(char *result,UINT id);
 void InitEntities(void);
 void StartLevel(void);
 ushort __stdcall RoomIsObverse(short roomIndex);

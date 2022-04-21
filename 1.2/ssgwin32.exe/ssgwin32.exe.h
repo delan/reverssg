@@ -1438,7 +1438,6 @@ void entry(void);
 void __GetExceptDLLinfo(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4);
 void FUN_00410074(void);
 void FUN_00410126(void);
-char * __stdcall TryWinapiLoadString(UINT id);
 void FUN_00410268(void);
 void FUN_0041026e(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined2 param_5);
 void FUN_0041029e(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);

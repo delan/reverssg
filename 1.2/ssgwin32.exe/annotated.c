@@ -2,19 +2,44 @@
 
 
 
-void __stdcall TryWinapiLoadStringIntoBuffer(char *result,UINT id)
+char * __stdcall GetWinapiStringAlloc(UINT id)
 
 {
-  int iVar1;
-  CHAR error [256];
+  int copied;
+  char *result;
+  CHAR scratch [256];
   
-  iVar1 = LoadStringA(hInstance_0046485c,id,error,0xfe);
-  if (iVar1 == 0) {
-    Sprintf2(error,s_Cannot_Load_Resource___d___missi_00460170,id);
-    MessageBoxA((HWND)0x0,error,(LPCSTR)&lpCaption_0046019c,0x10);
+  copied = LoadStringA(_Module,id,scratch,0xfe);
+  if (copied == 0) {
+    Sprintf2(scratch,s_Cannot_Load_Resource___d___missi_00460112,id);
+    MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046013e,0x10);
     DoSomethingThenExit_(1);
   }
-  Strcpy(result,error);
+  result = (char *)TurboAlloc_(0xff);
+  if (result == (char *)0x0) {
+    Sprintf2(scratch,s_Cannot_Load_Resource___d___out_o_00460142,id);
+    MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046016c,0x10);
+    DoSomethingThenExit_(1);
+  }
+  Strcpy(result,scratch);
+  return result;
+}
+
+
+
+void __stdcall GetWinapiString(char *result,UINT id)
+
+{
+  int copied;
+  CHAR scratch [256];
+  
+  copied = LoadStringA(_Module,id,scratch,0xfe);
+  if (copied == 0) {
+    Sprintf2(scratch,s_Cannot_Load_Resource___d___missi_00460170,id);
+    MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046019c,0x10);
+    DoSomethingThenExit_(1);
+  }
+  Strcpy(result,scratch);
   return;
 }
 
@@ -507,7 +532,7 @@ void __stdcall ShowAlertMessage(char *param_1,undefined param_2)
   
   Sprintf3(text,param_1,&param_2);
                     // 20102 = "Alert"
-  lpCaption = TryWinapiLoadString(20102);
+  lpCaption = GetWinapiStringAlloc(20102);
   MessageBoxA((HWND)0x0,text,lpCaption,0x30);
   TurboFree_(lpCaption);
   return;
