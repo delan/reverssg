@@ -506,7 +506,7 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
-int __stdcall CountCompletedPuzzles(PuzzleCategory category)
+int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category)
 
 {
   short i;
@@ -519,7 +519,7 @@ int __stdcall CountCompletedPuzzles(PuzzleCategory category)
       result = result + 1;
     }
     i = i + 1;
-  } while (i < 0x2b);
+  } while (i < 43);
   return result;
 }
 
@@ -635,6 +635,22 @@ void __stdcall EnterBuilding(void)
   FUN_0043bfee(2,0,1);
   FUN_0044b38d(&PTR_LAB_00461b2c);
   return;
+}
+
+
+
+uint Is16Color(void)
+
+{
+  return (uint)(_ColorMode == 16);
+}
+
+
+
+bool Is256Color(void)
+
+{
+  return _ColorMode == 256;
 }
 
 
@@ -858,7 +874,7 @@ undefined2 Puzzles::CheckEndgame(void)
       _GameState->puzzles[category1].mode_0_1_2_3_4_ = 3;
       category1 = category1 + 1;
     } while (category1 < 8);
-    _Endgame = 1;
+    Puzzles::endgame = 1;
     endgame = 1;
   }
   else {
