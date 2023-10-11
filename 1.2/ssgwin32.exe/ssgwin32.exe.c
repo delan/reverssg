@@ -32659,7 +32659,7 @@ void FUN_0043f7e9(void)
 
 {
   if ((DAT_004697b6 != 0) && (DAT_004697b6 == 1)) {
-    switch(DAT_00462afc) {
+    switch(Puzzles::candidateCategory) {
     case 0:
       FUN_0044b38d(&PTR_LAB_00462eac);
       break;
@@ -32760,9 +32760,9 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
     uVar3 = (undefined)param_4;
     switch(uVar2) {
     default:
-      DAT_00462afc = *(short *)(param_4 + 0x1e);
+      Puzzles::candidateCategory = *(short *)(param_4 + 0x1e);
       FUN_0043fb50();
-      if (_PuzzleCategoryCounts1[DAT_00462afc] < DAT_00462afe) {
+      if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < DAT_00462afe) {
         DAT_00462afe = 1;
       }
       uVar3 = FUN_0043fae6();
@@ -32786,14 +32786,14 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
       return;
     case 0xb:
       DAT_00462afe = DAT_00462afe + 1;
-      if (_PuzzleCategoryCounts1[DAT_00462afc] < DAT_00462afe) {
+      if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < DAT_00462afe) {
         DAT_00462afe = 1;
       }
       FUN_0043fae6();
       return;
     case 0xc:
       if ((DAT_00462afe != 0) && (DAT_00462afe = DAT_00462afe + -1, DAT_00462afe < 1)) {
-        DAT_00462afe = _PuzzleCategoryCounts1[DAT_00462afc];
+        DAT_00462afe = Puzzles::CATEGORY_LEN[Puzzles::candidateCategory];
       }
       FUN_0043fae6();
     }
@@ -32834,39 +32834,34 @@ void FUN_0043fb50(void)
   
   FUN_00412f04(in_AL,in_DL,in_CL,DAT_004698f8);
   uVar1 = FUN_0041395c(DAT_004698f8,0x1a,
-                       CONCAT22(DAT_00462afc >> 0xf,
-                                *(undefined2 *)(&DAT_00462aa2 + DAT_00462afc * 2)),1);
+                       CONCAT22(Puzzles::candidateCategory >> 0xf,
+                                *(undefined2 *)(&DAT_00462aa2 + Puzzles::candidateCategory * 2)),1);
   FUN_00412e70(uVar1,extraout_DL,extraout_CL,DAT_004698f8);
   return;
 }
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void FUN_0043fb8b(void)
 
 {
   bool bVar1;
-  undefined2 extraout_var;
   int iVar2;
-  undefined extraout_CL;
-  undefined extraout_DL;
   short sVar3;
   int unaff_EDI;
   
   bVar1 = false;
   while (!bVar1) {
-    DAT_00462afc = Puzzles::PickCandidateCategory();
-    FUN_0043fcf3((char)DAT_00462afc,extraout_DL,extraout_CL,CONCAT22(extraout_var,DAT_00462afc));
+    Puzzles::candidateCategory = Puzzles::ComputeCandidateCategory();
+    Puzzles::ComputeCandidatePuzzles(Puzzles::candidateCategory);
     sVar3 = 3;
-    if (_DAT_004698f0 == -1) {
+    if (Puzzles::candidatePuzzles[2] == -1) {
       sVar3 = 2;
     }
-    if (DAT_004698ee == -1) {
+    if (Puzzles::candidatePuzzles[1] == -1) {
       sVar3 = sVar3 + -1;
     }
-    if (DAT_004698ec != -1) {
+    if (Puzzles::candidatePuzzles[0] != -1) {
       if (sVar3 == 0) {
         unaff_EDI = 0;
       }
@@ -32877,50 +32872,8 @@ void FUN_0043fb8b(void)
       bVar1 = true;
     }
   }
-  DAT_00462afe = (&DAT_004698ec)[(short)unaff_EDI] + 1;
+  DAT_00462afe = Puzzles::candidatePuzzles[(short)unaff_EDI] + 1;
   return;
-}
-
-
-
-int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
-
-{
-  short sVar1;
-  short sVar2;
-  undefined2 extraout_var;
-  int iVar3;
-  int iVar4;
-  
-  sVar1 = 0;
-  do {
-    (&DAT_004698ec)[sVar1] = 0xffff;
-    sVar1 = sVar1 + 1;
-  } while (sVar1 < 3);
-  sVar1 = _PuzzleCategoryCounts1[(short)param_4];
-  sVar2 = Puzzles::CheckEndgame();
-  iVar4 = CONCAT22(extraout_var,sVar2);
-  if (sVar2 == 0) {
-    sVar2 = 0;
-    iVar4 = 0;
-    if (0 < sVar1) {
-      do {
-        if (_GameState->puzzles[(short)param_4].completion[(short)iVar4] == 0) {
-          (&DAT_004698ec)[sVar2] = (short)iVar4;
-          sVar2 = sVar2 + 1;
-        }
-      } while ((sVar2 < 3) && (iVar4 = iVar4 + 1, (short)iVar4 < sVar1));
-    }
-  }
-  else if (sVar1 == 0) {
-    DAT_004698ec = 0;
-  }
-  else {
-    iVar3 = Random();
-    iVar4 = iVar3 / (int)sVar1;
-    DAT_004698ec = (undefined2)(iVar3 % (int)sVar1);
-  }
-  return iVar4;
 }
 
 
@@ -32969,15 +32922,16 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   FUN_004103ee(10,0x148,&DAT_004697b8);
   sVar2 = DAT_00462afe;
   if ((Puzzles::_Endgame == 0) &&
-     (*(short *)(_GameState->field43_0x40 + DAT_00462afe * 2 + DAT_00462afc * 0x58 + 0x2e) == 0)) {
-    iVar3 = (int)DAT_00462afc;
+     (*(short *)(_GameState->field43_0x40 +
+                DAT_00462afe * 2 + Puzzles::candidateCategory * 0x58 + 0x2e) == 0)) {
+    iVar3 = (int)Puzzles::candidateCategory;
     psVar1 = _GameState->buildingCompletedLevels;
     (psVar1 + iVar3 * 0x2c + -0x1a)[DAT_00462afe + 0x37] = 1;
-    uVar4 = FUN_004401a3((char)DAT_00462afc,(char)sVar2,extraout_CL,
+    uVar4 = FUN_004401a3((char)Puzzles::candidateCategory,(char)sVar2,extraout_CL,
                          CONCAT22((short)((uint)(psVar1 + iVar3 * 0x2c + -0x1a) >> 0x10),
-                                  DAT_00462afc));
+                                  Puzzles::candidateCategory));
     if ((short)uVar4 != 0) {
-      _GameState->puzzles[DAT_00462afc].mode_0_1_2_3_4_ = 2;
+      _GameState->puzzles[Puzzles::candidateCategory].mode_0_1_2_3_4_ = 2;
       uVar4 = FUN_00440221();
       if ((short)uVar4 != 0) {
         Puzzles::ThrowChosenCategoriesExhausted();
@@ -33149,12 +33103,12 @@ void FUN_00440113(uint param_1,undefined4 param_2,uint param_3)
   undefined extraout_DL;
   short sVar3;
   
-  DAT_00469914 = FUN_00412ac4(DAT_00462afc + 0x4c2d);
+  DAT_00469914 = FUN_00412ac4(Puzzles::candidateCategory + 0x4c2d);
   uVar1 = FUN_0041395c(DAT_00469914,0x15d,0x16a,10);
   FUN_00412e70(uVar1,extraout_DL,extraout_CL,DAT_00469914);
   sVar3 = 0;
   do {
-    uVar2 = FUN_00412ac4(DAT_00462afc + 0x4c35);
+    uVar2 = FUN_00412ac4(Puzzles::candidateCategory + 0x4c35);
     (&DAT_004698fc)[sVar3] = uVar2;
     FUN_0041395c((&DAT_004698fc)[sVar3],CONCAT22(sVar3 >> 0xf,(&DAT_00462acc)[sVar3 * 2] + 0x15d),
                  0x16b,0xf);
@@ -33176,7 +33130,7 @@ undefined4 FUN_004401a3(undefined param_1,undefined param_2,undefined param_3,un
   sVar3 = 0;
   iVar1 = 0;
   while( true ) {
-    if (_PuzzleCategoryCounts1[(short)param_4] <= (short)iVar1) break;
+    if (Puzzles::CATEGORY_LEN[(short)param_4] <= (short)iVar1) break;
     if (_GameState->puzzles[(short)param_4].completion[(short)iVar1] == 0) {
       sVar3 = sVar3 + 1;
     }

@@ -844,7 +844,7 @@ undefined2 Puzzles::CheckEndgame(void)
   incompletePuzzles = 0;
   category = 0;
   do {
-    for (i = 0; i < _PuzzleCategoryCounts1[category]; i = i + 1) {
+    for (i = 0; i < CATEGORY_LEN[category]; i = i + 1) {
       if (_GameState->puzzles[category].completion[i] == 0) {
         incompletePuzzles = incompletePuzzles + 1;
       }
@@ -869,7 +869,7 @@ undefined2 Puzzles::CheckEndgame(void)
 
 
 
-short Puzzles::PickCandidateCategory(void)
+short Puzzles::ComputeCandidateCategory(void)
 
 {
   short category;
@@ -907,6 +907,54 @@ short Puzzles::PickCandidateCategory(void)
     result = categories[i];
   }
   return result;
+}
+
+
+
+void __cdecl Puzzles::ComputeCandidatePuzzles(short category)
+
+{
+  short endgameDword;
+  short puzzle;
+  short i;
+  short endgame;
+  int random;
+  short i_;
+  short categoryLen;
+  
+                    // let puzzleCandidates = {-1, -1, -1}
+  i = 0;
+  do {
+    candidatePuzzles[i] = 0xffff;
+    i = i + 1;
+  } while (i < 3);
+  categoryLen = CATEGORY_LEN[category];
+  endgame = CheckEndgame();
+  if (endgame == 0) {
+                    // not endgame
+    i_ = 0;
+    puzzle = 0;
+                    // pick first three unsolved puzzles in category
+    if (0 < categoryLen) {
+      do {
+                    // if puzzle is not yet solved
+        if (_GameState->puzzles[category].completion[puzzle] == 0) {
+          candidatePuzzles[i_] = puzzle;
+          i_ = i_ + 1;
+        }
+      } while ((i_ < 3) && (puzzle = puzzle + 1, puzzle < categoryLen));
+    }
+  }
+  else if (categoryLen == 0) {
+                    // unreachable
+    candidatePuzzles[0] = 0;
+  }
+  else {
+                    // endgame; pick one random puzzle in category
+    random = Random();
+    candidatePuzzles[0] = (undefined2)(random % (int)categoryLen);
+  }
+  return;
 }
 
 

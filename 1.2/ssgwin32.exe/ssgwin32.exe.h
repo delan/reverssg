@@ -2106,7 +2106,6 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_0043fae6(void);
 void FUN_0043fb50(void);
 void FUN_0043fb8b(void);
-int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043fd88(void);
 void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void __stdcall FUN_0043fef9(short param_1);
