@@ -1460,6 +1460,7 @@ void * __stdcall PoolAlloc(uint len);
 void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 ushort GetCriticalSlotCount(void);
+undefined2 Puzzles::CheckEndgame(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
 char * __stdcall Strcpy(char *dest,char *src);

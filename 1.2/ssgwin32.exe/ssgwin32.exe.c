@@ -32934,7 +32934,7 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
     default:
       DAT_00462afc = *(short *)(param_4 + 0x1e);
       FUN_0043fb50();
-      if ((short)(&DAT_00462aec)[DAT_00462afc] < DAT_00462afe) {
+      if (_PuzzleCategoryCounts1[DAT_00462afc] < DAT_00462afe) {
         DAT_00462afe = 1;
       }
       uVar3 = FUN_0043fae6();
@@ -32958,14 +32958,14 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
       return;
     case 0xb:
       DAT_00462afe = DAT_00462afe + 1;
-      if ((short)(&DAT_00462aec)[DAT_00462afc] < DAT_00462afe) {
+      if (_PuzzleCategoryCounts1[DAT_00462afc] < DAT_00462afe) {
         DAT_00462afe = 1;
       }
       FUN_0043fae6();
       return;
     case 0xc:
       if ((DAT_00462afe != 0) && (DAT_00462afe = DAT_00462afe + -1, DAT_00462afe < 1)) {
-        DAT_00462afe = (&DAT_00462aec)[DAT_00462afc];
+        DAT_00462afe = _PuzzleCategoryCounts1[DAT_00462afc];
       }
       FUN_0043fae6();
     }
@@ -33055,45 +33055,6 @@ void FUN_0043fb8b(void)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-undefined4 FUN_0043fc05(void)
-
-{
-  short sVar1;
-  int iVar2;
-  undefined4 uVar3;
-  short sVar4;
-  short sVar5;
-  
-  sVar5 = 0;
-  sVar4 = 0;
-  do {
-    for (sVar1 = 0; sVar1 < (short)(&DAT_00462aec)[sVar4]; sVar1 = sVar1 + 1) {
-      if (_GameState->puzzles[sVar4].completion[sVar1] == 0) {
-        sVar5 = sVar5 + 1;
-      }
-    }
-    sVar4 = sVar4 + 1;
-  } while (sVar4 < 8);
-  if (sVar5 < 7) {
-    sVar5 = 0;
-    do {
-      iVar2 = (int)sVar5;
-      _GameState->puzzles[iVar2].mode = 3;
-      sVar5 = sVar5 + 1;
-    } while (sVar5 < 8);
-    _DAT_00462ac8 = 1;
-    uVar3 = CONCAT22((short)((uint)(iVar2 * 0xb) >> 0x10),1);
-  }
-  else {
-    uVar3 = 0;
-  }
-  return uVar3;
-}
-
-
-
 short FUN_0043fc79(void)
 
 {
@@ -33141,27 +33102,29 @@ int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined
 
 {
   short sVar1;
-  int iVar2;
+  short sVar2;
+  undefined2 extraout_var;
   int iVar3;
-  short sVar4;
+  int iVar4;
   
   sVar1 = 0;
   do {
     (&DAT_004698ec)[sVar1] = 0xffff;
     sVar1 = sVar1 + 1;
   } while (sVar1 < 3);
-  sVar1 = (&DAT_00462aec)[(short)param_4];
-  iVar2 = FUN_0043fc05();
-  if ((short)iVar2 == 0) {
-    sVar4 = 0;
-    iVar2 = 0;
+  sVar1 = _PuzzleCategoryCounts1[(short)param_4];
+  sVar2 = Puzzles::CheckEndgame();
+  iVar4 = CONCAT22(extraout_var,sVar2);
+  if (sVar2 == 0) {
+    sVar2 = 0;
+    iVar4 = 0;
     if (0 < sVar1) {
       do {
-        if (_GameState->puzzles[(short)param_4].completion[(short)iVar2] == 0) {
-          (&DAT_004698ec)[sVar4] = (short)iVar2;
-          sVar4 = sVar4 + 1;
+        if (_GameState->puzzles[(short)param_4].completion[(short)iVar4] == 0) {
+          (&DAT_004698ec)[sVar2] = (short)iVar4;
+          sVar2 = sVar2 + 1;
         }
-      } while ((sVar4 < 3) && (iVar2 = iVar2 + 1, (short)iVar2 < sVar1));
+      } while ((sVar2 < 3) && (iVar4 = iVar4 + 1, (short)iVar4 < sVar1));
     }
   }
   else if (sVar1 == 0) {
@@ -33169,10 +33132,10 @@ int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined
   }
   else {
     iVar3 = Random();
-    iVar2 = iVar3 / (int)sVar1;
+    iVar4 = iVar3 / (int)sVar1;
     DAT_004698ec = (undefined2)(iVar3 % (int)sVar1);
   }
-  return iVar2;
+  return iVar4;
 }
 
 
@@ -33201,8 +33164,6 @@ void FUN_0043fd88(void)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4)
 
 {
@@ -33225,7 +33186,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   TurboFree_(format);
   FUN_004103ee(10,0x148,&DAT_004697b8);
   sVar2 = DAT_00462afe;
-  if ((_DAT_00462ac8 == 0) &&
+  if ((Puzzles::_Endgame == 0) &&
      (*(short *)(_GameState->field43_0x40 + DAT_00462afe * 2 + DAT_00462afc * 0x58 + 0x2e) == 0)) {
     iVar3 = (int)DAT_00462afc;
     psVar1 = _GameState->buildingCompletedLevels;
@@ -33438,7 +33399,7 @@ undefined4 FUN_004401a3(undefined param_1,undefined param_2,undefined param_3,un
   sVar3 = 0;
   iVar1 = 0;
   while( true ) {
-    if ((short)(&DAT_00462aec)[(short)param_4] <= (short)iVar1) break;
+    if (_PuzzleCategoryCounts1[(short)param_4] <= (short)iVar1) break;
     if (_GameState->puzzles[(short)param_4].completion[(short)iVar1] == 0) {
       sVar3 = sVar3 + 1;
     }

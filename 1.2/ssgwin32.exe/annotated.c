@@ -832,6 +832,43 @@ ushort GetCriticalSlotCount(void)
 
 
 
+undefined2 Puzzles::CheckEndgame(void)
+
+{
+  short i;
+  undefined2 endgame;
+  short incompletePuzzles;
+  short category;
+  short category1;
+  
+  incompletePuzzles = 0;
+  category = 0;
+  do {
+    for (i = 0; i < _PuzzleCategoryCounts1[category]; i = i + 1) {
+      if (_GameState->puzzles[category].completion[i] == 0) {
+        incompletePuzzles = incompletePuzzles + 1;
+      }
+    }
+    category = category + 1;
+  } while (category < 8);
+  if (incompletePuzzles < 7) {
+                    // set all category modes to 3
+    category1 = 0;
+    do {
+      _GameState->puzzles[category1].mode = 3;
+      category1 = category1 + 1;
+    } while (category1 < 8);
+    _Endgame = 1;
+    endgame = 1;
+  }
+  else {
+    endgame = 0;
+  }
+  return endgame;
+}
+
+
+
 void * __stdcall Memcpy(void *dest,void *src,uint len)
 
 {
