@@ -609,9 +609,17 @@ struct PartResource {
 
 typedef struct PuzzleState PuzzleState, *PPuzzleState;
 
+typedef enum Puzzle::CategoryMode { // 0 = on, 1 = off, 2 = fully solved, 3 = on (endgame), 4 = off (endgame)
+    ON=0,
+    OFF=1,
+    FULLY_SOLVED=2,
+    ON_ENDGAME=3,
+    OFF_ENDGAME=4
+} Puzzle::CategoryMode;
+
 struct PuzzleState {
     undefined2 completion[43];
-    undefined2 mode{0,1,2,3,4}; // 0 = on, 1 = off, 2 = fully solved, 3 = on (endgame), 4 = off (endgame)
+    enum Puzzle::CategoryMode mode;
 };
 
 typedef struct EntityNode EntityNode, *PEntityNode;

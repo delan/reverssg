@@ -918,7 +918,7 @@ undefined2 Puzzles::CheckEndgame(void)
                     // set all category modes to 3
     category1 = 0;
     do {
-      _GameState->puzzles[category1].mode_0_1_2_3_4_ = 3;
+      _GameState->puzzles[category1].mode = ON_ENDGAME;
       category1 = category1 + 1;
     } while (category1 < 8);
     Puzzles::endgame = 1;
@@ -947,9 +947,8 @@ short Puzzles::ComputeCandidateCategory(void)
                     // build list of candidate categories
   category = 0;
   do {
-                    // if category is on (normal) or on (endgame)
-    if ((_GameState->puzzles[category].mode_0_1_2_3_4_ == 0) ||
-       (_GameState->puzzles[category].mode_0_1_2_3_4_ == 3)) {
+    if ((_GameState->puzzles[category].mode == ON) ||
+       (_GameState->puzzles[category].mode == ON_ENDGAME)) {
       categories[categories_len] = category;
       categories_len = categories_len + 1;
     }
@@ -1029,8 +1028,8 @@ void Puzzles::TurnAllOffCategoriesBackOn(void)
   
   category = 0;
   do {
-    if (_GameState->puzzles[category].mode_0_1_2_3_4_ == 1) {
-      _GameState->puzzles[category].mode_0_1_2_3_4_ = 0;
+    if (_GameState->puzzles[category].mode == OFF) {
+      _GameState->puzzles[category].mode = ON;
     }
     category = category + 1;
   } while (category < 8);

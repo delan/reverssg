@@ -7621,7 +7621,7 @@ void FUN_004196ef(void)
   
   sVar1 = 0;
   do {
-    _GameState->puzzles[sVar1].mode_0_1_2_3_4_ = (&DAT_00466750)[sVar1 * 7];
+    _GameState->puzzles[sVar1].mode = (&DAT_00466750)[sVar1 * 7];
     sVar1 = sVar1 + 1;
   } while (sVar1 < 8);
   return;
@@ -7729,7 +7729,7 @@ void FUN_004198f8(void)
     (&DAT_00466746)[sVar3 * 7] = (&DAT_00460bac)[sVar3];
     uVar1 = FUN_00412ac4(sVar3 + 0x4a39);
     *(undefined4 *)((int)&DAT_00466748 + sVar3 * 0xe) = uVar1;
-    (&DAT_00466750)[sVar3 * 7] = _GameState->puzzles[sVar3].mode_0_1_2_3_4_;
+    (&DAT_00466750)[sVar3 * 7] = _GameState->puzzles[sVar3].mode;
     FUN_0041395c(*(undefined4 *)((int)&DAT_00466748 + sVar3 * 0xe),
                  CONCAT22((short)((uint)(sVar3 * 7) >> 0x10),(&DAT_00466744)[sVar3 * 7]),
                  CONCAT22((short)((uint)(sVar3 * 7) >> 0x10),(&DAT_00466746)[sVar3 * 7]),0xcd);
@@ -32633,7 +32633,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
                          CONCAT22((short)((uint)(psVar1 + iVar3 * 0x2c + -0x1a) >> 0x10),
                                   Puzzles::candidateCategory));
     if ((short)uVar4 != 0) {
-      _GameState->puzzles[Puzzles::candidateCategory].mode_0_1_2_3_4_ = 2;
+      _GameState->puzzles[Puzzles::candidateCategory].mode = FULLY_SOLVED;
       uVar4 = FUN_00440221();
       if ((short)uVar4 != 0) {
         Puzzles::ThrowChosenCategoriesExhausted();
@@ -32855,8 +32855,8 @@ undefined4 FUN_00440221(void)
   int iVar1;
   
   iVar1 = 0;
-  while ((_GameState->puzzles[(short)iVar1].mode_0_1_2_3_4_ != 0 &&
-         (_GameState->puzzles[(short)iVar1].mode_0_1_2_3_4_ != 3))) {
+  while ((_GameState->puzzles[(short)iVar1].mode != ON &&
+         (_GameState->puzzles[(short)iVar1].mode != ON_ENDGAME))) {
     iVar1 = iVar1 + 1;
     if (7 < (short)iVar1) {
       return CONCAT22((short)((uint)iVar1 >> 0x10),1);
