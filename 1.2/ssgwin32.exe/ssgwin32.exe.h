@@ -611,7 +611,7 @@ typedef struct PuzzleState PuzzleState, *PPuzzleState;
 
 struct PuzzleState {
     undefined2 completion[43];
-    undefined2 mode;
+    undefined2 mode{0,1,2,3,4}; // 0 = on, 1 = off, 2 = fully solved, 3 = on (endgame), 4 = off (endgame)
 };
 
 typedef struct EntityNode EntityNode, *PEntityNode;
@@ -2053,7 +2053,7 @@ void __stdcall FUN_0043bfee(byte param_1,undefined4 param_2,undefined4 param_3);
 uint FUN_0043c1a2(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_0043c1c0(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 void FUN_0043c249(void);
-void FUN_0043c2ba(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
+void __cdecl FUN_0043c2ba(DlistNode *param_1);
 void FUN_0043c323(void);
 void FUN_0043c324(void);
 void FUN_0043c325(void);
@@ -2106,19 +2106,17 @@ void FUN_0043f987(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_0043fae6(void);
 void FUN_0043fb50(void);
 void FUN_0043fb8b(void);
-short FUN_0043fc79(void);
 int FUN_0043fcf3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043fd88(void);
 void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void __stdcall FUN_0043fef9(short param_1);
 void FUN_0043ff91(undefined param_1,undefined param_2,byte param_3,int param_4);
 void FUN_0043ffba(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_0043ffe8(uint param_1,undefined4 param_2,uint param_3);
+void __cdecl Puzzles::ThrowChosenCategoriesExhausted(void);
 void FUN_0044001b(void);
 void FUN_004400eb(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00440113(uint param_1,undefined4 param_2,uint param_3);
 undefined4 FUN_004401a3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_004401eb(void);
 undefined4 FUN_00440221(void);
 bool FUN_00440260(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_00440318(void);
@@ -2130,7 +2128,7 @@ DlistNode *FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short
 void * __stdcall GetWinapiResource?(ushort id?,LPCSTR type?);
 void FUN_00440615(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5);
 void FUN_0044062c(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00440695(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,undefined *param_5);
+void __cdecl FUN_00440695(short param_1,undefined *param_2);
 void FUN_0044073c(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 undefined4 FUN_004407d3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_0044080d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,LPCSTR param_5);
@@ -2308,9 +2306,9 @@ int FUN_0044c09d(undefined param_1,undefined param_2,undefined param_3,char *par
 void FUN_0044c276(void);
 void FUN_0044c2df(void);
 void FUN_0044c32f(void);
-undefined4 FUN_0044c371(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4);
+undefined4 __cdecl FUN_0044c371(undefined2 *param_1);
 void FUN_0044c8c2(uint param_1,undefined4 param_2,uint param_3,ushort param_4);
-void FUN_0044c8f3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined2 param_5);
+void __cdecl FUN_0044c8f3(undefined4 param_1,undefined2 param_2);
 void FUN_0044c950(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0044c95d(void);
 void FUN_0044c970(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);

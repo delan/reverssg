@@ -611,7 +611,7 @@ typedef struct PuzzleState PuzzleState, *PPuzzleState;
 
 struct PuzzleState {
     undefined2 completion[43];
-    undefined2 mode;
+    undefined2 mode{0,1,2,3,4}; // 0 = on, 1 = off, 2 = fully solved, 3 = on (endgame), 4 = off (endgame)
 };
 
 typedef struct EntityNode EntityNode, *PEntityNode;
@@ -1461,6 +1461,8 @@ void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 ushort GetCriticalSlotCount(void);
 undefined2 Puzzles::CheckEndgame(void);
+short Puzzles::PickCandidateCategory(void);
+void Puzzles::TurnAllOffCategoriesBackOn(void);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
 char * __stdcall Strcpy(char *dest,char *src);

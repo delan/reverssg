@@ -855,7 +855,7 @@ undefined2 Puzzles::CheckEndgame(void)
                     // set all category modes to 3
     category1 = 0;
     do {
-      _GameState->puzzles[category1].mode = 3;
+      _GameState->puzzles[category1].mode_0_1_2_3_4_ = 3;
       category1 = category1 + 1;
     } while (category1 < 8);
     _Endgame = 1;
@@ -865,6 +865,65 @@ undefined2 Puzzles::CheckEndgame(void)
     endgame = 0;
   }
   return endgame;
+}
+
+
+
+short Puzzles::PickCandidateCategory(void)
+
+{
+  short category;
+  int i;
+  short categories_len;
+  short result;
+  short unknown [32762];
+  short categories [8];
+  
+  result = 0;
+  categories_len = 0;
+                    // build list of candidate categories
+  category = 0;
+  do {
+                    // if category is on (normal) or on (endgame)
+    if ((_GameState->puzzles[category].mode_0_1_2_3_4_ == 0) ||
+       (_GameState->puzzles[category].mode_0_1_2_3_4_ == 3)) {
+      categories[categories_len] = category;
+      categories_len = categories_len + 1;
+    }
+    category = category + 1;
+  } while (category < 8);
+  if (categories_len == 0) {
+    ThrowChosenCategoriesExhausted();
+  }
+  else {
+    if (categories_len == 0) {
+                    // unreachable
+      i = 0;
+    }
+    else {
+      i = Random();
+      i = i % (int)categories_len;
+    }
+    result = categories[i];
+  }
+  return result;
+}
+
+
+
+void Puzzles::TurnAllOffCategoriesBackOn(void)
+
+{
+  short category;
+  
+  category = 0;
+  do {
+    if (_GameState->puzzles[category].mode_0_1_2_3_4_ == 1) {
+      _GameState->puzzles[category].mode_0_1_2_3_4_ = 0;
+    }
+    category = category + 1;
+  } while (category < 8);
+  return;
 }
 
 
