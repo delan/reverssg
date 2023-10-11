@@ -67,10 +67,10 @@ void StartLevel(void)
   Dlist *list;
   void *current;
   Room *room;
+  short local_6;
   short building;
   short count;
   ushort partsCount;
-  short roomIndex;
   
   building = _GameState->building;
   if (building == 0) {
@@ -92,8 +92,8 @@ void StartLevel(void)
   _InitialBananaPartsCount = *_RoomInitialPartsCounts - _Level_partResource->definitionCount;
   _ActualBananaPartsCount = _InitialBananaPartsCount;
   Memset(_Rooms,0,0x40);
-  for (roomIndex = 0; roomIndex < _RoomCount; roomIndex = roomIndex + 1) {
-    _Rooms[roomIndex] = room;
+  for (local_6 = 0; local_6 < _RoomCount; local_6 = local_6 + 1) {
+    _Rooms[local_6] = room;
     current = room->entities;
     i = 3;
     do {
@@ -140,14 +140,14 @@ void StartLevel(void)
       }
       i = i + 1;
     } while (i < 6);
-    if (roomIndex != 0) {
+    if (local_6 != 0) {
       list = DlistNew();
       room->partEntities = list;
-      partsCount = _RoomInitialPartsCounts[roomIndex];
+      partsCount = _RoomInitialPartsCounts[local_6];
       room->partEntityCount = partsCount;
       if (partsCount != 0) {
         room->partEntityCount = 0;
-        PlacePartEntity(room,_RoomInitialPartsCounts[roomIndex],-1);
+        PlacePartEntity(room,_RoomInitialPartsCounts[local_6],-1);
       }
     }
     room = (Room *)current;
@@ -181,6 +181,7 @@ EntityNode * NextAvailableEntityNode(void)
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
 
 {
+  ushort *puVar1;
   short rows;
   PartId id;
   uint collision;
@@ -209,7 +210,6 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
   short structuralCount;
   short ladderCount;
   bool bad;
-  ushort *pSpriteId;
   
   locationIndex = 0;
   result = 1;
@@ -325,8 +325,8 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         entity->partId = partId;
                     // is part recycled?
         if ((_Level_partDefinitions[partId].flags & 0x40) != 0) {
-          pSpriteId = &(entity->base).spriteId;
-          *pSpriteId = *pSpriteId + 1;
+          puVar1 = &(entity->base).spriteId;
+          *puVar1 = *puVar1 + 1;
         }
       }
       *(undefined2 *)&entity->field_0x14 = 0;
@@ -349,7 +349,8 @@ void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,sho
 
 {
   EntityNode *node;
-  uint uVar1;
+  undefined4 uVar1;
+  undefined2 uVar2;
   EntityBaseBase_ rect;
   ushort spriteId;
   Room *room;
@@ -387,10 +388,10 @@ void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,sho
     if (roomIndex == _RoomIndex) {
       _DAT_00460318 = _DAT_00460318 + 1;
       uVar1 = FUN_00412ac4((node->inner).base.spriteId);
-      *(uint *)&(node->inner).base.rect.field_0xa = uVar1;
-      FUN_0041395c(*(undefined4 *)&(node->inner).base.rect.field_0xa,
-                   uVar1 & 0xffff0000 | (uint)(ushort)rect.inner.x,
-                   uVar1 & 0xffff0000 | (uint)(ushort)rect.inner.y,0x14);
+      *(undefined4 *)&(node->inner).base.rect.field_0xa = uVar1;
+      uVar2 = (undefined2)((uint)uVar1 >> 0x10);
+      FUN_0041395c(*(undefined4 *)&(node->inner).base.rect.field_0xa,CONCAT22(uVar2,rect.inner.x),
+                   CONCAT22(uVar2,rect.inner.y),0x14);
       FUN_00412dc8(*(undefined4 *)&(node->inner).base.rect.field_0xa);
     }
   }

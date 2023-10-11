@@ -16,7 +16,7 @@ how the sausage is made
 -----------------------
 
 
-* Ghidra 10.1.2
+* Ghidra 10.3
 * ssgwin32.exe 1.2 <https://archive.org/details/SSGCD>
 * export Ghidra Zip File, default options
 * export HTML, default options
