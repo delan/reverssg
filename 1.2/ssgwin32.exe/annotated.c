@@ -11,13 +11,13 @@ char * __stdcall GetWinapiStringAlloc(UINT id)
   
   copied = LoadStringA(_Module,id,scratch,0xfe);
   if (copied == 0) {
-    Sprintf2(scratch,s_Cannot_Load_Resource___d___missi_00460112,id);
+    Sprintf_(scratch,s_Cannot_Load_Resource___d___missi_00460112,id);
     MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046013e,0x10);
     DoSomethingThenExit_(1);
   }
   result = (char *)TurboAlloc_(0xff);
   if (result == (char *)0x0) {
-    Sprintf2(scratch,s_Cannot_Load_Resource___d___out_o_00460142,id);
+    Sprintf_(scratch,s_Cannot_Load_Resource___d___out_o_00460142,id);
     MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046016c,0x10);
     DoSomethingThenExit_(1);
   }
@@ -35,11 +35,20 @@ void __stdcall GetWinapiString(char *result,UINT id)
   
   copied = LoadStringA(_Module,id,scratch,0xfe);
   if (copied == 0) {
-    Sprintf2(scratch,s_Cannot_Load_Resource___d___missi_00460170,id);
+    Sprintf_(scratch,s_Cannot_Load_Resource___d___missi_00460170,id);
     MessageBoxA((HWND)0x0,scratch,(LPCSTR)&lpCaption_0046019c,0x10);
     DoSomethingThenExit_(1);
   }
   Strcpy(result,scratch);
+  return;
+}
+
+
+
+void __stdcall DrawString_(undefined2 x,undefined2 y,undefined4 value)
+
+{
+  DrawString(x,y,value);
   return;
 }
 
@@ -506,6 +515,19 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
+void __stdcall DrawInteger(undefined2 x,undefined2 y,short value,short color)
+
+{
+  char valueString [20];
+  
+  SetColor_(color);
+  Sprintf_(valueString,&_d,(int)value);
+  DrawString_(x,y,valueString);
+  return;
+}
+
+
+
 int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category)
 
 {
@@ -525,13 +547,38 @@ int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category)
 
 
 
+void Puzzles::Customization::draw(void)
+
+{
+  int count;
+  short category;
+  undefined2 color_;
+  
+  category = 0;
+  do {
+    if ((int)(short)(&DAT_00466750)[category * 7] - 1U < 4) {
+      color_ = 0x81c;
+    }
+    else {
+      color_ = 0;
+    }
+    DrawInteger(0xf6,tableY[category],CATEGORY_LEN[category],color_);
+    count = CountSolvedInCategory(category);
+    DrawInteger(0x164,tableY[category],(short)count,color_);
+    category = category + 1;
+  } while (category < 8);
+  return;
+}
+
+
+
 void __stdcall ShowAlertMessage(char *param_1,undefined param_2)
 
 {
   char *lpCaption;
   char text [500];
   
-  Sprintf3(text,param_1,&param_2);
+  Sprintf_(text,param_1,&param_2);
                     // 20102 = "Alert"
   lpCaption = GetWinapiStringAlloc(20102);
   MessageBoxA((HWND)0x0,text,lpCaption,0x30);
@@ -1069,7 +1116,7 @@ char * __stdcall Strcpy(char *dest,char *src)
 
 
 
-int __stdcall Sprintf1(char *dest,char *format,...)
+int __stdcall Sprintf_(char *dest,char *format,...)
 
 {
   int iVar1;
@@ -1082,7 +1129,7 @@ int __stdcall Sprintf1(char *dest,char *format,...)
 
 
 
-int __stdcall Sprintf2(char *dest,char *format,...)
+int __stdcall Sprintf_(char *dest,char *format,...)
 
 {
   int iVar1;
@@ -1096,7 +1143,7 @@ int __stdcall Sprintf2(char *dest,char *format,...)
 
 
 
-int __stdcall Sprintf3(char *dest,char *format,...)
+int __stdcall Sprintf_(char *dest,char *format,...)
 
 {
   int iVar1;
