@@ -2227,7 +2227,7 @@ void * __stdcall FUN_00412ac4(ushort param_1)
   short sVar9;
   uint local_c;
   
-  pvVar3 = GetWinapiResource_(param_1,&_ASEQ);
+  pvVar3 = Resource::Load_(param_1,&_ASEQ);
   if (_DAT_00462c38 == 0) {
     node = (DlistNode *)PoolAlloc(0x32);
     Memcpy(node + 1,pvVar3,10);
@@ -7238,7 +7238,7 @@ void FUN_004180c2(void)
 void FUN_0041879f(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
 
 {
-  GetWinapiResource_(param_4,&_DDLT);
+  Resource::Load_(param_4,&_DDLT);
   return;
 }
 
@@ -11318,7 +11318,7 @@ void __cdecl Puzzles::SetParametersForElectricity(PuzzleNumberOneBased puzzle)
     _DAT_00466a58 = 2;
     _DAT_00466a5a = 8;
   }
-  DAT_00469770 = GetWinapiResource_(DAT_0046977e,&_TEXT2);
+  DAT_00469770 = Resource::Load_(DAT_0046977e,&_TEXT2);
   return;
 }
 
@@ -13087,14 +13087,14 @@ void FUN_00421bc5(void)
   FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_004673f4);
   FUN_00412784();
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT3);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT3);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT4);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT4);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -15457,14 +15457,14 @@ void FUN_00425f5a(void)
   FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_004676f4);
   FUN_00412784();
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT6);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT6);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT7);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT7);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -16333,14 +16333,14 @@ void FUN_00427645(void)
   FUN_00412784();
   FUN_004465a5(0x1f5c,5,0);
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT9);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT9);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT10);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT10);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -17438,7 +17438,7 @@ void Puzzles::SetParametersForForce(void)
     DAT_0046177c = 10;
     DAT_00461778 = 0;
   }
-  DAT_00469770 = GetWinapiResource_(DAT_0046977e,&_TEXT12);
+  DAT_00469770 = Resource::Load_(DAT_0046977e,&_TEXT12);
   return;
 }
 
@@ -19212,7 +19212,7 @@ void __cdecl Puzzles::SetParametersForGear(PuzzleNumberOneBased puzzle)
   }
   DAT_0046977e = 0x36b1;
   DAT_00469780 = 14000;
-  DAT_00469770 = GetWinapiResource_(0x36b1,&_TEXT13);
+  DAT_00469770 = Resource::Load_(0x36b1,&_TEXT13);
   return;
 }
 
@@ -20184,7 +20184,7 @@ FUN_0042e73b(undefined param_1,undefined param_2,undefined param_3,undefined4 pa
 void FUN_0042e965(uint param_1,undefined4 param_2,uint param_3,short param_4)
 
 {
-  DAT_00467c40 = GetWinapiResource_(param_4 + 0x3714,&_GEAR);
+  DAT_00467c40 = Resource::Load_(param_4 + 0x3714,&_GEAR);
   DAT_00467c44 = (undefined2 *)((int)DAT_00467c40 + 0x116);
   DAT_00467c54 = DAT_00467c40;
   *DAT_00467c44 = 6;
@@ -20612,14 +20612,14 @@ void FUN_0042f1c8(void)
   FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_00467c90);
   FUN_00412784();
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT14);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT14);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT15);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT15);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -20812,12 +20812,12 @@ bool FUN_0042fcd7(undefined param_1,undefined param_2,undefined param_3,ushort p
   puVar2 = (undefined2 *)FUN_0044c2df();
   *puVar2 = 0xffff;
   puVar2[1] = 0xffff;
-  pvVar3 = GetWinapiResource_(param_4,_pTEXT);
+  pvVar3 = Resource::Load_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00467cfa,local_54,&DAT_00461caf);
   *(undefined **)(puVar2 + 0xf) = &DAT_00467cfa;
-  pvVar3 = GetWinapiResource_(param_5,_pTEXT);
+  pvVar3 = Resource::Load_(param_5,_pTEXT);
   *(void **)(puVar2 + 0x11) = pvVar3;
   puVar5 = puVar2;
   uVar4 = FUN_0044c371(puVar2);
@@ -21783,7 +21783,7 @@ void FUN_00431024(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
   void *pvVar1;
   
   DAT_00468122 = param_4;
-  pvVar1 = GetWinapiResource_(param_4,&_RRGB0);
+  pvVar1 = Resource::Load_(param_4,&_RRGB0);
   FUN_00430ef8(0,0,0,0,0x100,pvVar1);
   FUN_00440695(param_4,&_RRGB1);
   return;
@@ -21802,7 +21802,7 @@ void FUN_00431084(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
   undefined2 in_stack_0000000c;
   short in_stack_00000010;
   
-  pvVar1 = GetWinapiResource_(param_4,&_RRGB2);
+  pvVar1 = Resource::Load_(param_4,&_RRGB2);
   iVar2 = extraout_EDX;
   if (in_stack_00000010 != 0) {
     iVar2 = in_stack_00000008 * 6;
@@ -22819,7 +22819,7 @@ void FUN_004321b3(void)
   uVar1 = FUN_0041704f(uVar1,extraout_DL_00,extraout_CL_00,&LAB_004321a9);
   iVar2 = FUN_00416e6d(uVar1,extraout_DL_01,uVar8,0x1e,0x1b,0x1c4,0x136,5,0);
   FUN_0041029e((char)iVar2,extraout_DL_02,extraout_CL_01,&LAB_00432178);
-  local_8 = GetWinapiResource_(DAT_0046844c + 9000,&_HELP0);
+  local_8 = Resource::Load_(DAT_0046844c + 9000,&_HELP0);
   ppvVar4 = &local_8;
   uVar3 = FUN_0044fcf7((char)ppvVar4,extraout_DL_03,extraout_CL_02,ppvVar4);
   _DAT_0046845c = (short)uVar3;
@@ -23143,14 +23143,14 @@ void FUN_0043299b(void)
   FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_004685dc);
   FUN_00412784();
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT18);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT18);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT19);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT19);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -23239,7 +23239,7 @@ void Puzzles::SetParametersForJigsaw_(void)
   SetParametersForJigsaw(currentPuzzle);
   DAT_0046977e = 11000;
   DAT_00469780 = 11000;
-  DAT_00469770 = GetWinapiResource_(11000,&_TEXT21);
+  DAT_00469770 = Resource::Load_(11000,&_TEXT21);
   return;
 }
 
@@ -24213,7 +24213,7 @@ short * __stdcall GetEseqResource_(ushort param_1,int param_2,short **param_3,sh
   short *psVar4;
   short *psVar5;
   
-  psVar4 = (short *)GetWinapiResource_(param_1,&_ESEQ);
+  psVar4 = (short *)Resource::Load_(param_1,&_ESEQ);
   sVar3 = *psVar4;
   psVar5 = psVar4 + 1;
   *param_3 = psVar5;
@@ -25409,14 +25409,14 @@ void FUN_0043588a(void)
     FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_00468fd4);
     FUN_00412784();
     Memset(local_3ec,0,1000);
-    pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT23);
+    pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT23);
     local_400[0] = pvVar2;
     iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
     FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
     uVar1 = extraout_ECX;
     uVar4 = extraout_EDX;
     for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-      pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT24);
+      pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT24);
       local_400[sVar5] = pvVar2;
       pvVar2 = local_400[sVar5];
       iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -27469,7 +27469,7 @@ void __cdecl Puzzles::SetParametersForMagnet(PuzzleNumberOneBased puzzle)
   }
   DAT_0046977e = 13000;
   DAT_00469780 = 0x32d9;
-  DAT_00469770 = GetWinapiResource_(13000,&_TEXT26);
+  DAT_00469770 = Resource::Load_(13000,&_TEXT26);
   return;
 }
 
@@ -29847,7 +29847,7 @@ void FUN_0043ba8c(undefined param_1,undefined param_2,undefined param_3,ushort p
   puVar2 = (undefined2 *)FUN_0044c2df();
   *puVar2 = 0xffff;
   puVar2[1] = 0xffff;
-  pvVar3 = GetWinapiResource_(param_4,_pTEXT);
+  pvVar3 = Resource::Load_(param_4,_pTEXT);
   *(void **)(puVar2 + 0xd) = pvVar3;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00469040,local_54,&DAT_0046278e);
@@ -29855,7 +29855,7 @@ void FUN_0043ba8c(undefined param_1,undefined param_2,undefined param_3,ushort p
   if (*param_7 != 0) {
     param_5 = param_6;
   }
-  pvVar3 = GetWinapiResource_(param_5,_pTEXT);
+  pvVar3 = Resource::Load_(param_5,_pTEXT);
   *(void **)(puVar2 + 0x11) = pvVar3;
   puVar5 = puVar2;
   uVar4 = FUN_0044c371(puVar2);
@@ -30433,14 +30433,14 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
     Sprintf_(&DAT_00469220,local_54,&DAT_00462794);
     *(undefined **)(puVar3 + 0xd) = &DAT_004690e0;
     *(undefined **)(puVar3 + 0xf) = &DAT_00469220;
-    pvVar4 = GetWinapiResource_((short)param_4 + 0x4b0,&_TEXT27);
+    pvVar4 = Resource::Load_((short)param_4 + 0x4b0,&_TEXT27);
     *(void **)(puVar3 + 0x11) = pvVar4;
     sVar2 = FUN_0044714d();
     if (sVar2 == 0) {
       *(undefined4 *)(puVar3 + 0x13) = 0;
     }
     else {
-      pvVar4 = GetWinapiResource_((short)param_4 + 0x4b0,&_INTS3);
+      pvVar4 = Resource::Load_((short)param_4 + 0x4b0,&_INTS3);
       *(void **)(puVar3 + 0x13) = pvVar4;
     }
     puVar6 = puVar3;
@@ -30821,7 +30821,7 @@ ushort __stdcall LoadPartDefinitions_(void)
   PartDefinition *pPVar5;
   short sVar6;
   
-  _Level_partResource = (PartResource *)GetWinapiResource_(_GameState->level + 1000,&_PART);
+  _Level_partResource = (PartResource *)Resource::Load_(_GameState->level + 1000,&_PART);
   pPVar2 = _Level_partResource + 1;
   *(PartResource **)&_Level_partResource->field_0x24 = pPVar2;
   pPVar5 = (PartDefinition *)(&pPVar2->field_0x0 + _Level_partResource->criticalSlotCount * 2);
@@ -30836,7 +30836,7 @@ ushort __stdcall LoadPartDefinitions_(void)
       *(undefined4 *)&pPVar5->field_0x56 = uVar3;
       FUN_004129d4(*(undefined4 *)&pPVar5->field_0x56,*(undefined2 *)&pPVar5->field_0x10);
       *(short *)&pPVar5->field_0x60 = sVar6;
-      pvVar4 = GetWinapiResource_(*(ushort *)&pPVar5->field_0x16,_pTEXT);
+      pvVar4 = Resource::Load_(*(ushort *)&pPVar5->field_0x16,_pTEXT);
       *(void **)&pPVar5->field_0x5a = pvVar4;
       *(undefined4 *)&pPVar5->field_0x52 = 0;
       pPVar5 = pPVar5 + 1;
@@ -31431,7 +31431,7 @@ void FUN_0043e096(undefined4 param_1,undefined4 param_2,uint param_3)
                        0x157c);
   uVar1 = FUN_00431b20(uVar1,extraout_DL,uVar8,0,0,0x200,0x12a,0xee0);
   FUN_00430db4(uVar1,extraout_DL_00,extraout_CL,0,0,0x200,0x12a);
-  DAT_004695fc = (short *)GetWinapiResource_(_GameState->levelInBuilding + 0x157c,&_RDAT);
+  DAT_004695fc = (short *)Resource::Load_(_GameState->levelInBuilding + 0x157c,&_RDAT);
   DAT_00469610 = DAT_004695fc + 1;
   DAT_00469614 = DAT_004695fc + *DAT_004695fc * 5 + 2;
   uVar1 = 0x45;
@@ -31462,8 +31462,7 @@ void FUN_0043e096(undefined4 param_1,undefined4 param_2,uint param_3)
     *(undefined4 *)(DAT_00469614 + sVar9 * 5 + 3) = uVar5;
     sVar9 = sVar9 + 1;
   }
-  DAT_00469630 = (ushort *)GetWinapiResource_(*(ushort *)(&DAT_00462848 + DAT_00469600 * 2),&_RACE2)
-  ;
+  DAT_00469630 = (ushort *)Resource::Load_(*(ushort *)(&DAT_00462848 + DAT_00469600 * 2),&_RACE2);
   uVar2 = (short)(char)_GameState->field46_0x175e[_GameState->level + 2] +
           *(short *)(&DAT_00462834 + DAT_00469600 * 2);
   uVar1 = (undefined)uVar2;
@@ -31476,8 +31475,7 @@ void FUN_0043e096(undefined4 param_1,undefined4 param_2,uint param_3)
     uVar5 = CONCAT22(uVar7,DAT_0046254e);
   }
   FUN_00413a54((char)uVar5,extraout_DL_04,uVar1,DAT_00469654,uVar5,0);
-  DAT_00469672 = (ushort *)GetWinapiResource_(*(ushort *)(&DAT_00462852 + DAT_00469600 * 2),&_RACE3)
-  ;
+  DAT_00469672 = (ushort *)Resource::Load_(*(ushort *)(&DAT_00462852 + DAT_00469600 * 2),&_RACE3);
   uVar1 = (undefined)*(ushort *)(&DAT_0046283e + DAT_00469600 * 2);
   DAT_00469696 = FUN_00412ac4(*(ushort *)(&DAT_0046283e + DAT_00469600 * 2));
   uVar7 = (undefined2)((uint)DAT_00469696 >> 0x10);
@@ -31491,8 +31489,8 @@ void FUN_0043e096(undefined4 param_1,undefined4 param_2,uint param_3)
   if (_GameState->levelInBuilding == 1) {
     DAT_004695f4 = FUN_00412ac4(0x1666);
     DAT_004695f8 = FUN_00412ac4(0x1666);
-    DAT_00469608 = (undefined2 *)GetWinapiResource_(0x1582,&_RACE4);
-    puVar6 = (undefined2 *)GetWinapiResource_(0x1583,&_RACE5);
+    DAT_00469608 = (undefined2 *)Resource::Load_(0x1582,&_RACE4);
+    puVar6 = (undefined2 *)Resource::Load_(0x1583,&_RACE5);
     uVar1 = extraout_CL_01;
     uVar8 = extraout_DL_07;
     DAT_0046960c = puVar6;
@@ -32632,7 +32630,7 @@ void __cdecl Puzzles::ThrowChosenCategoriesExhausted(void)
 {
   void *pvVar1;
   
-  pvVar1 = GetWinapiResource_(19000,&_TEXT28);
+  pvVar1 = Resource::Load_(19000,&_TEXT28);
   FUN_0044c8f3(pvVar1,100);
   TurnAllOffCategoriesBackOn();
   FUN_00440695(19000,&_TEXT29);
@@ -32939,39 +32937,12 @@ void FUN_0044040c(undefined param_1,undefined param_2,undefined param_3,undefine
 
 
 
-uint FUN_00440472(undefined4 param_1,undefined4 param_2,uint param_3,undefined *param_4)
-
-{
-  short sVar1;
-  uint *puVar2;
-  uint local_8;
-  
-  if (((uint)param_4 & 0xffff0000) == 0) {
-    local_8 = (uint)param_4 & 0xffff;
-  }
-  else {
-    puVar2 = &local_8;
-    sVar1 = 0;
-    local_8 = param_3;
-    do {
-      *(undefined *)puVar2 = *param_4;
-      param_4 = param_4 + 1;
-      puVar2 = (uint *)((int)puVar2 + 1);
-      sVar1 = sVar1 + 1;
-    } while (sVar1 < 4);
-  }
-  return local_8;
-}
-
-
-
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-DlistNode *
-FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,LPCSTR param_5)
+void * __cdecl Resource::Load(short id,LPCSTR fourcc)
 
 {
-  undefined4 uVar1;
+  undefined uVar1;
   DlistNode *pDVar2;
   int iVar3;
   DlistNode *node;
@@ -32982,29 +32953,29 @@ FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,LP
   undefined extraout_CL_00;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
   int iVar6;
   
-  pDVar2 = (DlistNode *)FUN_00440472(param_1,param_2,param_3,param_5);
+  pDVar2 = (DlistNode *)ResolveFourcc(fourcc);
   for (iVar3 = DlistHead(DAT_00462c34); iVar3 != 0; iVar3 = DlistNext(iVar3)) {
-    if ((param_4 == *(short *)(iVar3 + 8)) && (pDVar2 == *(DlistNode **)(iVar3 + 0xc))) {
+    if ((id == *(short *)(iVar3 + 8)) && (pDVar2 == *(DlistNode **)(iVar3 + 0xc))) {
       _DAT_00462c38 = 1;
       *(short *)(iVar3 + 10) = *(short *)(iVar3 + 10) + 1;
       _DAT_0046991c = (DlistNode *)iVar3;
-      return (DlistNode *)*(undefined4 *)(iVar3 + 0x14);
+      return *(void **)(iVar3 + 0x14);
     }
   }
   node = (DlistNode *)PoolAlloc(0x1a);
   _DAT_00462c38 = 0;
   _DAT_0046991c = node;
-  *(short *)&node[1].next = param_4;
+  *(short *)&node[1].next = id;
   node[1].prev = pDVar2;
   *(undefined2 *)((int)&node[1].next + 2) = 1;
   node[2].prev = (DlistNode *)0x0;
   iVar3 = DAT_00469918;
   iVar4 = DlistHead(DAT_00469918);
-  uVar1 = extraout_EDX;
+  uVar1 = extraout_DL;
   do {
     iVar6 = iVar4;
     if (iVar6 == 0) {
@@ -33021,7 +32992,7 @@ LAB_004405cb:
     }
     if (*(short *)(iVar6 + 0x1c) == 5) {
       hResInfo = FindResourceA(*(HMODULE *)(iVar6 + 0x1e),(LPCSTR)(uint)*(ushort *)&node[1].next,
-                               param_5);
+                               fourcc);
       if (hResInfo != (HRSRC)0x0) {
         pDVar2 = (DlistNode *)LoadResource(*(HMODULE *)(iVar6 + 0x1e),hResInfo);
         node[2].next = pDVar2;
@@ -33032,38 +33003,23 @@ LAB_004405cb:
       }
     }
     else {
-      uVar5 = FUN_004107fe((char)*(undefined2 *)&node[1].next,(char)uVar1,(char)iVar3,
-                           *(undefined4 *)(iVar6 + 0x1e),*(undefined2 *)&node[1].next,param_5);
+      uVar5 = FUN_004107fe((char)*(undefined2 *)&node[1].next,uVar1,(char)iVar3,
+                           *(undefined4 *)(iVar6 + 0x1e),*(undefined2 *)&node[1].next,fourcc);
       if (uVar5 != 0) {
         pDVar2 = (DlistNode *)
-                 FUN_00410937((char)uVar5,extraout_DL,extraout_CL,*(undefined4 *)(iVar6 + 0x1e),
+                 FUN_00410937((char)uVar5,extraout_DL_00,extraout_CL,*(undefined4 *)(iVar6 + 0x1e),
                               (short)uVar5);
         node[2].next = pDVar2;
-        pDVar2 = (DlistNode *)FUN_00410a01((char)pDVar2,extraout_DL_00,extraout_CL_00,node[2].next);
+        pDVar2 = (DlistNode *)FUN_00410a01((char)pDVar2,extraout_DL_01,extraout_CL_00,node[2].next);
         node[2].prev = pDVar2;
         *(undefined2 *)&node[3].next = 0;
         goto LAB_004405cb;
       }
     }
     iVar4 = DlistNext(iVar6);
-    uVar1 = extraout_EDX_00;
+    uVar1 = extraout_DL_02;
     iVar3 = iVar6;
   } while( true );
-}
-
-
-
-void * __stdcall GetWinapiResource_(ushort id_,LPCSTR type_)
-
-{
-  undefined4 in_EAX;
-  void *pvVar1;
-  uint in_ECX;
-  undefined4 in_EDX;
-  
-  pvVar1 = (void *)FUN_004404a8(CONCAT22((short)((uint)in_EAX >> 0x10),id_),in_EDX,in_ECX,id_,type_)
-  ;
-  return pvVar1;
 }
 
 
@@ -33071,7 +33027,7 @@ void * __stdcall GetWinapiResource_(ushort id_,LPCSTR type_)
 void FUN_00440615(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5)
 
 {
-  FUN_004404a8(CONCAT22((short)(param_1 >> 0x10),param_4),param_2,param_3,param_4,param_5);
+  Resource::Load(param_4,param_5);
   return;
 }
 
@@ -33109,18 +33065,15 @@ void __cdecl FUN_00440695(short param_1,undefined *param_2)
 {
   short *psVar1;
   bool bVar2;
-  undefined4 in_EAX;
   DlistNode *pDVar3;
   DlistNode *pDVar4;
   BOOL BVar5;
-  uint in_ECX;
   undefined extraout_DL;
-  undefined4 in_EDX;
   DlistNode *node;
   DlistNode *pDVar6;
   
   bVar2 = false;
-  pDVar3 = (DlistNode *)FUN_00440472(in_EAX,in_EDX,in_ECX,param_2);
+  pDVar3 = (DlistNode *)Resource::ResolveFourcc(param_2);
   pDVar4 = (DlistNode *)DlistHead(DAT_00462c34);
   while( true ) {
     node = pDVar4;
@@ -33321,16 +33274,16 @@ undefined4
 FUN_0044094e(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,undefined *param_5)
 
 {
-  uint uVar1;
+  Fourcc FVar1;
   int iVar2;
   
-  uVar1 = FUN_00440472(param_1,param_2,param_3,param_5);
+  FVar1 = Resource::ResolveFourcc(param_5);
   iVar2 = DlistHead(DAT_00462c34);
   while( true ) {
     if (iVar2 == 0) {
       return 0;
     }
-    if ((param_4 == *(short *)(iVar2 + 8)) && (uVar1 == *(uint *)(iVar2 + 0xc))) break;
+    if ((param_4 == *(short *)(iVar2 + 8)) && (FVar1 == *(Fourcc *)(iVar2 + 0xc))) break;
     iVar2 = DlistNext(iVar2);
   }
   return *(undefined4 *)(iVar2 + 0x14);
@@ -33843,14 +33796,14 @@ void FUN_0044182e(void)
   FUN_00412f04((char)uVar1,extraout_DL,extraout_CL,DAT_00469940);
   FUN_00412784();
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT31);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT31);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT32);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT32);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -34943,7 +34896,7 @@ void __cdecl Puzzles::SetParametersForBalance(void)
   } while (sVar4 < 10);
   DAT_0046977e = 12000;
   DAT_00469780 = 12000;
-  DAT_00469770 = GetWinapiResource_(12000,(LPCSTR)((int)&_nulTEXT + 1));
+  DAT_00469770 = Resource::Load_(12000,(LPCSTR)((int)&_nulTEXT + 1));
   return;
 }
 
@@ -36510,7 +36463,7 @@ undefined4 FUN_004456d2(void)
   int iVar4;
   
   iVar1 = FUN_0044c2df();
-  pvVar2 = GetWinapiResource_(0x3f1,_pTEXT);
+  pvVar2 = Resource::Load_(0x3f1,_pTEXT);
   *(void **)(iVar1 + 0x22) = pvVar2;
   *(undefined2 *)(iVar1 + 0xe) = 0x3ee;
   *(undefined2 *)(iVar1 + 0x10) = 0x3ef;
@@ -36537,9 +36490,9 @@ undefined4 FUN_0044571b(void)
   char local_54 [80];
   
   iVar2 = FUN_0044c2df();
-  pvVar3 = GetWinapiResource_(0x3fb,_pTEXT);
+  pvVar3 = Resource::Load_(0x3fb,_pTEXT);
   *(void **)(iVar2 + 0x1a) = pvVar3;
-  pvVar3 = GetWinapiResource_(0x3fc,_pTEXT);
+  pvVar3 = Resource::Load_(0x3fc,_pTEXT);
   *(void **)(iVar2 + 0x22) = pvVar3;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00469ad4,local_54,&DAT_00462f3c);
@@ -37018,7 +36971,7 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   undefined unaff_DI;
-  ushort id_;
+  ushort id;
   DlistNode *pDVar7;
   
   iVar3 = FUN_00445b61(param_1,param_2,param_3,param_4,param_5);
@@ -37027,8 +36980,8 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
     Memset(node,0,0x54);
     *(short *)((int)&node[1].prev + 2) = (short)param_5;
     *(undefined2 *)&node[2].next = 1;
-    id_ = (ushort)param_4;
-    pDVar4 = (DlistNode *)GetWinapiResource_(id_,_pWAVE);
+    id = (ushort)param_4;
+    pDVar4 = (DlistNode *)Resource::Load_(id,_pWAVE);
     node[1].next = pDVar4;
     if (node[1].next == (DlistNode *)0x0) {
       FUN_0043c2ba(node);
@@ -37054,9 +37007,9 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
           ShowAlertMessage(pcVar6,unaff_DI);
           TurboFree_(pcVar6);
         }
-        FUN_00440695(id_,_pWAVE);
+        FUN_00440695(id,_pWAVE);
       }
-      *(ushort *)&node[1].prev = id_;
+      *(ushort *)&node[1].prev = id;
       *(undefined2 *)((int)&node[2].prev + 2) = 0;
       *(undefined2 *)&node[2].prev = 0;
       *(undefined2 *)((int)&node[3].prev + 2) = 1;
@@ -37098,7 +37051,7 @@ void __stdcall FUN_00446186(ushort param_1)
   node = (DlistNode *)PoolAlloc(0x54);
   *(undefined2 *)((int)&node[1].prev + 2) = 4;
   *(undefined2 *)&node[2].next = DAT_00469d92;
-  pDVar3 = (DlistNode *)GetWinapiResource_(param_1,_pTEXT);
+  pDVar3 = (DlistNode *)Resource::Load_(param_1,_pTEXT);
   node[1].next = pDVar3;
   uVar1 = 0x65;
   if (_DAT_00462f42 == 0) {
@@ -38372,7 +38325,7 @@ int FUN_004474c6(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
   undefined4 uVar5;
   short sVar6;
   
-  pvVar3 = GetWinapiResource_(param_4,_pINTS);
+  pvVar3 = Resource::Load_(param_4,_pINTS);
   sVar6 = 0;
   uVar4 = extraout_ECX;
   uVar5 = extraout_EDX;
@@ -39184,14 +39137,14 @@ void FUN_004484a5(void)
   FUN_00412784();
   FUN_004465a5(0x1f5c,5,0);
   Memset(local_3ec,0,1000);
-  pvVar2 = GetWinapiResource_(DAT_004697a8,&_TEXT34);
+  pvVar2 = Resource::Load_(DAT_004697a8,&_TEXT34);
   local_400[0] = pvVar2;
   iVar3 = FUN_0044ffac((char)pvVar2,extraout_DL_00,extraout_CL_00,pvVar2);
   FUN_0045008c((char)local_3ec,extraout_DL_01,(char)pvVar2,local_3ec,local_400[0],iVar3);
   uVar1 = extraout_ECX;
   uVar4 = extraout_EDX;
   for (sVar5 = 1; sVar5 < _DAT_0046977c; sVar5 = sVar5 + 1) {
-    pvVar2 = GetWinapiResource_((&DAT_004697a8)[sVar5],&_TEXT35);
+    pvVar2 = Resource::Load_((&DAT_004697a8)[sVar5],&_TEXT35);
     local_400[sVar5] = pvVar2;
     pvVar2 = local_400[sVar5];
     iVar3 = FUN_0044ffac((char)sVar5,(char)sVar5,extraout_CL_01,pvVar2);
@@ -40518,7 +40471,7 @@ void __cdecl Puzzles::SetParametersForSimpleMachine(PuzzleNumberOneBased puzzle)
                1);
   DAT_0046977e = 0x3e86;
   DAT_00469780 = 16000;
-  DAT_00469770 = GetWinapiResource_(0x3e86,&_TEXT38);
+  DAT_00469770 = Resource::Load_(0x3e86,&_TEXT38);
   return;
 }
 
@@ -41249,8 +41202,8 @@ void FUN_0044b9e3(void)
   FUN_00412dc8(DAT_0046a874);
   FUN_0041395c(DAT_0046a878,0xffff8000,0xffff8000,5);
   FUN_00412dc8(DAT_0046a878);
-  pvVar6 = GetWinapiResource_(0x640,&_INTS4);
-  pvVar7 = GetWinapiResource_(0x641,&_INTS5);
+  pvVar6 = Resource::Load_(0x640,&_INTS4);
+  pvVar7 = Resource::Load_(0x641,&_INTS5);
   sVar14 = 0;
   uVar17 = extraout_ECX_00;
   do {
@@ -41903,7 +41856,7 @@ void FUN_0044c8c2(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
   undefined extraout_DL;
   undefined2 in_stack_00000008;
   
-  pvVar2 = GetWinapiResource_(param_4,_pTEXT);
+  pvVar2 = Resource::Load_(param_4,_pTEXT);
   uVar1 = FUN_0044c8f3(pvVar2,in_stack_00000008);
   FUN_0044073c(uVar1,extraout_DL,extraout_CL,pvVar2);
   return;
@@ -42239,7 +42192,7 @@ void __stdcall Nfnt::Load(ushort param_1)
   
   iVar1 = FindNodeIn46A938h_(_param_1);
   if (iVar1 == 0) {
-    pDVar2 = (DlistNode *)GetWinapiResource_(param_1,&_NFNT);
+    pDVar2 = (DlistNode *)Resource::Load_(param_1,&_NFNT);
     if (pDVar2 == (DlistNode *)0x0) {
                     // 20136 = "Font resource not available."
       GetWinapiString(local_54,20136);
@@ -44090,7 +44043,7 @@ void FUN_0044e838(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
   short sVar15;
   short *psVar16;
   
-  pvVar5 = GetWinapiResource_(param_4,&_BLUE);
+  pvVar5 = Resource::Load_(param_4,&_BLUE);
   DAT_0046aa30 = pvVar5;
   uVar6 = FUN_0044fcec((char)pvVar5,extraout_DL,extraout_CL,pvVar5);
   iVar7 = (int)(short)uVar6 << 4;

@@ -856,6 +856,8 @@ struct PartDefinition {
     undefined field89_0x61;
 };
 
+typedef uint Fourcc;
+
 typedef short PuzzleNumberOneBased;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
@@ -2190,9 +2192,7 @@ undefined4 FUN_00440318(void);
 void FUN_00440342(void);
 undefined4 FUN_004403be(undefined param_1,undefined param_2,undefined param_3,char *param_4);
 void FUN_0044040c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-uint FUN_00440472(undefined4 param_1,undefined4 param_2,uint param_3,undefined *param_4);
-DlistNode *FUN_004404a8(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,LPCSTR param_5);
-void * __stdcall GetWinapiResource?(ushort id?,LPCSTR type?);
+void * __cdecl Resource::Load(short id,LPCSTR fourcc);
 void FUN_00440615(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5);
 void FUN_0044062c(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void __cdecl FUN_00440695(short param_1,undefined *param_2);

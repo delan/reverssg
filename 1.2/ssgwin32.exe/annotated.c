@@ -92,11 +92,11 @@ void StartLevel(void)
     _BuildingTextResourceId = 0x177a;
   }
   FUN_00446186(_BuildingTextResourceId);
-  _Area = (Area *)GetWinapiResource_(_LevelAreaResourceIds[_GameState->level],&_AREA);
+  _Area = (Area *)Resource::Load_(_LevelAreaResourceIds[_GameState->level],&_AREA);
   _RoomCount = _Area->roomCount;
   room = _Area->rooms;
   InitEntities();
-  _RoomInitialPartsCounts = (ushort *)GetWinapiResource_(_GameState->level + 0x582,_pINTS);
+  _RoomInitialPartsCounts = (ushort *)Resource::Load_(_GameState->level + 0x582,_pINTS);
   GenInitialPartIds(*_RoomInitialPartsCounts);
   _InitialBananaPartsCount = *_RoomInitialPartsCounts - _Level_partResource->definitionCount;
   _ActualBananaPartsCount = _InitialBananaPartsCount;
@@ -1252,6 +1252,45 @@ void Puzzles::TurnAllOffCategoriesBackOn(void)
     category = category + 1;
   } while (category < 8);
   return;
+}
+
+
+
+Fourcc __cdecl Resource::ResolveFourcc(char *fourccString)
+
+{
+  short i;
+  Fourcc in_ECX;
+  char *presult;
+  Fourcc result;
+  
+                    // accept raw uint16 packed in pointer
+  if (((uint)fourccString & 0xffff0000) == 0) {
+    result = (uint)fourccString & 0xffff;
+  }
+  else {
+    presult = (char *)&result;
+    i = 0;
+    result = in_ECX;
+    do {
+      *presult = *fourccString;
+      fourccString = fourccString + 1;
+      presult = (char *)((int)presult + 1);
+      i = i + 1;
+    } while (i < 4);
+  }
+  return result;
+}
+
+
+
+void * __stdcall Resource::Load_(ushort id,LPCSTR fourcc)
+
+{
+  void *result;
+  
+  result = Load(id,fourcc);
+  return result;
 }
 
 

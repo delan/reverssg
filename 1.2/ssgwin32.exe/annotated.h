@@ -856,6 +856,8 @@ struct PartDefinition {
     undefined field89_0x61;
 };
 
+typedef uint Fourcc;
+
 typedef short PuzzleNumberOneBased;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
@@ -1551,6 +1553,8 @@ undefined2 Puzzles::CheckEndgame(void);
 short Puzzles::ComputeCurrentCategory(void);
 void __cdecl Puzzles::ComputeCandidatePuzzles(short category);
 void Puzzles::TurnAllOffCategoriesBackOn(void);
+Fourcc __cdecl Resource::ResolveFourcc(char *fourccString);
+void * __stdcall Resource::Load'(ushort id,LPCSTR fourcc);
 void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1);
 short __stdcall SetCurrentColor(short color);
 void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *text);
