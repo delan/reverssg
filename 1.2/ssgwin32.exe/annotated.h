@@ -689,7 +689,7 @@ struct GameState {
     short buildingCompletedLevels[3]; // [0,5) or -1
     short buildingIsInitialised[3]; // true iff parts placement is done
     undefined field43_0x40[48];
-    struct PuzzleState puzzles[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    struct PuzzleState puzzles[8]; // see PuzzleCategory type
     struct BuildingState buildings[3];
     undefined field46_0x175e[5999];
 };
@@ -789,7 +789,18 @@ struct PartDefinition {
     undefined field89_0x61;
 };
 
-typedef short PuzzleCategory;
+typedef enum PuzzleCategory {
+    BALANCE=0 // Scales,
+    ELECTRICITY=1 // Electricity,
+    ENERGY=2 // Energy,
+    FORCE=3 // Force,
+    GEAR=4 // Gear,
+    JIGSAW=5 // Jigsaw,
+    MAGNET=6 // Magnetizm,
+    SIMPLE_MACHINE=7 // Simple Machine
+} PuzzleCategory;
+
+typedef short PuzzleNumberOneBased;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 

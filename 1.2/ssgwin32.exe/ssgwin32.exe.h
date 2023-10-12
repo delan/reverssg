@@ -689,7 +689,7 @@ struct GameState {
     short buildingCompletedLevels[3]; // [0,5) or -1
     short buildingIsInitialised[3]; // true iff parts placement is done
     undefined field43_0x40[48];
-    struct PuzzleState puzzles[8]; // balance, electricity, energy, force, gear, jigsaw, magnet, smachine
+    struct PuzzleState puzzles[8]; // see PuzzleCategory type
     struct BuildingState buildings[3];
     undefined field46_0x175e[5999];
 };
@@ -789,7 +789,18 @@ struct PartDefinition {
     undefined field89_0x61;
 };
 
-typedef short PuzzleCategory;
+typedef enum PuzzleCategory {
+    BALANCE=0 // Scales,
+    ELECTRICITY=1 // Electricity,
+    ENERGY=2 // Energy,
+    FORCE=3 // Force,
+    GEAR=4 // Gear,
+    JIGSAW=5 // Jigsaw,
+    MAGNET=6 // Magnetizm,
+    SIMPLE_MACHINE=7 // Simple Machine
+} PuzzleCategory;
+
+typedef short PuzzleNumberOneBased;
 
 typedef struct tagWNDCLASSA tagWNDCLASSA, *PtagWNDCLASSA;
 
@@ -1724,7 +1735,7 @@ void FUN_0041ba44(undefined param_1,byte param_2,byte param_3,uint param_4,undef
 void FUN_0041bac3(undefined param_1,undefined param_2,byte param_3,undefined2 param_4,int param_5,undefined4 param_6,undefined2 param_7);
 void FUN_0041bb49(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 void FUN_0041bc51(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5);
-void FUN_0041be66(undefined param_1,undefined param_2,undefined param_3,short param_4);
+void __cdecl Puzzles::SetElectricityParameters(PuzzleNumberOneBased puzzle);
 void FUN_0041f635(void);
 void FUN_0041f6da(void);
 void FUN_0041f782(undefined4 param_1,undefined4 param_2,uint param_3);
@@ -1752,7 +1763,7 @@ undefined4 FUN_0042114d(void);
 undefined4 FUN_004212b7(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,short param_8,short param_9);
 void FUN_004212fe(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004213fd(undefined4 param_1,uint param_2,uint param_3,undefined2 param_4,ushort param_5);
-void FUN_00421490(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5);
+void __cdecl FUN_00421490(undefined4 param_1,short param_2);
 undefined4 FUN_0042194c(void);
 short FUN_0042197d(void);
 void FUN_00421aef(void);
@@ -1803,7 +1814,7 @@ void FUN_004272d1(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00427563(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00427645(void);
 void FUN_00427794(undefined4 param_1,undefined4 param_2,undefined4 param_3);
-void FUN_00427832(void);
+void Puzzles::SetForceOrGearParameters(void);
 void FUN_00429980(void);
 void FUN_00429cab(undefined4 param_1,undefined4 param_2,uint param_3,int param_4);
 void FUN_0042ac69(void);
@@ -1932,11 +1943,11 @@ void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_00432947(uint param_1,undefined4 param_2,uint param_3);
 void FUN_0043299b(void);
 void FUN_00432aea(void);
-void FUN_00432c8f(void);
+void Puzzles::SJOSMP'(void);
 int FUN_00432d2e(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00432e65(void);
 void FUN_00432f2f(void);
-void FUN_00432fac(undefined4 param_1,undefined4 param_2,uint param_3,short param_4);
+void __cdecl Puzzles::SetJigsawOrSimpleMachineParameters(PuzzleNumberOneBased puzzle);
 void FUN_00433840(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5);
 void FUN_00433a0e(void);
 undefined4 FUN_00433cca(void);
@@ -2103,7 +2114,7 @@ void FUN_0043f193(void);
 void FUN_0043f27a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043f2c8(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5,short param_6,short param_7,byte param_8);
 void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short *param_5,short param_6);
-void FUN_0043f7e9(void);
+void Puzzles::DoSomethingWithCandidateCategory?(void);
 void FUN_0043f8b4(void);
 void __cdecl FUN_0043f987(int param_1);
 void FUN_0043fae6(void);

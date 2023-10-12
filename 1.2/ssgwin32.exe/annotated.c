@@ -537,7 +537,7 @@ int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category)
   result = 0;
   i = 0;
   do {
-    if (_GameState->puzzles[category].completion[i] != 0) {
+    if (_GameState->puzzles[(short)category].completion[i] != 0) {
       result = result + 1;
     }
     i = i + 1;
