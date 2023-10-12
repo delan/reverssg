@@ -45,10 +45,10 @@ void __stdcall GetWinapiString(char *result,UINT id)
 
 
 
-void __stdcall DrawString_(undefined2 x,undefined2 y,undefined4 value)
+void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *value)
 
 {
-  DrawString(x,y,value);
+  DrawStringWithCurrentFontAndColor(x,y,value);
   return;
 }
 
@@ -515,14 +515,14 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
-void __stdcall DrawInteger(undefined2 x,undefined2 y,short value,short color)
+void __stdcall DrawInteger(short x,short y,short value,short color)
 
 {
   char valueString [20];
   
-  SetColor_(color);
+  SetCurrentColor(color);
   Sprintf_(valueString,&_d,(int)value);
-  DrawString_(x,y,valueString);
+  DrawStringWithCurrentFontAndColor(x,y,valueString);
   return;
 }
 
@@ -547,7 +547,7 @@ int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category)
 
 
 
-void Puzzles::Customization::draw(void)
+void Puzzles::Customization::Draw(void)
 
 {
   int count;
@@ -680,7 +680,7 @@ void __stdcall EnterBuilding(void)
     _DAT_00461aae = 1;
   }
   FUN_0043bfee(2,0,1);
-  FUN_0044b38d(&PTR_LAB_00461b2c);
+  Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b2c);
   return;
 }
 
@@ -895,6 +895,119 @@ ushort GetCriticalSlotCount(void)
 
 
 
+void Puzzles::SetVtableForCurrentCategory(void)
+
+{
+  if ((DAT_004697b6 != 0) && (DAT_004697b6 == 1)) {
+    switch(currentCategory) {
+    case BALANCE:
+      SetVtableForGivenCategory(&vtableForBalance);
+      break;
+    case ELECTRICITY:
+      SetVtableForGivenCategory(&vtableForElectricity);
+      break;
+    case ENERGY:
+      SetVtableForGivenCategory(&vtableForEnergy);
+      break;
+    case FORCE:
+      SetVtableForGivenCategory(&vtableForForce);
+      break;
+    case GEAR:
+      SetVtableForGivenCategory(&vtableForGear);
+      break;
+    case JIGSAW:
+      SetVtableForGivenCategory(&vtableForJigsaw);
+      break;
+    case MAGNET:
+      SetVtableForGivenCategory(&vtableForMagnet);
+      break;
+    case SIMPLE_MACHINE:
+      SetVtableForGivenCategory(&vtableForSimpleMachine);
+      break;
+    default:
+      SetVtableForGivenCategory(&vtableForEnergy);
+    }
+  }
+  return;
+}
+
+
+
+void __cdecl PickapuzzleMenu::OnClick(astruct *param_1)
+
+{
+  switch(*(undefined4 *)&param_1->field30_0x1e) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+  case 6:
+  case 7:
+                    // category radio buttons
+    Puzzles::currentCategory = param_1->field30_0x1e;
+    FUN_0043fb50();
+    if (Puzzles::CATEGORY_LEN[(short)Puzzles::currentCategory] < Puzzles::currentPuzzle) {
+      Puzzles::currentPuzzle = 1;
+    }
+    Draw();
+    FUN_004465a5(0x1f4e,10,0);
+    return;
+  case 8:
+                    // Do Puzzle button
+    DAT_004697b6 = 1;
+    FUN_004465a5(0x1f4e,10,0);
+    return;
+  case 9:
+                    // Go Through button
+    FUN_0044d87c(1);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b2c);
+    FUN_004465a5(0x1f4e,10,0);
+    return;
+  case 10:
+                    // Go Back button
+    FUN_0044d87c(0);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b2c);
+    FUN_004465a5(0x1f4e,10,0);
+    return;
+  case 0xb:
+                    // up arrow
+    Puzzles::currentPuzzle = Puzzles::currentPuzzle + 1;
+    if (Puzzles::CATEGORY_LEN[(short)Puzzles::currentCategory] < Puzzles::currentPuzzle) {
+      Puzzles::currentPuzzle = 1;
+    }
+    Draw();
+    return;
+  case 0xc:
+                    // down arrow
+    if ((Puzzles::currentPuzzle != 0) &&
+       (Puzzles::currentPuzzle = Puzzles::currentPuzzle + -1, Puzzles::currentPuzzle < 1)) {
+      Puzzles::currentPuzzle = Puzzles::CATEGORY_LEN[(short)Puzzles::currentCategory];
+    }
+    Draw();
+  }
+  return;
+}
+
+
+
+void PickapuzzleMenu::Draw(void)
+
+{
+  char currentPuzzleString [8];
+  
+  Nfnt::Load(15000);
+  FUN_00430de8(0x17,0x41,0x4f,0xf);
+  Sprintf_(currentPuzzleString,&_d,(int)Puzzles::currentPuzzle);
+  DrawString(15000,currentPuzzleString,0x1a,0x4d,0);
+  FUN_00430abc(0x17,0x41,0x4f,0xf);
+  Nfnt::Unload(15000);
+  return;
+}
+
+
+
 void Puzzles::ComputeCurrentPuzzle(void)
 
 {
@@ -905,8 +1018,8 @@ void Puzzles::ComputeCurrentPuzzle(void)
   
   done = false;
   while (!done) {
-    candidateCategory = ComputeCandidateCategory();
-    ComputeCandidatePuzzles(candidateCategory);
+    currentCategory = ComputeCurrentCategory();
+    ComputeCandidatePuzzles(currentCategory);
     count = 3;
     if (candidatePuzzles[2] == -1) {
       count = 2;
@@ -968,7 +1081,7 @@ undefined2 Puzzles::CheckEndgame(void)
 
 
 
-short Puzzles::ComputeCandidateCategory(void)
+short Puzzles::ComputeCurrentCategory(void)
 
 {
   short category;
@@ -1069,6 +1182,42 @@ void Puzzles::TurnAllOffCategoriesBackOn(void)
     }
     category = category + 1;
   } while (category < 8);
+  return;
+}
+
+
+
+void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1)
+
+{
+  *(undefined4 *)(DAT_0046a35c + DAT_0046336c * 4) = param_1;
+  return;
+}
+
+
+
+short __stdcall SetCurrentColor(short color)
+
+{
+  short old;
+  
+  old = _CurrentColor;
+  _CurrentColor = color;
+  _CurrentColorClamped = ClampColorIndex_(color);
+  return old;
+}
+
+
+
+void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *text)
+
+{
+  short sVar1;
+  undefined2 color;
+  
+  color = _CurrentColorClamped;
+  sVar1 = GetFontBaselineY_(_CurrentFont);
+  DrawString(_CurrentFont,text,x,sVar1 + y,color);
   return;
 }
 
@@ -1189,6 +1338,61 @@ int __stdcall Sprintf_(char *dest,char *format,...)
   *dest = '\0';
   iVar1 = Sprintf0((char)&dest,in_DL,in_CL,&LAB_00452a4c,&dest,format,in_stack_0000000c);
   return iVar1;
+}
+
+
+
+uint __cdecl ToUpper(uint c)
+
+{
+  uint result;
+  
+  if (c == 0xffffffff) {
+    return 0xffffffff;
+  }
+  result = c & 0xff;
+  if ((_AsciiProperties[result] & LOWER) != 0) {
+    return result - 0x20;
+  }
+  return result;
+}
+
+
+
+int __cdecl Atoi(char *input)
+
+{
+  char c;
+  int result;
+  char *input_;
+  bool negative;
+  
+                    // skip whitespace
+  result = 0;
+  do {
+    input_ = input;
+    c = *input_;
+    input = input_ + 1;
+  } while ((_AsciiProperties[c] & WHITESPACE) != 0);
+                    // parse sign
+  if ((c == '+') || (c == '-')) {
+    negative = c == '-';
+    c = *input;
+    input = input_ + 2;
+  }
+  else {
+    negative = false;
+  }
+                    // parse digits
+  while (('/' < c && (c < ':'))) {
+    result = result * 10 + (int)c + -0x30;
+    c = *input;
+    input = input + 1;
+  }
+  if (negative) {
+    result = -result;
+  }
+  return result;
 }
 
 

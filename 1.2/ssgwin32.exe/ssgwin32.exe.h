@@ -265,13 +265,53 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
-typedef struct Rect16 Rect16, *PRect16;
+typedef struct astruct astruct, *Pastruct;
 
-struct Rect16 {
-    short x;
-    short y;
-    short w;
-    short h;
+typedef enum PuzzleCategory {
+    BALANCE=0 // Scales,
+    ELECTRICITY=1 // Electricity,
+    ENERGY=2 // Energy,
+    FORCE=3 // Force,
+    GEAR=4 // Gear,
+    JIGSAW=5 // Jigsaw,
+    MAGNET=6 // Magnetizm,
+    SIMPLE_MACHINE=7 // Simple Machine
+} PuzzleCategory;
+
+struct astruct {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    undefined field16_0x10;
+    undefined field17_0x11;
+    undefined field18_0x12;
+    undefined field19_0x13;
+    undefined field20_0x14;
+    undefined field21_0x15;
+    undefined field22_0x16;
+    undefined field23_0x17;
+    undefined field24_0x18;
+    undefined field25_0x19;
+    undefined field26_0x1a;
+    undefined field27_0x1b;
+    undefined field28_0x1c;
+    undefined field29_0x1d;
+    enum PuzzleCategory field30_0x1e;
+    undefined field31_0x20;
+    undefined field32_0x21;
 };
 
 typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
@@ -282,100 +322,28 @@ struct SavedPartEntity {
     short partId;
 };
 
-typedef struct Room Room, *PRoom;
-
-typedef struct OtherEntity OtherEntity, *POtherEntity;
-
-typedef struct LadderEntity LadderEntity, *PLadderEntity;
+typedef enum AsciiProperties { // bitflags
+    WHITESPACE=1,
+    DECIMAL=2,
+    UPPER=4,
+    LOWER=8,
+    HEX=16,
+    CONTROL=32,
+    SYMBOL=64
+} AsciiProperties;
 
 typedef struct Dlist Dlist, *PDlist;
 
-typedef struct EntityBase? EntityBase?, *PEntityBase?;
-
-typedef short PartId;
-
-typedef struct RectEx RectEx, *PRectEx;
-
 typedef struct DlistNode DlistNode, *PDlistNode;
-
-typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
-
-typedef short EntityType;
 
 struct Dlist {
     struct DlistNode * head;
     struct DlistNode * tail;
 };
 
-struct RectEx {
-    struct Rect16 rect;
-    undefined2 mode;
-};
-
-struct EntityBaseBase? {
-    struct Rect16 inner;
-    undefined field1_0x8;
-    undefined field2_0x9;
-    undefined field3_0xa;
-    undefined field4_0xb;
-    undefined field5_0xc;
-    undefined field6_0xd;
-};
-
-struct EntityBase? {
-    struct EntityBaseBase? rect;
-    ushort spriteId;
-    EntityType type;
-};
-
-struct OtherEntity {
-    struct EntityBase? base;
-    PartId partId;
-    undefined field2_0x14;
-    undefined field3_0x15;
-    struct RectEx activation?;
-};
-
-struct LadderEntity {
-    struct EntityBase? base;
-    undefined field1_0x12;
-    undefined field2_0x13;
-    undefined field3_0x14;
-    undefined field4_0x15;
-    undefined field5_0x16;
-    undefined field6_0x17;
-    undefined field7_0x18;
-    undefined field8_0x19;
-    undefined field9_0x1a;
-    undefined field10_0x1b;
-    undefined field11_0x1c;
-    undefined field12_0x1d;
-    struct RectEx collision?;
-};
-
 struct DlistNode {
     struct DlistNode * next;
     struct DlistNode * prev;
-};
-
-struct Room {
-    ushort flags; // bit 0 obverse
-    short structuralEntityCounts[4];
-    short ladderEntityCounts[4];
-    short cEntityCounts?[6];
-    undefined4 cEntityGroups?[6];
-    short dEntityCounts?[6];
-    undefined4 dEntityGroups?[6];
-    short eEntityCounts?[6];
-    undefined4 eEntityGroups?[6];
-    struct OtherEntity * structuralEntityGroups[4];
-    struct LadderEntity * ladderEntityGroups[4];
-    short partEntityCount;
-    struct Dlist * partEntities;
-    undefined2 field13_0xa4[6];
-    undefined2 field14_0xb0[6];
-    undefined2 field15_0xbc[50];
-    undefined entities[468];
 };
 
 typedef struct Actor Actor, *PActor;
@@ -544,17 +512,101 @@ struct Actor {
 
 typedef struct Area Area, *PArea;
 
+typedef struct Room Room, *PRoom;
+
+typedef struct OtherEntity OtherEntity, *POtherEntity;
+
+typedef struct LadderEntity LadderEntity, *PLadderEntity;
+
+typedef struct EntityBase? EntityBase?, *PEntityBase?;
+
+typedef short PartId;
+
+typedef struct RectEx RectEx, *PRectEx;
+
+typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
+
+typedef short EntityType;
+
+typedef struct Rect16 Rect16, *PRect16;
+
+struct Room {
+    ushort flags; // bit 0 obverse
+    short structuralEntityCounts[4];
+    short ladderEntityCounts[4];
+    short cEntityCounts?[6];
+    undefined4 cEntityGroups?[6];
+    short dEntityCounts?[6];
+    undefined4 dEntityGroups?[6];
+    short eEntityCounts?[6];
+    undefined4 eEntityGroups?[6];
+    struct OtherEntity * structuralEntityGroups[4];
+    struct LadderEntity * ladderEntityGroups[4];
+    short partEntityCount;
+    struct Dlist * partEntities;
+    undefined2 field13_0xa4[6];
+    undefined2 field14_0xb0[6];
+    undefined2 field15_0xbc[50];
+    undefined entities[468];
+};
+
 struct Area {
     short roomCount;
     struct Room rooms[16];
     undefined field2_0x2f42[32928];
 };
 
-typedef struct HeapNode HeapNode, *PHeapNode;
+struct Rect16 {
+    short x;
+    short y;
+    short w;
+    short h;
+};
 
-struct HeapNode {
-    struct DlistNode node;
-    void * heap;
+struct RectEx {
+    struct Rect16 rect;
+    undefined2 mode;
+};
+
+struct EntityBaseBase? {
+    struct Rect16 inner;
+    undefined field1_0x8;
+    undefined field2_0x9;
+    undefined field3_0xa;
+    undefined field4_0xb;
+    undefined field5_0xc;
+    undefined field6_0xd;
+};
+
+struct EntityBase? {
+    struct EntityBaseBase? rect;
+    ushort spriteId;
+    EntityType type;
+};
+
+struct OtherEntity {
+    struct EntityBase? base;
+    PartId partId;
+    undefined field2_0x14;
+    undefined field3_0x15;
+    struct RectEx activation?;
+};
+
+struct LadderEntity {
+    struct EntityBase? base;
+    undefined field1_0x12;
+    undefined field2_0x13;
+    undefined field3_0x14;
+    undefined field4_0x15;
+    undefined field5_0x16;
+    undefined field6_0x17;
+    undefined field7_0x18;
+    undefined field8_0x19;
+    undefined field9_0x1a;
+    undefined field10_0x1b;
+    undefined field11_0x1c;
+    undefined field12_0x1d;
+    struct RectEx collision?;
 };
 
 typedef struct PartResource PartResource, *PPartResource;
@@ -632,8 +684,6 @@ struct EntityNode {
     struct OtherEntity inner;
 };
 
-typedef struct GameState GameState, *PGameState;
-
 typedef struct BuildingState BuildingState, *PBuildingState;
 
 struct BuildingState {
@@ -643,6 +693,23 @@ struct BuildingState {
     undefined field3_0x304[398];
     undefined field4_0x492[552];
 };
+
+typedef struct CategoryVtable? CategoryVtable?, *PCategoryVtable?;
+
+struct CategoryVtable? {
+    pointer SetParameters'?;
+    pointer field1_0x4;
+    pointer field2_0x8;
+};
+
+typedef struct HeapNode HeapNode, *PHeapNode;
+
+struct HeapNode {
+    struct DlistNode node;
+    void * heap;
+};
+
+typedef struct GameState GameState, *PGameState;
 
 struct GameState {
     undefined field0_0x0;
@@ -788,17 +855,6 @@ struct PartDefinition {
     undefined field88_0x60;
     undefined field89_0x61;
 };
-
-typedef enum PuzzleCategory {
-    BALANCE=0 // Scales,
-    ELECTRICITY=1 // Electricity,
-    ENERGY=2 // Energy,
-    FORCE=3 // Force,
-    GEAR=4 // Gear,
-    JIGSAW=5 // Jigsaw,
-    MAGNET=6 // Magnetizm,
-    SIMPLE_MACHINE=7 // Simple Machine
-} PuzzleCategory;
 
 typedef short PuzzleNumberOneBased;
 
@@ -1725,7 +1781,7 @@ void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_0041abd6(void);
 void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,char *param_6,undefined param_7);
 void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *param_4,undefined param_5);
-void FUN_0041ad20(void);
+void Puzzles::SetParametersForElectricity'(void);
 void FUN_0041af2d(void);
 void FUN_0041b115(void);
 void FUN_0041b33a(void);
@@ -1735,7 +1791,7 @@ void FUN_0041ba44(undefined param_1,byte param_2,byte param_3,uint param_4,undef
 void FUN_0041bac3(undefined param_1,undefined param_2,byte param_3,undefined2 param_4,int param_5,undefined4 param_6,undefined2 param_7);
 void FUN_0041bb49(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 void FUN_0041bc51(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5);
-void __cdecl Puzzles::SetElectricityParameters(PuzzleNumberOneBased puzzle);
+void __cdecl Puzzles::SetParametersForElectricity(PuzzleNumberOneBased puzzle);
 void FUN_0041f635(void);
 void FUN_0041f6da(void);
 void FUN_0041f782(undefined4 param_1,undefined4 param_2,uint param_3);
@@ -1772,6 +1828,7 @@ void FUN_00421d9b(void);
 void FUN_00421dfc(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_00421f12(void);
 void FUN_00421f1f(void);
+void __cdecl Puzzles::SetParametersForEnergy'(void);
 void FUN_00422920(void);
 void FUN_00422b11(uint param_1,undefined4 param_2,uint param_3);
 int FUN_00422ee1(void);
@@ -1779,7 +1836,7 @@ void FUN_00422fb7(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_004234ab(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined param_5,undefined param_6,undefined param_7,undefined param_8,undefined param_9,undefined param_10,undefined2 param_11,undefined2 param_12,undefined2 param_13,undefined4 param_14,undefined4 param_15,undefined4 param_16);
 void FUN_004234df(void);
 void FUN_004235dc(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined param_5,undefined param_6,undefined param_7,undefined param_8,undefined param_9,undefined param_10,undefined2 param_11,undefined2 param_12,undefined2 param_13);
-void FUN_0042365b(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void __cdecl Puzzles::SetParametersForEnergy(PuzzleNumberOneBased puzzle);
 void FUN_00425794(undefined param_1,undefined param_2,byte param_3,int param_4,uint param_5,int param_6,uint param_7,undefined2 param_8);
 undefined4 FUN_004258b0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 int FUN_004258dd(void);
@@ -1808,13 +1865,14 @@ void FUN_00426918(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00426973(uint param_1,undefined4 param_2,DWORD param_3,LPCVOID *param_4);
 int FUN_00426981(undefined4 param_1,undefined *param_2,byte **param_3,byte **param_4,undefined4 param_5,uint param_6);
 int FUN_004269a4(undefined4 param_1,undefined4 param_2,byte **param_3,byte **param_4,undefined4 param_5,uint param_6);
+void __cdecl Puzzles::SetParametersForForce'(void);
 void FUN_004270f8(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00427184(void);
 void FUN_004272d1(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00427563(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00427645(void);
 void FUN_00427794(undefined4 param_1,undefined4 param_2,undefined4 param_3);
-void Puzzles::SetForceOrGearParameters(void);
+void Puzzles::SetParametersForForce(void);
 void FUN_00429980(void);
 void FUN_00429cab(undefined4 param_1,undefined4 param_2,uint param_3,int param_4);
 void FUN_0042ac69(void);
@@ -1835,13 +1893,14 @@ void FUN_0042b1d8(undefined param_1,undefined param_2,undefined param_3,ushort p
 bool FUN_0042b260(void);
 undefined4 *FUN_0042b476(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,ushort param_5,short param_6);
 void FUN_0042b4e4(undefined param_1,undefined param_2,undefined param_3,uint param_4);
+void Puzzles::SetParametersForGear'(void);
 void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_0042b98f(void);
 int FUN_0042bd1e(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0042bf6e(void);
 void FUN_0042c18b(undefined param_1,undefined param_2,byte param_3,undefined4 param_4);
 void FUN_0042c389(void);
-void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4);
+void __cdecl Puzzles::SetParametersForGear(PuzzleNumberOneBased puzzle);
 void FUN_0042c730(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0042c7de(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_0042c89d(undefined param_1,undefined param_2,undefined param_3,short param_4);
@@ -1939,15 +1998,16 @@ void FUN_00432128(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_004321b3(void);
 void FUN_004323c3(void);
 void FUN_004324b1(void);
+void Puzzles::SetParametersForJigsaw''(void);
 void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00432947(uint param_1,undefined4 param_2,uint param_3);
 void FUN_0043299b(void);
 void FUN_00432aea(void);
-void Puzzles::SJOSMP'(void);
+void Puzzles::SetParametersForJigsaw'(void);
 int FUN_00432d2e(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00432e65(void);
 void FUN_00432f2f(void);
-void __cdecl Puzzles::SetJigsawOrSimpleMachineParameters(PuzzleNumberOneBased puzzle);
+void __cdecl Puzzles::SetParametersForJigsaw(PuzzleNumberOneBased puzzle);
 void FUN_00433840(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5);
 void FUN_00433a0e(void);
 undefined4 FUN_00433cca(void);
@@ -1984,13 +2044,14 @@ int FUN_004352c9(undefined param_1,undefined param_2,undefined param_3,int param
 void FUN_00435302(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00435346(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 undefined2 FUN_00435355(void);
+void Puzzles::SetParametersForMagnet'(void);
 void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3);
 void FUN_0043588a(void);
 void FUN_004359e9(void);
 int FUN_00435c2d(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4);
 void FUN_00435d07(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_00435d8a(void);
-void FUN_00435e98(undefined4 param_1,undefined4 param_2,uint param_3,short param_4);
+void __cdecl Puzzles::SetParametersForMagnet(PuzzleNumberOneBased puzzle);
 void FUN_00438db6(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00438e43(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_00438efb(short param_1,undefined4 param_2,undefined4 param_3);
@@ -2114,15 +2175,12 @@ void FUN_0043f193(void);
 void FUN_0043f27a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0043f2c8(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5,short param_6,short param_7,byte param_8);
 void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *param_4,short *param_5,short param_6);
-void Puzzles::DoSomethingWithCandidateCategory?(void);
 void FUN_0043f8b4(void);
-void __cdecl FUN_0043f987(int param_1);
-void FUN_0043fae6(void);
 void FUN_0043fb50(void);
 void FUN_0043fd88(void);
 void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void __stdcall FUN_0043fef9(short param_1);
-void FUN_0043ff91(undefined param_1,undefined param_2,byte param_3,int param_4);
+void __cdecl FUN_0043ff91(int param_1);
 void FUN_0043ffba(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void __cdecl Puzzles::ThrowChosenCategoriesExhausted(void);
 void FUN_0044001b(void);
@@ -2148,6 +2206,7 @@ void FUN_0044086e(void);
 undefined4 FUN_004408cd(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_0044094e(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,undefined *param_5);
 void FUN_00440994(void);
+void Puzzles::SetParametersForBalance'(void);
 void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3);
 void FUN_004413d3(void);
 void FUN_00441442(void);
@@ -2162,7 +2221,7 @@ short FUN_00441b27(void);
 short FUN_00441b8a(void);
 void FUN_00441bea(void);
 undefined4 FUN_00441c86(void);
-void FUN_00441d26(uint param_1,undefined4 param_2,uint param_3);
+void __cdecl Puzzles::SetParametersForBalance(void);
 void FUN_0044380a(void);
 void FUN_00443878(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_004438d3(void);
@@ -2282,14 +2341,14 @@ void FUN_00447828(undefined param_1,undefined param_2,byte param_3,undefined4 pa
 void FUN_00447845(undefined param_1,undefined param_2,byte param_3,undefined4 param_4);
 void FUN_00447868(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004478cf(void);
-void FUN_00447988(void);
+void Puzzles::SetParametersForSimpleMachine'(void);
 void FUN_00447bab(uint param_1,undefined4 param_2,uint param_3);
 void FUN_00448097(void);
 int FUN_00448280(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004484a5(void);
 undefined4 FUN_004485f4(void);
 void FUN_0044868d(uint param_1,undefined4 param_2,uint param_3);
-void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void __cdecl Puzzles::SetParametersForSimpleMachine(PuzzleNumberOneBased puzzle);
 void FUN_0044a970(void);
 void FUN_0044a9f7(void);
 void FUN_0044aa9c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5);
@@ -2303,7 +2362,6 @@ void FUN_0044b0dc(undefined param_1,undefined param_2,undefined param_3,short pa
 void FUN_0044b1c8(void);
 void FUN_0044b1d5(void);
 void FUN_0044b24d(void);
-void __stdcall FUN_0044b38d(undefined4 param_1);
 void FUN_0044b3c6(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0044b3e5(void);
 void __stdcall FUN_0044b434(undefined4 param_1,undefined4 param_2);
@@ -2338,29 +2396,27 @@ void FUN_0044ca89(void);
 void FUN_0044ca9b(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0044cabc(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 __stdcall FindNodeIn46A938h?(undefined4 param_1);
-void __stdcall FUN_0044cb20(undefined2 param_1);
+void __stdcall Nfnt::Unload(undefined2 param_1);
 uint FUN_0044cb57(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 uint FUN_0044cb74(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
-uint __stdcall FUN_0044cb93(undefined2 param_1);
-void __stdcall FUN_0044cbbb(undefined4 param_1);
+short __stdcall GetFontBaselineY?(undefined2 param_1);
+void __stdcall Nfnt::Load(ushort param_1);
 int __stdcall FUN_0044cc56(int param_1);
 int __stdcall FUN_0044cc6c(int param_1);
 int FUN_0044cc99(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void __stdcall FUN_0044cca4(int param_1,int *param_2);
 short FUN_0044ccf5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,byte *param_5);
-void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,short param_7,undefined2 param_8);
-void __stdcall FUN_0044cf2c(undefined4 param_1,char *param_2,undefined4 param_3,short param_4,undefined2 param_5);
+void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,char *param_5,undefined4 param_6,short param_7,undefined2 param_8);
+void __stdcall DrawString(short font,char *text,short x,short y,undefined2 color);
 uint FUN_0044cfcb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,uint param_5,undefined2 param_6,ushort param_7,undefined2 param_8);
 undefined FUN_0044d0fb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,byte param_5);
 void FUN_0044d120(void);
 void FUN_0044d121(undefined param_1,undefined param_2,undefined param_3,int param_4,ushort param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,short param_9,short param_10,undefined4 param_11,undefined2 param_12);
-undefined2 __stdcall FUN_0044d4eb(undefined2 param_1);
-short __stdcall SetColor?(short param_1);
+undefined2 __stdcall SetCurrentFont(undefined2 font);
 void FUN_0044d531(void);
 void FUN_0044d55a(void);
 int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort param_4,short param_5,short param_6,short param_7,char *param_8);
 uint FUN_0044d73f(undefined2 *param_1,byte param_2,byte param_3,undefined2 param_4,char *param_5,short *param_6,short *param_7);
-void __stdcall DrawString(undefined2 x,short y,undefined4 string);
 undefined2 FUN_0044d81a(void);
 undefined2 FUN_0044d821(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_0044d837(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
@@ -2544,15 +2600,13 @@ bool FUN_00453cb0(undefined param_1,undefined param_2,undefined param_3,uint par
 DWORD FUN_00453ce0(undefined param_1,undefined param_2,undefined param_3,uint param_4,LONG param_5,int param_6);
 int FUN_00453d58(undefined param_1,undefined param_2,undefined param_3,LPCSTR param_4,uint param_5,uint param_6);
 undefined4 FUN_00453f48(undefined param_1,undefined param_2,undefined param_3,LPCSTR param_4);
-uint FUN_00453f68(undefined param_1,undefined param_2,undefined param_3,uint param_4);
 undefined2 FUN_00453f90(void);
 void FUN_00453fa4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 void thunk_FUN_00454090(void);
 void thunk_FUN_00454090(void);
 void FUN_00453fe4(void);
 undefined4 FUN_00453ffc(void);
-int FUN_00454024(undefined param_1,undefined param_2,undefined param_3,char *param_4);
-void FUN_00454080(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void FUN_00454080(undefined param_1,undefined param_2,undefined param_3,char *param_4);
 void FUN_00454090(void);
 char * FUN_004540a8(undefined param_1,undefined param_2,undefined param_3,uint param_4,char *param_5,uint param_6,char param_7,char param_8);
 void FUN_0045411c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);

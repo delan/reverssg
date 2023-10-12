@@ -265,13 +265,53 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
-typedef struct Rect16 Rect16, *PRect16;
+typedef struct astruct astruct, *Pastruct;
 
-struct Rect16 {
-    short x;
-    short y;
-    short w;
-    short h;
+typedef enum PuzzleCategory {
+    BALANCE=0 // Scales,
+    ELECTRICITY=1 // Electricity,
+    ENERGY=2 // Energy,
+    FORCE=3 // Force,
+    GEAR=4 // Gear,
+    JIGSAW=5 // Jigsaw,
+    MAGNET=6 // Magnetizm,
+    SIMPLE_MACHINE=7 // Simple Machine
+} PuzzleCategory;
+
+struct astruct {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    undefined field16_0x10;
+    undefined field17_0x11;
+    undefined field18_0x12;
+    undefined field19_0x13;
+    undefined field20_0x14;
+    undefined field21_0x15;
+    undefined field22_0x16;
+    undefined field23_0x17;
+    undefined field24_0x18;
+    undefined field25_0x19;
+    undefined field26_0x1a;
+    undefined field27_0x1b;
+    undefined field28_0x1c;
+    undefined field29_0x1d;
+    enum PuzzleCategory field30_0x1e;
+    undefined field31_0x20;
+    undefined field32_0x21;
 };
 
 typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
@@ -282,100 +322,28 @@ struct SavedPartEntity {
     short partId;
 };
 
-typedef struct Room Room, *PRoom;
-
-typedef struct OtherEntity OtherEntity, *POtherEntity;
-
-typedef struct LadderEntity LadderEntity, *PLadderEntity;
+typedef enum AsciiProperties { // bitflags
+    WHITESPACE=1,
+    DECIMAL=2,
+    UPPER=4,
+    LOWER=8,
+    HEX=16,
+    CONTROL=32,
+    SYMBOL=64
+} AsciiProperties;
 
 typedef struct Dlist Dlist, *PDlist;
 
-typedef struct EntityBase? EntityBase?, *PEntityBase?;
-
-typedef short PartId;
-
-typedef struct RectEx RectEx, *PRectEx;
-
 typedef struct DlistNode DlistNode, *PDlistNode;
-
-typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
-
-typedef short EntityType;
 
 struct Dlist {
     struct DlistNode * head;
     struct DlistNode * tail;
 };
 
-struct RectEx {
-    struct Rect16 rect;
-    undefined2 mode;
-};
-
-struct EntityBaseBase? {
-    struct Rect16 inner;
-    undefined field1_0x8;
-    undefined field2_0x9;
-    undefined field3_0xa;
-    undefined field4_0xb;
-    undefined field5_0xc;
-    undefined field6_0xd;
-};
-
-struct EntityBase? {
-    struct EntityBaseBase? rect;
-    ushort spriteId;
-    EntityType type;
-};
-
-struct OtherEntity {
-    struct EntityBase? base;
-    PartId partId;
-    undefined field2_0x14;
-    undefined field3_0x15;
-    struct RectEx activation?;
-};
-
-struct LadderEntity {
-    struct EntityBase? base;
-    undefined field1_0x12;
-    undefined field2_0x13;
-    undefined field3_0x14;
-    undefined field4_0x15;
-    undefined field5_0x16;
-    undefined field6_0x17;
-    undefined field7_0x18;
-    undefined field8_0x19;
-    undefined field9_0x1a;
-    undefined field10_0x1b;
-    undefined field11_0x1c;
-    undefined field12_0x1d;
-    struct RectEx collision?;
-};
-
 struct DlistNode {
     struct DlistNode * next;
     struct DlistNode * prev;
-};
-
-struct Room {
-    ushort flags; // bit 0 obverse
-    short structuralEntityCounts[4];
-    short ladderEntityCounts[4];
-    short cEntityCounts?[6];
-    undefined4 cEntityGroups?[6];
-    short dEntityCounts?[6];
-    undefined4 dEntityGroups?[6];
-    short eEntityCounts?[6];
-    undefined4 eEntityGroups?[6];
-    struct OtherEntity * structuralEntityGroups[4];
-    struct LadderEntity * ladderEntityGroups[4];
-    short partEntityCount;
-    struct Dlist * partEntities;
-    undefined2 field13_0xa4[6];
-    undefined2 field14_0xb0[6];
-    undefined2 field15_0xbc[50];
-    undefined entities[468];
 };
 
 typedef struct Actor Actor, *PActor;
@@ -544,17 +512,101 @@ struct Actor {
 
 typedef struct Area Area, *PArea;
 
+typedef struct Room Room, *PRoom;
+
+typedef struct OtherEntity OtherEntity, *POtherEntity;
+
+typedef struct LadderEntity LadderEntity, *PLadderEntity;
+
+typedef struct EntityBase? EntityBase?, *PEntityBase?;
+
+typedef short PartId;
+
+typedef struct RectEx RectEx, *PRectEx;
+
+typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
+
+typedef short EntityType;
+
+typedef struct Rect16 Rect16, *PRect16;
+
+struct Room {
+    ushort flags; // bit 0 obverse
+    short structuralEntityCounts[4];
+    short ladderEntityCounts[4];
+    short cEntityCounts?[6];
+    undefined4 cEntityGroups?[6];
+    short dEntityCounts?[6];
+    undefined4 dEntityGroups?[6];
+    short eEntityCounts?[6];
+    undefined4 eEntityGroups?[6];
+    struct OtherEntity * structuralEntityGroups[4];
+    struct LadderEntity * ladderEntityGroups[4];
+    short partEntityCount;
+    struct Dlist * partEntities;
+    undefined2 field13_0xa4[6];
+    undefined2 field14_0xb0[6];
+    undefined2 field15_0xbc[50];
+    undefined entities[468];
+};
+
 struct Area {
     short roomCount;
     struct Room rooms[16];
     undefined field2_0x2f42[32928];
 };
 
-typedef struct HeapNode HeapNode, *PHeapNode;
+struct Rect16 {
+    short x;
+    short y;
+    short w;
+    short h;
+};
 
-struct HeapNode {
-    struct DlistNode node;
-    void * heap;
+struct RectEx {
+    struct Rect16 rect;
+    undefined2 mode;
+};
+
+struct EntityBaseBase? {
+    struct Rect16 inner;
+    undefined field1_0x8;
+    undefined field2_0x9;
+    undefined field3_0xa;
+    undefined field4_0xb;
+    undefined field5_0xc;
+    undefined field6_0xd;
+};
+
+struct EntityBase? {
+    struct EntityBaseBase? rect;
+    ushort spriteId;
+    EntityType type;
+};
+
+struct OtherEntity {
+    struct EntityBase? base;
+    PartId partId;
+    undefined field2_0x14;
+    undefined field3_0x15;
+    struct RectEx activation?;
+};
+
+struct LadderEntity {
+    struct EntityBase? base;
+    undefined field1_0x12;
+    undefined field2_0x13;
+    undefined field3_0x14;
+    undefined field4_0x15;
+    undefined field5_0x16;
+    undefined field6_0x17;
+    undefined field7_0x18;
+    undefined field8_0x19;
+    undefined field9_0x1a;
+    undefined field10_0x1b;
+    undefined field11_0x1c;
+    undefined field12_0x1d;
+    struct RectEx collision?;
 };
 
 typedef struct PartResource PartResource, *PPartResource;
@@ -632,8 +684,6 @@ struct EntityNode {
     struct OtherEntity inner;
 };
 
-typedef struct GameState GameState, *PGameState;
-
 typedef struct BuildingState BuildingState, *PBuildingState;
 
 struct BuildingState {
@@ -643,6 +693,23 @@ struct BuildingState {
     undefined field3_0x304[398];
     undefined field4_0x492[552];
 };
+
+typedef struct CategoryVtable? CategoryVtable?, *PCategoryVtable?;
+
+struct CategoryVtable? {
+    pointer SetParameters'?;
+    pointer field1_0x4;
+    pointer field2_0x8;
+};
+
+typedef struct HeapNode HeapNode, *PHeapNode;
+
+struct HeapNode {
+    struct DlistNode node;
+    void * heap;
+};
+
+typedef struct GameState GameState, *PGameState;
 
 struct GameState {
     undefined field0_0x0;
@@ -788,17 +855,6 @@ struct PartDefinition {
     undefined field88_0x60;
     undefined field89_0x61;
 };
-
-typedef enum PuzzleCategory {
-    BALANCE=0 // Scales,
-    ELECTRICITY=1 // Electricity,
-    ENERGY=2 // Energy,
-    FORCE=3 // Force,
-    GEAR=4 // Gear,
-    JIGSAW=5 // Jigsaw,
-    MAGNET=6 // Magnetizm,
-    SIMPLE_MACHINE=7 // Simple Machine
-} PuzzleCategory;
 
 typedef short PuzzleNumberOneBased;
 
@@ -1456,7 +1512,7 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 
 char * __stdcall GetWinapiStringAlloc(UINT id);
 void __stdcall GetWinapiString(char *result,UINT id);
-void __stdcall DrawString'(undefined2 x,undefined2 y,undefined4 value);
+void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *value);
 void InitEntities(void);
 void StartLevel(void);
 ushort __stdcall RoomIsObverse(short roomIndex);
@@ -1465,9 +1521,9 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,short param_5);
 void __stdcall LoadEntities(char *puzzleEntityTypes,SavedPartEntity *partEntities);
 uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
-void __stdcall DrawInteger(undefined2 x,undefined2 y,short value,short color);
+void __stdcall DrawInteger(short x,short y,short value,short color);
 int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category);
-void Puzzles::Customization::draw(void);
+void Puzzles::Customization::Draw(void);
 void __stdcall ShowAlertMessage(char *param_1,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
 void __stdcall EnterBuilding(void);
@@ -1484,17 +1540,25 @@ void * __stdcall PoolAlloc(uint len);
 void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 ushort GetCriticalSlotCount(void);
+void Puzzles::SetVtableForCurrentCategory(void);
+void __cdecl PickapuzzleMenu::OnClick(astruct *param_1);
+void PickapuzzleMenu::Draw(void);
 void Puzzles::ComputeCurrentPuzzle(void);
 undefined2 Puzzles::CheckEndgame(void);
-short Puzzles::ComputeCandidateCategory(void);
+short Puzzles::ComputeCurrentCategory(void);
 void __cdecl Puzzles::ComputeCandidatePuzzles(short category);
 void Puzzles::TurnAllOffCategoriesBackOn(void);
+void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1);
+short __stdcall SetCurrentColor(short color);
+void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *text);
 void * __stdcall Memcpy(void *dest,void *src,uint len);
 void * __stdcall Memset(void *result,byte value,uint len);
 char * __stdcall Strcpy(char *dest,char *src);
 int __stdcall Sprintf'(char *dest,char *format,...);
 int __stdcall Sprintf'(char *dest,char *format,...);
 int __stdcall Sprintf'(char *dest,char *format,...);
+uint __cdecl ToUpper(uint c);
+int __cdecl Atoi(char *input);
 int Random(void);
 void __stdcall WinapiExitProcess(UINT exitCode);
 

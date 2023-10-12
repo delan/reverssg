@@ -324,42 +324,41 @@ void FUN_00410408(undefined param_1,undefined param_2,undefined param_3,undefine
   short sVar2;
   short sVar3;
   uint uVar4;
-  uint uVar5;
   uint extraout_ECX;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
-  undefined uVar6;
+  undefined uVar5;
   undefined4 unaff_EBX;
-  short sVar7;
-  uint uVar8;
+  short sVar6;
+  uint uVar7;
   
   sVar2 = FUN_0044d81a();
   DAT_004601aa = 0x404;
-  uVar8 = 0xffffffff;
-  uVar4 = FUN_0044cb93(0xffff);
-  uVar6 = extraout_DL;
-  sVar7 = (short)param_4;
+  uVar7 = 0xffffffff;
+  sVar3 = GetFontBaselineY_(0xffff);
+  uVar5 = extraout_DL;
+  sVar6 = (short)param_4;
   while( true ) {
     cVar1 = *param_6;
     unaff_EBX = CONCAT31((int3)((uint)unaff_EBX >> 8),cVar1);
     param_6 = param_6 + 1;
     if (cVar1 == '\0') break;
     if ((cVar1 == '\n') || (cVar1 == '\r')) {
-      param_5 = param_5 + (short)uVar4 + sVar2;
-      sVar7 = (short)param_4;
+      param_5 = param_5 + sVar3 + sVar2;
+      sVar6 = (short)param_4;
     }
     else if ((cVar1 == '|') && (_DAT_004601ac != 0)) {
-      uVar8 = (uint)DAT_004601aa;
-      DAT_004601aa = SetColor_(DAT_004601aa);
-      uVar6 = extraout_DL_00;
+      uVar7 = (uint)DAT_004601aa;
+      DAT_004601aa = SetCurrentColor(DAT_004601aa);
+      uVar5 = extraout_DL_00;
     }
     else {
-      sVar3 = param_5 + (short)uVar4;
-      uVar5 = FUN_0044cfcb((char)sVar3,uVar6,(char)uVar8,0xffff,unaff_EBX,sVar7,sVar3,0xffff);
-      uVar8 = extraout_ECX;
-      uVar6 = extraout_DL_01;
-      sVar7 = sVar7 + (short)uVar5;
+      uVar4 = FUN_0044cfcb((char)(param_5 + sVar3),uVar5,(char)uVar7,0xffff,unaff_EBX,sVar6,
+                           param_5 + sVar3,0xffff);
+      uVar7 = extraout_ECX;
+      uVar5 = extraout_DL_01;
+      sVar6 = sVar6 + (short)uVar4;
     }
   }
   return;
@@ -5341,7 +5340,7 @@ void FUN_00416485(void)
   _DAT_004605b4 = 0;
   FUN_00415a24();
   uVar2 = 0;
-  sVar1 = SetColor_(0);
+  sVar1 = SetCurrentColor(0);
   FUN_0044d5aa((char)sVar1,extraout_DL,uVar2,0xffff,0x15e,0x13f,0xa1,DAT_00466324);
   return;
 }
@@ -7118,13 +7117,13 @@ void FUN_00417e20(void)
   
   GetWinapiString(local_54,0x4e3a);
   GetWinapiString(local_a4,0x4e3b);
-  SetColor_(0xfff);
-  DrawString_(8,0x3d,local_54);
-  DrawString_(8,0x4d,local_a4);
-  SetColor_(0xafa);
-  DrawString_(0x40,0x3d,DAT_004666d8);
-  SetColor_(0x9f9);
-  DrawString_(0x40,0x4d,DAT_004666dc);
+  SetCurrentColor(0xfff);
+  DrawStringWithCurrentFontAndColor(8,0x3d,local_54);
+  DrawStringWithCurrentFontAndColor(8,0x4d,local_a4);
+  SetCurrentColor(0xafa);
+  DrawStringWithCurrentFontAndColor(0x40,0x3d,DAT_004666d8);
+  SetCurrentColor(0x9f9);
+  DrawStringWithCurrentFontAndColor(0x40,0x4d,DAT_004666dc);
   return;
 }
 
@@ -7690,7 +7689,7 @@ void FUN_00419873(undefined param_1,undefined param_2,undefined param_3,int para
                          CONCAT22((short)((uint)iVar1 >> 0x10),*(undefined2 *)(param_4 + 0x1e)));
     if ((short)uVar2 != 0) {
       FUN_004195bd();
-      Puzzles::Customization::draw();
+      Puzzles::Customization::Draw();
       return;
     }
   }
@@ -7782,7 +7781,7 @@ void FUN_00419a55(undefined4 param_1,undefined4 param_2,uint param_3)
 void FUN_00419ac0(void)
 
 {
-  Puzzles::Customization::draw();
+  Puzzles::Customization::Draw();
   return;
 }
 
@@ -7836,7 +7835,7 @@ undefined2 FUN_00419aca(undefined param_1,undefined param_2,undefined param_3,us
   FUN_00446bc3();
   FUN_00446e68();
   uVar2 = 0;
-  DAT_0046673c = SetColor_(0);
+  DAT_0046673c = SetCurrentColor(0);
   FUN_0041029e((char)DAT_0046673c,extraout_DL_00,uVar2,&LAB_00419a90);
   DAT_00466730 = param_4;
   DAT_00460ba8 = 0xffff;
@@ -7873,7 +7872,7 @@ undefined2 FUN_00419aca(undefined param_1,undefined param_2,undefined param_3,us
   FUN_00413b24(uVar2,extraout_DL_01,(char)uVar10,DAT_00466740,FUN_00419ac0,1);
   FUN_004198f8();
   FUN_004195bd();
-  Puzzles::Customization::draw();
+  Puzzles::Customization::Draw();
   DAT_00466734 = 3;
   _DAT_004634c8 = 1;
   _DAT_00460baa = 1;
@@ -7923,7 +7922,7 @@ undefined2 FUN_00419aca(undefined param_1,undefined param_2,undefined param_3,us
   }
   DAT_00466740 = FUN_00412d0c(uVar6,uVar8,uVar10,DAT_00466740);
   FUN_0043ba1d();
-  SetColor_(DAT_0046673c);
+  SetCurrentColor(DAT_0046673c);
   uVar8 = FUN_0041030c();
   FUN_00419a55(uVar8,extraout_EDX_04,extraout_ECX_02);
   FUN_00413868();
@@ -8711,19 +8710,17 @@ void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *pa
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_0041ad20(void)
+void Puzzles::SetParametersForElectricity_(void)
 
 {
   undefined uVar1;
   uint uVar2;
   undefined4 uVar3;
   int iVar4;
-  undefined in_CL;
   undefined extraout_CL;
   undefined extraout_CL_00;
   uint extraout_ECX;
   uint extraout_ECX_00;
-  undefined in_DL;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
@@ -8749,7 +8746,7 @@ void FUN_0041ad20(void)
   DAT_0046974e = 0x4a77;
   DAT_00469750 = 0xffff;
   uVar7 = 0x42;
-  uVar1 = FUN_0043ff91(0x42,in_DL,in_CL,&DAT_00469742);
+  uVar1 = FUN_0043ff91(&DAT_00469742);
   puVar8 = &LAB_00421cea;
   uVar2 = FUN_0044c950(uVar1,extraout_DL,uVar7,&LAB_00421cea);
   uVar2 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar8);
@@ -8758,7 +8755,7 @@ void FUN_0041ad20(void)
   DAT_004673dc = FUN_00412ac4(10000);
   uVar2 = FUN_00413cf4((char)DAT_004673dc,extraout_DL_00,uVar1,DAT_004673dc,0,0,0);
   FUN_00412d0c(uVar2,extraout_EDX_01,extraout_ECX_00,DAT_004673dc);
-  Puzzles::SetElectricityParameters(Puzzles::currentPuzzle);
+  SetParametersForElectricity(currentPuzzle);
   FUN_0043fef9(DAT_00461536);
   FUN_0041b115();
   uVar1 = FUN_0041f6da();
@@ -9637,7 +9634,7 @@ void FUN_0041bc51(undefined param_1,undefined param_2,undefined param_3,int para
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void __cdecl Puzzles::SetElectricityParameters(PuzzleNumberOneBased puzzle)
+void __cdecl Puzzles::SetParametersForElectricity(PuzzleNumberOneBased puzzle)
 
 {
   undefined4 uVar1;
@@ -11353,25 +11350,24 @@ void __cdecl Puzzles::SetElectricityParameters(PuzzleNumberOneBased puzzle)
 void FUN_0041f635(void)
 
 {
-  undefined2 uVar1;
-  undefined4 in_EAX;
-  short sVar2;
-  undefined4 unaff_ESI;
+  short x;
+  short y;
+  short sVar1;
   char local_10 [12];
   
-  FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
-  sVar2 = 0;
+  Nfnt::Load(15000);
+  sVar1 = 0;
   do {
-    if (0 < (short)(&DAT_00466a54)[sVar2]) {
-      unaff_ESI = CONCAT22((short)((uint)unaff_ESI >> 0x10),(&DAT_004614fc)[sVar2 * 6]);
-      uVar1 = (&DAT_004614fe)[sVar2 * 6];
-      Sprintf_(local_10,&DAT_00461554,(int)(short)(&DAT_00466a54)[sVar2]);
-      FUN_0044cf2c(CONCAT22((short)((uint)local_10 >> 0x10),15000),local_10,unaff_ESI,uVar1,0);
+    if (0 < (short)(&DAT_00466a54)[sVar1]) {
+      x = (&DAT_004614fc)[sVar1 * 6];
+      y = (&DAT_004614fe)[sVar1 * 6];
+      Sprintf_(local_10,&DAT_00461554,(int)(short)(&DAT_00466a54)[sVar1]);
+      DrawString(15000,local_10,x,y,0);
     }
-    sVar2 = sVar2 + 1;
-  } while (sVar2 < 5);
+    sVar1 = sVar1 + 1;
+  } while (sVar1 < 5);
   FUN_00430abc(10,0x80,0x7c,0xb5);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -13235,6 +13231,100 @@ void FUN_00421f1f(void)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void __cdecl Puzzles::SetParametersForEnergy_(void)
+
+{
+  int iVar1;
+  undefined uVar2;
+  uint in_EAX;
+  undefined2 extraout_var;
+  uint uVar3;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  undefined extraout_CL_02;
+  undefined extraout_CL_03;
+  undefined extraout_CL_04;
+  undefined extraout_CL_05;
+  uint in_ECX;
+  uint extraout_ECX;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined extraout_DL_03;
+  undefined extraout_DL_04;
+  undefined extraout_DL_05;
+  undefined extraout_DL_06;
+  undefined extraout_DL_07;
+  undefined4 in_EDX;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  undefined4 extraout_EDX_01;
+  uint uVar4;
+  
+  _DAT_0046778c = 0;
+  _DAT_00467794 = 0;
+  uVar2 = FUN_00440113(in_EAX,in_EDX,in_ECX);
+  DAT_00469544 = &LAB_0042613f;
+  FUN_0044c950(uVar2,extraout_DL,extraout_CL,&LAB_004260c7);
+  uVar3 = CONCAT22(extraout_var,currentPuzzle);
+  uVar4 = uVar3;
+  SetParametersForEnergy(currentPuzzle);
+  FUN_00431024(uVar3,extraout_EDX,uVar4,15000);
+  uVar2 = 0x98;
+  DAT_004676fc = FUN_00412ac4(15000);
+  uVar3 = FUN_00413cf4((char)DAT_004676fc,extraout_DL_00,uVar2,DAT_004676fc,0,0,0);
+  uVar4 = DAT_004676fc;
+  uVar3 = FUN_00412d0c(uVar3,extraout_EDX_00,extraout_ECX,DAT_004676fc);
+  FUN_00422b11(uVar3,extraout_EDX_01,uVar4);
+  FUN_004234df();
+  _DAT_00467606 = 0x10e012c;
+  _DAT_0046760a = 0x64012c;
+  DAT_00467610 = 0x10e012c;
+  DAT_00467614 = 0x64012c;
+  DAT_00467618._0_2_ = DAT_0046760e;
+  FUN_0041029e((char)DAT_0046760e,extraout_DL_01,extraout_CL_00,&LAB_004259f0);
+  DAT_00467700 = FUN_00412ac4(0x3ad6);
+  FUN_0042633e();
+  DAT_00469742 = 0x1f73;
+  DAT_00469744 = 0x1f5c;
+  DAT_00469746 = 0x4a49;
+  DAT_00469748 = 0x4a4a;
+  DAT_0046974a = 0x4a4c;
+  DAT_0046974c = 0x4a55;
+  DAT_0046974e = DAT_0046761e;
+  DAT_00469750 = DAT_00467620;
+  DAT_00469752 = DAT_00467622;
+  DAT_00469754 = DAT_00467624;
+  DAT_00469756 = 0x4a78;
+  DAT_00469758 = 0xffff;
+  FUN_0043ff91(&DAT_00469742);
+  DAT_00467774 = FUN_00412ac4(0x3ad7);
+  DAT_004676e4 = FUN_00412ac4(0x3a9f);
+  DAT_00467778 = FUN_00412ac4(0x3a9f);
+  uVar2 = 0xa0;
+  DAT_004676e8 = FUN_00412ac4(0x3aa0);
+  DAT_0046777c = FUN_0043b58e((char)DAT_004676e8,extraout_DL_02,uVar2,DAT_00467774,0,0);
+  DAT_00467780 = FUN_0043b58e((char)DAT_0046777c,extraout_DL_03,extraout_CL_01,DAT_004676e8,0,0x24);
+  DAT_00467784 = FUN_0043b58e((char)DAT_00467780,extraout_DL_04,extraout_CL_02,DAT_004676e4,0,0);
+  DAT_00467788 = FUN_0043b58e((char)DAT_00467784,extraout_DL_05,extraout_CL_03,DAT_004676e4,0,0);
+  *(undefined2 *)(DAT_0046777c + 0x12) = 0;
+  *(undefined2 *)(DAT_00467780 + 0x12) = 0;
+  iVar1 = DAT_00467784;
+  *(undefined2 *)(DAT_00467784 + 0x12) = 0;
+  FUN_00426714((char)iVar1,extraout_DL_06,extraout_CL_04,1);
+  uVar2 = FUN_0043139c();
+  DAT_0046778e = 0x14;
+  DAT_00467790 = 0x14;
+  FUN_00413a54(uVar2,extraout_DL_07,extraout_CL_05,DAT_00467700,0x3c,1);
+  return;
+}
+
+
+
 void FUN_00422920(void)
 
 {
@@ -13243,21 +13333,18 @@ void FUN_00422920(void)
   char *format;
   undefined4 extraout_ECX;
   undefined4 uVar3;
-  undefined extraout_DL;
-  undefined2 extraout_var;
   short sVar4;
   int iVar5;
   undefined4 unaff_ESI;
   undefined4 uVar6;
-  short sVar7;
-  undefined uVar8;
+  short y;
   char local_484 [256];
   char local_384 [640];
   char local_104 [250];
   short local_a;
   char *local_8;
   
-  sVar7 = 0x46;
+  y = 0x46;
   pcVar2 = GetWinapiStringAlloc(0x4e3c);
   Sprintf_(local_484,pcVar2,&DAT_00461590);
   TurboFree_(pcVar2);
@@ -13266,9 +13353,8 @@ void FUN_00422920(void)
     GetWinapiString(local_384 + iVar5 * 0x50,iVar5 + 0x4e3e);
     iVar5 = iVar5 + 1;
   } while (iVar5 < 9);
-  uVar8 = 0x5e;
   pcVar2 = GetWinapiStringAlloc(0x4e5e);
-  iVar5 = FUN_00454024((char)pcVar2,extraout_DL,uVar8,pcVar2);
+  iVar5 = Atoi(pcVar2);
   local_a = (short)iVar5;
   TurboFree_(pcVar2);
   if ((10 < local_a) || (local_a < -10)) {
@@ -13276,37 +13362,37 @@ void FUN_00422920(void)
   }
   uVar6 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
   uVar3 = uVar6;
-  FUN_0044cbbb(uVar6);
+  Nfnt::Load(15000);
   sVar4 = 0;
   do {
     if ((&DAT_00467626)[sVar4 * 0xd] != -1) {
       pcVar2 = local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50;
       sVar1 = FUN_0044ccf5((char)pcVar2,(char)local_384,(char)uVar3,uVar6,pcVar2);
-      FUN_0044cf2c(uVar6,local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50,
-                   CONCAT22(extraout_var,(0xee - sVar1) - local_a),sVar7,0);
+      DrawString(15000,local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50,
+                 (0xee - sVar1) - local_a,y,0);
       uVar3 = extraout_ECX;
     }
-    sVar7 = sVar7 + 0x41;
+    y = y + 0x41;
     sVar4 = sVar4 + 1;
   } while (sVar4 < 4);
   if (DAT_00461580 == 0) {
     pcVar2 = GetWinapiStringAlloc(0x4e46);
     format = GetWinapiStringAlloc(0x4e47);
     local_8 = GetWinapiStringAlloc(0x4e48);
-    FUN_0044cf2c(uVar6,pcVar2,10,0x152,0);
+    DrawString(15000,pcVar2,10,0x152,0);
     Sprintf_(local_104,format,(int)DAT_0046776a);
-    FUN_0044cf2c(uVar6,local_104,10,0x166,0);
-    FUN_0044cf2c(uVar6,local_8,10,0x17a,0);
+    DrawString(15000,local_104,10,0x166,0);
+    DrawString(15000,local_8,10,0x17a,0);
     TurboFree_(pcVar2);
     TurboFree_(format);
     TurboFree_(local_8);
   }
   else {
-    SetColor_(0);
-    DrawString_(10,0x148,local_484);
+    SetCurrentColor(0);
+    DrawStringWithCurrentFontAndColor(10,0x148,local_484);
   }
   FUN_00425b7d();
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -13761,17 +13847,17 @@ void FUN_004235dc(undefined param_1,undefined param_2,undefined param_3,short pa
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_0042365b(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
+void __cdecl Puzzles::SetParametersForEnergy(PuzzleNumberOneBased puzzle)
 
 {
   short sVar1;
   short sVar2;
   
   FUN_00425c3a();
-  if (0x21 < (short)param_4) {
-    param_4._0_2_ = 1;
+  if (33 < puzzle) {
+    puzzle = 1;
   }
-  switch((short)param_4) {
+  switch(puzzle) {
   case 1:
     _DAT_0046977a = 4;
     _DAT_0046977c = 4;
@@ -15194,19 +15280,16 @@ FUN_00425ab0(undefined param_1,undefined param_2,undefined param_3,int param_4,u
 void FUN_00425b7d(void)
 
 {
-  undefined4 unaff_EBX;
-  undefined4 uVar1;
   char local_10 [12];
   
-  uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
+  Nfnt::Load(15000);
   FUN_00430de8(0x37,0x70,0x1a,0x1a);
   if (0 < DAT_00467768) {
     Sprintf_(local_10,&DAT_00461593,(int)DAT_00467768);
-    FUN_0044cf2c(uVar1,local_10,0x3b,0x82,0);
+    DrawString(15000,local_10,0x3b,0x82,0);
   }
   FUN_00430abc(0x37,0x70,0x1a,0x1a);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -15907,6 +15990,63 @@ int FUN_004269a4(undefined4 param_1,undefined4 param_2,byte **param_3,byte **par
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void __cdecl Puzzles::SetParametersForForce_(void)
+
+{
+  undefined uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  uint extraout_ECX;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  undefined2 *puVar4;
+  
+  _DAT_00467890 = 0;
+  DAT_00469742 = 0x1f73;
+  DAT_00469744 = 0x1f67;
+  DAT_00469746 = 0x1f81;
+  DAT_00469748 = 0x4a6d;
+  DAT_0046974a = 0x1fa7;
+  DAT_0046974c = 0x4a5b;
+  DAT_0046974e = 0x1f5f;
+  DAT_00469750 = 0x4a61;
+  DAT_00469752 = 0x4a4c;
+  DAT_00469754 = 0x1f5c;
+  DAT_00469756 = 0x4a77;
+  DAT_00469758 = 0xffff;
+  puVar4 = &DAT_00469742;
+  uVar2 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar4);
+  FUN_0044c950(uVar1,extraout_DL,extraout_CL,&LAB_0042adee);
+  uVar2 = SetParametersForForce();
+  FUN_004272d1(uVar2,extraout_EDX_00,extraout_ECX);
+  FUN_00427184();
+  uVar1 = FUN_00429980();
+  FUN_0041029e(uVar1,extraout_DL_00,extraout_CL_00,&LAB_0042776a);
+  _DAT_00467824 = FUN_0044ca04();
+  uVar1 = 0xa6;
+  DAT_00467838 = FUN_00412ac4(0x42a6);
+  iVar3 = FUN_0043b58e((char)DAT_00467838,extraout_DL_01,uVar1,DAT_00467838,0,0);
+  DAT_0046783c = iVar3;
+  *(undefined2 *)(iVar3 + 0x12) = 0;
+  FUN_0042ae0e((char)iVar3,extraout_DL_02,extraout_CL_01,1);
+  FUN_0043139c();
+  DAT_00469544 = &LAB_0042ae7f;
+  _DAT_00467836 = 0;
+  return;
+}
+
+
+
 void FUN_004270f8(undefined param_1,undefined param_2,undefined param_3,int param_4)
 
 {
@@ -16271,7 +16411,7 @@ void FUN_00427794(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void Puzzles::SetForceOrGearParameters(void)
+void Puzzles::SetParametersForForce(void)
 
 {
   short sVar1;
@@ -18168,7 +18308,7 @@ short FUN_0042b00b(undefined param_1,undefined param_2,undefined param_3,undefin
     }
     else {
       ppuVar6 = &PTR_LAB_00461b74;
-      ppbVar1 = (byte **)FUN_0044b38d(&PTR_LAB_00461b74);
+      ppbVar1 = (byte **)Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b74);
       puVar4 = extraout_EDX_00;
     }
   }
@@ -18200,7 +18340,7 @@ void FUN_0042b10a(undefined4 param_1,undefined *param_2,byte **param_3,undefined
   if ((uVar1 != 1) && (param_6 != 0)) {
     pcVar2 = GetWinapiStringAlloc(0x4e88);
     ShowAlertMessage(pcVar2,unaff_BL);
-    FUN_0044b38d(&PTR_LAB_00461b74);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b74);
     TurboFree_(pcVar2);
   }
   return;
@@ -18225,7 +18365,7 @@ void FUN_0042b15b(void)
   uVar1 = FUN_00413a2c(uVar1,extraout_DL,extraout_CL,1);
   uVar2 = FUN_00430db4(uVar1,extraout_DL_00,uVar3,0,0,0x200,0x180);
   FUN_0044c8c2(uVar2,extraout_EDX,extraout_ECX,0x3fd);
-  FUN_0044b38d(&PTR_LAB_00461b74);
+  Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b74);
   return;
 }
 
@@ -18455,21 +18595,104 @@ void FUN_0042b4e4(undefined param_1,undefined param_2,undefined param_3,uint par
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void Puzzles::SetParametersForGear_(void)
+
+{
+  undefined uVar1;
+  undefined uVar2;
+  uint uVar3;
+  undefined2 extraout_var;
+  undefined2 extraout_var_00;
+  uint uVar4;
+  int iVar5;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  undefined extraout_CL_02;
+  undefined extraout_CL_03;
+  uint extraout_ECX;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined extraout_DL_03;
+  undefined extraout_DL_04;
+  undefined extraout_DL_05;
+  undefined extraout_DL_06;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  undefined4 extraout_EDX_01;
+  undefined4 extraout_EDX_02;
+  undefined2 *puVar6;
+  undefined *puVar7;
+  
+  _DAT_00467cec = 0;
+  DAT_00469742 = 0x4a4e;
+  DAT_00469744 = 0x4a4f;
+  DAT_00469746 = 0x1f73;
+  DAT_00469748 = 0x4a54;
+  DAT_0046974a = 0x4a5f;
+  DAT_0046974c = 0x1fa7;
+  DAT_0046974e = 0x1f5c;
+  DAT_00469750 = 0x4a79;
+  DAT_00469752 = 0xffff;
+  DAT_00467c9c = FUN_00412ac4(0x36bc);
+  DAT_00467ca0 = FUN_00412ac4(0x36b7);
+  uVar1 = 0xba;
+  DAT_00467ca4 = FUN_00412ac4(0x36ba);
+  DAT_00467ca8 = FUN_0043b58e((char)DAT_00467ca4,extraout_DL,uVar1,DAT_00467c9c,0x11,0x1c);
+  DAT_00467cac = FUN_0043b58e((char)DAT_00467ca8,extraout_DL_00,extraout_CL,DAT_00467ca0,0x11,0x20);
+  DAT_00467cb0 = FUN_0043b58e((char)DAT_00467cac,extraout_DL_01,extraout_CL_00,DAT_00467ca4,0,0);
+  puVar6 = &DAT_00469742;
+  uVar3 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar3,extraout_EDX,(uint)puVar6);
+  puVar7 = &LAB_0042f132;
+  FUN_0044c950(uVar1,extraout_DL_02,extraout_CL_01,&LAB_0042f132);
+  FUN_0042e965(CONCAT22(extraout_var,currentPuzzle),extraout_EDX_00,(uint)puVar7,currentPuzzle);
+  uVar4 = CONCAT22(extraout_var_00,currentPuzzle);
+  uVar3 = uVar4;
+  SetParametersForGear(currentPuzzle);
+  uVar3 = FUN_0042ec27(uVar4,extraout_EDX_01,uVar3);
+  FUN_0042ed2a(uVar3,extraout_EDX_02,extraout_ECX);
+  uVar1 = FUN_0042c389();
+  FUN_0042c89d(uVar1,extraout_DL_03,extraout_CL_02,1);
+  FUN_0042b98f();
+  uVar2 = (undefined)DAT_00461938;
+  uVar1 = uVar2;
+  FUN_0043fef9(DAT_00461938);
+  FUN_0041029e(uVar2,extraout_DL_04,uVar1,&LAB_0042c873);
+  FUN_0042ee23();
+  DAT_00467c94 = FUN_00412ac4(0x3aa1);
+  FUN_0041395c(DAT_00467c94,0x18e,0x143,10);
+  DAT_00467c90 = FUN_00412ac4(0x3a9d);
+  FUN_0041395c(DAT_00467c90,0x25,0x2e,1);
+  uVar1 = 0xbb;
+  DAT_00467c98 = FUN_00412ac4(0x36bb);
+  iVar5 = FUN_0043b58e((char)DAT_00467c98,extraout_DL_05,uVar1,DAT_00467c98,0,0);
+  DAT_00467cb4 = iVar5;
+  *(undefined2 *)(iVar5 + 0x12) = 0;
+  FUN_0042f2ed((char)iVar5,extraout_DL_06,extraout_CL_03,1);
+  DAT_00469544 = &LAB_0042f35e;
+  FUN_0043139c();
+  return;
+}
+
+
+
 void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  undefined4 unaff_EBX;
-  undefined4 uVar1;
   char local_38 [52];
   
-  uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
+  Nfnt::Load(15000);
   FUN_00430de8(10,0x14a,0xfa,0x28);
   Sprintf_(local_38,s_x__d_y__d_00461a77,(int)param_4,(int)param_5);
-  FUN_0044cf2c(uVar1,PTR_s__00461a48,10,0x159,0);
-  FUN_0044cf2c(uVar1,local_38,10,0x16d,0);
+  DrawString(15000,PTR_s__00461a48,10,0x159,0);
+  DrawString(15000,local_38,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -18939,28 +19162,28 @@ void FUN_0042c389(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4)
+void __cdecl Puzzles::SetParametersForGear(PuzzleNumberOneBased puzzle)
 
 {
   undefined4 uVar1;
-  int iVar2;
-  short sVar3;
+  int puzzle_;
+  short sVar2;
   
   DAT_00461938 = 0;
   DAT_00461a44 = 2;
   DAT_00467c6c = FUN_00412ac4(0x36b7);
   DAT_00467c5a = FUN_00412ac4(0x36bc);
-  sVar3 = 1;
+  sVar2 = 1;
   do {
     uVar1 = FUN_00412ac4(0x36bd);
-    *(undefined4 *)(sVar3 * 0x12 + 0x467c5e) = uVar1;
+    *(undefined4 *)(sVar2 * 0x12 + 0x467c5e) = uVar1;
     uVar1 = FUN_00412ac4(0x36bd);
-    *(undefined4 *)(sVar3 * 0x12 + 0x467c62) = uVar1;
-    sVar3 = sVar3 + -1;
-  } while (-1 < sVar3);
-  iVar2 = (int)param_4;
-  if (iVar2 < 4) {
-    if (iVar2 == 3) {
+    *(undefined4 *)(sVar2 * 0x12 + 0x467c62) = uVar1;
+    sVar2 = sVar2 + -1;
+  } while (-1 < sVar2);
+  puzzle_ = (int)puzzle;
+  if (puzzle_ < 4) {
+    if (puzzle_ == 3) {
       _DAT_0046977a = 3;
       _DAT_0046977c = 1;
       DAT_004697a8 = 14000;
@@ -18969,7 +19192,7 @@ void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4)
       DAT_0046978e = 0x36b9;
       DAT_00469790 = 0xffff;
     }
-    else if (iVar2 == 1) {
+    else if (puzzle_ == 1) {
       _DAT_0046977a = 3;
       _DAT_0046977c = 1;
       DAT_004697a8 = 0x36b4;
@@ -18978,7 +19201,7 @@ void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4)
       DAT_0046978e = 0x36b3;
       DAT_00469790 = 0xffff;
     }
-    else if (iVar2 == 2) {
+    else if (puzzle_ == 2) {
       _DAT_0046977a = 3;
       _DAT_0046977c = 1;
       DAT_004697a8 = 0x36b5;
@@ -18988,7 +19211,7 @@ void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4)
       DAT_00469790 = 0xffff;
     }
   }
-  else if (iVar2 - 4U < 0x17) {
+  else if (puzzle_ - 4U < 23) {
     _DAT_0046977a = 5;
     _DAT_0046977c = 1;
     DAT_004697a8 = 0x36b3;
@@ -18999,7 +19222,7 @@ void FUN_0042c4f1(uint param_1,undefined4 param_2,uint param_3,short param_4)
     DAT_00469792 = 0x36c3;
     DAT_00469794 = 0xffff;
   }
-  else if (iVar2 - 0x1bU < 0x10) {
+  else if (puzzle_ - 27U < 16) {
     _DAT_0046977a = 5;
     _DAT_0046977c = 1;
     DAT_004697a8 = 0x36b2;
@@ -20567,7 +20790,7 @@ void FUN_0042fbf7(void)
   }
   *psVar2 = -1;
   _DAT_00461aca = 0;
-  FUN_0044b38d(&PTR_LAB_00461b50);
+  Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b50);
   return;
 }
 
@@ -20650,7 +20873,7 @@ undefined4 FUN_0042fe06(void)
       return 0;
     }
     FUN_0042b260();
-    FUN_0044b38d(&PTR_LAB_00461b74);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b74);
     uVar2 = 1;
   }
   return uVar2;
@@ -20812,8 +21035,8 @@ undefined4 FUN_0042ffd7(void)
   PTR_FUN_00460244 = &LAB_0042fee7;
   PTR_FUN_00460248 = &LAB_0042fe9d;
   PTR_FUN_00460250 = FUN_0043b1cc;
-  FUN_0044cbbb(200);
-  FUN_0044d4eb(200);
+  Nfnt::Load(200);
+  SetCurrentFont(200);
   FUN_0042f4ab();
   uVar1 = FUN_0043b972();
   FUN_0044b434(2,&PTR_FUN_004627d8);
@@ -22518,7 +22741,7 @@ void FUN_00431ef2(void)
   
   FUN_0044bd20(in_AL,in_DL,in_CL,0xffffffff,0xffffffff,0x1c4,0xfa,5);
   uVar3 = 0;
-  SetColor_(0);
+  SetCurrentColor(0);
   iVar2 = (int)DAT_0046a8b0 >> 1;
   if (iVar2 < 0) {
     iVar2 = iVar2 + (uint)(((int)DAT_0046a8b0 & 1U) != 0);
@@ -22887,22 +23110,84 @@ void FUN_004324b1(void)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void Puzzles::SetParametersForJigsaw__(void)
+
+{
+  undefined uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  uint extraout_ECX;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined extraout_DL_03;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  undefined4 extraout_EDX_01;
+  undefined2 *puVar4;
+  undefined *puVar5;
+  
+  _DAT_004685e0 = 0;
+  DAT_00469742 = 0x1f73;
+  DAT_00469744 = 0x1f74;
+  DAT_00469746 = 0x1f5b;
+  DAT_00469748 = 0x1fa7;
+  DAT_0046974a = 0x1f5c;
+  DAT_0046974c = 0x4a77;
+  DAT_0046974e = 0xffff;
+  puVar4 = &DAT_00469742;
+  uVar2 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar4);
+  puVar5 = &LAB_00433f92;
+  uVar2 = FUN_0044c950(uVar1,extraout_DL,extraout_CL,&LAB_00433f92);
+  FUN_00431024(uVar2,extraout_EDX_00,(uint)puVar5,11000);
+  uVar1 = 0xf8;
+  DAT_004685d0 = FUN_00412ac4(11000);
+  uVar2 = FUN_00413cf4((char)DAT_004685d0,extraout_DL_00,uVar1,DAT_004685d0,0,0,0);
+  FUN_00412d0c(uVar2,extraout_EDX_01,extraout_ECX,DAT_004685d0);
+  SetParametersForJigsaw_();
+  FUN_0043fef9(DAT_0046251e);
+  FUN_00432aea();
+  uVar1 = FUN_00432f2f();
+  FUN_0041029e(uVar1,extraout_DL_01,extraout_CL_00,&LAB_00432ac0);
+  DAT_004685d8 = FUN_00412ac4(0x3aa1);
+  FUN_0041395c(DAT_004685d8,0x18e,0x143,10);
+  DAT_004685c8 = FUN_00412ac4(0x2b75);
+  DAT_004685dc = FUN_00412ac4(0x3a9d);
+  FUN_0041395c(DAT_004685dc,0x2a,0x19,1);
+  uVar1 = 0x74;
+  DAT_004685c4 = FUN_00412ac4(0x2b74);
+  iVar3 = FUN_0043b58e((char)DAT_004685c4,extraout_DL_02,uVar1,DAT_004685c4,0,0);
+  DAT_004685cc = iVar3;
+  *(undefined2 *)(iVar3 + 0x12) = 0;
+  FUN_00433ff3((char)iVar3,extraout_DL_03,extraout_CL_01,1);
+  DAT_00469544 = &LAB_00434064;
+  FUN_0043139c();
+  return;
+}
+
+
+
 void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  undefined3 in_register_00000001;
   char *format;
-  undefined2 extraout_var;
   
   DAT_004685be = 15000;
-  FUN_0044cbbb(CONCAT22((short)((uint3)in_register_00000001 >> 8),15000));
+  Nfnt::Load(15000);
   FUN_00430de8(10,200,0x96,0x14);
   format = GetWinapiStringAlloc(0x4e8e);
   Sprintf_(&DAT_0046858c,format,(int)param_4,(int)param_5,(int)DAT_0046847c);
   TurboFree_(format);
-  FUN_0044cf2c(CONCAT22(extraout_var,DAT_004685be),&DAT_0046858c,10,0xd2,0);
+  DrawString(DAT_004685be,&DAT_0046858c,10,0xd2,0);
   FUN_00430abc(10,0xd2,0x96,0x14);
-  FUN_0044cb20(DAT_004685be);
+  Nfnt::Unload(DAT_004685be);
   return;
 }
 
@@ -23045,7 +23330,7 @@ void FUN_00432aea(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void Puzzles::SJOSMP_(void)
+void Puzzles::SetParametersForJigsaw_(void)
 
 {
   short sVar1;
@@ -23062,7 +23347,7 @@ void Puzzles::SJOSMP_(void)
   _DAT_00462520 = 0;
   DAT_00462522 = 0;
   DAT_0046847c = 0xb;
-  SetJigsawOrSimpleMachineParameters(currentPuzzle);
+  SetParametersForJigsaw(currentPuzzle);
   DAT_0046977e = 11000;
   DAT_00469780 = 11000;
   DAT_00469770 = GetWinapiResource_(11000,&_TEXT21);
@@ -23181,19 +23466,16 @@ void FUN_00432e65(void)
 void FUN_00432f2f(void)
 
 {
-  undefined4 unaff_EBX;
-  undefined4 uVar1;
   char local_10 [12];
   
-  uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
+  Nfnt::Load(15000);
   FUN_00430de8(0x3c,0xf5,0x1a,0x1a);
   if (0 < DAT_0046251c) {
     Sprintf_(local_10,&DAT_00462549,(int)DAT_0046251c);
-    FUN_0044cf2c(uVar1,local_10,0x41,0x104,0);
+    DrawString(15000,local_10,0x41,0x104,0);
   }
   FUN_00430abc(0x3c,0xf5,0x1a,0x1a);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -23201,7 +23483,7 @@ void FUN_00432f2f(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void __cdecl Puzzles::SetJigsawOrSimpleMachineParameters(PuzzleNumberOneBased puzzle)
+void __cdecl Puzzles::SetParametersForJigsaw(PuzzleNumberOneBased puzzle)
 
 {
   ushort uVar1;
@@ -25051,6 +25333,91 @@ undefined2 FUN_00435355(void)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void Puzzles::SetParametersForMagnet_(void)
+
+{
+  undefined uVar1;
+  uint uVar2;
+  undefined2 extraout_var;
+  uint uVar3;
+  int iVar4;
+  undefined4 uVar5;
+  int iVar6;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  uint extraout_ECX;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined extraout_DL_03;
+  undefined extraout_DL_04;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  undefined4 extraout_EDX_01;
+  undefined4 extraout_EDX_02;
+  short sVar7;
+  undefined2 *puVar8;
+  
+  _DAT_00468ff6 = 0;
+  DAT_00469742 = 0x1f73;
+  DAT_00469744 = 0x1f74;
+  DAT_00469746 = 0x4a57;
+  DAT_00469748 = 0x1f4e;
+  DAT_0046974a = 0x4a77;
+  DAT_0046974c = 0xffff;
+  puVar8 = &DAT_00469742;
+  uVar2 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar8);
+  FUN_0044c950(uVar1,extraout_DL,extraout_CL,&LAB_0043a972);
+  uVar2 = 900;
+  DAT_00468f2c = PoolAlloc(900);
+  FUN_00431024((uint)DAT_00468f2c,extraout_EDX_00,uVar2,13000);
+  uVar1 = 200;
+  DAT_00468fc0 = FUN_00412ac4(13000);
+  uVar2 = FUN_00413cf4((char)DAT_00468fc0,extraout_DL_00,uVar1,DAT_00468fc0,0,0,0);
+  FUN_00412d0c(uVar2,extraout_EDX_01,extraout_ECX,DAT_00468fc0);
+  SetParametersForMagnet(currentPuzzle);
+  FUN_00435d8a();
+  FUN_004359e9();
+  uVar3 = CONCAT22(extraout_var,DAT_0046269e);
+  uVar2 = uVar3;
+  FUN_0043fef9(DAT_0046269e);
+  uVar1 = FUN_00438e43(uVar3,extraout_EDX_02,uVar2);
+  FUN_0041029e(uVar1,extraout_DL_01,extraout_CL_00,&LAB_004359bf);
+  DAT_00468fd0 = FUN_00412ac4(0x3aa1);
+  FUN_0041395c(DAT_00468fd0,0x18e,0x143,10);
+  DAT_00468fd4 = FUN_00412ac4(0x3a9d);
+  FUN_0041395c(DAT_00468fd4,0x15,0x19,1);
+  uVar1 = 0xea;
+  DAT_00468f44 = FUN_00412ac4(0x32ea);
+  iVar4 = FUN_0043b58e((char)DAT_00468f44,extraout_DL_02,uVar1,DAT_00468f44,0,0);
+  DAT_00468f48 = iVar4;
+  *(undefined2 *)(iVar4 + 0x12) = 0;
+  FUN_0043a9ca((char)iVar4,extraout_DL_03,extraout_CL_01,1);
+  DAT_00469544 = &LAB_0043aa3b;
+  iVar4 = 0;
+  do {
+    iVar6 = iVar4 + 0x32cb;
+    uVar5 = FUN_00412ac4((ushort)iVar6);
+    sVar7 = (short)iVar4;
+    (&DAT_00468f54)[sVar7] = uVar5;
+    iVar6 = FUN_0043b58e((char)iVar4,(char)iVar4,(char)iVar6,(&DAT_00468f54)[sVar7],0,0);
+    (&DAT_00468f88)[sVar7] = iVar6;
+    iVar4 = iVar4 + 1;
+  } while ((short)iVar4 < 0xc);
+  uVar1 = 0xba;
+  DAT_00468f84 = FUN_00412ac4(0x36ba);
+  DAT_00468fb8 = FUN_0043b58e((char)DAT_00468f84,extraout_DL_04,uVar1,DAT_00468f84,0,0);
+  FUN_0043139c();
+  return;
+}
+
+
+
 void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3)
 
 {
@@ -25373,7 +25740,8 @@ void FUN_00435d8a(void)
 {
   undefined2 uVar1;
   undefined2 uVar2;
-  undefined4 in_EAX;
+  short x;
+  short y;
   undefined uVar3;
   undefined4 extraout_ECX;
   undefined4 extraout_ECX_00;
@@ -25389,7 +25757,7 @@ void FUN_00435d8a(void)
   undefined2 uVar8;
   char local_10 [12];
   
-  FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
+  Nfnt::Load(15000);
   FUN_00430de8(0xd,0x5a,0x5d,0x90);
   sVar6 = 0;
   uVar4 = extraout_ECX;
@@ -25406,18 +25774,19 @@ void FUN_00435d8a(void)
       uVar8 = (undefined2)((uint)unaff_EDI >> 0x10);
       FUN_00412e70((char)sVar6,extraout_DL_00,(char)uVar4,(&DAT_00468fc4)[sVar6]);
       FUN_0041395c((&DAT_00468fc4)[sVar6],CONCAT22(uVar7,uVar1),CONCAT22(uVar8,uVar2),5);
-      unaff_ESI = CONCAT22(uVar7,(&DAT_00462584)[sVar6 * 2]);
-      uVar1 = (&DAT_00462586)[sVar6 * 2];
-      unaff_EDI = CONCAT22(uVar8,uVar1);
+      x = (&DAT_00462584)[sVar6 * 2];
+      unaff_ESI = CONCAT22(uVar7,x);
+      y = (&DAT_00462586)[sVar6 * 2];
+      unaff_EDI = CONCAT22(uVar8,y);
       Sprintf_(local_10,&DAT_004626c2,(int)(short)(&DAT_00462698)[sVar6]);
-      FUN_0044cf2c(CONCAT22((short)((uint)local_10 >> 0x10),15000),local_10,unaff_ESI,uVar1,0x996);
+      DrawString(15000,local_10,x,y,0x996);
       uVar4 = extraout_ECX_00;
       uVar5 = extraout_DL_01;
     }
     sVar6 = sVar6 + 1;
   } while (sVar6 < 3);
   FUN_00430abc(0xd,0x5a,0x5d,0x90);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -25425,14 +25794,14 @@ void FUN_00435d8a(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_00435e98(undefined4 param_1,undefined4 param_2,uint param_3,short param_4)
+void __cdecl Puzzles::SetParametersForMagnet(PuzzleNumberOneBased puzzle)
 
 {
   undefined4 uVar1;
   short sVar2;
   
-  if (0x1e < param_4) {
-    param_4 = 1;
+  if (0x1e < puzzle) {
+    puzzle = 1;
   }
   DAT_0046269e = 0;
   DAT_00468f30 = 0xffff;
@@ -25451,7 +25820,7 @@ void FUN_00435e98(undefined4 param_1,undefined4 param_2,uint param_3,short param
   sVar2 = 0;
   do {
     (&DAT_00462698)[sVar2] =
-         (short)(char)(&DAT_0046261d)[(int)sVar2 + *(char *)(param_4 + 0x462679) * 3];
+         (short)(char)(&DAT_0046261d)[(int)sVar2 + *(char *)(puzzle + 0x462679) * 3];
     sVar2 = sVar2 + 1;
   } while (sVar2 < 3);
   sVar2 = 0;
@@ -25459,7 +25828,7 @@ void FUN_00435e98(undefined4 param_1,undefined4 param_2,uint param_3,short param
     (&DAT_00468dee)[sVar2 * 4] = 0xffff;
     sVar2 = sVar2 + 1;
   } while (sVar2 < 0x28);
-  switch(param_4) {
+  switch(puzzle) {
   case 1:
     _DAT_0046977a = 5;
     _DAT_0046977c = 1;
@@ -28327,19 +28696,16 @@ void FUN_0043a834(undefined param_1,undefined param_2,undefined param_3,short pa
 
 {
   char *format;
-  undefined4 unaff_ESI;
-  undefined4 uVar1;
   char local_54 [80];
   
-  uVar1 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
+  Nfnt::Load(15000);
   FUN_00430de8(10,0x15e,0xfa,0x14);
   format = GetWinapiStringAlloc(0x4ea4);
   Sprintf_(local_54,format,(int)param_4,(int)param_5,(int)DAT_00468f30,(int)DAT_00468f34);
   TurboFree_(format);
-  FUN_0044cf2c(uVar1,local_54,10,0x16d,0);
+  DrawString(15000,local_54,10,0x16d,0);
   FUN_00430abc(10,0x15e,0x96,0x14);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -30454,12 +30820,12 @@ void FUN_0043d275(void)
   
   if (_DAT_004627a4 == 2) {
     in_CL = 0xcc;
-    FUN_0044b38d(&PTR_LAB_004627cc);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_004627cc);
     in_DL = extraout_DL;
   }
   if (_DAT_004627a4 == 1) {
     in_CL = 0xb4;
-    FUN_0044b38d(&PTR_LAB_004627b4);
+    Puzzles::SetVtableForGivenCategory(&PTR_LAB_004627b4);
     in_DL = extraout_DL_00;
   }
   if (DAT_0046942c < 8) {
@@ -30552,7 +30918,7 @@ void FUN_0043d275(void)
     case 7:
       sVar3 = FUN_00413ed0((char)DAT_004693d8,in_DL,in_CL,*(undefined4 *)(DAT_004693d8 + 0x24));
       if (sVar3 == 1) {
-        FUN_0044b38d(&PTR_LAB_004627b4);
+        Puzzles::SetVtableForGivenCategory(&PTR_LAB_004627b4);
       }
     }
   }
@@ -31586,7 +31952,7 @@ uint FUN_0043e65c(void)
         else {
           ppuVar12 = &PTR_LAB_00460b30;
         }
-        uVar8 = FUN_0044b38d(ppuVar12);
+        uVar8 = Puzzles::SetVtableForGivenCategory(ppuVar12);
       }
     }
   }
@@ -31705,14 +32071,14 @@ undefined4 FUN_0043ecaa(undefined param_1,undefined param_2,undefined param_3,in
   FUN_00446bc3();
   FUN_00446e68();
   uVar2 = 0;
-  DAT_00469730 = SetColor_(0);
+  DAT_00469730 = SetCurrentColor(0);
   FUN_0041029e((char)DAT_00469730,extraout_DL_00,uVar2,&LAB_0043ec24);
   DAT_00469720 = param_4;
   DAT_00462a98 = 0xffff;
   FUN_0043b9f5();
-  FUN_0044cbbb(15000);
+  Nfnt::Load(15000);
   uVar13 = 15000;
-  local_6 = FUN_0044d4eb(15000);
+  local_6 = SetCurrentFont(15000);
   iVar6 = CONCAT22((short)((uint)unaff_EDI >> 0x10),0xfa);
   local_c = 0;
   uVar12 = extraout_EDX;
@@ -31745,9 +32111,9 @@ undefined4 FUN_0043ecaa(undefined param_1,undefined param_2,undefined param_3,in
                local_e + 10,0xc9,0);
   FUN_0044d5aa((char)(DAT_00469708 + 5),extraout_DL_02,extraout_CL_01,0xffff,DAT_00469708 + 5,
                DAT_0046970a + 3,sVar4 + 0x14,*(undefined4 *)(DAT_00469720 + 0x26));
-  uVar3 = FUN_0044d4eb(local_6);
+  uVar3 = SetCurrentFont(local_6);
   uVar2 = (undefined)uVar3;
-  FUN_0044cb20(uVar3);
+  Nfnt::Unload(uVar3);
   if ((local_10 & 1) != 0) {
     iVar5 = (int)DAT_00469714 >> 1;
     if (iVar5 < 0) {
@@ -31857,7 +32223,7 @@ undefined4 FUN_0043ecaa(undefined param_1,undefined param_2,undefined param_3,in
   uVar13 = FUN_00412d0c(uVar8,uVar13,uVar9,DAT_0046973c);
   FUN_0041408d((char)uVar13,extraout_DL_16,(char)uVar14,&DAT_00469700);
   FUN_0043ba1d();
-  SetColor_(DAT_00469730);
+  SetCurrentColor(DAT_00469730);
   FUN_0041030c();
   FUN_00413868();
   uVar2 = FUN_00416ffd();
@@ -32084,13 +32450,13 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
   byte bVar1;
   byte bVar2;
   bool bVar3;
-  short sVar4;
+  ushort uVar4;
   short sVar5;
-  uint uVar6;
   undefined4 extraout_ECX;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
-  undefined4 uVar7;
+  undefined4 uVar6;
+  short sVar7;
   byte *pbVar8;
   byte *pbVar9;
   byte *pbVar10;
@@ -32100,9 +32466,9 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
   bVar3 = true;
   local_a = 0;
   uVar11 = 0xffffffff;
-  uVar6 = FUN_0044cb93(0xffff);
-  sVar4 = (short)uVar6;
-  uVar7 = extraout_EDX;
+  uVar4 = GetFontBaselineY_(0xffff);
+  sVar7 = uVar4 + 3;
+  uVar6 = extraout_EDX;
   pbVar8 = param_4;
   pbVar10 = param_4;
   do {
@@ -32113,15 +32479,15 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
       }
       bVar1 = *pbVar8;
       *pbVar8 = 0;
-      sVar5 = FUN_0044ccf5(bVar1,(char)uVar7,(char)uVar11,0xffffffff,pbVar10);
+      sVar5 = FUN_0044ccf5(bVar1,(char)uVar6,(char)uVar11,0xffffffff,pbVar10);
       uVar11 = extraout_ECX;
-      uVar7 = extraout_EDX_00;
+      uVar6 = extraout_EDX_00;
       if (param_6 < sVar5) {
         bVar2 = *param_4;
         *param_4 = 0;
         local_a = local_a + 1;
         *param_4 = bVar2;
-        uVar6 = (uint)bVar1;
+        uVar4 = (ushort)bVar1;
         *pbVar8 = bVar1;
         pbVar9 = param_4;
         if (*param_4 == 10) {
@@ -32136,7 +32502,7 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
         }
       }
       else {
-        uVar6 = (uint)bVar1;
+        uVar4 = (ushort)bVar1;
         *pbVar8 = bVar1;
         pbVar9 = pbVar8 + 1;
         param_4 = pbVar8;
@@ -32147,7 +32513,7 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
     }
     pbVar8 = pbVar9;
   } while (*pbVar9 != 0);
-  sVar5 = FUN_0044ccf5((char)uVar6,(char)uVar7,(char)uVar11,0xffffffff,pbVar10);
+  sVar5 = FUN_0044ccf5((char)uVar4,(char)uVar6,(char)uVar11,0xffffffff,pbVar10);
   if (param_6 < sVar5) {
     bVar1 = *param_4;
     *param_4 = 0;
@@ -32159,45 +32525,7 @@ void FUN_0043f579(undefined param_1,undefined param_2,undefined param_3,byte *pa
   if (pbVar10 != (byte *)0x0) {
     local_a = local_a + 1;
   }
-  *param_5 = local_a * (sVar4 + 3);
-  return;
-}
-
-
-
-void Puzzles::DoSomethingWithCandidateCategory_(void)
-
-{
-  if ((DAT_004697b6 != 0) && (DAT_004697b6 == 1)) {
-    switch(candidateCategory) {
-    case BALANCE:
-      FUN_0044b38d(&PTR_LAB_00462eac);
-      break;
-    case ELECTRICITY:
-      FUN_0044b38d(&PTR_FUN_0046153e);
-      break;
-    case ENERGY:
-      FUN_0044b38d(&PTR_LAB_00461584);
-      break;
-    case FORCE:
-      FUN_0044b38d(&PTR_LAB_00461796);
-      break;
-    case GEAR:
-      FUN_0044b38d(&PTR_LAB_00461a4c);
-      break;
-    case JIGSAW:
-      FUN_0044b38d(&PTR_LAB_00462524);
-      break;
-    case MAGNET:
-      FUN_0044b38d(&PTR_LAB_004626a2);
-      break;
-    case SIMPLE_MACHINE:
-      FUN_0044b38d(&PTR_FUN_00463342);
-      break;
-    default:
-      FUN_0044b38d(&PTR_LAB_00461584);
-    }
-  }
+  *param_5 = local_a * sVar7;
   return;
 }
 
@@ -32223,7 +32551,7 @@ void FUN_0043f8b4(void)
   iVar1 = extraout_EDX;
   do {
     iVar1 = FUN_00416e6d((char)(&DAT_00462ab2)[sVar3],(char)iVar1,uVar2,10,(&DAT_00462ab2)[sVar3],
-                         100,0xf,1,FUN_0043f987);
+                         100,0xf,1,PickapuzzleMenu::OnClick);
     (&DAT_004698b8)[sVar3] = iVar1;
     iVar1 = (&DAT_004698b8)[sVar3];
     *(int *)(iVar1 + 0x1e) = (int)sVar3;
@@ -32234,91 +32562,20 @@ void FUN_0043f8b4(void)
   do {
     sVar4 = sVar3;
     iVar1 = FUN_00416e6d((char)(&DAT_00462ab2)[sVar4],(char)iVar1,uVar2,0xe1,(&DAT_00462ab2)[sVar4],
-                         0x58,0x17,1,FUN_0043f987);
+                         0x58,0x17,1,PickapuzzleMenu::OnClick);
     (&DAT_004698b8)[sVar4] = iVar1;
     iVar1 = (&DAT_004698b8)[sVar4];
     *(int *)(iVar1 + 0x1e) = (int)sVar4;
     uVar2 = extraout_CL_01;
     sVar3 = sVar4 + 1;
   } while ((short)(sVar4 + 1) < 0xb);
-  iVar1 = FUN_00416e6d((char)sVar4,(char)iVar1,extraout_CL_01,0x65,0x37,0x13,0x10,1,FUN_0043f987);
+  iVar1 = FUN_00416e6d((char)sVar4,(char)iVar1,extraout_CL_01,0x65,0x37,0x13,0x10,1,
+                       PickapuzzleMenu::OnClick);
   DAT_004698e4 = iVar1;
   *(undefined4 *)(iVar1 + 0x1e) = 0xb;
   DAT_004698e8 = FUN_00416e6d((char)iVar1,extraout_DL,extraout_CL_02,0x65,0x4c,0x13,0x10,1,
-                              FUN_0043f987);
+                              PickapuzzleMenu::OnClick);
   *(undefined4 *)(DAT_004698e8 + 0x1e) = 0xc;
-  return;
-}
-
-
-
-void __cdecl FUN_0043f987(int param_1)
-
-{
-  switch(*(undefined4 *)(param_1 + 0x1e)) {
-  case 0:
-  case 1:
-  case 2:
-  case 3:
-  case 4:
-  case 5:
-  case 6:
-  case 7:
-    Puzzles::candidateCategory = *(PuzzleCategory *)(param_1 + 0x1e);
-    FUN_0043fb50();
-    if (Puzzles::CATEGORY_LEN[(short)Puzzles::candidateCategory] < Puzzles::currentPuzzle) {
-      Puzzles::currentPuzzle = 1;
-    }
-    FUN_0043fae6();
-    FUN_004465a5(0x1f4e,10,0);
-    return;
-  case 8:
-    DAT_004697b6 = 1;
-    FUN_004465a5(0x1f4e,10,0);
-    return;
-  case 9:
-    FUN_0044d87c(1);
-    FUN_0044b38d(&PTR_LAB_00461b2c);
-    FUN_004465a5(0x1f4e,10,0);
-    return;
-  case 10:
-    FUN_0044d87c(0);
-    FUN_0044b38d(&PTR_LAB_00461b2c);
-    FUN_004465a5(0x1f4e,10,0);
-    return;
-  case 0xb:
-    Puzzles::currentPuzzle = Puzzles::currentPuzzle + 1;
-    if (Puzzles::CATEGORY_LEN[(short)Puzzles::candidateCategory] < Puzzles::currentPuzzle) {
-      Puzzles::currentPuzzle = 1;
-    }
-    FUN_0043fae6();
-    return;
-  case 0xc:
-    if ((Puzzles::currentPuzzle != 0) &&
-       (Puzzles::currentPuzzle = Puzzles::currentPuzzle + -1, Puzzles::currentPuzzle < 1)) {
-      Puzzles::currentPuzzle = Puzzles::CATEGORY_LEN[(short)Puzzles::candidateCategory];
-    }
-    FUN_0043fae6();
-  }
-  return;
-}
-
-
-
-void FUN_0043fae6(void)
-
-{
-  undefined4 unaff_EBX;
-  undefined4 uVar1;
-  char local_c [8];
-  
-  uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
-  FUN_00430de8(0x17,0x41,0x4f,0xf);
-  Sprintf_(local_c,&DAT_00462b0e,(int)Puzzles::currentPuzzle);
-  FUN_0044cf2c(uVar1,local_c,0x1a,0x4d,0);
-  FUN_00430abc(0x17,0x41,0x4f,0xf);
-  FUN_0044cb20(15000);
   return;
 }
 
@@ -32336,9 +32593,9 @@ void FUN_0043fb50(void)
   
   FUN_00412f04(in_AL,in_DL,in_CL,DAT_004698f8);
   uVar1 = FUN_0041395c(DAT_004698f8,0x1a,
-                       CONCAT22((short)Puzzles::candidateCategory >> 0xf,
-                                *(undefined2 *)
-                                 (&DAT_00462aa2 + (short)Puzzles::candidateCategory * 2)),1);
+                       CONCAT22((short)Puzzles::currentCategory >> 0xf,
+                                *(undefined2 *)(&DAT_00462aa2 + (short)Puzzles::currentCategory * 2)
+                               ),1);
   FUN_00412e70(uVar1,extraout_DL,extraout_CL,DAT_004698f8);
   return;
 }
@@ -32382,24 +32639,23 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   FUN_004465a5(param_4,0xf,0);
   FUN_00430de8(10,0x140,0x14e,0x3f);
   FUN_00430abc(10,0x140,0x14e,0x3f);
-  SetColor_(0);
+  SetCurrentColor(0);
   format = GetWinapiStringAlloc(0x4e3c);
   Sprintf_(&DAT_004697b8,format,&DAT_00462b11);
   TurboFree_(format);
-  DrawString_(10,0x148,&DAT_004697b8);
+  DrawStringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
   PVar2 = Puzzles::currentPuzzle;
   if ((Puzzles::endgame == 0) &&
      (*(short *)(_GameState->field43_0x40 +
-                Puzzles::currentPuzzle * 2 + (short)Puzzles::candidateCategory * 0x58 + 0x2e) == 0))
-  {
-    iVar3 = (int)(short)Puzzles::candidateCategory;
+                Puzzles::currentPuzzle * 2 + (short)Puzzles::currentCategory * 0x58 + 0x2e) == 0)) {
+    iVar3 = (int)(short)Puzzles::currentCategory;
     psVar1 = _GameState->buildingCompletedLevels;
     (psVar1 + iVar3 * 0x2c + -0x1a)[Puzzles::currentPuzzle + 0x37] = 1;
-    uVar4 = FUN_004401a3((char)Puzzles::candidateCategory,(char)PVar2,extraout_CL,
+    uVar4 = FUN_004401a3((char)Puzzles::currentCategory,(char)PVar2,extraout_CL,
                          CONCAT22((short)((uint)(psVar1 + iVar3 * 0x2c + -0x1a) >> 0x10),
-                                  Puzzles::candidateCategory));
+                                  Puzzles::currentCategory));
     if ((short)uVar4 != 0) {
-      _GameState->puzzles[(short)Puzzles::candidateCategory].mode = FULLY_SOLVED;
+      _GameState->puzzles[(short)Puzzles::currentCategory].mode = FULLY_SOLVED;
       uVar4 = FUN_00440221();
       if ((short)uVar4 != 0) {
         Puzzles::ThrowChosenCategoriesExhausted();
@@ -32414,44 +32670,44 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
 void __stdcall FUN_0043fef9(short param_1)
 
 {
-  undefined2 uVar1;
+  undefined2 font;
   
   FUN_00430de8(10,0x140,0x14e,0x3f);
   FUN_00430abc(10,300,0x14e,0x50);
-  SetColor_(0);
+  SetCurrentColor(0);
   if (param_1 == 0) {
                     // font 15000 = small font for puzzles
-    FUN_0044cbbb(15000);
-    uVar1 = FUN_0044d4eb(15000);
-    DrawString_(10,0x148,DAT_00469770);
-    FUN_0044d4eb(uVar1);
-    FUN_0044cb20(15000);
+    Nfnt::Load(15000);
+    font = SetCurrentFont(15000);
+    DrawStringWithCurrentFontAndColor(10,0x148,DAT_00469770);
+    SetCurrentFont(font);
+    Nfnt::Unload(15000);
     return;
   }
-  DrawString_(10,0x148,&DAT_004697b8);
+  DrawStringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
   return;
 }
 
 
 
-void FUN_0043ff91(undefined param_1,undefined param_2,byte param_3,int param_4)
+void __cdecl FUN_0043ff91(int param_1)
 
 {
   ushort uVar1;
   undefined uVar2;
-  uint uVar3;
+  uint in_ECX;
+  undefined in_DL;
   undefined extraout_DL;
-  short sVar4;
+  short sVar3;
   
-  uVar3 = (uint)param_3;
-  sVar4 = 0;
-  while (*(short *)(param_4 + sVar4 * 2) != -1) {
-    uVar1 = *(ushort *)(param_4 + sVar4 * 2);
-    uVar2 = (undefined)uVar3;
-    uVar3 = (uint)uVar1;
-    FUN_00446172((char)uVar1,param_2,uVar2,uVar1);
-    sVar4 = sVar4 + 1;
-    param_2 = extraout_DL;
+  sVar3 = 0;
+  while (*(short *)(param_1 + sVar3 * 2) != -1) {
+    uVar1 = *(ushort *)(param_1 + sVar3 * 2);
+    uVar2 = (undefined)in_ECX;
+    in_ECX = (uint)uVar1;
+    FUN_00446172((char)uVar1,in_DL,uVar2,uVar1);
+    sVar3 = sVar3 + 1;
+    in_DL = extraout_DL;
   }
   return;
 }
@@ -32571,12 +32827,12 @@ void FUN_00440113(uint param_1,undefined4 param_2,uint param_3)
   undefined extraout_DL;
   short sVar3;
   
-  DAT_00469914 = FUN_00412ac4(Puzzles::candidateCategory + 0x4c2d);
+  DAT_00469914 = FUN_00412ac4(Puzzles::currentCategory + 0x4c2d);
   uVar1 = FUN_0041395c(DAT_00469914,0x15d,0x16a,10);
   FUN_00412e70(uVar1,extraout_DL,extraout_CL,DAT_00469914);
   sVar3 = 0;
   do {
-    uVar2 = FUN_00412ac4(Puzzles::candidateCategory + 0x4c35);
+    uVar2 = FUN_00412ac4(Puzzles::currentCategory + 0x4c35);
     (&DAT_004698fc)[sVar3] = uVar2;
     FUN_0041395c((&DAT_004698fc)[sVar3],CONCAT22(sVar3 >> 0xf,(&DAT_00462acc)[sVar3 * 2] + 0x15d),
                  0x16b,0xf);
@@ -33291,6 +33547,95 @@ void FUN_00440994(void)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void Puzzles::SetParametersForBalance_(void)
+
+{
+  undefined uVar1;
+  uint uVar2;
+  undefined4 uVar3;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_CL_01;
+  uint extraout_ECX;
+  uint extraout_ECX_00;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined extraout_DL_02;
+  undefined extraout_DL_03;
+  undefined extraout_DL_04;
+  undefined4 extraout_EDX;
+  undefined4 extraout_EDX_00;
+  short sVar4;
+  int iVar5;
+  undefined2 *puVar6;
+  int iVar7;
+  
+  _DAT_004699d4 = 0;
+  DAT_00469742 = 0x4a64;
+  DAT_00469744 = 0x4a65;
+  DAT_00469746 = 0x4a70;
+  DAT_00469748 = 0x4a72;
+  DAT_0046974a = 0x4a77;
+  DAT_0046974c = 0xffff;
+  puVar6 = &DAT_00469742;
+  uVar2 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar6);
+  FUN_0044c950(uVar1,extraout_DL,extraout_CL,&LAB_004437a7);
+  sVar4 = 0;
+  do {
+    (&DAT_00469948)[sVar4] = 0;
+    sVar4 = sVar4 + 1;
+  } while (sVar4 < 0xc);
+  iVar5 = 0;
+  do {
+    iVar7 = iVar5 + 0x2eed;
+    uVar3 = FUN_00412ac4((ushort)iVar7);
+    sVar4 = (short)iVar5;
+    (&DAT_00469a60)[sVar4] = uVar3;
+    uVar2 = FUN_0043b58e((char)iVar5,(char)-(&DAT_00462e8c)[sVar4],(char)iVar7,
+                         (&DAT_00469a60)[sVar4],-(&DAT_00462e8c)[sVar4],0);
+    (&DAT_00469a78)[sVar4] = uVar2;
+    iVar5 = iVar5 + 1;
+  } while ((short)iVar5 < 6);
+  FUN_00431024(uVar2,(int)sVar4,extraout_ECX,12000);
+  uVar1 = 0xe0;
+  DAT_00469944 = FUN_00412ac4(12000);
+  uVar2 = FUN_00413cf4((char)DAT_00469944,extraout_DL_00,uVar1,DAT_00469944,0,0,0);
+  FUN_00412d0c(uVar2,extraout_EDX_00,extraout_ECX_00,DAT_00469944);
+  SetParametersForBalance();
+  FUN_00440994();
+  DAT_00469940 = FUN_00412ac4(0x2ef6);
+  FUN_00412dc8(DAT_00469940);
+  uVar1 = FUN_0041395c(DAT_00469940,10,0x19,10);
+  FUN_0041029e(uVar1,extraout_DL_01,extraout_CL_00,&LAB_0044377d);
+  DAT_0046993c = FUN_00412ac4(0x2ef7);
+  FUN_00412dc8(DAT_0046993c);
+  FUN_0041395c(DAT_0046993c,0x18e,0x143,10);
+  uVar1 = 0xf8;
+  DAT_00469938 = FUN_00412ac4(0x2ef8);
+  FUN_00412e70((char)DAT_00469938,extraout_DL_02,uVar1,DAT_00469938);
+  FUN_0041395c(DAT_00469938,0x6b,0x1f,10);
+  FUN_004129d4(DAT_00469938,3);
+  _DAT_00469920 = FUN_0044ca04();
+  FUN_00441ab9();
+  FUN_0043fef9(DAT_00462c5c);
+  FUN_00441942();
+  uVar1 = 0xf9;
+  DAT_00469930 = FUN_00412ac4(0x2ef9);
+  iVar5 = FUN_0043b58e((char)DAT_00469930,extraout_DL_03,uVar1,DAT_00469930,0,0);
+  DAT_00469934 = iVar5;
+  *(undefined2 *)(iVar5 + 0x12) = 0;
+  FUN_00443878((char)iVar5,extraout_DL_04,extraout_CL_01,1);
+  DAT_00469544 = &LAB_0044381d;
+  FUN_0043139c();
+  return;
+}
+
+
+
 void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3)
 
 {
@@ -33648,12 +33993,9 @@ void FUN_00441942(void)
   undefined extraout_DL_00;
   undefined uVar2;
   short sVar3;
-  undefined4 unaff_ESI;
-  undefined4 uVar4;
   char local_10 [12];
   
-  uVar4 = CONCAT22((short)((uint)unaff_ESI >> 0x10),15000);
-  FUN_0044cbbb(uVar4);
+  Nfnt::Load(15000);
   FUN_00430de8(0xb,0x81,0x42,0xb1);
   sVar3 = 0;
   uVar1 = extraout_ECX;
@@ -33665,16 +34007,14 @@ void FUN_00441942(void)
                    CONCAT22((short)((uint)(sVar3 * 9) >> 0x10),(&DAT_00462c6a)[sVar3 * 9]),
                    CONCAT22((short)((uint)(sVar3 * 9) >> 0x10),(&DAT_00462c6c)[sVar3 * 9]),0x14);
       Sprintf_(local_10,&DAT_00462ecc,(int)(short)(&DAT_004699d6)[sVar3]);
-      FUN_0044cf2c(uVar4,local_10,
-                   CONCAT22((short)((uint)(sVar3 * 9) >> 0x10),(&DAT_00462c6e)[sVar3 * 9]),
-                   (&DAT_00462c70)[sVar3 * 9],0);
+      DrawString(15000,local_10,(&DAT_00462c6e)[sVar3 * 9],(&DAT_00462c70)[sVar3 * 9],0);
       uVar1 = extraout_ECX_00;
       uVar2 = extraout_DL_00;
     }
     sVar3 = sVar3 + 1;
   } while (sVar3 < 6);
   FUN_00430abc(0xb,0x81,0x42,0xb1);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -33874,11 +34214,12 @@ undefined4 FUN_00441c86(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_00441d26(uint param_1,undefined4 param_2,uint param_3)
+void __cdecl Puzzles::SetParametersForBalance(void)
 
 {
   short sVar1;
   undefined4 uVar2;
+  undefined4 in_ECX;
   short sVar3;
   short sVar4;
   undefined4 uStack_8;
@@ -33908,10 +34249,10 @@ void FUN_00441d26(uint param_1,undefined4 param_2,uint param_3)
     (&DAT_004699bc)[sVar4] = 0;
     sVar4 = sVar4 + 1;
   } while (sVar4 < 5);
-  if (0x2b < Puzzles::currentPuzzle) {
-    Puzzles::currentPuzzle = 1;
+  if (43 < currentPuzzle) {
+    currentPuzzle = 1;
   }
-  switch(Puzzles::currentPuzzle) {
+  switch(currentPuzzle) {
   case 1:
     _DAT_0046977a = 3;
     _DAT_0046977c = 1;
@@ -34680,7 +35021,7 @@ void FUN_00441d26(uint param_1,undefined4 param_2,uint param_3)
   }
   DAT_0046992c = 0;
   sVar4 = 0;
-  uStack_8 = param_3;
+  uStack_8 = in_ECX;
   do {
     sVar3 = 0;
     do {
@@ -35475,7 +35816,6 @@ void FUN_004444bf(void)
 
 {
   undefined uVar1;
-  short sVar2;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
@@ -35486,7 +35826,8 @@ void FUN_004444bf(void)
   int in_stack_00000004;
   short in_stack_00000008;
   short in_stack_0000000c;
-  undefined auStack_38 [52];
+  char acStack_38 [52];
+  short sVar2;
   
   iVar3 = 0;
   do {
@@ -35494,11 +35835,14 @@ void FUN_004444bf(void)
     iVar3 = iVar3 + 1;
   } while (iVar3 < 7);
   if (-1 < in_stack_00000004) {
-    FUN_0041032e((char)auStack_38,extraout_DL,extraout_CL,in_stack_00000004,auStack_38);
-    sVar2 = FUN_0044ccf5((char)auStack_38,extraout_DL_00,extraout_CL_00,0xffffffff,auStack_38);
-    uVar1 = DrawString_((in_stack_00000008 + 0xa8) - sVar2,in_stack_0000000c + 1,auStack_38);
+    FUN_0041032e((char)acStack_38,extraout_DL,extraout_CL,in_stack_00000004,acStack_38);
+    sVar2 = FUN_0044ccf5((char)acStack_38,extraout_DL_00,extraout_CL_00,0xffffffff,acStack_38);
+    uVar1 = (undefined)sVar2;
+    DrawStringWithCurrentFontAndColor
+              ((in_stack_00000008 + 0xa8) - sVar2,in_stack_0000000c + 1,acStack_38);
     sVar2 = FUN_0042b4e4(uVar1,extraout_DL_01,extraout_CL_01,in_stack_00000004);
-    DrawString_(in_stack_00000008 + 0xb2,in_stack_0000000c + 1,&DAT_00467a98 + sVar2 * 0x32);
+    DrawStringWithCurrentFontAndColor
+              (in_stack_00000008 + 0xb2,in_stack_0000000c + 1,&DAT_00467a98 + sVar2 * 0x32);
   }
   return;
 }
@@ -35511,7 +35855,6 @@ void FUN_004444c5(void)
   int iVar1;
   int iVar2;
   undefined uVar3;
-  short sVar4;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
@@ -35520,6 +35863,7 @@ void FUN_004444c5(void)
   undefined extraout_DL_01;
   int iVar5;
   int unaff_EBP;
+  short sVar4;
   
   iVar1 = *(int *)(unaff_EBP + 0xc);
   iVar2 = *(int *)(unaff_EBP + 8);
@@ -35532,10 +35876,13 @@ void FUN_004444c5(void)
     FUN_0041032e((char)(unaff_EBP + -0x34),extraout_DL,extraout_CL,iVar2,unaff_EBP + -0x34);
     sVar4 = FUN_0044ccf5((char)(unaff_EBP + -0x34),extraout_DL_00,extraout_CL_00,0xffffffff,
                          unaff_EBP + -0x34);
-    uVar3 = DrawString_((short)(iVar1 + 0xa8) - sVar4,*(short *)(unaff_EBP + 0x10) + 1,
-                        unaff_EBP + -0x34);
+    uVar3 = (undefined)sVar4;
+    DrawStringWithCurrentFontAndColor
+              ((short)(iVar1 + 0xa8) - sVar4,*(short *)(unaff_EBP + 0x10) + 1,
+               (char *)(unaff_EBP + -0x34));
     sVar4 = FUN_0042b4e4(uVar3,extraout_DL_01,extraout_CL_01,iVar2);
-    DrawString_((short)iVar1 + 0xb2,*(short *)(unaff_EBP + 0x10) + 1,&DAT_00467a98 + sVar4 * 0x32);
+    DrawStringWithCurrentFontAndColor
+              ((short)iVar1 + 0xb2,*(short *)(unaff_EBP + 0x10) + 1,&DAT_00467a98 + sVar4 * 0x32);
   }
   return;
 }
@@ -35550,7 +35897,7 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
 {
   undefined uVar1;
   ushort uVar2;
-  int value;
+  char *value;
   undefined uVar3;
   uint uVar4;
   uint extraout_ECX;
@@ -35615,8 +35962,9 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
         if (sVar7 == DAT_00469aaa) {
           FUN_00431b20((char)(iVar9 + -2),(char)uVar6,(char)uVar4,99,iVar9 + -2,0x120,0x15,0);
           if (DAT_00469ab2 < 1) {
-            SetColor_(0xefe);
-            DrawString_(0x65,sVar8 + 0x16,sVar7 * 0x16 + DAT_00469aac + 8);
+            SetCurrentColor(0xefe);
+            DrawStringWithCurrentFontAndColor
+                      (0x65,sVar8 + 0x16,(char *)(sVar7 * 0x16 + DAT_00469aac + 8));
             FUN_004444bf();
             uVar4 = extraout_ECX_02;
           }
@@ -35626,23 +35974,24 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
             if (acStack_3d[DAT_00469ab2] == '\x1f') {
               acStack_3d[DAT_00469ab2] = '\0';
             }
-            SetColor_(0xbfb);
-            DrawString_(0x65,sVar8 + 0x16,acStack_3d + 1);
+            SetCurrentColor(0xbfb);
+            DrawStringWithCurrentFontAndColor(0x65,sVar8 + 0x16,acStack_3d + 1);
             uVar3 = 0xfe;
-            SetColor_(0xefe);
-            value = sVar7 * 0x16 + DAT_00469aac + (int)DAT_00469ab2 + 8;
+            SetCurrentColor(0xefe);
+            value = (char *)(sVar7 * 0x16 + DAT_00469aac + (int)DAT_00469ab2 + 8);
             sVar8 = sVar8 + 0x16;
             sVar7 = FUN_0044ccf5((char)(acStack_3d + 1),(char)DAT_00469ab2,uVar3,0xffffffff,
                                  acStack_3d + 1);
-            DrawString_(sVar7 + 0x65,sVar8,value);
+            DrawStringWithCurrentFontAndColor(sVar7 + 0x65,sVar8,value);
             FUN_004444bf();
             uVar4 = extraout_ECX_01;
           }
         }
         else {
           FUN_00430de8(99,sVar8 + 0x13,0x120,0x15);
-          SetColor_(0xfff);
-          DrawString_(0x65,sVar8 + 0x16,sVar7 * 0x16 + DAT_00469aac + 8);
+          SetCurrentColor(0xfff);
+          DrawStringWithCurrentFontAndColor
+                    (0x65,sVar8 + 0x16,(char *)(sVar7 * 0x16 + DAT_00469aac + 8));
           FUN_004444bf();
           uVar4 = extraout_ECX_03;
         }
@@ -36133,12 +36482,10 @@ void FUN_0044510a(undefined4 param_1,undefined4 param_2,uint param_3)
   undefined uVar4;
   undefined extraout_CL_01;
   undefined extraout_CL_02;
-  undefined extraout_CL_03;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined uVar5;
   undefined extraout_DL_01;
-  undefined extraout_DL_02;
   short sVar6;
   CHAR local_10 [12];
   
@@ -36167,7 +36514,7 @@ void FUN_0044510a(undefined4 param_1,undefined4 param_2,uint param_3)
     sVar6 = sVar6 + 1;
   } while (sVar6 < 3);
   LoadStringA(_Module,0x4e27,local_10,10);
-  iVar3 = FUN_00454024((char)local_10,extraout_DL_02,extraout_CL_03,local_10);
+  iVar3 = Atoi(local_10);
   DAT_00469aa8 = (char)iVar3;
   return;
 }
@@ -38001,31 +38348,26 @@ void FUN_00447176(void)
 uint FUN_0044727e(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
-  char cVar1;
-  short sVar2;
-  bool bVar3;
+  short sVar1;
+  bool bVar2;
   undefined3 extraout_var;
-  undefined4 uVar4;
-  UINT UVar5;
-  LONG LVar6;
-  UINT UVar7;
+  undefined4 uVar3;
+  UINT UVar4;
+  LONG LVar5;
+  UINT UVar6;
+  int iVar7;
   uint uVar8;
-  int iVar9;
-  undefined uVar10;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
   undefined extraout_CL_02;
   undefined extraout_CL_03;
-  int extraout_ECX;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   undefined extraout_DL_02;
   undefined extraout_DL_03;
-  int extraout_EDX;
-  int iVar11;
-  short sVar12;
+  short sVar9;
   tagMIDIOUTCAPSA local_13c;
   char local_108 [258];
   short local_6;
@@ -38033,12 +38375,12 @@ uint FUN_0044727e(undefined param_1,undefined param_2,undefined param_3,short pa
   DAT_00469d88 = 0;
   if (param_4 != 0) {
     if (param_4 == 1) {
-      UVar5 = waveOutGetNumDevs();
-      if (UVar5 != 0) {
+      UVar4 = waveOutGetNumDevs();
+      if (UVar4 != 0) {
         DAT_00469d88 = DAT_00469d88 | 1;
         DAT_00462f48 = 0;
-        bVar3 = FUN_00445bd7();
-        if ((short)CONCAT31(extraout_var,bVar3) != 0) {
+        bVar2 = FUN_00445bd7();
+        if ((short)CONCAT31(extraout_var,bVar2) != 0) {
           DAT_00462f48 = 1;
         }
       }
@@ -38046,13 +38388,13 @@ uint FUN_0044727e(undefined param_1,undefined param_2,undefined param_3,short pa
     }
     if (param_4 != 2) goto LAB_00447341;
     DAT_00469d88 = 1;
-    uVar4 = FUN_00445cd8();
-    if ((short)uVar4 == 0) {
+    uVar3 = FUN_00445cd8();
+    if ((short)uVar3 == 0) {
       DAT_00462f48 = 0;
     }
     else {
-      iVar9 = (*DAT_00469d9c)();
-      if (iVar9 == 0) {
+      iVar7 = (*DAT_00469d9c)();
+      if (iVar7 == 0) {
         DAT_00462f48 = 2;
       }
       else {
@@ -38060,51 +38402,46 @@ uint FUN_0044727e(undefined param_1,undefined param_2,undefined param_3,short pa
       }
     }
   }
-  UVar5 = waveOutGetNumDevs();
-  if (UVar5 != 0) {
+  UVar4 = waveOutGetNumDevs();
+  if (UVar4 != 0) {
     DAT_00469d88 = DAT_00469d88 | 1;
     DAT_00462f48 = 0;
   }
 LAB_00447341:
-  UVar5 = midiOutGetNumDevs();
-  if (((short)UVar5 != 0) && (UVar5 = midiOutGetDevCapsA(0xffffffff,&local_13c,0x34), UVar5 != 6)) {
+  UVar4 = midiOutGetNumDevs();
+  if (((short)UVar4 != 0) && (UVar4 = midiOutGetDevCapsA(0xffffffff,&local_13c,0x34), UVar4 != 6)) {
     DAT_00469d88 = DAT_00469d88 | 2;
-    UVar5 = FUN_00447176();
-    if ((int)UVar5 < 0) {
+    UVar4 = FUN_00447176();
+    if ((int)UVar4 < 0) {
       DAT_00469d88 = DAT_00469d88 & 0xfffd;
     }
     else {
       _DAT_00462f42 = 1;
-      LVar6 = _llseek(UVar5,6,0);
-      if ((((LVar6 == 6) && (UVar7 = _lread(UVar5,&local_6,2), UVar7 == 2)) &&
-          (LVar6 = _llseek(UVar5,(local_6 + -1) * 0x36 + 0x12,0), LVar6 != 0)) &&
-         (UVar7 = _lread(UVar5,local_108,0x10), UVar7 == 0x10)) {
-        iVar9 = extraout_ECX;
-        iVar11 = extraout_EDX;
-        sVar2 = 0;
+      LVar5 = _llseek(UVar4,6,0);
+      if ((((LVar5 == 6) && (UVar6 = _lread(UVar4,&local_6,2), UVar6 == 2)) &&
+          (LVar5 = _llseek(UVar4,(local_6 + -1) * 0x36 + 0x12,0), LVar5 != 0)) &&
+         (UVar6 = _lread(UVar4,local_108,0x10), UVar6 == 0x10)) {
+        sVar1 = 0;
         do {
-          sVar12 = sVar2;
-          cVar1 = local_108[sVar12];
-          uVar10 = (undefined)iVar9;
-          iVar9 = (int)cVar1;
-          uVar8 = FUN_00453f68(cVar1,(char)iVar11,uVar10,(int)cVar1);
-          iVar11 = (int)sVar12;
-          local_108[iVar11] = (char)uVar8;
-          sVar2 = sVar12 + 1;
-        } while ((short)(sVar12 + 1) < 0x10);
-        iVar9 = FUN_00450108((char)uVar8,(char)sVar12,(char)iVar9,local_108,s_ADLIB_00463185);
-        if (iVar9 == 0) {
-          iVar9 = FUN_00450108(0,extraout_DL,extraout_CL,local_108,s_AD_LIB_0046318b);
-          if (iVar9 == 0) {
-            iVar9 = FUN_00450108(0,extraout_DL_00,extraout_CL_00,local_108,s_MVI_PRO_00463192);
-            if (iVar9 == 0) {
-              iVar9 = FUN_00450108(0,extraout_DL_01,extraout_CL_01,local_108,&DAT_0046319a);
-              if (iVar9 == 0) {
-                iVar9 = FUN_00450108(0,extraout_DL_02,extraout_CL_02,local_108,&DAT_0046319e);
-                if (iVar9 == 0) {
-                  iVar9 = FUN_00450108(0,extraout_DL_03,extraout_CL_03,local_108,
+          sVar9 = sVar1;
+          iVar7 = (int)local_108[sVar9];
+          uVar8 = ToUpper(iVar7);
+          local_108[sVar9] = (char)uVar8;
+          sVar1 = sVar9 + 1;
+        } while ((short)(sVar9 + 1) < 0x10);
+        iVar7 = FUN_00450108((char)uVar8,(char)sVar9,(char)iVar7,local_108,s_ADLIB_00463185);
+        if (iVar7 == 0) {
+          iVar7 = FUN_00450108(0,extraout_DL,extraout_CL,local_108,s_AD_LIB_0046318b);
+          if (iVar7 == 0) {
+            iVar7 = FUN_00450108(0,extraout_DL_00,extraout_CL_00,local_108,s_MVI_PRO_00463192);
+            if (iVar7 == 0) {
+              iVar7 = FUN_00450108(0,extraout_DL_01,extraout_CL_01,local_108,&DAT_0046319a);
+              if (iVar7 == 0) {
+                iVar7 = FUN_00450108(0,extraout_DL_02,extraout_CL_02,local_108,&DAT_0046319e);
+                if (iVar7 == 0) {
+                  iVar7 = FUN_00450108(0,extraout_DL_03,extraout_CL_03,local_108,
                                        s_THUNDER_BOARD_004631a3);
-                  if (iVar9 != 0) {
+                  if (iVar7 != 0) {
                     _DAT_00462f42 = 0;
                   }
                 }
@@ -38128,10 +38465,10 @@ LAB_00447341:
           _DAT_00462f42 = 0;
         }
       }
-      UVar5 = _lclose(UVar5);
+      UVar4 = _lclose(UVar4);
     }
   }
-  return CONCAT22((short)(UVar5 >> 0x10),DAT_00469d88);
+  return CONCAT22((short)(UVar4 >> 0x10),DAT_00469d88);
 }
 
 
@@ -38617,31 +38954,26 @@ void FUN_004478cf(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_00447988(void)
+void Puzzles::SetParametersForSimpleMachine_(void)
 
 {
   undefined uVar1;
   uint uVar2;
-  undefined2 extraout_var;
   undefined4 uVar3;
   int iVar4;
-  undefined in_CL;
   undefined extraout_CL;
   undefined extraout_CL_00;
   uint extraout_ECX;
-  undefined in_DL;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
-  undefined extraout_DL_02;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
   short sVar5;
   int iVar6;
-  undefined uVar7;
-  undefined2 *puVar8;
-  undefined *puVar9;
+  undefined2 *puVar7;
+  undefined *puVar8;
   
   _DAT_0046a28c = 0;
   _DAT_0046a28a = 0;
@@ -38660,22 +38992,20 @@ void FUN_00447988(void)
   DAT_0046975a = 0x1f73;
   DAT_0046975c = 0x4a77;
   DAT_0046975e = 0xffff;
-  puVar8 = &DAT_00469742;
-  uVar2 = FUN_0043ff91(0x42,in_DL,in_CL,&DAT_00469742);
-  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar8);
-  puVar9 = &LAB_0044afcd;
+  puVar7 = &DAT_00469742;
+  uVar2 = FUN_0043ff91(&DAT_00469742);
+  uVar1 = FUN_00440113(uVar2,extraout_EDX,(uint)puVar7);
+  puVar8 = &LAB_0044afcd;
   uVar2 = FUN_0044c950(uVar1,extraout_DL,extraout_CL,&LAB_0044afcd);
-  FUN_00431024(uVar2,extraout_EDX_00,(uint)puVar9,16000);
+  FUN_00431024(uVar2,extraout_EDX_00,(uint)puVar8,16000);
   uVar1 = 0x80;
   DAT_0046a2d4 = FUN_00412ac4(16000);
   uVar2 = FUN_00413cf4((char)DAT_0046a2d4,extraout_DL_00,uVar1,DAT_0046a2d4,0,0,0);
   FUN_00412d0c(uVar2,extraout_EDX_01,extraout_ECX,DAT_0046a2d4);
   uVar1 = 0xc2;
   DAT_0046a300 = FUN_00412ac4(0x3ec2);
-  uVar7 = 0xca;
   FUN_0041029e((char)DAT_0046a300,extraout_DL_01,uVar1,&LAB_004485ca);
-  FUN_00448742((char)Puzzles::currentPuzzle,extraout_DL_02,uVar7,
-               CONCAT22(extraout_var,Puzzles::currentPuzzle));
+  SetParametersForSimpleMachine(currentPuzzle);
   FUN_0044a970();
   FUN_0044a9f7();
   FUN_00448097();
@@ -39099,11 +39429,12 @@ void FUN_0044868d(uint param_1,undefined4 param_2,uint param_3)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
+void __cdecl Puzzles::SetParametersForSimpleMachine(PuzzleNumberOneBased puzzle)
 
 {
   short sVar1;
   undefined4 uVar2;
+  int puzzle_;
   undefined2 extraout_var;
   undefined uVar3;
   int iVar4;
@@ -39128,7 +39459,6 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
   int extraout_EDX_17;
   int extraout_EDX_18;
   short sVar5;
-  int iVar6;
   
   DAT_00469fc6 = 0xa0;
   DAT_00469fc8 = 0x28;
@@ -39147,22 +39477,22 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     } while (sVar1 < 6);
     sVar5 = sVar5 + 1;
   } while (sVar5 < 10);
-  iVar6 = 0;
+  puzzle_ = 0;
   do {
-    iVar4 = iVar6 + 0x3ec2;
+    iVar4 = puzzle_ + 0x3ec2;
     uVar2 = FUN_00412ac4((ushort)iVar4);
     uVar3 = (undefined)iVar4;
-    iVar4 = (int)(short)iVar6;
+    iVar4 = (int)(short)puzzle_;
     (&DAT_0046a2e0)[iVar4] = uVar2;
-    (&DAT_00469fbe)[(short)iVar6] = 0;
-    iVar6 = iVar6 + 1;
-  } while ((short)iVar6 < 8);
+    (&DAT_00469fbe)[(short)puzzle_] = 0;
+    puzzle_ = puzzle_ + 1;
+  } while ((short)puzzle_ < 8);
   DAT_00463340 = 1;
-  if (0x14 < (short)param_4) {
-    param_4._0_2_ = 1;
+  if (20 < puzzle) {
+    puzzle = 1;
   }
-  iVar6 = (int)(short)param_4;
-  switch(iVar6) {
+  puzzle_ = (int)puzzle;
+  switch(puzzle_) {
   case 1:
     _DAT_0046977a = 4;
     _DAT_0046977c = 2;
@@ -39187,9 +39517,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b37);
     uVar3 = 0x38;
-    iVar6 = FUN_00412ac4(0x2b38);
+    puzzle_ = FUN_00412ac4(0x2b38);
     iVar4 = extraout_EDX;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 2:
     _DAT_0046977a = 5;
@@ -39242,9 +39572,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc3 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b4e);
     uVar3 = 0x4f;
-    iVar6 = FUN_00412ac4(0x2b4f);
+    puzzle_ = FUN_00412ac4(0x2b4f);
     iVar4 = extraout_EDX_00;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 3:
     _DAT_0046977a = 5;
@@ -39272,9 +39602,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc3 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b43);
     uVar3 = 0x44;
-    iVar6 = FUN_00412ac4(0x2b44);
+    puzzle_ = FUN_00412ac4(0x2b44);
     iVar4 = extraout_EDX_01;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 4:
     _DAT_0046977a = 3;
@@ -39304,9 +39634,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc5 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b01);
     uVar3 = 2;
-    iVar6 = FUN_00412ac4(0x2b02);
+    puzzle_ = FUN_00412ac4(0x2b02);
     iVar4 = extraout_EDX_02;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 5:
     _DAT_0046977a = 2;
@@ -39338,9 +39668,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc2 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b3d);
     uVar3 = 0x3e;
-    iVar6 = FUN_00412ac4(0x2b3e);
+    puzzle_ = FUN_00412ac4(0x2b3e);
     iVar4 = extraout_EDX_03;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 6:
     _DAT_0046977a = 2;
@@ -39387,9 +39717,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fbf = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b5c);
     uVar3 = 0x5d;
-    iVar6 = FUN_00412ac4(0x2b5d);
+    puzzle_ = FUN_00412ac4(0x2b5d);
     iVar4 = extraout_EDX_04;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 7:
     _DAT_0046977a = 2;
@@ -39421,9 +39751,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc2 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b19);
     uVar3 = 0x1a;
-    iVar6 = FUN_00412ac4(0x2b1a);
+    puzzle_ = FUN_00412ac4(0x2b1a);
     iVar4 = extraout_EDX_05;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 8:
     _DAT_0046977a = 2;
@@ -39455,9 +39785,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b32);
     uVar3 = 0x33;
-    iVar6 = FUN_00412ac4(0x2b33);
+    puzzle_ = FUN_00412ac4(0x2b33);
     iVar4 = extraout_EDX_06;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 9:
     _DAT_0046977a = 2;
@@ -39498,9 +39828,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 3;
     DAT_0046a2d8 = FUN_00412ac4(0x3e90);
     uVar3 = 0x94;
-    iVar6 = FUN_00412ac4(0x3e94);
+    puzzle_ = FUN_00412ac4(0x3e94);
     iVar4 = extraout_EDX_07;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 10:
     _DAT_0046977a = 6;
@@ -39544,9 +39874,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc1 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x3e95);
     uVar3 = 0x98;
-    iVar6 = FUN_00412ac4(0x3e98);
+    puzzle_ = FUN_00412ac4(0x3e98);
     iVar4 = extraout_EDX_08;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0xb:
     _DAT_0046977a = 5;
@@ -39599,9 +39929,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fbe = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x3e99);
     uVar3 = 0x9c;
-    iVar6 = FUN_00412ac4(0x3e9c);
+    puzzle_ = FUN_00412ac4(0x3e9c);
     iVar4 = extraout_EDX_09;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0xc:
     _DAT_0046977a = 5;
@@ -39638,9 +39968,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc1 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b1e);
     uVar3 = 0x1f;
-    iVar6 = FUN_00412ac4(0x2b1f);
+    puzzle_ = FUN_00412ac4(0x2b1f);
     iVar4 = extraout_EDX_10;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0xd:
     _DAT_0046977a = 5;
@@ -39698,9 +40028,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc5 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b25);
     uVar3 = 0x26;
-    iVar6 = FUN_00412ac4(0x2b26);
+    puzzle_ = FUN_00412ac4(0x2b26);
     iVar4 = extraout_EDX_11;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0xe:
     _DAT_0046977a = 2;
@@ -39732,9 +40062,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x3ea2);
     uVar3 = 0xd4;
-    iVar6 = FUN_00412ac4(0x3ed4);
+    puzzle_ = FUN_00412ac4(0x3ed4);
     iVar4 = extraout_EDX_12;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0xf:
     _DAT_0046977a = 5;
@@ -39786,9 +40116,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fbe = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b55);
     uVar3 = 0x56;
-    iVar6 = FUN_00412ac4(0x2b56);
+    puzzle_ = FUN_00412ac4(0x2b56);
     iVar4 = extraout_EDX_13;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0x10:
     _DAT_0046977a = 6;
@@ -39906,9 +40236,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b12);
     uVar3 = 0x13;
-    iVar6 = FUN_00412ac4(0x2b13);
+    puzzle_ = FUN_00412ac4(0x2b13);
     iVar4 = extraout_EDX_14;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0x11:
     _DAT_0046977a = 6;
@@ -39996,9 +40326,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc3 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b61);
     uVar3 = 0x62;
-    iVar6 = FUN_00412ac4(0x2b62);
+    puzzle_ = FUN_00412ac4(0x2b62);
     iVar4 = extraout_EDX_15;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0x12:
     _DAT_0046977a = 8;
@@ -40098,9 +40428,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc0 = 2;
     DAT_0046a2d8 = FUN_00412ac4(0x2b48);
     uVar3 = 0x49;
-    iVar6 = FUN_00412ac4(0x2b49);
+    puzzle_ = FUN_00412ac4(0x2b49);
     iVar4 = extraout_EDX_16;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0x13:
     _DAT_0046977a = 2;
@@ -40195,9 +40525,9 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fbf = 9;
     DAT_0046a2d8 = FUN_00412ac4(0x2b2c);
     uVar3 = 0x2d;
-    iVar6 = FUN_00412ac4(0x2b2d);
+    puzzle_ = FUN_00412ac4(0x2b2d);
     iVar4 = extraout_EDX_17;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
     break;
   case 0x14:
     _DAT_0046977a = 6;
@@ -40295,11 +40625,11 @@ void FUN_00448742(undefined param_1,undefined param_2,undefined param_3,undefine
     DAT_00469fc5 = 1;
     DAT_0046a2d8 = FUN_00412ac4(0x2b0c);
     uVar3 = 0xd;
-    iVar6 = FUN_00412ac4(0x2b0d);
+    puzzle_ = FUN_00412ac4(0x2b0d);
     iVar4 = extraout_EDX_18;
-    DAT_0046a2dc = iVar6;
+    DAT_0046a2dc = puzzle_;
   }
-  FUN_00412e70((char)iVar6,(char)iVar4,uVar3,DAT_0046a2d8);
+  FUN_00412e70((char)puzzle_,(char)iVar4,uVar3,DAT_0046a2d8);
   FUN_0041395c(DAT_0046a2d8,CONCAT22(extraout_var,DAT_00469fc6),CONCAT22(extraout_var,DAT_00469fc8),
                1);
   DAT_0046977e = 0x3e86;
@@ -40349,26 +40679,24 @@ void FUN_0044a970(void)
 void FUN_0044a9f7(void)
 
 {
-  undefined2 uVar1;
-  undefined4 in_EAX;
-  short sVar2;
-  undefined4 unaff_ESI;
+  short x;
+  short y;
+  short sVar1;
   char local_10 [12];
   
-  FUN_0044cbbb(CONCAT22((short)((uint)in_EAX >> 0x10),15000));
-  sVar2 = 0;
+  Nfnt::Load(15000);
+  sVar1 = 0;
   do {
-    if ('\0' < (char)(&DAT_00469fbe)[sVar2]) {
-      unaff_ESI = CONCAT22((short)((uint)unaff_ESI >> 0x10),
-                           *(undefined2 *)((int)&DAT_00463269 + sVar2 * 0xf));
-      uVar1 = *(undefined2 *)((int)&DAT_0046326b + sVar2 * 0xf);
-      Sprintf_(local_10,&DAT_00463367,(int)(char)(&DAT_00469fbe)[sVar2]);
-      FUN_0044cf2c(CONCAT22((short)((uint)local_10 >> 0x10),15000),local_10,unaff_ESI,uVar1,0);
+    if ('\0' < (char)(&DAT_00469fbe)[sVar1]) {
+      x = *(short *)((int)&DAT_00463269 + sVar1 * 0xf);
+      y = *(short *)((int)&DAT_0046326b + sVar1 * 0xf);
+      Sprintf_(local_10,&DAT_00463367,(int)(char)(&DAT_00469fbe)[sVar1]);
+      DrawString(15000,local_10,x,y,0);
     }
-    sVar2 = sVar2 + 1;
-  } while (sVar2 < 8);
+    sVar1 = sVar1 + 1;
+  } while (sVar1 < 8);
   FUN_00430abc(6,0x5d,0x4d,0xbd);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -40622,19 +40950,16 @@ void FUN_0044b030(void)
 void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  undefined4 unaff_EBX;
-  undefined4 uVar1;
   char local_a4 [80];
   char local_54 [80];
   
-  uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
-  FUN_0044cbbb(uVar1);
+  Nfnt::Load(15000);
   FUN_00430de8(10,0x14a,0xfa,0x28);
   GetWinapiString(local_a4,0x4ea0);
   Sprintf_(local_54,local_a4,(int)param_4,(int)param_5);
-  FUN_0044cf2c(uVar1,local_54,10,0x16d,0);
+  DrawString(15000,local_54,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
-  FUN_0044cb20(15000);
+  Nfnt::Unload(15000);
   return;
 }
 
@@ -40758,15 +41083,6 @@ void FUN_0044b24d(void)
   else {
     _DAT_0046a358 = 1;
   }
-  return;
-}
-
-
-
-void __stdcall FUN_0044b38d(undefined4 param_1)
-
-{
-  *(undefined4 *)(DAT_0046a35c + DAT_0046336c * 4) = param_1;
   return;
 }
 
@@ -41495,7 +41811,7 @@ undefined4 __cdecl FUN_0044c371(undefined2 *param_1)
   FUN_00446bc3();
   FUN_00446e68();
   uVar3 = 0;
-  DAT_0046a91c = SetColor_(0);
+  DAT_0046a91c = SetCurrentColor(0);
   FUN_0041029e((char)DAT_0046a91c,extraout_DL_00,uVar3,&LAB_0044c0c1);
   DAT_0046a90c = param_1;
   DAT_004634d0 = 0xffff;
@@ -41679,7 +41995,7 @@ undefined4 __cdecl FUN_0044c371(undefined2 *param_1)
   }
   FUN_0041408d((char)DAT_0046a90c,(char)uVar8,(char)uVar14,&DAT_0046a89c);
   FUN_0043ba1d();
-  SetColor_(DAT_0046a91c);
+  SetCurrentColor(DAT_0046a91c);
   FUN_0041030c();
   FUN_00413868();
   FUN_00416ffd();
@@ -41936,7 +42252,7 @@ undefined4 __stdcall FindNodeIn46A938h_(undefined4 param_1)
   int current;
   
   if ((short)param_1 == -1) {
-    param_1._0_2_ = DAT_0046a93e;
+    param_1._0_2_ = _CurrentFont;
   }
   for (current = DlistHead(DAT_0046a938);
       (current != 0 && ((short)param_1 != *(short *)(current + 0x2c))); current = DlistNext(current)
@@ -41947,7 +42263,7 @@ undefined4 __stdcall FindNodeIn46A938h_(undefined4 param_1)
 
 
 
-void __stdcall FUN_0044cb20(undefined2 param_1)
+void __stdcall Nfnt::Unload(undefined2 param_1)
 
 {
   undefined4 in_EAX;
@@ -41976,7 +42292,7 @@ uint FUN_0044cb57(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined2 extraout_var;
   
   if ((short)param_4 == -1) {
-    uVar2 = CONCAT22((short)((uint)param_4 >> 0x10),_ClampedColor_);
+    uVar2 = CONCAT22((short)((uint)param_4 >> 0x10),_CurrentColorClamped);
   }
   else {
     uVar1 = ClampColorIndex_((short)param_4);
@@ -42007,28 +42323,26 @@ uint FUN_0044cb74(undefined param_1,undefined param_2,undefined param_3,undefine
 
 
 
-uint __stdcall FUN_0044cb93(undefined2 param_1)
+short __stdcall GetFontBaselineY_(undefined2 param_1)
 
 {
   undefined4 in_EAX;
   int iVar1;
-  uint uVar2;
+  short sVar2;
   
   iVar1 = FindNodeIn46A938h_(CONCAT22((short)((uint)in_EAX >> 0x10),param_1));
   if (iVar1 == 0) {
-    uVar2 = 0;
+    sVar2 = 0;
   }
   else {
-    uVar2 = CONCAT22((short)((uint)*(int *)(iVar1 + 8) >> 0x10),
-                     *(short *)(*(int *)(iVar1 + 8) + 0x12) - *(short *)(*(int *)(iVar1 + 8) + 0x14)
-                    );
+    sVar2 = *(short *)(*(int *)(iVar1 + 8) + 0x12) - *(short *)(*(int *)(iVar1 + 8) + 0x14);
   }
-  return uVar2;
+  return sVar2;
 }
 
 
 
-void __stdcall FUN_0044cbbb(undefined4 param_1)
+void __stdcall Nfnt::Load(ushort param_1)
 
 {
   int iVar1;
@@ -42036,11 +42350,12 @@ void __stdcall FUN_0044cbbb(undefined4 param_1)
   DlistNode *node;
   DlistNode *pDVar3;
   undefined unaff_DI;
+  undefined2 in_stack_00000006;
   char local_54 [80];
   
-  iVar1 = FindNodeIn46A938h_(param_1);
+  iVar1 = FindNodeIn46A938h_(_param_1);
   if (iVar1 == 0) {
-    pDVar2 = (DlistNode *)GetWinapiResource_((ushort)param_1,&_NFNT);
+    pDVar2 = (DlistNode *)GetWinapiResource_(param_1,&_NFNT);
     if (pDVar2 == (DlistNode *)0x0) {
                     // 20136 = "Font resource not available."
       GetWinapiString(local_54,20136);
@@ -42054,7 +42369,7 @@ void __stdcall FUN_0044cbbb(undefined4 param_1)
     pDVar3 = (DlistNode *)FUN_0044cc6c(pDVar2);
     node[1].prev = pDVar3;
     FUN_0044cca4(pDVar2,&node[2].prev);
-    *(ushort *)&node[5].prev = (ushort)param_1;
+    *(ushort *)&node[5].prev = param_1;
     DlistInsert(DAT_0046a938,node,-1);
   }
   return;
@@ -42208,35 +42523,31 @@ short FUN_0044ccf5(undefined param_1,undefined param_2,undefined param_3,undefin
 
 
 void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,
-                 undefined4 param_5,undefined4 param_6,short param_7,undefined2 param_8)
+                 char *param_5,undefined4 param_6,short param_7,undefined2 param_8)
 
 {
   short sVar1;
   int iVar2;
-  uint uVar3;
   undefined extraout_DL;
-  undefined4 uVar4;
+  undefined4 uVar3;
   
-  uVar4 = param_4;
+  uVar3 = param_4;
   iVar2 = FindNodeIn46A938h_(param_4);
   if (iVar2 != 0) {
-    sVar1 = FUN_0044ccf5((char)iVar2,extraout_DL,(char)uVar4,param_4,param_5);
+    sVar1 = FUN_0044ccf5((char)iVar2,extraout_DL,(char)uVar3,param_4,param_5);
     iVar2 = (int)sVar1 >> 1;
     if (iVar2 < 0) {
       iVar2 = iVar2 + (uint)(((int)sVar1 & 1U) != 0);
     }
-    uVar3 = FUN_0044cb93(DAT_0046a93e);
-    FUN_0044cf2c(param_4,param_5,
-                 CONCAT22((short)((uint)param_6 >> 0x10),(short)param_6 - (short)iVar2),
-                 (short)uVar3 + param_7,param_8);
+    sVar1 = GetFontBaselineY_(_CurrentFont);
+    DrawString((short)param_4,param_5,(short)param_6 - (short)iVar2,sVar1 + param_7,param_8);
   }
   return;
 }
 
 
 
-void __stdcall
-FUN_0044cf2c(undefined4 param_1,char *param_2,undefined4 param_3,short param_4,undefined2 param_5)
+void __stdcall DrawString(short font,char *text,short x,short y,undefined2 color)
 
 {
   char cVar1;
@@ -42249,37 +42560,38 @@ FUN_0044cf2c(undefined4 param_1,char *param_2,undefined4 param_3,short param_4,u
   undefined extraout_DL_00;
   undefined uVar5;
   undefined unaff_DI;
+  undefined2 in_stack_00000006;
   char local_70 [52];
   char local_3c [50];
   short local_a;
   int local_8;
   
-  local_a = (short)param_3;
-  local_8 = FindNodeIn46A938h_(param_1);
+  local_a = x;
+  local_8 = FindNodeIn46A938h_(_font);
   if (local_8 == 0) {
     GetWinapiString(local_70,0x4ea2);
-    Sprintf_(local_3c,local_70,(int)(short)param_1);
+    Sprintf_(local_3c,local_70,(int)font);
     ShowAlertMessage(local_3c,unaff_DI);
   }
   else {
     uVar3 = FUN_0044d120();
     uVar4 = extraout_ECX;
     uVar5 = extraout_DL;
-    while (*param_2 != '\0') {
-      if (*param_2 == '\n') {
+    while (*text != '\0') {
+      if (*text == '\n') {
         sVar2 = *(short *)(*(int *)(local_8 + 8) + 0xe);
         uVar3 = CONCAT22((short)((uint)*(int *)(local_8 + 8) >> 0x10),sVar2);
-        param_4 = param_4 + sVar2;
-        param_2 = param_2 + 1;
-        param_3._0_2_ = local_a;
+        y = y + sVar2;
+        text = text + 1;
+        x = local_a;
       }
       else {
-        cVar1 = *param_2;
-        param_2 = param_2 + 1;
-        uVar3 = FUN_0044cfcb(cVar1,uVar5,(char)uVar4,(short)param_1,
-                             CONCAT31((int3)(CONCAT22((short)(uVar3 >> 0x10),param_4) >> 8),cVar1),
-                             (short)param_3,param_4,param_5);
-        param_3._0_2_ = (short)param_3 + (short)uVar3;
+        cVar1 = *text;
+        text = text + 1;
+        uVar3 = FUN_0044cfcb(cVar1,uVar5,(char)uVar4,font,
+                             CONCAT31((int3)(CONCAT22((short)(uVar3 >> 0x10),y) >> 8),cVar1),x,y,
+                             color);
+        x = x + (short)uVar3;
         uVar4 = extraout_ECX_00;
         uVar5 = extraout_DL_00;
       }
@@ -42616,26 +42928,13 @@ void FUN_0044d121(undefined param_1,undefined param_2,undefined param_3,int para
 
 
 
-undefined2 __stdcall FUN_0044d4eb(undefined2 param_1)
+undefined2 __stdcall SetCurrentFont(undefined2 font)
 
 {
-  undefined2 uVar1;
+  undefined2 old;
   
-  uVar1 = DAT_0046a93e;
-  DAT_0046a93e = param_1;
-  return uVar1;
-}
-
-
-
-short __stdcall SetColor_(short param_1)
-
-{
-  short old;
-  
-  old = _Color_;
-  _Color_ = param_1;
-  _ClampedColor_ = ClampColorIndex_(param_1);
+  old = _CurrentFont;
+  _CurrentFont = font;
   return old;
 }
 
@@ -42683,7 +42982,7 @@ void FUN_0044d55a(void)
     while (iVar1 != 0) {
       iVar4 = DlistNext(iVar1);
       uVar5 = (undefined)*(undefined2 *)(iVar1 + 0x2c);
-      iVar3 = FUN_0044cb20(*(undefined2 *)(iVar1 + 0x2c));
+      iVar3 = Nfnt::Unload(*(undefined2 *)(iVar1 + 0x2c));
       iVar1 = iVar4;
       uVar2 = extraout_DL_00;
     }
@@ -42704,98 +43003,89 @@ int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort pa
   short sVar3;
   short sVar4;
   uint uVar5;
-  uint uVar6;
   undefined2 extraout_var;
-  undefined4 uVar7;
-  undefined2 uVar8;
   undefined2 extraout_var_00;
+  undefined2 uVar6;
   uint extraout_ECX;
   uint extraout_ECX_00;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
+  undefined4 uVar7;
+  char *pcVar8;
   char *pcVar9;
-  char *pcVar10;
-  char *pcVar11;
-  bool bVar12;
+  char *text;
+  bool bVar10;
   int local_10;
   
-  bVar12 = -1 < param_5;
+  bVar10 = -1 < param_5;
   local_10 = 0;
-  uVar5 = FUN_0044cb93(param_4);
-  sVar3 = (short)uVar5 + DAT_004634ec;
+  sVar3 = GetFontBaselineY_(param_4);
+  sVar3 = sVar3 + DAT_004634ec;
   uVar5 = (uint)param_4;
-  uVar6 = FUN_0044cb93(param_4);
-  param_6 = param_6 + (short)uVar6;
+  sVar4 = GetFontBaselineY_(param_4);
+  param_6 = param_6 + sVar4;
   uVar7 = extraout_EDX;
-  pcVar9 = param_8;
-  pcVar11 = param_8;
+  pcVar8 = param_8;
+  text = param_8;
+  uVar6 = extraout_var;
   do {
-    if (((((*pcVar9 == ' ') || (*pcVar9 == '\0')) || (*pcVar9 == '\n')) ||
-        ((*pcVar9 == '-' || (*pcVar9 == '^')))) || (*pcVar9 == '\r')) {
-      if ((*pcVar9 == '-') || (*pcVar9 == '^')) {
-        pcVar9 = pcVar9 + 1;
+    if (((((*pcVar8 == ' ') || (*pcVar8 == '\0')) || (*pcVar8 == '\n')) ||
+        ((*pcVar8 == '-' || (*pcVar8 == '^')))) || (*pcVar8 == '\r')) {
+      if ((*pcVar8 == '-') || (*pcVar8 == '^')) {
+        pcVar8 = pcVar8 + 1;
       }
-      cVar1 = *pcVar9;
-      *pcVar9 = '\0';
-      sVar4 = FUN_0044ccf5((char)param_4,(char)uVar7,(char)uVar5,
-                           CONCAT22((short)(uVar6 >> 0x10),param_4),pcVar11);
+      cVar1 = *pcVar8;
+      *pcVar8 = '\0';
+      sVar4 = FUN_0044ccf5((char)param_4,(char)uVar7,(char)uVar5,CONCAT22(uVar6,param_4),text);
       uVar5 = extraout_ECX;
       uVar7 = extraout_EDX_00;
+      uVar6 = extraout_var_00;
       if (param_7 < sVar4) {
         cVar2 = *param_8;
         *param_8 = '\0';
-        uVar8 = extraout_var;
-        if (bVar12) {
-          uVar7 = CONCAT22(extraout_var,param_4);
-          FUN_0044cf2c(uVar7,pcVar11,CONCAT22(extraout_var,param_5),param_6,_ClampedColor_);
-          uVar8 = (undefined2)((uint)uVar7 >> 0x10);
+        if (bVar10) {
+          DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
           uVar5 = extraout_ECX_00;
           uVar7 = extraout_EDX_01;
         }
         param_6 = param_6 + sVar3;
         local_10 = local_10 + 1;
         *param_8 = cVar2;
-        uVar6 = CONCAT31((int3)(CONCAT22(uVar8,sVar3) >> 8),cVar1);
-        *pcVar9 = cVar1;
-        if ((*param_8 == '\n') || (pcVar10 = param_8, *param_8 == '\r')) {
-          pcVar10 = param_8 + 1;
+        *pcVar8 = cVar1;
+        if ((*param_8 == '\n') || (pcVar9 = param_8, *param_8 == '\r')) {
+          pcVar9 = param_8 + 1;
         }
-        for (; param_8 = pcVar10, pcVar11 = pcVar10, *pcVar10 == ' '; pcVar10 = pcVar10 + 1) {
+        for (; param_8 = pcVar9, text = pcVar9, *pcVar9 == ' '; pcVar9 = pcVar9 + 1) {
         }
       }
       else {
-        uVar6 = CONCAT31((int3)(CONCAT22(extraout_var,sVar4) >> 8),cVar1);
-        *pcVar9 = cVar1;
-        pcVar10 = pcVar9 + 1;
-        param_8 = pcVar9;
+        *pcVar8 = cVar1;
+        pcVar9 = pcVar8 + 1;
+        param_8 = pcVar8;
       }
     }
     else {
-      pcVar10 = pcVar9 + 1;
+      pcVar9 = pcVar8 + 1;
     }
-    pcVar9 = pcVar10;
-  } while (*pcVar10 != '\0');
-  sVar4 = FUN_0044ccf5((char)param_4,(char)uVar7,(char)uVar5,
-                       CONCAT22((short)(uVar6 >> 0x10),param_4),pcVar11);
-  uVar8 = extraout_var_00;
+    pcVar8 = pcVar9;
+  } while (*pcVar9 != '\0');
+  sVar4 = FUN_0044ccf5((char)param_4,(char)uVar7,(char)uVar5,CONCAT22(uVar6,param_4),text);
   if (param_7 < sVar4) {
     cVar1 = *param_8;
     *param_8 = '\0';
-    if (bVar12) {
-      uVar7 = CONCAT22(extraout_var_00,param_4);
-      FUN_0044cf2c(uVar7,pcVar11,CONCAT22(extraout_var_00,param_5),param_6,_ClampedColor_);
-      uVar8 = (undefined2)((uint)uVar7 >> 0x10);
+    if (bVar10) {
+      DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
     }
     local_10 = local_10 + 1;
     param_6 = param_6 + sVar3;
     *param_8 = cVar1;
-    for (; pcVar11 = param_8, *param_8 == ' '; param_8 = param_8 + 1) {
+    for (; text = param_8, *param_8 == ' '; param_8 = param_8 + 1) {
     }
   }
-  if (pcVar11 != (char *)0x0) {
-    if (bVar12) {
-      FUN_0044cf2c(CONCAT22(uVar8,param_4),pcVar11,CONCAT22(uVar8,param_5),param_6,_ClampedColor_);
+  if (text != (char *)0x0) {
+    if (bVar10) {
+      DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
     }
     local_10 = local_10 + 1;
   }
@@ -42811,8 +43101,8 @@ uint FUN_0044d73f(undefined2 *param_1,byte param_2,byte param_3,undefined2 param
   char cVar1;
   bool bVar2;
   short sVar3;
-  uint uVar4;
-  int iVar5;
+  short sVar4;
+  uint uVar5;
   uint extraout_ECX;
   uint uVar6;
   uint extraout_EDX;
@@ -42822,7 +43112,7 @@ uint FUN_0044d73f(undefined2 *param_1,byte param_2,byte param_3,undefined2 param
   short local_6;
   
   uVar6 = (uint)param_2;
-  uVar4 = (uint)param_3;
+  uVar5 = (uint)param_3;
   bVar2 = false;
   sVar3 = 0;
   local_8 = 0;
@@ -42831,11 +43121,10 @@ LAB_0044d797:
   do {
     if (bVar2) {
       if (param_7 != (short *)0x0) {
-        uVar4 = FUN_0044cb93(0xffff);
-        iVar5 = (int)(short)uVar4 * (int)local_6;
-        sVar3 = (short)iVar5 + (local_6 + -1) * DAT_004634ec;
-        param_1 = (undefined2 *)CONCAT22((short)((uint)iVar5 >> 0x10),sVar3);
-        *param_7 = sVar3;
+        sVar3 = GetFontBaselineY_(0xffff);
+        sVar4 = (short)((int)sVar3 * (int)local_6) + (local_6 + -1) * DAT_004634ec;
+        param_1 = (undefined2 *)CONCAT22((short)((uint)((int)sVar3 * (int)local_6) >> 0x10),sVar4);
+        *param_7 = sVar4;
       }
       if (param_6 != (short *)0x0) {
         *param_6 = local_8;
@@ -42854,9 +43143,9 @@ LAB_0044d797:
       param_1 = (undefined2 *)CONCAT31(uVar7,cVar1 + -10);
       if (((char)(cVar1 + -10) != '\0') &&
          (param_1 = (undefined2 *)CONCAT31(uVar7,cVar1 + -0xd), (char)(cVar1 + -0xd) != '\0')) {
-        param_1 = (undefined2 *)FUN_0044d0fb((char)param_4,(char)uVar6,(char)uVar4,param_4,cVar1);
+        param_1 = (undefined2 *)FUN_0044d0fb((char)param_4,(char)uVar6,(char)uVar5,param_4,cVar1);
         sVar3 = sVar3 + (short)param_1;
-        uVar4 = extraout_ECX;
+        uVar5 = extraout_ECX;
         uVar6 = extraout_EDX;
         param_5 = param_5 + 1;
         goto LAB_0044d797;
@@ -42869,22 +43158,6 @@ LAB_0044d797:
     sVar3 = 0;
     param_5 = param_5 + 1;
   } while( true );
-}
-
-
-
-void __stdcall DrawString(undefined2 x,short y,undefined4 string)
-
-{
-  uint uVar1;
-  undefined2 uVar2;
-  undefined2 uVar3;
-  
-  uVar3 = _ClampedColor_;
-  uVar1 = FUN_0044cb93(DAT_0046a93e);
-  uVar2 = (undefined2)(uVar1 >> 0x10);
-  FUN_0044cf2c(CONCAT22(uVar2,DAT_0046a93e),string,CONCAT22(uVar2,x),(short)uVar1 + y,uVar3);
-  return;
 }
 
 
@@ -44119,7 +44392,7 @@ void FUN_0044ebef(void)
   _DAT_00463544 = 1;
   FUN_00416f4d();
   *(undefined2 *)&_GameState->field_0x1a = 1;
-  sVar3 = SetColor_(0xfff);
+  sVar3 = SetCurrentColor(0xfff);
   uVar2 = (undefined)sVar3;
   GetWinapiString(&DAT_0046aa3a,0x4e3d);
   puVar6 = &DAT_0046aa3a;
@@ -49723,23 +49996,6 @@ undefined4 FUN_00453f48(undefined param_1,undefined param_2,undefined param_3,LP
 
 
 
-uint FUN_00453f68(undefined param_1,undefined param_2,undefined param_3,uint param_4)
-
-{
-  uint uVar1;
-  
-  if (param_4 == 0xffffffff) {
-    return 0xffffffff;
-  }
-  uVar1 = param_4 & 0xff;
-  if (((&DAT_00464251)[uVar1] & 8) != 0) {
-    return uVar1 - 0x20;
-  }
-  return uVar1;
-}
-
-
-
 undefined2 FUN_00453f90(void)
 
 {
@@ -49808,45 +50064,10 @@ undefined4 FUN_00453ffc(void)
 
 
 
-int FUN_00454024(undefined param_1,undefined param_2,undefined param_3,char *param_4)
+void FUN_00454080(undefined param_1,undefined param_2,undefined param_3,char *param_4)
 
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar4;
-  
-  iVar2 = 0;
-  do {
-    pcVar3 = param_4;
-    cVar1 = *pcVar3;
-    param_4 = pcVar3 + 1;
-  } while (((&DAT_00464251)[cVar1] & 1) != 0);
-  if ((cVar1 == '+') || (cVar1 == '-')) {
-    bVar4 = cVar1 == '-';
-    cVar1 = *param_4;
-    param_4 = pcVar3 + 2;
-  }
-  else {
-    bVar4 = false;
-  }
-  while (('/' < cVar1 && (cVar1 < ':'))) {
-    iVar2 = iVar2 * 10 + (int)cVar1 + -0x30;
-    cVar1 = *param_4;
-    param_4 = param_4 + 1;
-  }
-  if (bVar4) {
-    iVar2 = -iVar2;
-  }
-  return iVar2;
-}
-
-
-
-void FUN_00454080(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
-
-{
-  FUN_00454024((char)param_4,param_2,param_3,param_4);
+  Atoi(param_4);
   return;
 }
 
