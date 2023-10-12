@@ -985,18 +985,17 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
                    uint param_6,uint param_7)
 
 {
-  undefined uVar1;
-  ushort uVar2;
-  short sVar3;
+  ushort uVar1;
+  short sVar2;
   HMENU hMenu;
-  uint uVar4;
-  LRESULT LVar5;
+  uint uVar3;
+  LRESULT LVar4;
   undefined extraout_CL;
   undefined extraout_CL_00;
+  undefined uVar5;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined uVar6;
-  undefined extraout_DL_01;
   UINT UVar7;
   tagPOINT local_18;
   tagPOINT local_10;
@@ -1031,9 +1030,8 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
         case 6:
           if (((param_6 != 0) && ((short)(param_7 >> 0x10) == 0)) && (_DAT_00464874 == 0)) {
             _DAT_00464874 = 1;
-            uVar6 = 0;
-            uVar1 = FUN_00410bb0((char)(param_7 >> 0x10),extraout_DL,extraout_CL,0);
-            FUN_0043095c(uVar1,extraout_DL_01,uVar6,0);
+            FUN_00410bb0((char)(param_7 >> 0x10),extraout_DL,extraout_CL,0);
+            Draw::DirtyRect((Rect16 *)0x0);
             (*(code *)PTR_FUN_00460230)();
             _DAT_004601bc = 1;
             InvalidateRect(hWnd_00464834,(RECT *)0x0,0);
@@ -1041,15 +1039,15 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
           break;
         case 0xf:
           UVar7 = param_5;
-          uVar1 = extraout_CL;
+          uVar5 = extraout_CL;
           uVar6 = extraout_DL;
           if (_DAT_004601bc != 0) {
             _DAT_004601bc = 0;
             UVar7 = FUN_00410d30();
-            uVar1 = extraout_CL_00;
+            uVar5 = extraout_CL_00;
             uVar6 = extraout_DL_00;
           }
-          FUN_00410f13((char)UVar7,uVar6,uVar1,param_4);
+          FUN_00410f13((char)UVar7,uVar6,uVar5,param_4);
           break;
         case 0x10:
           (*(code *)PTR_FUN_00460254)();
@@ -1059,8 +1057,8 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
             ShowWindow(param_4,9);
           }
           SetForegroundWindow(param_4);
-          sVar3 = (*(code *)PTR_FUN_00460254)();
-          return (int)sVar3;
+          sVar2 = (*(code *)PTR_FUN_00460254)();
+          return (int)sVar2;
         default:
           return 1;
         }
@@ -1103,24 +1101,24 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
     if (param_5 != 0x117) {
       if ((int)param_5 < 0x113) {
         if (param_5 == 0x112) {
-          uVar4 = param_6 & 0xfff0;
-          if (uVar4 == 2000) {
+          uVar3 = param_6 & 0xfff0;
+          if (uVar3 == 2000) {
             (*(code *)PTR_FUN_0046024c)();
             return 0;
           }
-          if (uVar4 == 0xf010) {
+          if (uVar3 == 0xf010) {
             if (local_8 == 0) {
               return 0;
             }
           }
-          else if (uVar4 == 0xf060) {
+          else if (uVar3 == 0xf060) {
             (*(code *)PTR_FUN_00460254)();
             return 0;
           }
         }
         else if (param_5 == 0x102) {
-          uVar2 = GetAsyncKeyState(0x11);
-          if (((uVar2 & 0x8000) != 0) && (sVar3 = (*(code *)PTR_FUN_00460240)(), sVar3 != 0)) {
+          uVar1 = GetAsyncKeyState(0x11);
+          if (((uVar1 & 0x8000) != 0) && (sVar2 = (*(code *)PTR_FUN_00460240)(), sVar2 != 0)) {
             return 0;
           }
           _DAT_00464870 = param_6;
@@ -1197,8 +1195,8 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
       ShowWindow(param_4,9);
     }
   }
-  LVar5 = DefWindowProcA(param_4,param_5,param_6,param_7);
-  return LVar5;
+  LVar4 = DefWindowProcA(param_4,param_5,param_6,param_7);
+  return LVar4;
 }
 
 
@@ -1819,75 +1817,74 @@ void FUN_00412490(undefined param_1,undefined param_2,undefined param_3,int para
   short sVar1;
   undefined2 uVar2;
   undefined *puVar3;
-  undefined4 uVar4;
-  undefined *puVar5;
+  undefined *puVar4;
+  undefined4 uVar5;
+  undefined *puVar6;
   undefined extraout_CL;
   undefined extraout_CL_00;
-  undefined uVar6;
+  undefined uVar7;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
-  undefined extraout_DL_02;
-  undefined uVar7;
+  undefined uVar8;
   undefined2 extraout_DX;
   undefined2 extraout_DX_00;
   undefined2 extraout_DX_02;
-  short *psVar8;
-  undefined *puVar9;
+  short *psVar9;
+  Rect16 *rectOptional;
   undefined local_2c [12];
   ushort local_20;
-  undefined local_1e [22];
+  Rect16 local_1e [2];
   short local_8;
   short local_6;
   undefined2 extraout_DX_01;
   
   local_8 = 0;
-  psVar8 = *(short **)(param_4 + 0x6a);
+  psVar9 = *(short **)(param_4 + 0x6a);
   for (local_6 = 0; local_6 < *(short *)(param_4 + 0x58); local_6 = local_6 + 1) {
-    sVar1 = *psVar8;
+    sVar1 = *psVar9;
     Memcpy(local_2c,&DAT_00464910 + sVar1 * 0x24,0x24);
     puVar3 = (undefined *)(uint)local_20;
-    uVar6 = extraout_CL;
-    uVar7 = extraout_DL;
+    uVar7 = extraout_CL;
+    uVar8 = extraout_DL;
     if (((local_20 & 0x10) == 0) && ((local_20 & 0x106) != 0)) {
-      uVar6 = SUB41(local_1e,0);
       FUN_00412086();
-      puVar3 = local_1e;
-      FUN_0043095c((char)puVar3,extraout_DL_00,uVar6,puVar3);
-      puVar9 = local_2c;
-      puVar3 = (undefined *)FUN_00435117((char)puVar9,extraout_DL_01,(char)puVar3,puVar9);
+      rectOptional = local_1e;
+      Draw::DirtyRect(rectOptional);
+      puVar3 = local_2c;
+      puVar4 = (undefined *)FUN_00435117((char)puVar3,extraout_DL_00,(char)rectOptional,puVar3);
       uVar2 = extraout_DX;
-      while (puVar5 = puVar3, puVar5 != (undefined *)0x0) {
-        uVar4 = FUN_004122d0((char)local_1e,(char)uVar2,(char)puVar9,local_1e,puVar5 + 0xe);
-        if ((short)uVar4 != 0) {
-          *(ushort *)(puVar5 + 0xc) = *(ushort *)(puVar5 + 0xc) | 0x40;
+      while (puVar6 = puVar4, puVar6 != (undefined *)0x0) {
+        uVar5 = FUN_004122d0((char)local_1e,(char)uVar2,(char)puVar3,local_1e,puVar6 + 0xe);
+        if ((short)uVar5 != 0) {
+          *(ushort *)(puVar6 + 0xc) = *(ushort *)(puVar6 + 0xc) | 0x40;
         }
-        puVar3 = (undefined *)FUN_00435117((char)uVar4,extraout_DL_02,extraout_CL_00,puVar5);
+        puVar4 = (undefined *)FUN_00435117((char)uVar5,extraout_DL_01,extraout_CL_00,puVar6);
         uVar2 = extraout_DX_00;
-        puVar9 = puVar5;
+        puVar3 = puVar6;
       }
-      puVar9 = local_2c;
-      puVar5 = (undefined *)DlistNext(puVar9);
-      uVar7 = (undefined)extraout_DX_01;
-      uVar6 = SUB41(puVar9,0);
+      puVar4 = local_2c;
+      puVar6 = (undefined *)DlistNext(puVar4);
+      uVar8 = (undefined)extraout_DX_01;
+      uVar7 = SUB41(puVar4,0);
       uVar2 = extraout_DX_01;
-      while (puVar3 = puVar5, puVar3 != (undefined *)0x0) {
-        uVar4 = FUN_004122d0((char)local_1e,(char)uVar2,(char)puVar9,local_1e,puVar3 + 0xe);
-        if ((short)uVar4 != 0) {
+      while (puVar3 = puVar6, puVar3 != (undefined *)0x0) {
+        uVar5 = FUN_004122d0((char)local_1e,(char)uVar2,(char)puVar4,local_1e,puVar3 + 0xe);
+        if ((short)uVar5 != 0) {
           *(ushort *)(puVar3 + 0xc) = *(ushort *)(puVar3 + 0xc) | 0x40;
         }
-        puVar5 = (undefined *)DlistNext(puVar3);
-        uVar7 = (undefined)extraout_DX_02;
-        uVar6 = SUB41(puVar3,0);
+        puVar6 = (undefined *)DlistNext(puVar3);
+        uVar8 = (undefined)extraout_DX_02;
+        uVar7 = SUB41(puVar3,0);
         uVar2 = extraout_DX_02;
-        puVar9 = puVar3;
+        puVar4 = puVar3;
       }
     }
     if ((local_20 & 10) != 0) {
-      FUN_00412434((char)puVar3,uVar7,uVar6,&DAT_00464910 + sVar1 * 0x24);
+      FUN_00412434((char)puVar3,uVar8,uVar7,&DAT_00464910 + sVar1 * 0x24);
       local_8 = local_8 + 1;
     }
-    psVar8 = psVar8 + 1;
+    psVar9 = psVar9 + 1;
   }
   *(short *)(param_4 + 0x58) = *(short *)(param_4 + 0x58) - local_8;
   return;
@@ -1910,6 +1907,7 @@ void FUN_004125a8(void)
   undefined extraout_DL_04;
   undefined uVar5;
   int iVar6;
+  Rect16 *rectOptional;
   int iVar7;
   int iVar8;
   
@@ -1927,9 +1925,9 @@ void FUN_004125a8(void)
       }
       if (*(int *)(iVar8 + 0x16) != 0) {
         if ((uVar1 & 5) != 0) {
-          iVar6 = iVar8 + 0xe;
-          FUN_0043095c((char)iVar6,uVar4,uVar5,iVar6);
-          uVar5 = (undefined)iVar6;
+          rectOptional = (Rect16 *)(iVar8 + 0xe);
+          Draw::DirtyRect(rectOptional);
+          uVar5 = SUB41(rectOptional,0);
           uVar4 = extraout_DL_00;
         }
         if ((uVar1 & 0x400) != 0) {
@@ -3358,77 +3356,63 @@ void FUN_00413b24(undefined param_1,undefined param_2,undefined param_3,int para
 
 
 
-uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,uint param_4,
+uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *param_4,
                  undefined4 param_5,undefined4 param_6,short param_7,byte param_8)
 
 {
   undefined uVar1;
   undefined2 *puVar2;
-  uint uVar3;
+  Rect16 *pRVar3;
   undefined4 uVar4;
   undefined extraout_CL;
   undefined extraout_CL_00;
-  undefined extraout_CL_01;
-  undefined extraout_CL_02;
-  undefined extraout_CL_03;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined extraout_DL_01;
-  undefined extraout_DL_02;
-  undefined uVar5;
-  undefined extraout_DL_03;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
-  int iVar6;
-  uint uVar7;
-  short local_10;
-  undefined2 local_e;
-  undefined2 local_c;
-  undefined2 local_a;
+  int iVar5;
+  Rect16 *pRVar6;
+  Rect16 local_10;
   ushort local_8;
   undefined2 local_6;
   
   local_6 = 0;
-  if ((param_4 != 0) && (iVar6 = *(int *)(param_4 + 0x26), param_7 < *(short *)(iVar6 + 10))) {
-    iVar6 = *(int *)(*(int *)(iVar6 + 0x16) + param_7 * 4) + *(int *)(iVar6 + 0x12);
+  if ((param_4 != (Rect16 *)0x0) &&
+     (iVar5 = *(int *)&param_4[4].h, param_7 < *(short *)(iVar5 + 10))) {
+    iVar5 = *(int *)(*(int *)(iVar5 + 0x16) + param_7 * 4) + *(int *)(iVar5 + 0x12);
     if ((short)param_5 == -0x8000) {
-      param_5._0_2_ = *(short *)(param_4 + 8);
+      param_5._0_2_ = param_4[1].x;
     }
     if ((short)param_6 == -0x8000) {
-      param_6 = CONCAT22((short)((uint)param_6 >> 0x10),*(undefined2 *)(param_4 + 10));
+      param_6 = CONCAT22((short)((uint)param_6 >> 0x10),param_4[1].y);
     }
-    local_e = (undefined2)param_6;
-    local_c = *(undefined2 *)(iVar6 + 2);
-    local_a = *(undefined2 *)(iVar6 + 4);
-    if (*(short *)(param_4 + 0x6e) == 0) {
+    local_10.y = (short)param_6;
+    local_10.w = *(short *)(iVar5 + 2);
+    local_10.h = *(short *)(iVar5 + 4);
+    if (param_4[0xd].h == 0) {
       puVar2 = (undefined2 *)&DAT_004657e2;
     }
     else {
       puVar2 = &DAT_004657da;
     }
-    local_10 = (short)param_5;
-    param_4 = FUN_0041233c((char)puVar2,(char)local_a,(char)param_7,puVar2,&local_10);
+    local_10.x = (short)param_5;
+    param_4 = (Rect16 *)FUN_0041233c((char)puVar2,(char)local_10.h,(char)param_7,puVar2,&local_10);
     local_8 = (ushort)param_4;
     if (local_8 != 0) {
       local_6 = 1;
-      if ((param_4 & 2) == 0) {
+      if (((uint)param_4 & 2) == 0) {
         if ((param_8 & 1) == 0) {
           FUN_004119e4();
-          uVar1 = extraout_CL_02;
-          uVar5 = extraout_DL_02;
         }
         else {
           FUN_00411ceb();
-          uVar1 = extraout_CL_01;
-          uVar5 = extraout_DL_01;
         }
       }
       else {
-        FUN_004315b4((char)param_4,extraout_DL,extraout_CL,(short)param_5,param_6,iVar6);
-        uVar1 = extraout_CL_00;
-        uVar5 = extraout_DL_00;
+        FUN_004315b4((char)param_4,extraout_DL,extraout_CL,(short)param_5,param_6,iVar5);
       }
-      param_4 = FUN_0043095c((char)&local_10,uVar5,uVar1,&local_10);
+      param_4 = &local_10;
+      Draw::DirtyRect(param_4);
       if ((param_8 & 2) != 0) {
         uVar1 = FUN_00431420();
         if ((local_8 & 2) == 0) {
@@ -3440,27 +3424,27 @@ uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,uint par
           }
         }
         else {
-          FUN_004315b4(uVar1,extraout_DL_03,extraout_CL_03,(short)param_5,param_6,iVar6);
+          FUN_004315b4(uVar1,extraout_DL_00,extraout_CL_00,(short)param_5,param_6,iVar5);
         }
-        param_4 = FUN_004313d8();
+        param_4 = (Rect16 *)FUN_004313d8();
       }
     }
     if ((param_8 & 4) == 0) {
-      uVar7 = DAT_00465720;
-      uVar3 = DlistHead(DAT_00465720);
+      pRVar6 = DAT_00465720;
+      pRVar3 = (Rect16 *)DlistHead(DAT_00465720);
       uVar4 = extraout_EDX;
-      while (param_4 = uVar3, param_4 != 0) {
-        uVar4 = FUN_004122d0((char)&local_10,(char)uVar4,(char)uVar7,&local_10,param_4 + 0xe);
+      while (param_4 = pRVar3, param_4 != (Rect16 *)0x0) {
+        uVar4 = FUN_004122d0((char)&local_10,(char)uVar4,(char)pRVar6,&local_10,&param_4[1].h);
         if ((short)uVar4 != 0) {
-          *(ushort *)(param_4 + 0xc) = *(ushort *)(param_4 + 0xc) | 0x40;
+          param_4[1].w = param_4[1].w | 0x40;
         }
-        uVar3 = DlistNext(param_4);
+        pRVar3 = (Rect16 *)DlistNext(param_4);
         uVar4 = extraout_EDX_00;
-        uVar7 = param_4;
+        pRVar6 = param_4;
       }
     }
   }
-  return CONCAT22((short)(param_4 >> 0x10),local_6);
+  return CONCAT22((short)((uint)param_4 >> 0x10),local_6);
 }
 
 
@@ -3768,7 +3752,7 @@ void FUN_00414088(void)
 
 
 
-void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
+void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,Rect16 *param_4)
 
 {
   undefined uVar1;
@@ -3776,23 +3760,21 @@ void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,undefine
   undefined4 uVar3;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined extraout_DL_01;
   int iVar4;
   int iVar5;
   
-  uVar3 = param_4;
-  uVar1 = FUN_00412086();
-  FUN_0043095c(uVar1,extraout_DL,(char)uVar3,param_4);
+  FUN_00412086();
+  Draw::DirtyRect(param_4);
   iVar4 = DAT_00465720;
   iVar2 = DlistHead(DAT_00465720);
-  uVar1 = extraout_DL_00;
+  uVar1 = extraout_DL;
   while (iVar5 = iVar2, iVar5 != 0) {
     uVar3 = FUN_004122d0((char)(iVar5 + 0xe),uVar1,(char)iVar4,param_4,iVar5 + 0xe);
     if ((short)uVar3 != 0) {
       *(ushort *)(iVar5 + 0xc) = *(ushort *)(iVar5 + 0xc) | 0x40;
     }
     iVar2 = DlistNext(iVar5);
-    uVar1 = extraout_DL_01;
+    uVar1 = extraout_DL_00;
     iVar4 = iVar5;
   }
   return;
@@ -4708,15 +4690,10 @@ void FUN_00415aa2(void)
 void FUN_00415af1(void)
 
 {
-  undefined uVar1;
-  undefined extraout_DL;
-  undefined4 uVar2;
-  
-  uVar2 = DAT_004605d4;
-  uVar1 = FUN_0041179f();
-  FUN_0043095c(uVar1,extraout_DL,(char)uVar2,DAT_004605d4);
+  FUN_0041179f();
+  Draw::DirtyRect(DAT_004605d4);
   FUN_0043c2ba(DAT_004605d4);
-  DAT_004605d4 = 0;
+  DAT_004605d4 = (Rect16 *)0x0;
   return;
 }
 
@@ -7118,12 +7095,12 @@ void FUN_00417e20(void)
   GetWinapiString(local_54,0x4e3a);
   GetWinapiString(local_a4,0x4e3b);
   SetCurrentColor(0xfff);
-  DrawStringWithCurrentFontAndColor(8,0x3d,local_54);
-  DrawStringWithCurrentFontAndColor(8,0x4d,local_a4);
+  Draw::StringWithCurrentFontAndColor(8,0x3d,local_54);
+  Draw::StringWithCurrentFontAndColor(8,0x4d,local_a4);
   SetCurrentColor(0xafa);
-  DrawStringWithCurrentFontAndColor(0x40,0x3d,DAT_004666d8);
+  Draw::StringWithCurrentFontAndColor(0x40,0x3d,DAT_004666d8);
   SetCurrentColor(0x9f9);
-  DrawStringWithCurrentFontAndColor(0x40,0x4d,DAT_004666dc);
+  Draw::StringWithCurrentFontAndColor(0x40,0x4d,DAT_004666dc);
   return;
 }
 
@@ -11362,7 +11339,7 @@ void FUN_0041f635(void)
       x = (&DAT_004614fc)[sVar1 * 6];
       y = (&DAT_004614fe)[sVar1 * 6];
       Sprintf_(local_10,&DAT_00461554,(int)(short)(&DAT_00466a54)[sVar1]);
-      DrawString(15000,local_10,x,y,0);
+      Draw::String(15000,local_10,x,y,0);
     }
     sVar1 = sVar1 + 1;
   } while (sVar1 < 5);
@@ -13368,8 +13345,8 @@ void FUN_00422920(void)
     if ((&DAT_00467626)[sVar4 * 0xd] != -1) {
       pcVar2 = local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50;
       sVar1 = FUN_0044ccf5((char)pcVar2,(char)local_384,(char)uVar3,uVar6,pcVar2);
-      DrawString(15000,local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50,
-                 (0xee - sVar1) - local_a,y,0);
+      Draw::String(15000,local_384 + (short)(&DAT_00467626)[sVar4 * 0xd] * 0x50,
+                   (0xee - sVar1) - local_a,y,0);
       uVar3 = extraout_ECX;
     }
     y = y + 0x41;
@@ -13379,17 +13356,17 @@ void FUN_00422920(void)
     pcVar2 = GetWinapiStringAlloc(0x4e46);
     format = GetWinapiStringAlloc(0x4e47);
     local_8 = GetWinapiStringAlloc(0x4e48);
-    DrawString(15000,pcVar2,10,0x152,0);
+    Draw::String(15000,pcVar2,10,0x152,0);
     Sprintf_(local_104,format,(int)DAT_0046776a);
-    DrawString(15000,local_104,10,0x166,0);
-    DrawString(15000,local_8,10,0x17a,0);
+    Draw::String(15000,local_104,10,0x166,0);
+    Draw::String(15000,local_8,10,0x17a,0);
     TurboFree_(pcVar2);
     TurboFree_(format);
     TurboFree_(local_8);
   }
   else {
     SetCurrentColor(0);
-    DrawStringWithCurrentFontAndColor(10,0x148,local_484);
+    Draw::StringWithCurrentFontAndColor(10,0x148,local_484);
   }
   FUN_00425b7d();
   Nfnt::Unload(15000);
@@ -15286,7 +15263,7 @@ void FUN_00425b7d(void)
   FUN_00430de8(0x37,0x70,0x1a,0x1a);
   if (0 < DAT_00467768) {
     Sprintf_(local_10,&DAT_00461593,(int)DAT_00467768);
-    DrawString(15000,local_10,0x3b,0x82,0);
+    Draw::String(15000,local_10,0x3b,0x82,0);
   }
   FUN_00430abc(0x37,0x70,0x1a,0x1a);
   Nfnt::Unload(15000);
@@ -18689,8 +18666,8 @@ void FUN_0042b8fc(undefined param_1,undefined param_2,undefined param_3,short pa
   Nfnt::Load(15000);
   FUN_00430de8(10,0x14a,0xfa,0x28);
   Sprintf_(local_38,s_x__d_y__d_00461a77,(int)param_4,(int)param_5);
-  DrawString(15000,PTR_s__00461a48,10,0x159,0);
-  DrawString(15000,local_38,10,0x16d,0);
+  Draw::String(15000,PTR_s__00461a48,10,0x159,0);
+  Draw::String(15000,local_38,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
   Nfnt::Unload(15000);
   return;
@@ -21472,87 +21449,11 @@ LAB_004308ee:
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-void FUN_00430908(void)
-
-{
-  Memset(&DAT_00467e1a,0,0x300);
-  _DAT_00461cc2 = 0;
-  return;
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-undefined4 FUN_00430928(undefined param_1,undefined param_2,undefined param_3,void *param_4)
-
-{
-  void *pvVar1;
-  
-  pvVar1 = Memcpy(&DAT_00467e1a,param_4,0x300);
-  if (_DAT_00461cc2 == 0) {
-    _DAT_00461cc2 = 1;
-  }
-  return CONCAT22((short)((uint)pvVar1 >> 0x10),0x300);
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-void FUN_0043095c(undefined param_1,undefined param_2,undefined param_3,short *param_4)
-
-{
-  undefined *puVar1;
-  short sVar2;
-  short sVar3;
-  short sVar4;
-  short local_8;
-  short local_6;
-  
-  if (param_4 == (short *)0x0) {
-    _DAT_00461cc2 = -1;
-  }
-  else {
-    local_6 = *param_4;
-    sVar2 = local_6 + param_4[2] + -1;
-    sVar3 = param_4[1];
-    local_8 = sVar3 + param_4[3] + -1;
-    if (local_6 < 0) {
-      local_6 = 0;
-    }
-    if (0x1ff < sVar2) {
-      sVar2 = 0x1ff;
-    }
-    if (sVar3 < 0) {
-      sVar3 = 0;
-    }
-    if (0x17f < local_8) {
-      local_8 = 0x17f;
-    }
-    for (sVar3 = sVar3 >> 4; sVar3 <= local_8 >> 4; sVar3 = sVar3 + 1) {
-      puVar1 = &DAT_00467e1a + sVar3 * 0x20 + (int)(local_6 >> 4);
-      for (sVar4 = local_6 >> 4; sVar4 <= sVar2 >> 4; sVar4 = sVar4 + 1) {
-        *puVar1 = 1;
-        puVar1 = puVar1 + 1;
-      }
-    }
-    if (_DAT_00461cc2 == 0) {
-      _DAT_00461cc2 = 1;
-    }
-  }
-  return;
-}
-
-
-
 void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *param_4)
 
 {
   short sVar1;
-  undefined *puVar2;
+  bool *pbVar2;
   short sVar3;
   short sVar4;
   short local_8;
@@ -21575,10 +21476,10 @@ void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *p
     local_8 = 0x17f;
   }
   for (sVar1 = sVar1 >> 4; sVar1 <= local_8 >> 4; sVar1 = sVar1 + 1) {
-    puVar2 = &DAT_00467e1a + sVar1 * 0x20 + (int)(local_6 >> 4);
+    pbVar2 = Draw::dirtyTiles[sVar1] + (local_6 >> 4);
     for (sVar4 = local_6 >> 4; sVar4 <= sVar3 >> 4; sVar4 = sVar4 + 1) {
-      *puVar2 = 0;
-      puVar2 = puVar2 + 1;
+      *pbVar2 = false;
+      pbVar2 = pbVar2 + 1;
     }
   }
   return;
@@ -21586,22 +21487,16 @@ void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *p
 
 
 
-void __stdcall
-FUN_00430abc(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4)
+void __stdcall FUN_00430abc(short param_1,short param_2,short param_3,short param_4)
 
 {
-  undefined in_CL;
-  undefined in_DL;
-  undefined2 local_c;
-  undefined2 local_a;
-  undefined2 local_8;
-  undefined2 local_6;
+  Rect16 local_c;
   
-  local_c = param_1;
-  local_a = param_2;
-  local_8 = param_3;
-  local_6 = param_4;
-  FUN_0043095c((char)&local_c,in_DL,in_CL,&local_c);
+  local_c.x = param_1;
+  local_c.y = param_2;
+  local_c.w = param_3;
+  local_c.h = param_4;
+  Draw::DirtyRect(&local_c);
   return;
 }
 
@@ -21662,14 +21557,15 @@ undefined4 FUN_00430bbc(void)
   int iVar4;
   undefined4 uVar5;
   short sVar6;
+  bool *pbVar7;
   undefined in_stack_ffffffe8;
-  short sVar7;
-  char *pcStack_14;
+  short sVar8;
+  bool (*pabStack_14) [32];
   
   uVar5 = 0;
   if ((_DAT_00461cc4 == 0) && (_DAT_00461cc6 == 0)) {
     FUN_00426842();
-    if (_DAT_00461cc2 < 0) {
+    if (Draw::dirtyMode < 0) {
       DAT_00467e14 = 0;
       DAT_00467e12 = 0;
       DAT_00467e16 = 0x200;
@@ -21686,29 +21582,29 @@ undefined4 FUN_00430bbc(void)
       }
       (*DAT_00468424)();
       ReleaseDC(hWnd_00464834,DAT_00468428);
-      _DAT_00461cc2 = 0;
+      Draw::dirtyMode = 0;
       uVar5 = 1;
     }
-    if (_DAT_00461cc2 != 0) {
-      _DAT_00461cc2 = 0;
-      pcStack_14 = &DAT_00467e1a;
+    if (Draw::dirtyMode != 0) {
+      Draw::dirtyMode = 0;
+      pabStack_14 = Draw::dirtyTiles;
       DAT_00467e18 = 0x10;
       DAT_00468428 = GetDC(hWnd_00464834);
       if (DAT_0046811c != (HPALETTE)0x0) {
         SelectPalette(DAT_00468428,DAT_0046811c,0);
         RealizePalette(DAT_00468428);
       }
-      sVar7 = 0;
+      sVar8 = 0;
       DAT_00467e14 = 0;
       do {
         DAT_00467e12 = 0;
         sVar6 = 0;
-        pcVar2 = pcStack_14;
+        pbVar7 = (bool *)pabStack_14;
         do {
           iVar4 = 0;
           while( true ) {
-            cVar1 = *pcVar2;
-            pcVar2 = pcVar2 + 1;
+            cVar1 = *pbVar7;
+            pbVar7 = pbVar7 + 1;
             sVar3 = (short)iVar4;
             if ((cVar1 == '\0') || (0x1f < (int)sVar6 + (int)sVar3)) break;
             iVar4 = iVar4 + 1;
@@ -21725,13 +21621,13 @@ undefined4 FUN_00430bbc(void)
           }
           DAT_00467e12 = DAT_00467e12 + 0x10;
         } while (sVar6 < 0x20);
-        pcStack_14 = pcStack_14 + 0x20;
+        pabStack_14 = (bool (*) [32])((int)pabStack_14 + 0x20);
         DAT_00467e14 = DAT_00467e14 + 0x10;
-        sVar7 = sVar7 + 1;
-      } while (sVar7 < 0x18);
+        sVar8 = sVar8 + 1;
+      } while (sVar8 < 0x18);
       ReleaseDC(hWnd_00464834,DAT_00468428);
     }
-    FUN_00430908();
+    Draw::DirtyInit();
     if (_DAT_00461cc4 != 0) {
       FUN_0043139c();
     }
@@ -21754,24 +21650,17 @@ void FUN_00430db4(undefined param_1,undefined param_2,undefined param_3,undefine
 
 
 
-void __stdcall
-FUN_00430de8(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4)
+void __stdcall FUN_00430de8(short param_1,short param_2,short param_3,short param_4)
 
 {
-  undefined extraout_DL;
-  undefined uVar1;
-  undefined2 local_c;
-  undefined2 local_a;
-  undefined2 local_8;
-  undefined2 local_6;
+  Rect16 local_c;
   
-  local_c = param_1;
-  local_a = param_2;
-  local_8 = param_3;
-  local_6 = param_4;
-  uVar1 = SUB41(&local_c,0);
+  local_c.x = param_1;
+  local_c.y = param_2;
+  local_c.w = param_3;
+  local_c.h = param_4;
   FUN_00412086();
-  FUN_0043095c((char)&local_c,extraout_DL,uVar1,&local_c);
+  Draw::DirtyRect(&local_c);
   return;
 }
 
@@ -22091,7 +21980,7 @@ void FUN_00431348(void)
   
   if (_DAT_00461cc4 == 0) {
     iVar1 = FUN_004312c4();
-    _DAT_00461cc2 = 0xffff;
+    Draw::dirtyMode = 0xffff;
     FUN_00431b20((char)DAT_00467dca,extraout_DL,extraout_CL,0,0,
                  CONCAT22((short)((uint)iVar1 >> 0x10),DAT_00467dca),DAT_00467dcc,iVar1);
     FUN_00430bbc();
@@ -23185,7 +23074,7 @@ void FUN_004326e8(undefined param_1,undefined param_2,undefined param_3,short pa
   format = GetWinapiStringAlloc(0x4e8e);
   Sprintf_(&DAT_0046858c,format,(int)param_4,(int)param_5,(int)DAT_0046847c);
   TurboFree_(format);
-  DrawString(DAT_004685be,&DAT_0046858c,10,0xd2,0);
+  Draw::String(DAT_004685be,&DAT_0046858c,10,0xd2,0);
   FUN_00430abc(10,0xd2,0x96,0x14);
   Nfnt::Unload(DAT_004685be);
   return;
@@ -23472,7 +23361,7 @@ void FUN_00432f2f(void)
   FUN_00430de8(0x3c,0xf5,0x1a,0x1a);
   if (0 < DAT_0046251c) {
     Sprintf_(local_10,&DAT_00462549,(int)DAT_0046251c);
-    DrawString(15000,local_10,0x41,0x104,0);
+    Draw::String(15000,local_10,0x41,0x104,0);
   }
   FUN_00430abc(0x3c,0xf5,0x1a,0x1a);
   Nfnt::Unload(15000);
@@ -25779,7 +25668,7 @@ void FUN_00435d8a(void)
       y = (&DAT_00462586)[sVar6 * 2];
       unaff_EDI = CONCAT22(uVar8,y);
       Sprintf_(local_10,&DAT_004626c2,(int)(short)(&DAT_00462698)[sVar6]);
-      DrawString(15000,local_10,x,y,0x996);
+      Draw::String(15000,local_10,x,y,0x996);
       uVar4 = extraout_ECX_00;
       uVar5 = extraout_DL_01;
     }
@@ -28703,7 +28592,7 @@ void FUN_0043a834(undefined param_1,undefined param_2,undefined param_3,short pa
   format = GetWinapiStringAlloc(0x4ea4);
   Sprintf_(local_54,format,(int)param_4,(int)param_5,(int)DAT_00468f30,(int)DAT_00468f34);
   TurboFree_(format);
-  DrawString(15000,local_54,10,0x16d,0);
+  Draw::String(15000,local_54,10,0x16d,0);
   FUN_00430abc(10,0x15e,0x96,0x14);
   Nfnt::Unload(15000);
   return;
@@ -29629,14 +29518,9 @@ void FUN_0043b4e2(undefined4 param_1,undefined4 param_2,undefined4 param_3,int p
 void FUN_0043b563(void)
 
 {
-  undefined uVar1;
-  undefined extraout_DL;
-  undefined4 uVar2;
-  
   if (_DAT_0046901a == 0) {
-    uVar2 = DAT_0046901c;
-    uVar1 = FUN_0041179f();
-    FUN_0043095c(uVar1,extraout_DL,(char)uVar2,&DAT_00469006);
+    FUN_0041179f();
+    Draw::DirtyRect((Rect16 *)&DAT_00469006);
     _DAT_0046901a = 1;
   }
   return;
@@ -32643,7 +32527,7 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   format = GetWinapiStringAlloc(0x4e3c);
   Sprintf_(&DAT_004697b8,format,&DAT_00462b11);
   TurboFree_(format);
-  DrawStringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
+  Draw::StringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
   PVar2 = Puzzles::currentPuzzle;
   if ((Puzzles::endgame == 0) &&
      (*(short *)(_GameState->field43_0x40 +
@@ -32679,12 +32563,12 @@ void __stdcall FUN_0043fef9(short param_1)
                     // font 15000 = small font for puzzles
     Nfnt::Load(15000);
     font = SetCurrentFont(15000);
-    DrawStringWithCurrentFontAndColor(10,0x148,DAT_00469770);
+    Draw::StringWithCurrentFontAndColor(10,0x148,DAT_00469770);
     SetCurrentFont(font);
     Nfnt::Unload(15000);
     return;
   }
-  DrawStringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
+  Draw::StringWithCurrentFontAndColor(10,0x148,&DAT_004697b8);
   return;
 }
 
@@ -34007,7 +33891,7 @@ void FUN_00441942(void)
                    CONCAT22((short)((uint)(sVar3 * 9) >> 0x10),(&DAT_00462c6a)[sVar3 * 9]),
                    CONCAT22((short)((uint)(sVar3 * 9) >> 0x10),(&DAT_00462c6c)[sVar3 * 9]),0x14);
       Sprintf_(local_10,&DAT_00462ecc,(int)(short)(&DAT_004699d6)[sVar3]);
-      DrawString(15000,local_10,(&DAT_00462c6e)[sVar3 * 9],(&DAT_00462c70)[sVar3 * 9],0);
+      Draw::String(15000,local_10,(&DAT_00462c6e)[sVar3 * 9],(&DAT_00462c70)[sVar3 * 9],0);
       uVar1 = extraout_ECX_00;
       uVar2 = extraout_DL_00;
     }
@@ -35838,10 +35722,10 @@ void FUN_004444bf(void)
     FUN_0041032e((char)acStack_38,extraout_DL,extraout_CL,in_stack_00000004,acStack_38);
     sVar2 = FUN_0044ccf5((char)acStack_38,extraout_DL_00,extraout_CL_00,0xffffffff,acStack_38);
     uVar1 = (undefined)sVar2;
-    DrawStringWithCurrentFontAndColor
+    Draw::StringWithCurrentFontAndColor
               ((in_stack_00000008 + 0xa8) - sVar2,in_stack_0000000c + 1,acStack_38);
     sVar2 = FUN_0042b4e4(uVar1,extraout_DL_01,extraout_CL_01,in_stack_00000004);
-    DrawStringWithCurrentFontAndColor
+    Draw::StringWithCurrentFontAndColor
               (in_stack_00000008 + 0xb2,in_stack_0000000c + 1,&DAT_00467a98 + sVar2 * 0x32);
   }
   return;
@@ -35877,11 +35761,11 @@ void FUN_004444c5(void)
     sVar4 = FUN_0044ccf5((char)(unaff_EBP + -0x34),extraout_DL_00,extraout_CL_00,0xffffffff,
                          unaff_EBP + -0x34);
     uVar3 = (undefined)sVar4;
-    DrawStringWithCurrentFontAndColor
+    Draw::StringWithCurrentFontAndColor
               ((short)(iVar1 + 0xa8) - sVar4,*(short *)(unaff_EBP + 0x10) + 1,
                (char *)(unaff_EBP + -0x34));
     sVar4 = FUN_0042b4e4(uVar3,extraout_DL_01,extraout_CL_01,iVar2);
-    DrawStringWithCurrentFontAndColor
+    Draw::StringWithCurrentFontAndColor
               ((short)iVar1 + 0xb2,*(short *)(unaff_EBP + 0x10) + 1,&DAT_00467a98 + sVar4 * 0x32);
   }
   return;
@@ -35963,7 +35847,7 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
           FUN_00431b20((char)(iVar9 + -2),(char)uVar6,(char)uVar4,99,iVar9 + -2,0x120,0x15,0);
           if (DAT_00469ab2 < 1) {
             SetCurrentColor(0xefe);
-            DrawStringWithCurrentFontAndColor
+            Draw::StringWithCurrentFontAndColor
                       (0x65,sVar8 + 0x16,(char *)(sVar7 * 0x16 + DAT_00469aac + 8));
             FUN_004444bf();
             uVar4 = extraout_ECX_02;
@@ -35975,14 +35859,14 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
               acStack_3d[DAT_00469ab2] = '\0';
             }
             SetCurrentColor(0xbfb);
-            DrawStringWithCurrentFontAndColor(0x65,sVar8 + 0x16,acStack_3d + 1);
+            Draw::StringWithCurrentFontAndColor(0x65,sVar8 + 0x16,acStack_3d + 1);
             uVar3 = 0xfe;
             SetCurrentColor(0xefe);
             value = (char *)(sVar7 * 0x16 + DAT_00469aac + (int)DAT_00469ab2 + 8);
             sVar8 = sVar8 + 0x16;
             sVar7 = FUN_0044ccf5((char)(acStack_3d + 1),(char)DAT_00469ab2,uVar3,0xffffffff,
                                  acStack_3d + 1);
-            DrawStringWithCurrentFontAndColor(sVar7 + 0x65,sVar8,value);
+            Draw::StringWithCurrentFontAndColor(sVar7 + 0x65,sVar8,value);
             FUN_004444bf();
             uVar4 = extraout_ECX_01;
           }
@@ -35990,7 +35874,7 @@ void FUN_00444558(undefined param_1,byte param_2,byte param_3,short param_4,shor
         else {
           FUN_00430de8(99,sVar8 + 0x13,0x120,0x15);
           SetCurrentColor(0xfff);
-          DrawStringWithCurrentFontAndColor
+          Draw::StringWithCurrentFontAndColor
                     (0x65,sVar8 + 0x16,(char *)(sVar7 * 0x16 + DAT_00469aac + 8));
           FUN_004444bf();
           uVar4 = extraout_ECX_03;
@@ -40691,7 +40575,7 @@ void FUN_0044a9f7(void)
       x = *(short *)((int)&DAT_00463269 + sVar1 * 0xf);
       y = *(short *)((int)&DAT_0046326b + sVar1 * 0xf);
       Sprintf_(local_10,&DAT_00463367,(int)(char)(&DAT_00469fbe)[sVar1]);
-      DrawString(15000,local_10,x,y,0);
+      Draw::String(15000,local_10,x,y,0);
     }
     sVar1 = sVar1 + 1;
   } while (sVar1 < 8);
@@ -40957,7 +40841,7 @@ void FUN_0044b048(undefined param_1,undefined param_2,undefined param_3,short pa
   FUN_00430de8(10,0x14a,0xfa,0x28);
   GetWinapiString(local_a4,0x4ea0);
   Sprintf_(local_54,local_a4,(int)param_4,(int)param_5);
-  DrawString(15000,local_54,10,0x16d,0);
+  Draw::String(15000,local_54,10,0x16d,0);
   FUN_00430abc(10,0x14a,0x96,0x28);
   Nfnt::Unload(15000);
   return;
@@ -42540,14 +42424,14 @@ void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefine
       iVar2 = iVar2 + (uint)(((int)sVar1 & 1U) != 0);
     }
     sVar1 = GetFontBaselineY_(_CurrentFont);
-    DrawString((short)param_4,param_5,(short)param_6 - (short)iVar2,sVar1 + param_7,param_8);
+    Draw::String((short)param_4,param_5,(short)param_6 - (short)iVar2,sVar1 + param_7,param_8);
   }
   return;
 }
 
 
 
-void __stdcall DrawString(short font,char *text,short x,short y,undefined2 color)
+void __stdcall Draw::String(short font,char *text,short x,short y,undefined2 color)
 
 {
   char cVar1;
@@ -43045,7 +42929,7 @@ int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort pa
         cVar2 = *param_8;
         *param_8 = '\0';
         if (bVar10) {
-          DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
+          Draw::String(param_4,text,param_5,param_6,_CurrentColorClamped);
           uVar5 = extraout_ECX_00;
           uVar7 = extraout_EDX_01;
         }
@@ -43075,7 +42959,7 @@ int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort pa
     cVar1 = *param_8;
     *param_8 = '\0';
     if (bVar10) {
-      DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
+      Draw::String(param_4,text,param_5,param_6,_CurrentColorClamped);
     }
     local_10 = local_10 + 1;
     param_6 = param_6 + sVar3;
@@ -43085,7 +42969,7 @@ int FUN_0044d5aa(undefined param_1,undefined param_2,undefined param_3,ushort pa
   }
   if (text != (char *)0x0) {
     if (bVar10) {
-      DrawString(param_4,text,param_5,param_6,_CurrentColorClamped);
+      Draw::String(param_4,text,param_5,param_6,_CurrentColorClamped);
     }
     local_10 = local_10 + 1;
   }

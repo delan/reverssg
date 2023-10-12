@@ -1618,7 +1618,7 @@ void FUN_00413acc(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00413af4(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined2 param_5);
 void FUN_00413b08(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined2 param_6);
 void FUN_00413b24(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5,undefined2 param_6);
-uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,uint param_4,undefined4 param_5,undefined4 param_6,short param_7,byte param_8);
+uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *param_4,undefined4 param_5,undefined4 param_6,short param_7,byte param_8);
 void FUN_00413cf4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7);
 void FUN_00413d18(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,short param_6,undefined2 param_7);
 void FUN_00413d54(undefined4 param_1,undefined4 param_2,uint param_3,int param_4,short *param_5,short *param_6,short param_7);
@@ -1631,7 +1631,7 @@ uint FUN_00413ee8(undefined param_1,undefined param_2,undefined param_3,DlistNod
 void FUN_00413f88(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 undefined4 FUN_00413fdc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00414088(void);
-void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,Rect16 *param_4);
 undefined4 FUN_004140e4(undefined param_1,undefined param_2,undefined param_3,int param_4);
 undefined4 FUN_0041412e(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004143a5(void);
@@ -1953,15 +1953,12 @@ void FUN_00430494(undefined param_1,undefined param_2,undefined param_3,HDC para
 undefined4 FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short param_4,short param_5,short param_6);
 void FUN_0043078c(void);
 void FUN_00430810(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,byte param_6);
-void FUN_00430908(void);
-undefined4 FUN_00430928(undefined param_1,undefined param_2,undefined param_3,void *param_4);
-void FUN_0043095c(undefined param_1,undefined param_2,undefined param_3,short *param_4);
 void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *param_4);
-void __stdcall FUN_00430abc(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4);
+void __stdcall FUN_00430abc(short param_1,short param_2,short param_3,short param_4);
 void FUN_00430af0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined2 param_6,undefined2 param_7,byte param_8);
 undefined4 FUN_00430bbc(void);
 void FUN_00430db4(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7);
-void __stdcall FUN_00430de8(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4);
+void __stdcall FUN_00430de8(short param_1,short param_2,short param_3,short param_4);
 void FUN_00430e28(void);
 void FUN_00430ef8(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,undefined2 *param_6);
 void FUN_00431024(uint param_1,undefined4 param_2,uint param_3,ushort param_4);
@@ -2407,7 +2404,7 @@ int FUN_0044cc99(undefined param_1,undefined param_2,undefined param_3,int param
 void __stdcall FUN_0044cca4(int param_1,int *param_2);
 short FUN_0044ccf5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,byte *param_5);
 void FUN_0044ced4(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,char *param_5,undefined4 param_6,short param_7,undefined2 param_8);
-void __stdcall DrawString(short font,char *text,short x,short y,undefined2 color);
+void __stdcall Draw::String(short font,char *text,short x,short y,undefined2 color);
 uint FUN_0044cfcb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,uint param_5,undefined2 param_6,ushort param_7,undefined2 param_8);
 undefined FUN_0044d0fb(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,byte param_5);
 void FUN_0044d120(void);

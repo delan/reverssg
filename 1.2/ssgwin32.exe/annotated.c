@@ -45,10 +45,10 @@ void __stdcall GetWinapiString(char *result,UINT id)
 
 
 
-void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *value)
+void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *value)
 
 {
-  DrawStringWithCurrentFontAndColor(x,y,value);
+  StringWithCurrentFontAndColor(x,y,value);
   return;
 }
 
@@ -515,14 +515,14 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
 
 
 
-void __stdcall DrawInteger(short x,short y,short value,short color)
+void __stdcall Draw::Integer(short x,short y,short value,short color)
 
 {
   char valueString [20];
   
   SetCurrentColor(color);
   Sprintf_(valueString,&_d,(int)value);
-  DrawStringWithCurrentFontAndColor(x,y,valueString);
+  StringWithCurrentFontAndColor(x,y,valueString);
   return;
 }
 
@@ -562,9 +562,9 @@ void Puzzles::Customization::Draw(void)
     else {
       color_ = 0;
     }
-    DrawInteger(0xf6,tableY[category],CATEGORY_LEN[category],color_);
+    ::Draw::Integer(0xf6,tableY[category],CATEGORY_LEN[category],color_);
     count = CountSolvedInCategory(category);
-    DrawInteger(0x164,tableY[category],(short)count,color_);
+    ::Draw::Integer(0x164,tableY[category],(short)count,color_);
     category = category + 1;
   } while (category < 8);
   return;
@@ -681,6 +681,75 @@ void __stdcall EnterBuilding(void)
   }
   FUN_0043bfee(2,0,1);
   Puzzles::SetVtableForGivenCategory(&PTR_LAB_00461b2c);
+  return;
+}
+
+
+
+void Draw::DirtyInit(void)
+
+{
+  Memset(dirtyTiles,0,0x300);
+  dirtyMode = 0;
+  return;
+}
+
+
+
+void __cdecl Draw::DirtyCopy(byte (*dirtyTiles) [24] [32])
+
+{
+  Memcpy(Draw::dirtyTiles,dirtyTiles,0x300);
+  if (dirtyMode == 0) {
+    dirtyMode = 1;
+  }
+  return;
+}
+
+
+
+void __cdecl Draw::DirtyRect(Rect16 *rectOptional)
+
+{
+  bool *tile;
+  short x2;
+  short y;
+  short x;
+  short y2;
+  short x1;
+  short y1;
+  
+  if (rectOptional == (Rect16 *)0x0) {
+    dirtyMode = -1;
+  }
+  else {
+    x1 = rectOptional->x;
+    x2 = x1 + rectOptional->w + -1;
+    y1 = rectOptional->y;
+    y2 = y1 + rectOptional->h + -1;
+    if (x1 < 0) {
+      x1 = 0;
+    }
+    if (511 < x2) {
+      x2 = 511;
+    }
+    if (y1 < 0) {
+      y1 = 0;
+    }
+    if (383 < y2) {
+      y2 = 383;
+    }
+    for (y = y1 >> 4; y <= y2 >> 4; y = y + 1) {
+      tile = dirtyTiles[y] + (x1 >> 4);
+      for (x = x1 >> 4; x <= x2 >> 4; x = x + 1) {
+        *tile = true;
+        tile = tile + 1;
+      }
+    }
+    if (dirtyMode == 0) {
+      dirtyMode = 1;
+    }
+  }
   return;
 }
 
@@ -1000,7 +1069,7 @@ void PickapuzzleMenu::Draw(void)
   Nfnt::Load(15000);
   FUN_00430de8(0x17,0x41,0x4f,0xf);
   Sprintf_(currentPuzzleString,&_d,(int)Puzzles::currentPuzzle);
-  DrawString(15000,currentPuzzleString,0x1a,0x4d,0);
+  ::Draw::String(15000,currentPuzzleString,0x1a,0x4d,0);
   FUN_00430abc(0x17,0x41,0x4f,0xf);
   Nfnt::Unload(15000);
   return;
@@ -1209,15 +1278,15 @@ short __stdcall SetCurrentColor(short color)
 
 
 
-void __stdcall DrawStringWithCurrentFontAndColor(short x,short y,char *text)
+void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *text)
 
 {
-  short sVar1;
+  short baselineY_;
   undefined2 color;
   
   color = _CurrentColorClamped;
-  sVar1 = GetFontBaselineY_(_CurrentFont);
-  DrawString(_CurrentFont,text,x,sVar1 + y,color);
+  baselineY_ = GetFontBaselineY_(_CurrentFont);
+  String(_CurrentFont,text,x,baselineY_ + y,color);
   return;
 }
 
