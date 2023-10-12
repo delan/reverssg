@@ -1473,6 +1473,7 @@ void * __stdcall PoolAlloc(uint len);
 void __stdcall GenInitialPartIds(ushort count);
 PartId NextInitialPartId(void);
 ushort GetCriticalSlotCount(void);
+void Puzzles::ComputeCurrentPuzzle(void);
 undefined2 Puzzles::CheckEndgame(void);
 short Puzzles::ComputeCandidateCategory(void);
 void __cdecl Puzzles::ComputeCandidatePuzzles(short category);

@@ -8761,7 +8761,7 @@ void FUN_0041ad20(void)
   uVar3 = FUN_00413cf4((char)DAT_004673dc,extraout_DL_00,uVar1,DAT_004673dc,0,0,0);
   uVar2 = DAT_004673dc;
   FUN_00412d0c(uVar3,extraout_EDX_01,extraout_ECX_00,DAT_004673dc);
-  FUN_0041be66((char)DAT_00462afe,extraout_DL_01,(char)uVar2,DAT_00462afe);
+  FUN_0041be66((char)Puzzles::currentPuzzle,extraout_DL_01,(char)uVar2,Puzzles::currentPuzzle);
   FUN_0043fef9(DAT_00461536);
   FUN_0041b115();
   uVar1 = FUN_0041f6da();
@@ -16487,15 +16487,15 @@ void FUN_00427832(void)
   DAT_0046782a = 0;
   _DAT_00461794 = 0;
   DAT_00467834 = 0;
-  if (0x2a < DAT_00462afe) {
-    DAT_00462afe = 1;
+  if (0x2a < Puzzles::currentPuzzle) {
+    Puzzles::currentPuzzle = 1;
   }
   sVar1 = 0;
   do {
     (&DAT_0046177e)[sVar1] = 0;
     sVar1 = sVar1 + 1;
   } while (sVar1 < 4);
-  switch(DAT_00462afe) {
+  switch(Puzzles::currentPuzzle) {
   case 1:
     _DAT_0046977a = 4;
     _DAT_0046977c = 1;
@@ -23262,8 +23262,8 @@ void FUN_00432c8f(void)
   _DAT_00462520 = 0;
   DAT_00462522 = 0;
   DAT_0046847c = 0xb;
-  FUN_00432fac(CONCAT22((short)((uint)iVar2 >> 0x10),DAT_00462afe),&DAT_00468482,sVar1 * 0xb,
-               DAT_00462afe);
+  FUN_00432fac(CONCAT22((short)((uint)iVar2 >> 0x10),Puzzles::currentPuzzle),&DAT_00468482,
+               sVar1 * 0xb,Puzzles::currentPuzzle);
   DAT_0046977e = 11000;
   DAT_00469780 = 11000;
   DAT_00469770 = GetWinapiResource_(11000,&_TEXT21);
@@ -23740,10 +23740,10 @@ void FUN_00432fac(undefined4 param_1,undefined4 param_2,uint param_3,short param
   _DAT_0046977a = 5;
   _DAT_0046977c = 3;
   DAT_004697a8 = 0x2b0d;
-  DAT_004697aa = DAT_00462afe + 11000;
+  DAT_004697aa = Puzzles::currentPuzzle + 11000;
   _DAT_004697ac = 0x2b0e;
   DAT_0046978a = 0x2b0d;
-  DAT_0046978c = DAT_00462afe + 11000;
+  DAT_0046978c = Puzzles::currentPuzzle + 11000;
   DAT_0046978e = 0x2b0e;
   DAT_00469790 = 0x2b0f;
   DAT_00469792 = 0x2b10;
@@ -28502,7 +28502,7 @@ void FUN_0043a724(void)
   short sVar2;
   
   dest = FUN_00452220(0xca,in_DL,in_CL,s_D_cordcode_c_004626ca,&DAT_004626d7);
-  Sprintf_((char *)dest,s__case__d__004626da,(int)DAT_00462afe);
+  Sprintf_((char *)dest,s__case__d__004626da,(int)Puzzles::currentPuzzle);
   sVar2 = 0;
   do {
     if (*(short *)(DAT_00468f2c + sVar2 * 0x1e) != -1) {
@@ -32467,8 +32467,8 @@ void __cdecl FUN_0043f987(int param_1)
   case 7:
     Puzzles::candidateCategory = *(short *)(param_1 + 0x1e);
     FUN_0043fb50();
-    if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < DAT_00462afe) {
-      DAT_00462afe = 1;
+    if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < Puzzles::currentPuzzle) {
+      Puzzles::currentPuzzle = 1;
     }
     FUN_0043fae6();
     FUN_004465a5(0x1f4e,10,0);
@@ -32488,15 +32488,16 @@ void __cdecl FUN_0043f987(int param_1)
     FUN_004465a5(0x1f4e,10,0);
     return;
   case 0xb:
-    DAT_00462afe = DAT_00462afe + 1;
-    if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < DAT_00462afe) {
-      DAT_00462afe = 1;
+    Puzzles::currentPuzzle = Puzzles::currentPuzzle + 1;
+    if (Puzzles::CATEGORY_LEN[Puzzles::candidateCategory] < Puzzles::currentPuzzle) {
+      Puzzles::currentPuzzle = 1;
     }
     FUN_0043fae6();
     return;
   case 0xc:
-    if ((DAT_00462afe != 0) && (DAT_00462afe = DAT_00462afe + -1, DAT_00462afe < 1)) {
-      DAT_00462afe = Puzzles::CATEGORY_LEN[Puzzles::candidateCategory];
+    if ((Puzzles::currentPuzzle != 0) &&
+       (Puzzles::currentPuzzle = Puzzles::currentPuzzle + -1, Puzzles::currentPuzzle < 1)) {
+      Puzzles::currentPuzzle = Puzzles::CATEGORY_LEN[Puzzles::candidateCategory];
     }
     FUN_0043fae6();
   }
@@ -32515,7 +32516,7 @@ void FUN_0043fae6(void)
   uVar1 = CONCAT22((short)((uint)unaff_EBX >> 0x10),15000);
   FUN_0044cbbb(uVar1);
   FUN_00430de8(0x17,0x41,0x4f,0xf);
-  Sprintf_(local_c,&DAT_00462b0e,(int)DAT_00462afe);
+  Sprintf_(local_c,&DAT_00462b0e,(int)Puzzles::currentPuzzle);
   FUN_0044cf2c(uVar1,local_c,0x1a,0x4d,0);
   FUN_00430abc(0x17,0x41,0x4f,0xf);
   FUN_0044cb20(15000);
@@ -32539,42 +32540,6 @@ void FUN_0043fb50(void)
                        CONCAT22(Puzzles::candidateCategory >> 0xf,
                                 *(undefined2 *)(&DAT_00462aa2 + Puzzles::candidateCategory * 2)),1);
   FUN_00412e70(uVar1,extraout_DL,extraout_CL,DAT_004698f8);
-  return;
-}
-
-
-
-void FUN_0043fb8b(void)
-
-{
-  bool bVar1;
-  int iVar2;
-  short sVar3;
-  int unaff_EDI;
-  
-  bVar1 = false;
-  while (!bVar1) {
-    Puzzles::candidateCategory = Puzzles::ComputeCandidateCategory();
-    Puzzles::ComputeCandidatePuzzles(Puzzles::candidateCategory);
-    sVar3 = 3;
-    if (Puzzles::candidatePuzzles[2] == -1) {
-      sVar3 = 2;
-    }
-    if (Puzzles::candidatePuzzles[1] == -1) {
-      sVar3 = sVar3 + -1;
-    }
-    if (Puzzles::candidatePuzzles[0] != -1) {
-      if (sVar3 == 0) {
-        unaff_EDI = 0;
-      }
-      else {
-        iVar2 = Random();
-        unaff_EDI = iVar2 % (int)sVar3;
-      }
-      bVar1 = true;
-    }
-  }
-  DAT_00462afe = Puzzles::candidatePuzzles[(short)unaff_EDI] + 1;
   return;
 }
 
@@ -32622,13 +32587,13 @@ void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefine
   Sprintf_(&DAT_004697b8,format,&DAT_00462b11);
   TurboFree_(format);
   DrawString_(10,0x148,&DAT_004697b8);
-  sVar2 = DAT_00462afe;
+  sVar2 = Puzzles::currentPuzzle;
   if ((Puzzles::endgame == 0) &&
      (*(short *)(_GameState->field43_0x40 +
-                DAT_00462afe * 2 + Puzzles::candidateCategory * 0x58 + 0x2e) == 0)) {
+                Puzzles::currentPuzzle * 2 + Puzzles::candidateCategory * 0x58 + 0x2e) == 0)) {
     iVar3 = (int)Puzzles::candidateCategory;
     psVar1 = _GameState->buildingCompletedLevels;
-    (psVar1 + iVar3 * 0x2c + -0x1a)[DAT_00462afe + 0x37] = 1;
+    (psVar1 + iVar3 * 0x2c + -0x1a)[Puzzles::currentPuzzle + 0x37] = 1;
     uVar4 = FUN_004401a3((char)Puzzles::candidateCategory,(char)sVar2,extraout_CL,
                          CONCAT22((short)((uint)(psVar1 + iVar3 * 0x2c + -0x1a) >> 0x10),
                                   Puzzles::candidateCategory));
@@ -34142,10 +34107,10 @@ void FUN_00441d26(uint param_1,undefined4 param_2,uint param_3)
     (&DAT_004699bc)[sVar4] = 0;
     sVar4 = sVar4 + 1;
   } while (sVar4 < 5);
-  if (0x2b < DAT_00462afe) {
-    DAT_00462afe = 1;
+  if (0x2b < Puzzles::currentPuzzle) {
+    Puzzles::currentPuzzle = 1;
   }
-  switch(DAT_00462afe) {
+  switch(Puzzles::currentPuzzle) {
   case 1:
     _DAT_0046977a = 3;
     _DAT_0046977c = 1;
@@ -38908,7 +38873,8 @@ void FUN_00447988(void)
   DAT_0046a300 = FUN_00412ac4(0x3ec2);
   uVar7 = 0xca;
   FUN_0041029e((char)DAT_0046a300,extraout_DL_01,uVar1,&LAB_004485ca);
-  FUN_00448742((char)DAT_00462afe,extraout_DL_02,uVar7,CONCAT22(extraout_var,DAT_00462afe));
+  FUN_00448742((char)Puzzles::currentPuzzle,extraout_DL_02,uVar7,
+               CONCAT22(extraout_var,Puzzles::currentPuzzle));
   FUN_0044a970();
   FUN_0044a9f7();
   FUN_00448097();

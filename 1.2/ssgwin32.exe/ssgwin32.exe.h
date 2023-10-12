@@ -2108,7 +2108,6 @@ void FUN_0043f8b4(void);
 void __cdecl FUN_0043f987(int param_1);
 void FUN_0043fae6(void);
 void FUN_0043fb50(void);
-void FUN_0043fb8b(void);
 void FUN_0043fd88(void);
 void FUN_0043fdaa(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void __stdcall FUN_0043fef9(short param_1);

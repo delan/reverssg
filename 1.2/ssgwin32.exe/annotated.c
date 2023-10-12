@@ -895,6 +895,42 @@ ushort GetCriticalSlotCount(void)
 
 
 
+void Puzzles::ComputeCurrentPuzzle(void)
+
+{
+  int random;
+  short count;
+  int i;
+  bool done;
+  
+  done = false;
+  while (!done) {
+    candidateCategory = ComputeCandidateCategory();
+    ComputeCandidatePuzzles(candidateCategory);
+    count = 3;
+    if (candidatePuzzles[2] == -1) {
+      count = 2;
+    }
+    if (candidatePuzzles[1] == -1) {
+      count = count + -1;
+    }
+    if (candidatePuzzles[0] != -1) {
+      if (count == 0) {
+        i = 0;
+      }
+      else {
+        random = Random();
+        i = random % (int)count;
+      }
+      done = true;
+    }
+  }
+  currentPuzzle = candidatePuzzles[(short)i] + 1;
+  return;
+}
+
+
+
 undefined2 Puzzles::CheckEndgame(void)
 
 {
