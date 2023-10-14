@@ -765,79 +765,15 @@ void FUN_00410b42(undefined param_1,undefined param_2,undefined param_3,undefine
   RECT local_14;
   
   hbr = CreateSolidBrush(param_6 | 0x1000000);
-  hDC = GetDC(hWnd_00464834);
+  hDC = GetDC(Game::window);
   local_14.left = (LONG)(short)param_4;
   local_14.top = (LONG)param_5;
   local_14.right = (short)param_4 + 0x14;
   local_14.bottom = param_5 + 0x14;
   FillRect(hDC,&local_14,hbr);
-  ReleaseDC(hWnd_00464834,hDC);
+  ReleaseDC(Game::window,hDC);
   DeleteObject(hbr);
   return;
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-void FUN_00410bb0(undefined param_1,undefined param_2,undefined param_3,short param_4)
-
-{
-  HWND hWnd;
-  
-  if (_DAT_00464860 == 1) {
-    hWnd = FindWindowA(s_Shell_TrayWnd_004601cc,(LPCSTR)0x0);
-    ShowWindow(hWnd,(uint)(param_4 != 0));
-  }
-  return;
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-ATOM FUN_00410bde(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
-
-{
-  ATOM AVar1;
-  undefined extraout_CL;
-  undefined extraout_DL;
-  WNDCLASSEXA local_34;
-  
-  GetWinapiString((char *)&lpWindowName_00464880,0x4e21);
-  local_34.lpszClassName = s_TLCSSG_004601be;
-  local_34.lpszMenuName = (LPCSTR)0x100;
-  local_34.style = 0x1040;
-  local_34.hInstance = _Module;
-  local_34.lpfnWndProc = MainWndProc;
-  local_34.hCursor = (HCURSOR)0x0;
-  local_34.hIcon = LoadIconA(_Module,(LPCSTR)0x80);
-  local_34.hbrBackground = (HBRUSH)GetStockObject(1);
-  local_34.cbClsExtra = 0;
-  local_34.cbWndExtra = 0;
-  local_34.cbSize = 0x30;
-  if (_DAT_00464860 == 2) {
-    local_34.hIconSm = (HICON)0x0;
-  }
-  else {
-    local_34.hIconSm = LoadIconA(_Module,(LPCSTR)0x81);
-  }
-  AVar1 = RegisterClassExA(&local_34);
-  FUN_00410bb0((char)AVar1,extraout_DL,extraout_CL,0);
-  if (AVar1 != 0) {
-    hWnd_00464834 =
-         CreateWindowExA(0,s_TLCSSG_004601be,(LPCSTR)&lpWindowName_00464880,0xca0000,(int)X_00464848
-                         ,Y_0046484c,nWidth_00464850,nHeight_00464854,(HWND)0x0,(HMENU)0x0,_Module,
-                         (LPVOID)0x0);
-    if (hWnd_00464834 == (HWND)0x0) {
-      AVar1 = 0;
-    }
-    else {
-      ShowWindow(hWnd_00464834,1);
-      UpdateWindow(hWnd_00464834);
-    }
-  }
-  return AVar1;
 }
 
 
@@ -845,15 +781,11 @@ ATOM FUN_00410bde(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00410cfc(void)
 
 {
-  undefined in_AL;
-  undefined in_CL;
-  undefined in_DL;
-  
-  FUN_00410bb0(in_AL,in_DL,in_CL,1);
-  if (hWnd_00464834 != (HWND)0x0) {
-    DestroyWindow(hWnd_00464834);
+  Game::ShowTaskbar(1);
+  if (Game::window != (HWND)0x0) {
+    DestroyWindow(Game::window);
     UnregisterClassA(s_TLCSSG_004601be,_Module);
-    hWnd_00464834 = (HWND)0x0;
+    Game::window = (HWND)0x0;
   }
   return;
 }
@@ -862,97 +794,47 @@ void FUN_00410cfc(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-void FUN_00410d30(void)
+undefined4 __cdecl Game::Main(HMODULE param_1,int param_2,undefined param_3,undefined4 param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int cy;
-  uint uVar5;
-  undefined extraout_CL;
-  undefined extraout_DL;
-  UINT uFlags;
-  
-  iVar1 = GetSystemMetrics(4);
-  iVar2 = GetSystemMetrics(0xf);
-  GetSystemMetrics(1);
-  iVar3 = GetSystemMetrics(0);
-  iVar4 = GetSystemMetrics(1);
-  uFlags = 6;
-  cy = GetSystemMetrics(1);
-  SetWindowPos(hWnd_00464834,(HWND)0x0,0,0,(int)(short)iVar3,cy,uFlags);
-  uVar5 = (int)(short)iVar3 - 0x200;
-  _DAT_00464838 = (int)uVar5 >> 1;
-  if (_DAT_00464838 < 0) {
-    _DAT_00464838 = _DAT_00464838 + (uint)((uVar5 & 1) != 0);
-  }
-  _DAT_00464838 = (int)&X_00464848->left + _DAT_00464838;
-  uVar5 = (int)(short)(((short)iVar4 - (short)iVar2) - (short)iVar1) - 0x180;
-  iVar1 = (int)uVar5 >> 1;
-  if (iVar1 < 0) {
-    iVar1 = iVar1 + (uint)((uVar5 & 1) != 0);
-  }
-  DAT_0046483c = iVar1 + Y_0046484c;
-  _DAT_00464840 = _DAT_00464840 + 0x1ff;
-  _DAT_00464844 = DAT_0046483c + 0x17f;
-  FUN_00431e11((char)_DAT_00464838,extraout_DL,extraout_CL,DAT_00464838,(undefined2)DAT_0046483c);
-  return;
-}
-
-
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-undefined4
-FUN_00410df3(undefined param_1,undefined param_2,undefined param_3,HMODULE param_4,int param_5,
-            undefined param_6,undefined4 param_7)
-
-{
-  undefined uVar1;
-  ATOM AVar2;
-  HWND pHVar3;
-  undefined4 uVar4;
-  BOOL BVar5;
-  undefined extraout_CL;
-  undefined extraout_DL;
-  undefined extraout_DL_00;
-  short sVar6;
-  LPRECT *lpRect;
+  ATOM windowClass;
+  HWND desktopWindow;
+  undefined4 uVar1;
+  BOOL BVar2;
+  short desktopHeight;
   tagMSG local_b4;
   _OSVERSIONINFOA local_98;
+  LPRECT desktopRect;
   
-  if ((param_5 == 0) && (pHVar3 = FindWindowA(s_TLCSSG_004601be,(LPCSTR)0x0), pHVar3 != (HWND)0x0))
-  {
-    IsIconic(pHVar3);
-    ShowWindow(pHVar3,9);
-    SetForegroundWindow(pHVar3);
+  if ((param_2 == 0) &&
+     (desktopWindow = FindWindowA(s_TLCSSG_004601be,(LPCSTR)0x0), desktopWindow != (HWND)0x0)) {
+    IsIconic(desktopWindow);
+    ShowWindow(desktopWindow,9);
+    SetForegroundWindow(desktopWindow);
     return 0;
   }
   local_98.dwOSVersionInfoSize = 0x94;
   GetVersionExA(&local_98);
-  _DAT_00464860 = local_98.dwPlatformId;
-  _Module = param_4;
-  lpRect = &X_00464848;
-  pHVar3 = GetDesktopWindow();
-  GetWindowRect(pHVar3,(LPRECT)lpRect);
-  sVar6 = (short)nHeight_00464854 - (short)Y_0046484c;
-  uVar1 = FUN_00410074();
-  AVar2 = FUN_00410bde(uVar1,extraout_DL,extraout_CL,param_7);
-  if (AVar2 != 0) {
-    _DAT_00464858 = sVar6 - ((short)nHeight_00464854 - (short)Y_0046484c);
-    FUN_004548e0((char)((short)nHeight_00464854 - (short)Y_0046484c),extraout_DL_00,(char)param_7,
-                 FUN_00410cfc);
-    uVar4 = FUN_0042ffd7();
-    if ((short)uVar4 != 0) {
+  _dwPlatformId = local_98.dwPlatformId;
+  _Module = param_1;
+  desktopRect = &_DesktopRect;
+  desktopWindow = GetDesktopWindow();
+  GetWindowRect(desktopWindow,desktopRect);
+  desktopHeight = (short)_DesktopRect.bottom - (short)_DesktopRect.top;
+  FUN_00410074();
+  windowClass = CreateWindow(param_4);
+  if (windowClass != 0) {
+    DAT_00464858 = desktopHeight - ((short)_DesktopRect.bottom - (short)_DesktopRect.top);
+    FUN_004548e0(FUN_00410cfc);
+    uVar1 = FUN_0042ffd7();
+    if ((short)uVar1 != 0) {
       _DAT_00464874 = 1;
       do {
         do {
           FUN_0044b24d();
           FUN_00412784();
-          BVar5 = PeekMessageA(&local_b4,(HWND)0x0,0,0,1);
-        } while (BVar5 == 0);
+          BVar2 = PeekMessageA(&local_b4,(HWND)0x0,0,0,1);
+        } while (BVar2 == 0);
         TranslateMessage(&local_b4);
         DispatchMessageA(&local_b4);
       } while( true );
@@ -965,14 +847,14 @@ FUN_00410df3(undefined param_1,undefined param_2,undefined param_3,HMODULE param
 
 
 
-void FUN_00410f13(undefined param_1,undefined param_2,undefined param_3,HWND param_4)
+void __cdecl FUN_00410f13(HWND param_1)
 
 {
   tagPAINTSTRUCT local_44;
   
-  BeginPaint(param_4,&local_44);
+  BeginPaint(param_1,&local_44);
   (*(code *)PTR_FUN_0046021c)();
-  EndPaint(param_4,&local_44);
+  EndPaint(param_1,&local_44);
   return;
 }
 
@@ -980,8 +862,7 @@ void FUN_00410f13(undefined param_1,undefined param_2,undefined param_3,HWND par
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND param_4,UINT param_5,
-                   uint param_6,uint param_7)
+LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
 
 {
   ushort uVar1;
@@ -989,23 +870,17 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
   HMENU hMenu;
   uint uVar3;
   LRESULT LVar4;
-  undefined extraout_CL;
-  undefined extraout_CL_00;
-  undefined uVar5;
-  undefined extraout_DL;
-  undefined extraout_DL_00;
-  undefined uVar6;
-  UINT UVar7;
+  UINT uEnable;
   tagPOINT local_18;
   tagPOINT local_10;
   BOOL local_8;
   
                     // 0x10f44  2  MainWndProc
-  local_8 = IsIconic(param_4);
-  if ((int)param_5 < 0x102) {
-    if (param_5 != 0x101) {
-      if ((int)param_5 < 0x15) {
-        switch(param_5) {
+  local_8 = IsIconic(window);
+  if ((int)uMsg < 0x102) {
+    if (uMsg != 0x101) {
+      if ((int)uMsg < 0x15) {
+        switch(uMsg) {
         case 0:
         case 3:
         case 4:
@@ -1020,75 +895,72 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
         case 0xe:
           break;
         case 1:
-          PostMessageA(param_4,0x400,0,0);
+          PostMessageA(window,0x400,0,0);
           break;
         case 2:
           PostQuitMessage(0);
           _DAT_004601b6 = 0xffff;
           return 0;
         case 6:
-          if (((param_6 != 0) && ((short)(param_7 >> 0x10) == 0)) && (_DAT_00464874 == 0)) {
+                    // WM_ACTIVATE
+          if (((wParam != 0) && ((short)(lParam >> 0x10) == 0)) && (_DAT_00464874 == 0)) {
             _DAT_00464874 = 1;
-            FUN_00410bb0((char)(param_7 >> 0x10),extraout_DL,extraout_CL,0);
+            Game::ShowTaskbar(0);
             Draw::DirtyRect((Rect16 *)0x0);
             (*(code *)PTR_FUN_00460230)();
-            _DAT_004601bc = 1;
-            InvalidateRect(hWnd_00464834,(RECT *)0x0,0);
+            Game::needToMakeGameAnnoying = 1;
+            InvalidateRect(Game::window,(RECT *)0x0,0);
           }
           break;
         case 0xf:
-          UVar7 = param_5;
-          uVar5 = extraout_CL;
-          uVar6 = extraout_DL;
-          if (_DAT_004601bc != 0) {
-            _DAT_004601bc = 0;
-            UVar7 = FUN_00410d30();
-            uVar5 = extraout_CL_00;
-            uVar6 = extraout_DL_00;
+                    // WM_PAINT
+          if (Game::needToMakeGameAnnoying != 0) {
+            Game::needToMakeGameAnnoying = 0;
+            Game::MakeWindowAnnoying();
           }
-          FUN_00410f13((char)UVar7,uVar6,uVar5,param_4);
+          FUN_00410f13(window);
           break;
         case 0x10:
           (*(code *)PTR_FUN_00460254)();
           return 0;
         case 0x11:
           if (local_8 != 0) {
-            ShowWindow(param_4,9);
+            ShowWindow(window,9);
           }
-          SetForegroundWindow(param_4);
+          SetForegroundWindow(window);
           sVar2 = (*(code *)PTR_FUN_00460254)();
           return (int)sVar2;
         default:
           return 1;
         }
       }
-      else if ((int)param_5 < 0x7f) {
-        if (param_5 != 0x7e) {
-          if (param_5 == 0x1c) {
-            if (param_6 == 0) {
+      else if ((int)uMsg < 0x7f) {
+        if (uMsg != 0x7e) {
+          if (uMsg == 0x1c) {
+            if (wParam == 0) {
               if (_DAT_00464874 != 0) {
-                FUN_00410bb0(0,extraout_DL,extraout_CL,1);
+                Game::ShowTaskbar(1);
                 (*(code *)PTR_FUN_00460234)();
               }
               _DAT_00464874 = 0;
             }
           }
-          else if (param_5 == 0x47) {
+          else if (uMsg == 0x47) {
             return 0;
           }
         }
       }
-      else if ((param_5 != 0x86) && (param_5 == 0x100)) {
+      else if ((uMsg != 0x86) && (uMsg == 0x100)) {
         GetAsyncKeyState(0x10);
         DAT_00464878 = 0;
-        if ((param_7 & 0x40000000) == 0) {
-          if ((0x20 < param_6) && (param_6 < 0x29)) {
-            DAT_00464878 = (short)param_6;
+        if ((lParam & 0x40000000) == 0) {
+          if ((0x20 < wParam) && (wParam < 0x29)) {
+            DAT_00464878 = (short)wParam;
             (*(code *)PTR_FUN_00460228)();
             return 0;
           }
-          if ((0x6f < param_6) && (param_6 < 0x88)) {
-            DAT_00464878 = (short)param_6;
+          if ((0x6f < wParam) && (wParam < 0x88)) {
+            DAT_00464878 = (short)wParam;
             (*(code *)PTR_FUN_00460228)();
             return 0;
           }
@@ -1096,11 +968,11 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
       }
     }
   }
-  else if ((int)param_5 < 0x118) {
-    if (param_5 != 0x117) {
-      if ((int)param_5 < 0x113) {
-        if (param_5 == 0x112) {
-          uVar3 = param_6 & 0xfff0;
+  else if ((int)uMsg < 0x118) {
+    if (uMsg != 0x117) {
+      if ((int)uMsg < 0x113) {
+        if (uMsg == 0x112) {
+          uVar3 = wParam & 0xfff0;
           if (uVar3 == 2000) {
             (*(code *)PTR_FUN_0046024c)();
             return 0;
@@ -1115,30 +987,30 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
             return 0;
           }
         }
-        else if (param_5 == 0x102) {
+        else if (uMsg == 0x102) {
           uVar1 = GetAsyncKeyState(0x11);
           if (((uVar1 & 0x8000) != 0) && (sVar2 = (*(code *)PTR_FUN_00460240)(), sVar2 != 0)) {
             return 0;
           }
-          _DAT_00464870 = param_6;
+          _DAT_00464870 = wParam;
           DAT_00464878 = 0;
           (*(code *)PTR_FUN_00460228)();
         }
-        else if (param_5 == 0x111) {
+        else if (uMsg == 0x111) {
           (*(code *)PTR_FUN_00460250)();
         }
       }
       else {
-        if (param_5 == 0x115) {
+        if (uMsg == 0x115) {
           return 0;
         }
-        if (param_5 == 0x116) {
-          hMenu = GetSystemMenu(param_4,0);
-          UVar7 = 0;
+        if (uMsg == 0x116) {
+          hMenu = GetSystemMenu(window,0);
+          uEnable = 0;
           if (local_8 == 0) {
-            UVar7 = 3;
+            uEnable = 3;
           }
-          EnableMenuItem(hMenu,0xf010,UVar7);
+          EnableMenuItem(hMenu,0xf010,uEnable);
           if (local_8 == 0) {
             (*(code *)PTR_FUN_00460244)();
           }
@@ -1146,55 +1018,55 @@ LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND p
       }
     }
   }
-  else if ((int)param_5 < 0x202) {
-    if (param_5 == 0x201) {
-      if (_DAT_00460268 != 0) {
-        PostMessageA(param_4,0x201,param_6,param_7);
+  else if ((int)uMsg < WM_LBUTTONDOWN + 1) {
+    if (uMsg == WM_LBUTTONDOWN) {
+      if (DAT_00460268 != 0) {
+        PostMessageA(window,WM_LBUTTONDOWN,wParam,lParam);
         return 0;
       }
       GetCursorPos(&local_10);
-      ScreenToClient(param_4,&local_10);
-      _DAT_00464868 = local_10.x - _DAT_00464838;
-      _DAT_0046486c = local_10.y - DAT_0046483c;
+      ScreenToClient(window,&local_10);
+      DAT_00464868 = local_10.x - Game::mouseInputRect.left;
+      DAT_0046486c = local_10.y - Game::mouseInputRect.top;
       DAT_00464878 = 0x8000;
       (*(code *)PTR_FUN_00460220)();
       _DAT_004601ba = 1;
     }
-    else if (param_5 == 0x11f) {
-      if (((param_7 == 0) && ((short)(param_6 >> 0x10) == -1)) && (local_8 == 0)) {
+    else if (uMsg == 0x11f) {
+      if (((lParam == 0) && ((short)(wParam >> 0x10) == -1)) && (local_8 == 0)) {
         (*(code *)PTR_FUN_00460248)();
       }
     }
-    else if (param_5 == 0x200) {
-      _DAT_00464868 = (param_7 & 0xffff) - _DAT_00464838;
-      _DAT_0046486c = (param_7 >> 0x10) - _DAT_00464840;
+    else if (uMsg == WM_MOUSEMOVE) {
+      DAT_00464868 = (lParam & 0xffff) - Game::mouseInputRect.left;
+      DAT_0046486c = (lParam >> 0x10) - Game::mouseInputRect.right;
       return 0;
     }
   }
-  else if (param_5 == 0x202) {
+  else if (uMsg == 0x202) {
     if (_DAT_004601ba != 0) {
-      if (_DAT_00460268 != 0) {
-        PostMessageA(param_4,0x202,param_6,param_7);
+      if (DAT_00460268 != 0) {
+        PostMessageA(window,0x202,wParam,lParam);
         return 0;
       }
       GetCursorPos(&local_18);
-      ScreenToClient(param_4,&local_18);
-      _DAT_00464868 = local_18.x - _DAT_00464838;
-      _DAT_0046486c = local_18.y - DAT_0046483c;
+      ScreenToClient(window,&local_18);
+      DAT_00464868 = local_18.x - Game::mouseInputRect.left;
+      DAT_0046486c = local_18.y - Game::mouseInputRect.top;
       DAT_00464878 = 0x8000;
       (*(code *)PTR_FUN_00460224)();
       _DAT_004601ba = 0;
     }
   }
-  else if (param_5 == 0x400) {
+  else if (uMsg == 0x400) {
     if (local_8 == 0) {
-      SetActiveWindow(param_4);
+      SetActiveWindow(window);
     }
     else {
-      ShowWindow(param_4,9);
+      ShowWindow(window,9);
     }
   }
-  LVar4 = DefWindowProcA(param_4,param_5,param_6,param_7);
+  LVar4 = DefWindowProcA(window,uMsg,wParam,lParam);
   return LVar4;
 }
 
@@ -1249,10 +1121,10 @@ uint FUN_00411519(void)
       TranslateMessage(&local_20);
       DispatchMessageA(&local_20);
     }
-    pHVar2 = (HWND)IsIconic(hWnd_00464834);
+    pHVar2 = (HWND)IsIconic(Game::window);
     if (pHVar2 == (HWND)0x0) {
       pHVar2 = GetActiveWindow();
-      if (pHVar2 != hWnd_00464834) goto LAB_0041156b;
+      if (pHVar2 != Game::window) goto LAB_0041156b;
     }
     else {
 LAB_0041156b:
@@ -1331,7 +1203,7 @@ void FUN_004116a2(undefined param_1,undefined param_2,undefined param_3,LPCSTR p
 {
   HMENU hMenu;
   
-  hMenu = GetSystemMenu(hWnd_00464834,0);
+  hMenu = GetSystemMenu(Game::window,0);
   InsertMenuA(hMenu,0,0x400,0x800,(LPCSTR)0x0);
   InsertMenuA(hMenu,0,0x400,2000,param_4);
   return;
@@ -2060,7 +1932,7 @@ void FUN_004127bc(void)
                  CONCAT22(extraout_var,DAT_00467dbc),CONCAT22(extraout_var,DAT_00467dc0));
     FUN_00413acc((char)DAT_00467dba,extraout_DL_00,extraout_CL_00,DAT_00467dba,DAT_00467dbe,
                  DAT_00467dbc,DAT_00467dc0);
-    _DAT_00460268 = 0;
+    DAT_00460268 = 0;
     _DAT_00460258 = 1;
   }
   return;
@@ -3235,28 +3107,24 @@ void __stdcall FUN_0041395c(int param_1,undefined4 param_2,undefined4 param_3,sh
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void FUN_00413a24(void)
 
 {
-  _DAT_00460268 = _DAT_00460268 + 1;
+  DAT_00460268 = DAT_00460268 + 1;
   return;
 }
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void FUN_00413a2c(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
   if (param_4 != 0) {
-    _DAT_00460268 = 0;
+    DAT_00460268 = 0;
     return;
   }
-  if (0 < _DAT_00460268) {
-    _DAT_00460268 = _DAT_00460268 + -1;
+  if (0 < DAT_00460268) {
+    DAT_00460268 = DAT_00460268 + -1;
   }
   return;
 }
@@ -8002,7 +7870,7 @@ undefined4 FUN_00419e02(undefined param_1,undefined param_2,undefined param_3,un
 void FUN_0041a068(undefined param_1,undefined param_2,undefined param_3,ushort param_4)
 
 {
-  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_00419ec4,0);
+  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,Game::window,(DLGPROC)&LAB_00419ec4,0);
   return;
 }
 
@@ -8638,10 +8506,10 @@ void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short pa
   char local_1f8 [500];
   
   Sprintf_(local_1f8,param_6,&param_7);
-  hdc = GetDC(hWnd_00464834);
+  hdc = GetDC(Game::window);
   c = FUN_0044ffac((char)local_1f8,extraout_DL,extraout_CL,local_1f8);
   TextOutA(hdc,(int)param_4,(int)param_5,local_1f8,c);
-  ReleaseDC(hWnd_00464834,hdc);
+  ReleaseDC(Game::window,hdc);
   return;
 }
 
@@ -20768,14 +20636,13 @@ undefined4 FUN_0042ffd7(void)
   undefined in_AL;
   undefined uVar1;
   undefined4 uVar2;
-  undefined4 uVar3;
-  uint uVar4;
+  uint uVar3;
   undefined2 extraout_var;
   undefined in_CL;
+  undefined uVar4;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_CL_01;
-  undefined extraout_CL_02;
   undefined *extraout_ECX;
   undefined *puVar5;
   undefined in_DL;
@@ -20785,13 +20652,9 @@ undefined4 FUN_0042ffd7(void)
   undefined extraout_DL_02;
   undefined extraout_DL_03;
   undefined extraout_DL_04;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 extraout_EDX_01;
+  undefined extraout_DL_05;
   short sVar6;
   undefined uVar7;
-  undefined uVar8;
-  undefined4 uVar9;
   
   FUN_0043c1c0(in_AL,in_DL,in_CL,500);
   uVar2 = FUN_0044b62f();
@@ -20801,31 +20664,30 @@ undefined4 FUN_0042ffd7(void)
   FUN_00440318();
   sVar6 = 0;
   puVar5 = extraout_ECX;
-  uVar2 = extraout_EDX;
+  uVar1 = extraout_DL;
   do {
-    uVar1 = SUB41(puVar5,0);
+    uVar4 = SUB41(puVar5,0);
     puVar5 = (&PTR_s_gizmo_dat_00461acc)[sVar6];
-    uVar3 = FUN_004403be((char)sVar6,(char)uVar2,uVar1,(&PTR_s_gizmo_dat_00461acc)[sVar6]);
-    if ((short)uVar3 == 0) {
-      FUN_0041a08d((char)uVar3,(char)extraout_EDX_00,(char)puVar5,0x81);
+    uVar2 = FUN_004403be((char)sVar6,uVar1,uVar4,(&PTR_s_gizmo_dat_00461acc)[sVar6]);
+    if ((short)uVar2 == 0) {
+      FUN_0041a08d((char)uVar2,extraout_DL_00,(char)puVar5,0x81);
       return 0;
     }
     sVar6 = sVar6 + 1;
-    uVar2 = extraout_EDX_00;
+    uVar1 = extraout_DL_00;
   } while (sVar6 < 0x12);
-  uVar9 = 1000;
-  uVar2 = FUN_0044c970((char)uVar3,(char)extraout_EDX_00,(char)puVar5,1000);
-  FUN_004305fc(uVar2,extraout_EDX_01,uVar9,0x200,0x180,2);
+  FUN_0044c970((char)uVar2,extraout_DL_00,(char)puVar5,1000);
+  FUN_004305fc(0x200,0x180,2);
   FUN_004127bc();
   FUN_004267cc();
-  uVar4 = FUN_00416bad();
-  FUN_00445d1d(uVar4);
+  uVar3 = FUN_00416bad();
+  FUN_00445d1d(uVar3);
   FUN_0044d531();
-  uVar1 = FUN_0043ab87();
-  uVar2 = FUN_004548e0(uVar1,extraout_DL,extraout_CL,&LAB_0042ff86);
+  FUN_0043ab87();
+  uVar2 = FUN_004548e0(&LAB_0042ff86);
   uVar1 = (undefined)uVar2;
   GetWinapiString(&DAT_00467d4a,0x4e22);
-  FUN_004116a2(uVar1,extraout_DL_00,extraout_CL_00,&DAT_00467d4a);
+  FUN_004116a2(uVar1,extraout_DL_01,extraout_CL,&DAT_00467d4a);
   FUN_0043bc68();
   PTR_FUN_00460230 = &LAB_0042fe9d;
   PTR_FUN_00460234 = &LAB_0042fee7;
@@ -20839,13 +20701,13 @@ undefined4 FUN_0042ffd7(void)
   FUN_0042f4ab();
   uVar1 = FUN_0043b972();
   FUN_0044b434(2,&PTR_FUN_004627d8);
+  uVar4 = 0;
+  uVar1 = FUN_0041161a(uVar1,extraout_DL_02,extraout_CL_00,0);
   uVar7 = 0;
-  uVar1 = FUN_0041161a(uVar1,extraout_DL_01,extraout_CL_01,0);
-  uVar8 = 0;
-  uVar2 = FUN_00455430(uVar1,extraout_DL_02,uVar7,0);
-  FUN_00454224((char)uVar2,extraout_DL_03,uVar8,uVar2);
+  uVar2 = FUN_00455430(uVar1,extraout_DL_03,uVar4,0);
+  FUN_00454224((char)uVar2,extraout_DL_04,uVar7,uVar2);
   uVar1 = FUN_0043b3e0();
-  FUN_00431df5(uVar1,extraout_DL_04,extraout_CL_02,FUN_0042ff68);
+  FUN_00431df5(uVar1,extraout_DL_05,extraout_CL_01,FUN_0042ff68);
   _DAT_00467da0 = 1;
   return CONCAT22(extraout_var,1);
 }
@@ -20902,10 +20764,10 @@ void FUN_0043025c(void)
   int DestHeight;
   
   DestHeight = (int)DAT_00467e18;
-  StretchDIBits(DAT_00468428,(int)DAT_00467e12 + (int)DAT_00461cbe,
-                (int)DAT_00467e14 + (int)DAT_00461cc0,(int)DAT_00467e16,DestHeight,(int)DAT_00467e12
-                ,(int)DAT_00467dcc - (DAT_00467e14 + DestHeight),(int)DAT_00467e16,DestHeight,
-                DAT_00467dd2,DAT_00467dc4,(int)DAT_00461cb4,0xcc0020);
+  StretchDIBits(DAT_00468428,(int)DAT_00467e12 + (int)Game::drawAreaX,
+                (int)DAT_00467e14 + (int)Game::drawAreaY,(int)DAT_00467e16,DestHeight,
+                (int)DAT_00467e12,(int)DAT_00467dcc - (DAT_00467e14 + DestHeight),(int)DAT_00467e16,
+                DestHeight,DAT_00467dd2,DAT_00467dc4,(int)DAT_00461cb4,0xcc0020);
   return;
 }
 
@@ -21028,24 +20890,24 @@ void FUN_00430494(undefined param_1,undefined param_2,undefined param_3,HDC para
     ptVar3 = (tagRECT *)&ptVar3->top;
     pLVar4 = pLVar4 + 1;
   }
-  local_18 = DAT_00461cc0 + local_20;
+  local_18 = Game::drawAreaY + local_20;
   FillRect(param_4,(RECT *)local_24,hbr);
   local_18 = local_14.bottom;
-  local_20 = local_20 + (int)DAT_00461cc0 + (int)DAT_00467db8;
+  local_20 = local_20 + (int)Game::drawAreaY + (int)DAT_00467db8;
   FillRect(param_4,(RECT *)local_24,hbr);
   local_20 = local_14.top;
-  local_1c = (int)DAT_00461cbe;
+  local_1c = (int)Game::drawAreaX;
   FillRect(param_4,(RECT *)local_24,hbr);
   local_1c = local_14.right;
-  local_24 = (undefined  [4])((int)local_24 + (int)DAT_00461cbe + (int)DAT_00467db6);
+  local_24 = (undefined  [4])((int)local_24 + (int)Game::drawAreaX + (int)DAT_00467db6);
   FillRect(param_4,(RECT *)local_24,hbr);
-  SetRect(&local_14,(int)DAT_00461cbe,(int)DAT_00461cc0,(int)DAT_00467db6 + (int)DAT_00461cbe,
-          (int)DAT_00467db8 + (int)DAT_00461cc0);
+  SetRect(&local_14,(int)Game::drawAreaX,(int)Game::drawAreaY,
+          (int)DAT_00467db6 + (int)Game::drawAreaX,(int)DAT_00467db8 + (int)Game::drawAreaY);
   BVar1 = IntersectRect((LPRECT)local_24,param_5,&local_14);
   if (BVar1 != 0) {
     DAT_00468428 = param_4;
-    DAT_00467e12 = local_24._0_2_ - DAT_00461cbe;
-    DAT_00467e14 = (short)local_20 - DAT_00461cc0;
+    DAT_00467e12 = local_24._0_2_ - Game::drawAreaX;
+    DAT_00467e14 = (short)local_20 - Game::drawAreaY;
     DAT_00467e16 = (short)local_1c - local_24._0_2_;
     DAT_00467e18 = (short)local_18 - (short)local_20;
     if (DAT_0046811c != (HPALETTE)0x0) {
@@ -21061,12 +20923,11 @@ void FUN_00430494(undefined param_1,undefined param_2,undefined param_3,HDC para
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-undefined4
-FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short param_4,short param_5,
-            short param_6)
+undefined4 __cdecl FUN_004305fc(short param_1,short param_2,short param_3)
 
 {
   undefined uVar1;
+  undefined4 in_EAX;
   undefined2 uVar6;
   char *message;
   undefined4 uVar2;
@@ -21092,11 +20953,11 @@ FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short para
   undefined2 in_stack_00000006;
   undefined2 in_stack_0000000a;
   
-  uVar6 = (undefined2)((uint)param_1 >> 0x10);
+  uVar6 = (undefined2)((uint)in_EAX >> 0x10);
   if (DAT_00467da4 == -0x5aa6) {
     if (_DAT_00461cbc == 0) {
-      FUN_00431e11((char)DAT_00464838,(undefined)param_2,(undefined)param_3,DAT_00464838,
-                   (undefined2)DAT_0046483c);
+      Game::SetDrawAreaXY((undefined2)Game::mouseInputRect.left,(undefined2)Game::mouseInputRect.top
+                         );
       PTR_FUN_0046021c = FUN_00430494;
       FUN_004310f8();
       if (DAT_00467db0 == 1) {
@@ -21111,10 +20972,10 @@ FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short para
         puVar4[6] = 0;
         puVar4[9] = 0;
         puVar4[8] = 0;
-        puVar4[1] = (int)param_4;
-        puVar4[2] = (int)param_5;
-        iVar7 = (int)param_5;
-        puVar4[5] = param_4 * iVar7;
+        puVar4[1] = (int)param_1;
+        puVar4[2] = (int)param_2;
+        iVar7 = (int)param_2;
+        puVar4[5] = param_1 * iVar7;
         puVar4 = DAT_00467dc4 + 10;
         iVar3 = 0;
         do {
@@ -21131,29 +20992,29 @@ FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short para
           DAT_00468424 = (code *)&LAB_00430214;
         }
       }
-      if (2 < param_6) {
-        param_6 = 2;
+      if (2 < param_3) {
+        param_3 = 2;
       }
-      FUN_00431d24((char)iVar3,(char)puVar4,(char)iVar7,0,0,_param_4,_param_5);
-      uVar5 = CONCAT22(extraout_var,param_6);
-      _DAT_00467e10 = param_6;
+      FUN_00431d24((char)iVar3,(char)puVar4,(char)iVar7,0,0,_param_1,_param_2);
+      uVar5 = CONCAT22(extraout_var,param_3);
+      _DAT_00467e10 = param_3;
       sVar9 = 0;
       uVar2 = extraout_ECX_00;
       uVar8 = extraout_EDX_00;
-      if (0 < param_6) {
+      if (0 < param_3) {
         do {
-          uVar5 = FUN_004302cc((char)uVar5,(char)uVar8,(char)uVar2,sVar9,_param_4,param_5);
+          uVar5 = FUN_004302cc((char)uVar5,(char)uVar8,(char)uVar2,sVar9,_param_1,param_2);
           sVar9 = sVar9 + 1;
           uVar2 = extraout_ECX_01;
           uVar8 = extraout_EDX_01;
-        } while (sVar9 < param_6);
+        } while (sVar9 < param_3);
       }
       FUN_00412156(CONCAT22((short)((uint)uVar5 >> 0x10),DAT_00467dc8),uVar8,uVar2,DAT_00467dc8,
                    DAT_00467dd0);
       uVar1 = FUN_00431420();
-      FUN_00431b20(uVar1,extraout_DL,extraout_CL,0,0,_param_4,param_5,0);
+      FUN_00431b20(uVar1,extraout_DL,extraout_CL,0,0,_param_1,param_2,0);
       uVar1 = FUN_004313d8();
-      FUN_00431b20(uVar1,extraout_DL_00,extraout_CL_00,0,0,_param_4,param_5,0);
+      FUN_00431b20(uVar1,extraout_DL_00,extraout_CL_00,0,0,_param_1,param_2,0);
       _DAT_00461cbc = 1;
       uVar6 = extraout_var_00;
     }
@@ -21238,7 +21099,7 @@ void FUN_00430810(undefined param_1,undefined param_2,undefined param_3,undefine
   DAT_00467db0 = 0;
   DAT_00467db2 = 1;
   if ((DAT_00467db4 == 1) && (7 < DAT_00467da8)) {
-    _ColorMode = 0x100;
+    _ColorMode = 256;
     DAT_00467db0 = (short)param_4;
     if ((short)param_4 == 3) {
       uVar2 = FUN_0043013c(iVar1);
@@ -21258,7 +21119,7 @@ LAB_004308ce:
     if (DAT_00467db4 != 1) goto LAB_004308ee;
     if (DAT_00467da8 != 4) goto LAB_004308ee;
   }
-  _ColorMode = 0x10;
+  _ColorMode = 16;
   DAT_00467db0 = 4;
   DAT_00467db2 = 0;
 LAB_004308ee:
@@ -21345,7 +21206,7 @@ void FUN_00430af0(undefined param_1,undefined param_2,undefined param_3,undefine
   DAT_00467e18 = param_7;
   DAT_00467e12 = local_c;
   DAT_00467e14 = local_a;
-  DAT_00468428 = GetDC(hWnd_00464834);
+  DAT_00468428 = GetDC(Game::window);
   if (DAT_00468428 == (HDC)0x0) {
     uVar2 = 0x8b;
     pcVar1 = GetWinapiStringAlloc(0x4e8b);
@@ -21357,7 +21218,7 @@ void FUN_00430af0(undefined param_1,undefined param_2,undefined param_3,undefine
     RealizePalette(DAT_00468428);
   }
   (*DAT_00468424)();
-  ReleaseDC(hWnd_00464834,DAT_00468428);
+  ReleaseDC(Game::window,DAT_00468428);
   if ((param_8 & 1) != 0) {
     local_8 = param_6;
     local_6 = param_7;
@@ -21392,7 +21253,7 @@ undefined4 FUN_00430bbc(void)
       DAT_00467e12 = 0;
       DAT_00467e16 = 0x200;
       DAT_00467e18 = 0x180;
-      DAT_00468428 = GetDC(hWnd_00464834);
+      DAT_00468428 = GetDC(Game::window);
       if (DAT_00468428 == (HDC)0x0) {
         message = GetWinapiStringAlloc(0x4e8c);
         ShowAlertMessage(message,in_stack_ffffffe8);
@@ -21403,7 +21264,7 @@ undefined4 FUN_00430bbc(void)
         RealizePalette(DAT_00468428);
       }
       (*DAT_00468424)();
-      ReleaseDC(hWnd_00464834,DAT_00468428);
+      ReleaseDC(Game::window,DAT_00468428);
       Draw::dirtyMode = 0;
       uVar4 = 1;
     }
@@ -21411,7 +21272,7 @@ undefined4 FUN_00430bbc(void)
       Draw::dirtyMode = 0;
       pabStack_14 = Draw::dirtyTiles;
       DAT_00467e18 = 0x10;
-      DAT_00468428 = GetDC(hWnd_00464834);
+      DAT_00468428 = GetDC(Game::window);
       if (DAT_0046811c != (HPALETTE)0x0) {
         SelectPalette(DAT_00468428,DAT_0046811c,0);
         RealizePalette(DAT_00468428);
@@ -21447,7 +21308,7 @@ undefined4 FUN_00430bbc(void)
         DAT_00467e14 = DAT_00467e14 + 0x10;
         sVar7 = sVar7 + 1;
       } while (sVar7 < 0x18);
-      ReleaseDC(hWnd_00464834,DAT_00468428);
+      ReleaseDC(Game::window,DAT_00468428);
     }
     Draw::DirtyInit();
     if (_DAT_00461cc4 != 0) {
@@ -22419,17 +22280,6 @@ void FUN_00431df5(undefined param_1,undefined param_2,undefined param_3,undefine
 
 {
   DAT_00461cb8 = param_4;
-  return;
-}
-
-
-
-void FUN_00431e11(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5)
-
-{
-  DAT_00461cbe = param_4;
-  DAT_00461cc0 = param_5;
   return;
 }
 
@@ -28566,7 +28416,7 @@ void FUN_0043ab87(void)
 {
   DAT_00468ff8 = DlistNew();
   hMenu_00468ffc = CreateMenu();
-  SetMenu(hWnd_00464834,hMenu_00468ffc);
+  SetMenu(Game::window,hMenu_00468ffc);
   return;
 }
 
@@ -28619,7 +28469,7 @@ FUN_0043abbe(undefined param_1,undefined param_2,undefined param_3,LPCSTR param_
     DlistInsert(DAT_00468ff8,node,(short)param_6);
     uVar4 = 1;
     if (_DAT_0046276c != 0) {
-      DrawMenuBar(hWnd_00464834);
+      DrawMenuBar(Game::window);
     }
   }
   return uVar4;
@@ -28776,7 +28626,7 @@ short FUN_0043ad75(undefined param_1,undefined param_2,undefined param_3,ushort 
   if (sVar4 != 0) {
     DlistInsert(DAT_00468ff8,node,-1);
     if (_DAT_0046276c != 0) {
-      DrawMenuBar(hWnd_00464834);
+      DrawMenuBar(Game::window);
     }
   }
   return sVar4;
@@ -28843,7 +28693,7 @@ undefined4 FUN_0043aed8(undefined4 param_1,undefined4 param_2,undefined4 param_3
     DlistRemove(DAT_00468ff8,node);
     FUN_0043c2ba(node);
     if (_DAT_0046276c != 0) {
-      DrawMenuBar(hWnd_00464834);
+      DrawMenuBar(Game::window);
     }
     uVar6 = 1;
   }
@@ -28945,7 +28795,7 @@ undefined4 FUN_0043b0b8(undefined4 param_1,undefined4 param_2,undefined4 param_3
     EnableMenuItem(hMenu_00468ffc,(int)uStack_8._2_2_,0x400);
     uVar2 = 1;
     if (_DAT_0046276c != 0) {
-      DrawMenuBar(hWnd_00464834);
+      DrawMenuBar(Game::window);
     }
   }
   return uVar2;
@@ -28972,7 +28822,7 @@ undefined4 FUN_0043b115(undefined4 param_1,undefined4 param_2,undefined4 param_3
     EnableMenuItem(hMenu_00468ffc,(int)uStack_8._2_2_,0x401);
     uVar2 = 1;
     if (_DAT_0046276c != 0) {
-      DrawMenuBar(hWnd_00464834);
+      DrawMenuBar(Game::window);
     }
   }
   return uVar2;
@@ -29116,7 +28966,7 @@ int FUN_0043b2c2(byte param_1,undefined param_2,byte param_3,ushort param_4,unde
     } while (uVar1 != 0xffff);
   }
   _DAT_0046276c = 1;
-  DrawMenuBar(hWnd_00464834);
+  DrawMenuBar(Game::window);
   return iVar7;
 }
 
@@ -29141,16 +28991,16 @@ void FUN_0043b318(undefined param_1,undefined param_2,undefined param_3,undefine
     sVar1 = DAT_0046900a;
     sVar2 = DAT_0046900c;
   }
-  sVar3 = (short)param_4 + DAT_00464838;
-  sVar4 = (short)param_5 + (short)DAT_0046483c;
+  sVar3 = (short)param_4 + (short)Game::mouseInputRect.left;
+  sVar4 = (short)param_5 + (short)Game::mouseInputRect.top;
   local_c.x = ((int)sVar3 + (int)param_6) - (int)sVar1;
   local_c.y = ((int)sVar4 + (int)param_7) - (int)sVar2;
-  ClientToScreen(hWnd_00464834,&local_c);
+  ClientToScreen(Game::window,&local_c);
   local_1c.right = local_c.x;
   local_1c.bottom = local_c.y;
   local_c.x = (LONG)sVar3;
   local_c.y = (LONG)sVar4;
-  ClientToScreen(hWnd_00464834,&local_c);
+  ClientToScreen(Game::window,&local_c);
   local_1c.left = local_c.x;
   local_1c.top = local_c.y;
   ClipCursor(&local_1c);
@@ -29847,7 +29697,7 @@ void FUN_0043be66(undefined param_1,undefined param_2,byte param_3,byte param_4,
     } while ((short)iVar4 < 7);
   }
   if ((param_4 & 8) != 0) {
-    hMenu = GetSystemMenu(hWnd_00464834,0);
+    hMenu = GetSystemMenu(Game::window,0);
     sVar3 = 0;
     do {
       if (((uint)(ushort)param_5 == (int)sVar3) || ((ushort)param_5 == 0xffff)) {
@@ -29929,7 +29779,7 @@ void __stdcall FUN_0043bfee(byte param_1,undefined4 param_2,undefined4 param_3)
     } while ((short)iVar2 < 7);
   }
   if ((param_1 & 8) != 0) {
-    hMenu = GetSystemMenu(hWnd_00464834,0);
+    hMenu = GetSystemMenu(Game::window,0);
     sVar1 = 0;
     do {
       if (((uint)(ushort)param_2 == (int)sVar1) || ((ushort)param_2 == 0xffff)) {
@@ -36545,7 +36395,7 @@ uint FUN_00445d1d(uint param_1)
     RegisterClassA(&local_38);
     dwCallback_00469e44 =
          CreateWindowExA(0,lpClassName_00463068,&lpWindowName_00463162,0x40000000,-0x80000000,
-                         -0x80000000,-0x80000000,-0x80000000,hWnd_00464834,(HMENU)0x0,_Module,
+                         -0x80000000,-0x80000000,-0x80000000,Game::window,(HMENU)0x0,_Module,
                          (LPVOID)0x0);
     if (DAT_00462f48 == 0) {
       _DAT_00469d96 = 2;
@@ -40658,10 +40508,64 @@ void FUN_0044b4ba(undefined param_1,undefined param_2,undefined param_3,undefine
 
 
 
-void FUN_0044b60a(undefined param_1,undefined param_2,undefined param_3,ushort param_4)
+undefined4 __cdecl Game::DialogProc(HWND window,short param_2,ushort param_3)
 
 {
-  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,hWnd_00464834,(DLGPROC)&LAB_0044b504,0);
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  short local_14;
+  short local_10;
+  short local_c;
+  short local_8;
+  
+  if (param_2 == 0x47) {
+    return 0;
+  }
+  if (param_2 == 0x110) {
+    GetWindowRect(window,(LPRECT)&local_14);
+    uVar1 = (_DesktopRect.right - _DesktopRect.left) - (int)(short)((local_c - local_14) + 1);
+    iVar2 = (int)uVar1 >> 1;
+    if (iVar2 < 0) {
+      iVar2 = iVar2 + (uint)((uVar1 & 1) != 0);
+    }
+    uVar1 = (_DesktopRect.bottom - _DesktopRect.top) - (int)(short)((local_8 - local_10) + 1);
+    iVar3 = (int)uVar1 >> 1;
+    if (iVar3 < 0) {
+      iVar3 = iVar3 + (uint)((uVar1 & 1) != 0);
+    }
+    SetWindowPos(window,(HWND)0x0,(int)(short)((short)iVar2 + (short)_DesktopRect.left),
+                 (int)(short)((short)iVar3 + (short)_DesktopRect.top + DAT_00464858),0,0,5);
+    return 1;
+  }
+  if (param_2 == 0x111) {
+    if (param_3 < 0x3ea) {
+      if ((param_3 == 0x3e9) || (param_3 == 1)) {
+        EndDialog(window,1);
+        return 1;
+      }
+      if (param_3 == 2) {
+LAB_0044b5f1:
+        EndDialog(window,0);
+        return 1;
+      }
+    }
+    else {
+      if (param_3 == 0x3ea) goto LAB_0044b5f1;
+      if (param_3 == 0x641) {
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
+
+
+void __cdecl FUN_0044b60a(ushort param_1)
+
+{
+  DialogBoxParamA(_Module,(LPCSTR)(uint)param_1,Game::window,Game::DialogProc,0);
   return;
 }
 
@@ -40687,9 +40591,7 @@ undefined4 FUN_0044b62f(void)
   undefined extraout_CL_05;
   undefined extraout_CL_06;
   undefined extraout_CL_07;
-  undefined uVar6;
   undefined extraout_CL_08;
-  undefined extraout_CL_09;
   undefined in_DL;
   undefined extraout_DL;
   undefined extraout_DL_00;
@@ -40703,13 +40605,9 @@ undefined4 FUN_0044b62f(void)
   undefined extraout_DL_08;
   undefined extraout_DL_09;
   undefined extraout_DL_10;
+  undefined2 uVar6;
   undefined uVar7;
-  undefined extraout_DL_11;
-  undefined extraout_DL_12;
-  undefined extraout_DL_13;
-  undefined2 uVar8;
-  CHAR *pCVar9;
-  UINT UVar10;
+  CHAR *pCVar8;
   CHAR local_214 [260];
   CHAR local_110 [268];
   
@@ -40719,15 +40617,15 @@ undefined4 FUN_0044b62f(void)
   GetVersion();
   GetWinapiString((char *)&lpAppName_0046a370,0x4e28);
   uVar7 = 0;
-  uVar8 = 1;
+  uVar6 = 1;
   UVar1 = GetPrivateProfileIntA((LPCSTR)&lpAppName_0046a370,lpKeyName_00463384,3,local_110);
-  FUN_00430810((char)UVar1,extraout_DL_01,extraout_CL_01,UVar1,uVar8,uVar7);
+  FUN_00430810((char)UVar1,extraout_DL_01,extraout_CL_01,UVar1,uVar6,uVar7);
   uVar2 = Is16Color();
   if ((short)uVar2 == 0) {
     UVar1 = GetPrivateProfileIntA((LPCSTR)&lpAppName_0046a370,s_Sound_004633bc,0,local_110);
-    uVar3 = FUN_0044727e((char)UVar1,extraout_DL_03,extraout_CL_03,(short)UVar1);
+    uVar3 = FUN_0044727e((char)UVar1,extraout_DL_02,extraout_CL_02,(short)UVar1);
     if ((uVar3 & 1) == 0) {
-      FUN_0044b60a((char)uVar3,extraout_DL_04,(char)UVar1,0xbe0);
+      FUN_0044b60a(0xbe0);
       uVar2 = 0;
     }
     else {
@@ -40737,27 +40635,22 @@ undefined4 FUN_0044b62f(void)
       GetPrivateProfileStringA
                 ((LPCSTR)&lpAppName_0046a370,lpKeyName_00463380,&DAT_004633c2,local_214,0x50,
                  local_110);
-      pCVar9 = local_214;
-      iVar4 = FUN_0044ffac((char)pCVar9,extraout_DL_05,extraout_CL_04,pCVar9);
+      pCVar8 = local_214;
+      iVar4 = FUN_0044ffac((char)pCVar8,extraout_DL_03,extraout_CL_03,pCVar8);
       if (iVar4 == 0) {
         Strcpy(local_214,(char *)&lpReturnedString_00462b30);
-        FUN_0044feec((char)local_214,extraout_DL_07,extraout_CL_05,local_214,s_midi__004633c3);
-        FUN_00447763((char)local_214,extraout_DL_08,extraout_CL_06,local_214);
+        FUN_0044feec((char)local_214,extraout_DL_05,extraout_CL_04,local_214,s_midi__004633c3);
+        FUN_00447763((char)local_214,extraout_DL_06,extraout_CL_05,local_214);
       }
       else {
-        FUN_00447763((char)local_214,extraout_DL_06,(char)pCVar9,local_214);
+        FUN_00447763((char)local_214,extraout_DL_04,(char)pCVar8,local_214);
       }
       UVar1 = GetPrivateProfileIntA((LPCSTR)&lpAppName_0046a370,s_MIDIType_004633c9,-1,local_110);
-      uVar7 = extraout_DL_09;
-      uVar6 = extraout_CL_07;
       if ((short)UVar1 != -1) {
-        UVar10 = UVar1;
-        UVar1 = FUN_0044755f((char)UVar1,extraout_DL_09,extraout_CL_07,(short)UVar1);
-        uVar6 = (undefined)UVar10;
-        uVar7 = extraout_DL_10;
+        FUN_0044755f((char)UVar1,extraout_DL_07,extraout_CL_06,(short)UVar1);
       }
       if ((uVar3 & 2) == 0) {
-        FUN_0044b60a((char)UVar1,uVar7,uVar6,0xbe1);
+        FUN_0044b60a(0xbe1);
         uVar2 = 0;
       }
       else {
@@ -40767,14 +40660,14 @@ undefined4 FUN_0044b62f(void)
         if (UVar1 == 5) {
           UVar1 = GetWindowsDirectoryA((LPSTR)&lpBuffer_0046a770,0x104);
           uVar7 = 0x70;
-          pcVar5 = (char *)FUN_0044ffac((char)UVar1,extraout_DL_12,extraout_CL_09,&lpBuffer_0046a770
+          pcVar5 = (char *)FUN_0044ffac((char)UVar1,extraout_DL_09,extraout_CL_08,&lpBuffer_0046a770
                                        );
           if (pcVar5[0x46a770] != '\\') {
-            pcVar5 = FUN_0044feec(0xdc,extraout_DL_13,uVar7,&lpBuffer_0046a770,&DAT_004633dc);
+            pcVar5 = FUN_0044feec(0xdc,extraout_DL_10,uVar7,&lpBuffer_0046a770,&DAT_004633dc);
           }
         }
         else {
-          pcVar5 = FUN_0044feec(0xde,extraout_DL_11,extraout_CL_08,&lpBuffer_0046a770,&DAT_004633de)
+          pcVar5 = FUN_0044feec(0xde,extraout_DL_08,extraout_CL_07,&lpBuffer_0046a770,&DAT_004633de)
           ;
         }
         uVar2 = CONCAT22((short)((uint)pcVar5 >> 0x10),1);
@@ -40782,7 +40675,7 @@ undefined4 FUN_0044b62f(void)
     }
   }
   else {
-    FUN_0044b60a((char)uVar2,extraout_DL_02,extraout_CL_02,0xbdb);
+    FUN_0044b60a(0xbdb);
     uVar2 = 0;
   }
   return uVar2;
@@ -42979,8 +42872,8 @@ void FUN_0044dcbd(undefined param_1,undefined param_2,undefined param_3,int para
   undefined uVar1;
   short sVar2;
   
-  if (_DAT_00460268 != 0) {
-    _DAT_00460268 = 1;
+  if (DAT_00460268 != 0) {
+    DAT_00460268 = 1;
   }
   if ((_DAT_0046350e != 0) && (_DAT_0046350a == 0xffff)) {
     _DAT_0046350e = 0;
@@ -44241,9 +44134,9 @@ void FUN_0044fbfd(undefined param_1,undefined param_2,undefined param_3,short *p
   short local_8;
   
   GetCursorPos((LPPOINT)&local_c);
-  ScreenToClient(hWnd_00464834,(LPPOINT)&local_c);
-  *param_4 = local_c - DAT_00464838;
-  param_4[1] = local_8 - (short)DAT_0046483c;
+  ScreenToClient(Game::window,(LPPOINT)&local_c);
+  *param_4 = local_c - (short)Game::mouseInputRect.left;
+  param_4[1] = local_8 - (short)Game::mouseInputRect.top;
   return;
 }
 
@@ -50079,13 +49972,13 @@ void FUN_004548d0(void)
 
 
 
-undefined4 FUN_004548e0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
+undefined4 __cdecl FUN_004548e0(undefined4 param_1)
 
 {
   if (DAT_00464424 == 0x20) {
     return 1;
   }
-  *(undefined4 *)(&DAT_0046ae30 + DAT_00464424 * 4) = param_4;
+  *(undefined4 *)(&DAT_0046ae30 + DAT_00464424 * 4) = param_1;
   DAT_00464424 = DAT_00464424 + 1;
   return 0;
 }

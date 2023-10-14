@@ -265,28 +265,6 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
-typedef struct astruct_1 astruct_1, *Pastruct_1;
-
-struct astruct_1 {
-    undefined field0_0x0;
-    undefined field1_0x1;
-    undefined field2_0x2;
-    undefined field3_0x3;
-    undefined field4_0x4;
-    undefined field5_0x5;
-    undefined field6_0x6;
-    undefined field7_0x7;
-    undefined field8_0x8;
-    undefined field9_0x9;
-    undefined field10_0xa;
-    undefined field11_0xb;
-    undefined field12_0xc;
-    undefined field13_0xd;
-    undefined field14_0xe;
-    undefined field15_0xf;
-    short field16_0x10;
-};
-
 typedef struct astruct astruct, *Pastruct;
 
 typedef enum PuzzleCategory {
@@ -334,6 +312,28 @@ struct astruct {
     enum PuzzleCategory field30_0x1e;
     undefined field31_0x20;
     undefined field32_0x21;
+};
+
+typedef struct astruct_1 astruct_1, *Pastruct_1;
+
+struct astruct_1 {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    short field16_0x10;
 };
 
 typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
@@ -1546,6 +1546,9 @@ typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
 char * __stdcall GetWinapiStringAlloc(UINT id);
 void __stdcall GetWinapiString(char *result,UINT id);
 void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *value);
+void __cdecl Game::ShowTaskbar(short shouldShow);
+ATOM __cdecl Game::CreateWindow(undefined4 param_1);
+void Game::MakeWindowAnnoying(void);
 void InitEntities(void);
 void StartLevel(void);
 ushort __stdcall RoomIsObverse(short roomIndex);
@@ -1565,6 +1568,7 @@ void __cdecl Draw::DirtyCopy(byte (*dirtyTiles) [24] [32]);
 void __cdecl Draw::DirtyRect(Rect16 *rectOptional);
 uint Is16Color(void);
 bool Is256Color(void);
+void __cdecl Game::SetDrawAreaXY(undefined2 param_1,undefined2 param_2);
 void __stdcall ActorUpdateDynamics(short actorIndex,short obverse);
 DlistNode * __stdcall DlistHead(DlistNode **param_1);
 DlistNode * __stdcall DlistNext(DlistNode *param_1);

@@ -265,28 +265,6 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
-typedef struct astruct_1 astruct_1, *Pastruct_1;
-
-struct astruct_1 {
-    undefined field0_0x0;
-    undefined field1_0x1;
-    undefined field2_0x2;
-    undefined field3_0x3;
-    undefined field4_0x4;
-    undefined field5_0x5;
-    undefined field6_0x6;
-    undefined field7_0x7;
-    undefined field8_0x8;
-    undefined field9_0x9;
-    undefined field10_0xa;
-    undefined field11_0xb;
-    undefined field12_0xc;
-    undefined field13_0xd;
-    undefined field14_0xe;
-    undefined field15_0xf;
-    short field16_0x10;
-};
-
 typedef struct astruct astruct, *Pastruct;
 
 typedef enum PuzzleCategory {
@@ -334,6 +312,28 @@ struct astruct {
     enum PuzzleCategory field30_0x1e;
     undefined field31_0x20;
     undefined field32_0x21;
+};
+
+typedef struct astruct_1 astruct_1, *Pastruct_1;
+
+struct astruct_1 {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    short field16_0x10;
 };
 
 typedef struct SavedPartEntity SavedPartEntity, *PSavedPartEntity;
@@ -1568,13 +1568,10 @@ int FUN_00410a44(undefined param_1,undefined param_2,undefined param_3,int param
 undefined4 FUN_00410aa2(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 DWORD FUN_00410aaa(undefined4 param_1,undefined4 param_2,DWORD param_3,int param_4,LPVOID param_5,DWORD param_6);
 void FUN_00410b42(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,ushort param_6);
-void FUN_00410bb0(undefined param_1,undefined param_2,undefined param_3,short param_4);
-ATOM FUN_00410bde(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00410cfc(void);
-void FUN_00410d30(void);
-undefined4 FUN_00410df3(undefined param_1,undefined param_2,undefined param_3,HMODULE param_4,int param_5,undefined param_6,undefined4 param_7);
-void FUN_00410f13(undefined param_1,undefined param_2,undefined param_3,HWND param_4);
-LRESULT MainWndProc(undefined param_1,undefined param_2,undefined param_3,HWND param_4,UINT param_5,uint param_6,uint param_7);
+undefined4 __cdecl Game::Main(HMODULE param_1,int param_2,undefined param_3,undefined4 param_4);
+void __cdecl FUN_00410f13(HWND param_1);
+LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam);
 int FUN_004114b6(void);
 uint FUN_00411519(void);
 void FUN_00411599(void);
@@ -1983,7 +1980,7 @@ void FUN_0043025c(void);
 void FUN_004302cc(undefined param_1,undefined param_2,undefined param_3,short param_4,undefined4 param_5,short param_6);
 void FUN_00430434(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_00430494(undefined param_1,undefined param_2,undefined param_3,HDC param_4,RECT *param_5);
-undefined4 FUN_004305fc(undefined4 param_1,undefined4 param_2,undefined4 param_3,short param_4,short param_5,short param_6);
+undefined4 __cdecl FUN_004305fc(short param_1,short param_2,short param_3);
 void FUN_0043078c(void);
 void FUN_00430810(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,byte param_6);
 void FUN_00430a20(undefined param_1,undefined param_2,undefined param_3,short *param_4);
@@ -2021,7 +2018,6 @@ ushort __stdcall ClampColorIndex?(short color);
 void FUN_00431dc9(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 *param_5);
 int FUN_00431dde(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
 void FUN_00431df5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_00431e11(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);
 void FUN_00431ef2(void);
 void FUN_00431f6c(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00432128(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -2394,7 +2390,8 @@ void FUN_0044b3c6(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_0044b3e5(void);
 void __stdcall FUN_0044b434(undefined4 param_1,undefined4 param_2);
 void FUN_0044b4ba(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
-void FUN_0044b60a(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
+undefined4 __cdecl Game::DialogProc(HWND window,short param_2,ushort param_3);
+void __cdecl FUN_0044b60a(ushort param_1);
 undefined4 FUN_0044b62f(void);
 void FUN_0044b858(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_0044b9e3(void);
@@ -2657,7 +2654,7 @@ void FUN_00454850(undefined param_1,undefined param_2,undefined param_3,undefine
 void FUN_00454860(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004548bc(void);
 void FUN_004548d0(void);
-undefined4 FUN_004548e0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+undefined4 __cdecl FUN_004548e0(undefined4 param_1);
 void FUN_0045490c(void);
 void __stdcall DoSomethingThenExit?0(int param_1,int param_2,UINT exitCode);
 void __stdcall DoSomethingThenExit?(UINT exitCode);

@@ -54,6 +54,107 @@ void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *value)
 
 
 
+void __cdecl Game::ShowTaskbar(short shouldShow)
+
+{
+  HWND hWnd;
+  
+                    // if VER_PLATFORM_WIN32_WINDOWS, not VER_PLATFORM_WIN32s
+  if (_dwPlatformId == 1) {
+    hWnd = FindWindowA(s_Shell_TrayWnd_004601cc,(LPCSTR)0x0);
+    ShowWindow(hWnd,(uint)(shouldShow != 0));
+  }
+  return;
+}
+
+
+
+ATOM __cdecl Game::CreateWindow(undefined4 param_1)
+
+{
+  ATOM windowClass;
+  WNDCLASSEXA local_34;
+  
+  GetWinapiString((char *)&lpWindowName_00464880,0x4e21);
+  local_34.lpszClassName = s_TLCSSG_004601be;
+  local_34.lpszMenuName = (LPCSTR)0x100;
+  local_34.style = 0x1040;
+  local_34.hInstance = _Module;
+  local_34.lpfnWndProc = MainWndProc;
+  local_34.hCursor = (HCURSOR)0x0;
+  local_34.hIcon = LoadIconA(_Module,(LPCSTR)0x80);
+  local_34.hbrBackground = (HBRUSH)GetStockObject(1);
+  local_34.cbClsExtra = 0;
+  local_34.cbWndExtra = 0;
+  local_34.cbSize = 0x30;
+  if (_dwPlatformId == 2) {
+    local_34.hIconSm = (HICON)0x0;
+  }
+  else {
+    local_34.hIconSm = LoadIconA(_Module,(LPCSTR)0x81);
+  }
+  windowClass = RegisterClassExA(&local_34);
+  ShowTaskbar(0);
+  if (windowClass != 0) {
+    window = CreateWindowExA(0,s_TLCSSG_004601be,(LPCSTR)&lpWindowName_00464880,0xca0000,
+                             _DesktopRect.left,_DesktopRect.top,_DesktopRect.right,
+                             _DesktopRect.bottom,(HWND)0x0,(HMENU)0x0,_Module,(LPVOID)0x0);
+    if (window == (HWND)0x0) {
+      windowClass = 0;
+    }
+    else {
+      ShowWindow(window,1);
+      UpdateWindow(window);
+    }
+  }
+  return windowClass;
+}
+
+
+
+void Game::MakeWindowAnnoying(void)
+
+{
+  int titleBarHeight;
+  int menuBarHeight;
+  int screenWidth;
+  int screenHeight;
+  int screenHeight_;
+  uint xPadding;
+  int leftPadding;
+  UINT uFlags;
+  
+  titleBarHeight = GetSystemMetrics(SM_CYCAPTION);
+  menuBarHeight = GetSystemMetrics(SM_CYMENU);
+  GetSystemMetrics(1);
+  screenWidth = GetSystemMetrics(SM_CXSCREEN);
+  screenHeight = GetSystemMetrics(SM_CYSCREEN);
+  uFlags = 6;
+  screenHeight_ = GetSystemMetrics(SM_CYSCREEN);
+                    // move window to (0,0); resize to whole screen
+  SetWindowPos(window,(HWND)0x0,0,0,(int)(short)screenWidth,screenHeight_,uFlags);
+  xPadding = (int)(short)screenWidth - 512;
+  leftPadding = (int)xPadding >> 1;
+  if (leftPadding < 0) {
+    leftPadding = leftPadding + (uint)((xPadding & 1) != 0);
+  }
+  mouseInputRect.left = leftPadding + _DesktopRect.left;
+  xPadding = (int)(short)(((short)screenHeight - (short)menuBarHeight) - (short)titleBarHeight) -
+             384;
+  titleBarHeight = (int)xPadding >> 1;
+  if (titleBarHeight < 0) {
+    titleBarHeight = titleBarHeight + (uint)((xPadding & 1) != 0);
+  }
+  mouseInputRect.top = titleBarHeight + _DesktopRect.top;
+                    // this is incorrect, but it doesn’t break anything
+  mouseInputRect.right = mouseInputRect.right + 511;
+  mouseInputRect.bottom = mouseInputRect.top + 383;
+  SetDrawAreaXY((undefined2)mouseInputRect.left,(undefined2)mouseInputRect.top);
+  return;
+}
+
+
+
 void InitEntities(void)
 
 {
@@ -767,6 +868,16 @@ bool Is256Color(void)
 
 {
   return _ColorMode == 256;
+}
+
+
+
+void __cdecl Game::SetDrawAreaXY(undefined2 param_1,undefined2 param_2)
+
+{
+  drawAreaX = param_1;
+  drawAreaY = param_2;
+  return;
 }
 
 
