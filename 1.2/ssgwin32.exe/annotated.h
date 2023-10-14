@@ -265,6 +265,28 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
+typedef struct astruct_1 astruct_1, *Pastruct_1;
+
+struct astruct_1 {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    short field16_0x10;
+};
+
 typedef struct astruct astruct, *Pastruct;
 
 typedef enum PuzzleCategory {
@@ -759,6 +781,15 @@ struct GameState {
     struct PuzzleState puzzles[8]; // see PuzzleCategory type
     struct BuildingState buildings[3];
     undefined field46_0x175e[5999];
+};
+
+typedef struct Nfnt Nfnt, *PNfnt;
+
+struct Nfnt {
+    struct DlistNode node;
+    undefined4 inner;
+    undefined field2_0xc[32];
+    short resourceId;
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -1526,7 +1557,7 @@ uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
 void __stdcall Draw::Integer(short x,short y,short value,short color);
 int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category);
 void Puzzles::Customization::Draw(void);
-void __stdcall ShowAlertMessage(char *param_1,undefined param_2);
+void __stdcall ShowAlertMessage(char *message,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
 void __stdcall EnterBuilding(void);
 void Draw::DirtyInit(void);
@@ -1535,8 +1566,8 @@ void __cdecl Draw::DirtyRect(Rect16 *rectOptional);
 uint Is16Color(void);
 bool Is256Color(void);
 void __stdcall ActorUpdateDynamics(short actorIndex,short obverse);
-undefined4 __stdcall DlistHead(undefined4 *param_1);
-undefined4 __stdcall DlistNext(undefined4 *param_1);
+DlistNode * __stdcall DlistHead(DlistNode **param_1);
+DlistNode * __stdcall DlistNext(DlistNode *param_1);
 void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
 void __stdcall DlistRemove(Dlist *list,DlistNode *node);
 Dlist * DlistNew(void);
@@ -1554,8 +1585,9 @@ short Puzzles::ComputeCurrentCategory(void);
 void __cdecl Puzzles::ComputeCandidatePuzzles(short category);
 void Puzzles::TurnAllOffCategoriesBackOn(void);
 Fourcc __cdecl Resource::ResolveFourcc(char *fourccString);
-void * __stdcall Resource::Load'(ushort id,LPCSTR fourcc);
+void * __stdcall Resource::Load(ushort id,LPCSTR fourcc);
 void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1);
+Nfnt * __stdcall Nfnt::GetFromCache(short resourceId);
 short __stdcall SetCurrentColor(short color);
 void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *text);
 void * __stdcall Memcpy(void *dest,void *src,uint len);

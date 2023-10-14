@@ -265,6 +265,28 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
 
+typedef struct astruct_1 astruct_1, *Pastruct_1;
+
+struct astruct_1 {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    short field16_0x10;
+};
+
 typedef struct astruct astruct, *Pastruct;
 
 typedef enum PuzzleCategory {
@@ -759,6 +781,15 @@ struct GameState {
     struct PuzzleState puzzles[8]; // see PuzzleCategory type
     struct BuildingState buildings[3];
     undefined field46_0x175e[5999];
+};
+
+typedef struct Nfnt Nfnt, *PNfnt;
+
+struct Nfnt {
+    struct DlistNode node;
+    undefined4 inner;
+    undefined field2_0xc[32];
+    short resourceId;
 };
 
 typedef struct PartDefinition PartDefinition, *PPartDefinition;
@@ -1529,8 +1560,8 @@ void FUN_004104c9(void);
 void FUN_00410528(undefined param_1,undefined param_2,undefined param_3,int param_4);
 uint FUN_004105b0(undefined param_1,undefined param_2,undefined param_3,LPCSTR param_4);
 uint FUN_004107fe(undefined param_1,undefined param_2,undefined param_3,int param_4,short param_5,int *param_6);
-HGLOBAL FUN_00410937(undefined param_1,undefined param_2,undefined param_3,int param_4,ushort param_5);
-LPVOID FUN_00410a01(undefined param_1,undefined param_2,undefined param_3,HGLOBAL param_4);
+HGLOBAL __cdecl FUN_00410937(int param_1,ushort param_2);
+LPVOID __cdecl FUN_00410a01(HGLOBAL param_1);
 BOOL FUN_00410a17(undefined param_1,undefined param_2,undefined param_3,HGLOBAL param_4);
 undefined4 FUN_00410a30(undefined param_1,undefined param_2,undefined param_3,HGLOBAL param_4);
 int FUN_00410a44(undefined param_1,undefined param_2,undefined param_3,int param_4,ushort param_5);
@@ -1696,28 +1727,28 @@ void FUN_004168c2(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_00416932(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0041695b(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004169b7(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_004169ec(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,int param_6);
+void FUN_004169ec(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,DlistNode *param_6);
 void FUN_00416b73(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);
 void FUN_00416b90(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);
 void FUN_00416bad(void);
 void FUN_00416c01(void);
 uint FUN_00416c3e(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
-int FUN_00416c51(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,short param_6,short param_7,short param_8,uint param_9);
-void FUN_00416d19(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
+int __cdecl PickapuzzleHitTest(short param_1,short param_2,short param_3,short param_4,short param_5,ClickHandler *onClick);
+void __cdecl FUN_00416d19(DlistNode *param_1);
 void FUN_00416d57(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00416d95(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00416dd3(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00416e11(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00416e35(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00416e51(undefined param_1,undefined param_2,undefined param_3,int param_4);
-int FUN_00416e6d(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7,undefined2 param_8,undefined4 param_9);
-int FUN_00416ea3(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7,undefined2 param_8,undefined4 param_9);
-int FUN_00416ed9(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 param_5,undefined4 param_6);
-int FUN_00416f13(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 param_5,undefined4 param_6);
+int __cdecl PickapuzzleHitTest'(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,undefined2 param_5,ClickHandler *onClick);
+int FUN_00416ea3(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7,undefined2 param_8,ClickHandler *param_9);
+int FUN_00416ed9(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 param_5,ClickHandler *param_6);
+int FUN_00416f13(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 param_5,ClickHandler *param_6);
 void FUN_00416f4d(void);
 void FUN_00416f98(void);
 void FUN_00416ffd(void);
-void FUN_0041704f(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void FUN_0041704f(undefined param_1,undefined param_2,undefined param_3,ClickHandler *param_4);
 void FUN_0041706f(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00417096(void);
 void FUN_00417112(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined2 param_5);
@@ -1730,7 +1761,7 @@ void FUN_00417224(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_00417255(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004172bf(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004172cc(undefined param_1,undefined param_2,undefined param_3,int param_4,short param_5);
-void FUN_00417328(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,short param_6);
+void FUN_00417328(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,ClickHandler *param_5,short param_6);
 undefined4 FUN_00417375(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,short param_5,undefined2 param_6,undefined4 param_7);
 void FUN_004173aa(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_004174d3(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
@@ -1992,7 +2023,7 @@ int FUN_00431dde(undefined param_1,undefined param_2,undefined param_3,short par
 void FUN_00431df5(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_00431e11(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);
 void FUN_00431ef2(void);
-void FUN_00431f6c(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_00431f6c(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00432128(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_004321b3(void);
 void FUN_004323c3(void);
@@ -2096,7 +2127,7 @@ undefined4 FUN_0043b0b8(undefined4 param_1,undefined4 param_2,undefined4 param_3
 undefined4 FUN_0043b115(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined2 param_4);
 void FUN_0043b1cc(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043b21c(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined4 param_6);
-void FUN_0043b24e(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined4 *param_5);
+void FUN_0043b24e(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,DlistNode **param_5);
 void FUN_0043b291(void);
 int FUN_0043b2c2(byte param_1,undefined param_2,byte param_3,ushort param_4,undefined2 param_5);
 void FUN_0043b318(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,short param_6,short param_7);
@@ -2155,7 +2186,7 @@ int FUN_0043d893(undefined param_1,undefined param_2,undefined param_3,short par
 int FUN_0043d90c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5,undefined2 *param_6);
 uint FUN_0043d94c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 int FUN_0043d978(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_0043d9c0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
+void FUN_0043d9c0(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_0043d9e3(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4);
 void __stdcall ezFUN_0043da4e(ushort *param_1);
@@ -2194,13 +2225,13 @@ undefined4 FUN_004403be(undefined param_1,undefined param_2,undefined param_3,ch
 void FUN_0044040c(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void * __cdecl Resource::Load(short id,LPCSTR fourcc);
 void FUN_00440615(uint param_1,undefined4 param_2,uint param_3,ushort param_4,LPCSTR param_5);
-void FUN_0044062c(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void FUN_0044062c(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void __cdecl FUN_00440695(short param_1,undefined *param_2);
 void FUN_0044073c(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
-undefined4 FUN_004407d3(undefined param_1,undefined param_2,undefined param_3,int param_4);
+undefined4 FUN_004407d3(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 undefined4 FUN_0044080d(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,LPCSTR param_5);
 void FUN_0044086e(void);
-undefined4 FUN_004408cd(undefined param_1,undefined param_2,undefined param_3,int param_4);
+undefined4 FUN_004408cd(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 undefined4 FUN_0044094e(undefined4 param_1,undefined4 param_2,uint param_3,short param_4,undefined *param_5);
 void FUN_00440994(void);
 void Puzzles::SetParametersForBalance'(void);
@@ -2392,13 +2423,12 @@ void FUN_0044ca7e(void);
 void FUN_0044ca89(void);
 void FUN_0044ca9b(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_0044cabc(undefined param_1,undefined param_2,undefined param_3,int param_4);
-undefined4 __stdcall FindNodeIn46A938h?(undefined4 param_1);
 void __stdcall Nfnt::Unload(undefined2 param_1);
 uint FUN_0044cb57(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 uint FUN_0044cb74(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 short __stdcall GetFontBaselineY?(undefined2 param_1);
-void __stdcall Nfnt::Load(ushort param_1);
-int __stdcall FUN_0044cc56(int param_1);
+Nfnt * __stdcall Nfnt::LoadWithCache(ushort resourceId);
+void * __stdcall FUN_0044cc56(astruct_1 *param_1);
 int __stdcall FUN_0044cc6c(int param_1);
 int FUN_0044cc99(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void __stdcall FUN_0044cca4(int param_1,int *param_2);

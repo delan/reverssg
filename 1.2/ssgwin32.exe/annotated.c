@@ -92,11 +92,11 @@ void StartLevel(void)
     _BuildingTextResourceId = 0x177a;
   }
   FUN_00446186(_BuildingTextResourceId);
-  _Area = (Area *)Resource::Load_(_LevelAreaResourceIds[_GameState->level],&_AREA);
+  _Area = (Area *)Resource::Load(_LevelAreaResourceIds[_GameState->level],&_AREA);
   _RoomCount = _Area->roomCount;
   room = _Area->rooms;
   InitEntities();
-  _RoomInitialPartsCounts = (ushort *)Resource::Load_(_GameState->level + 0x582,_pINTS);
+  _RoomInitialPartsCounts = (ushort *)Resource::Load(_GameState->level + 0x582,_pINTS);
   GenInitialPartIds(*_RoomInitialPartsCounts);
   _InitialBananaPartsCount = *_RoomInitialPartsCounts - _Level_partResource->definitionCount;
   _ActualBananaPartsCount = _InitialBananaPartsCount;
@@ -282,7 +282,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
           if ((short)collision != 0) {
             bad = true;
           }
-          partNode = (EntityNode *)DlistNext(partNode);
+          partNode = (EntityNode *)DlistNext(&partNode->node);
         }
                     // 2. avoid intersecting structural entities of type > 3 (e.g. gaps, doors)
         entity = room->structuralEntityGroups[0];
@@ -572,13 +572,13 @@ void Puzzles::Customization::Draw(void)
 
 
 
-void __stdcall ShowAlertMessage(char *param_1,undefined param_2)
+void __stdcall ShowAlertMessage(char *message,undefined param_2)
 
 {
   char *lpCaption;
   char text [500];
   
-  Sprintf_(text,param_1,&param_2);
+  Sprintf_(text,message,&param_2);
                     // 20102 = "Alert"
   lpCaption = GetWinapiStringAlloc(20102);
   MessageBoxA((HWND)0x0,text,lpCaption,0x30);
@@ -790,21 +790,21 @@ void __stdcall ActorUpdateDynamics(short actorIndex,short obverse)
 
 
 
-undefined4 __stdcall DlistHead(undefined4 *param_1)
+DlistNode * __stdcall DlistHead(DlistNode **param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    return 0;
+  if (param_1 == (DlistNode **)0x0) {
+    return (DlistNode *)0x0;
   }
   return *param_1;
 }
 
 
 
-undefined4 __stdcall DlistNext(undefined4 *param_1)
+DlistNode * __stdcall DlistNext(DlistNode *param_1)
 
 {
-  return *param_1;
+  return param_1->next;
 }
 
 
@@ -1066,11 +1066,11 @@ void PickapuzzleMenu::Draw(void)
 {
   char currentPuzzleString [8];
   
-  Nfnt::Load(15000);
-  FUN_00430de8(0x17,0x41,0x4f,0xf);
+  Nfnt::LoadWithCache(15000);
+  FUN_00430de8(23,65,79,15);
   Sprintf_(currentPuzzleString,&_d,(int)Puzzles::currentPuzzle);
-  ::Draw::String(15000,currentPuzzleString,0x1a,0x4d,0);
-  FUN_00430abc(0x17,0x41,0x4f,0xf);
+  ::Draw::String(15000,currentPuzzleString,26,77,0);
+  FUN_00430abc(23,65,79,15);
   Nfnt::Unload(15000);
   return;
 }
@@ -1284,7 +1284,7 @@ Fourcc __cdecl Resource::ResolveFourcc(char *fourccString)
 
 
 
-void * __stdcall Resource::Load_(ushort id,LPCSTR fourcc)
+void * __stdcall Resource::Load(ushort id,LPCSTR fourcc)
 
 {
   void *result;
@@ -1300,6 +1300,23 @@ void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1)
 {
   *(undefined4 *)(DAT_0046a35c + DAT_0046336c * 4) = param_1;
   return;
+}
+
+
+
+Nfnt * __stdcall Nfnt::GetFromCache(short resourceId)
+
+{
+  Nfnt *current;
+  
+  if (resourceId == -1) {
+    resourceId = currentFont;
+  }
+  for (current = (Nfnt *)DlistHead(cache);
+      (current != (Nfnt *)0x0 && (resourceId != current->resourceId));
+      current = (Nfnt *)DlistNext(&current->node)) {
+  }
+  return current;
 }
 
 
@@ -1324,8 +1341,8 @@ void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *text)
   undefined2 color;
   
   color = _CurrentColorClamped;
-  baselineY_ = GetFontBaselineY_(_CurrentFont);
-  String(_CurrentFont,text,x,baselineY_ + y,color);
+  baselineY_ = GetFontBaselineY_(Nfnt::currentFont);
+  String(Nfnt::currentFont,text,x,baselineY_ + y,color);
   return;
 }
 
