@@ -11,7 +11,7 @@ Knowledge gained here forms the basis of [ssgesus](https://bitbucket.org/delan/s
 how the sausage is made
 -----------------------
 
-* Ghidra 10.3
+* Ghidra 10.4
 * ssgwin32.exe 1.2 <https://archive.org/details/SSGCD>
 * analyse as borlandcpp (somewhat better than borlanddelphi)
 * export Ghidra Zip File, default options
