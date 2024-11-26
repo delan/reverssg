@@ -3,7 +3,7 @@ reverssg
 
 The goal of this project is to create a decompilation of *Super Solvers: Gizmos & Gadgets!* that can ideally be recompiled.
 
-Knowledge gained here forms the basis of [ssgesus](https://bitbucket.org/delan/ssgesus), my speedrun route planner for the game.
+Knowledge gained here forms the basis of [ssgesus](https://bucket.daz.cat/ssgesus/), my [speedrun](https://www.speedrun.com/super_solvers_gizmos_and_gadgets) route planner for the game.
 
 * Disassembled: <https://delan.github.io/reverssg/1.2/ssgwin32.exe/ssgwin32.exe.html#00414750>
 * Decompiled: <https://github.com/delan/reverssg/blob/default/1.2/ssgwin32.exe/annotated.c>
