@@ -210,7 +210,7 @@ void StartLevel(void)
       count = room->structuralEntityCounts[i];
       if (count != 0) {
         room->structuralEntityGroups[i] = (OtherEntity *)current;
-        current = (void *)((int)(EntityBase_ *)current + count * 0x20);
+        current = (void *)((int)&((LadderEntity *)current)->base + count * 0x20);
       }
       i = i + -1;
     } while (-1 < i);
@@ -228,7 +228,7 @@ void StartLevel(void)
       count = room->cEntityCounts_[i];
       if (count != 0) {
         room->cEntityGroups_[i] = current;
-        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
+        current = (void *)((int)&(((LadderEntity *)current)->base).rect.inner + count * 10);
       }
       i = i + 1;
     } while (i < 6);
@@ -237,7 +237,7 @@ void StartLevel(void)
       count = room->dEntityCounts_[i];
       if (count != 0) {
         room->dEntityGroups_[i] = current;
-        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
+        current = (void *)((int)&(((LadderEntity *)current)->base).rect.inner + count * 10);
       }
       i = i + 1;
     } while (i < 6);
@@ -246,7 +246,7 @@ void StartLevel(void)
       count = room->eEntityCounts_[i];
       if (count != 0) {
         room->eEntityGroups_[i] = current;
-        current = (void *)((int)&(((EntityBase_ *)current)->rect).inner + count * 10);
+        current = (void *)((int)&(((LadderEntity *)current)->base).rect.inner + count * 10);
       }
       i = i + 1;
     } while (i < 6);
@@ -379,7 +379,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         partCount = room->partEntityCount;
         partNode = (EntityNode *)DlistHead(room->partEntities);
         for (j = 0; (!bad && (j < partCount)); j = j + 1) {
-          collision = CheckCollision((Rect16 *)&rect,(Rect16 *)&partNode->inner);
+          collision = CheckCollision(&rect.inner,(Rect16 *)&partNode->inner);
           if ((short)collision != 0) {
             bad = true;
           }
@@ -390,8 +390,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         structuralCount = room->structuralEntityCounts[0];
         for (j = 0; (!bad && (j < structuralCount)); j = j + 1) {
           if ((3 < (entity->base).type) &&
-             (collision = CheckCollision((Rect16 *)&rect,(Rect16 *)entity), (short)collision != 0))
-          {
+             (collision = CheckCollision(&rect.inner,(Rect16 *)entity), (short)collision != 0)) {
             bad = true;
           }
           entity = entity + 1;
@@ -400,7 +399,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         ladderCount = room->ladderEntityCounts[0];
         ladder = room->ladderEntityGroups[0];
         for (j = 0; (!bad && (j < ladderCount)); j = j + 1) {
-          collision = CheckCollision((Rect16 *)&rect,(Rect16 *)ladder);
+          collision = CheckCollision(&rect.inner,(Rect16 *)ladder);
           if ((short)collision != 0) {
             bad = true;
           }
@@ -901,13 +900,13 @@ void __stdcall ActorUpdateDynamics(short actorIndex,short obverse)
 
 
 
-DlistNode * __stdcall DlistHead(DlistNode **param_1)
+DlistNode * __stdcall DlistHead(undefined4 *param_1)
 
 {
-  if (param_1 == (DlistNode **)0x0) {
+  if (param_1 == (undefined4 *)0x0) {
     return (DlistNode *)0x0;
   }
-  return *param_1;
+  return (DlistNode *)*param_1;
 }
 
 
@@ -1523,12 +1522,12 @@ char * __stdcall Strcpy(char *dest,char *src)
   pDest = dest;
   for (uVar1 = ~len >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
     *(undefined4 *)pDest = *(undefined4 *)src;
-    src = (char *)((int)src + 4);
-    pDest = (undefined4 *)((int)pDest + 4);
+    src = src + 4;
+    pDest = (char *)((int)pDest + 4);
   }
   for (len = ~len & 3; len != 0; len = len - 1) {
     *(char *)pDest = *src;
-    src = (char *)((int)src + 1);
+    src = src + 1;
     pDest = (void *)((int)pDest + 1);
   }
   return dest;

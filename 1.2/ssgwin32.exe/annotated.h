@@ -1,10 +1,46 @@
-typedef unsigned char   undefined;
+#define 15 0xf
+#define 50 0x32
+#define 64 0x40
+#define 32 0x20
+#define 88 0x58
+#define 52 0x34
+#define 24 0x18
+#define 16 0x10
+#define 13 0xd
+#define 0x1770 0x1770
+#define 20102 0x4e86
+#define 20136 0x4ea8
+#define 20 0x14
+#define 43 0x2b
+#define 256 0x100
+#define 42 0x2a
+#define 40 0x28
+#define 33 0x21
+#define 27 0x1b
+#define 23 0x17
+#define 4294967292 0xfffffffc
+#define 511 0x1ff
+#define 383 0x17f
+#define 65 0x41
+#define 79 0x4f
+#define 26 0x1a
+#define 77 0x4d
+#define SM_CYCAPTION 0x4
+#define SM_CYMENU 0xf
+#define SM_CYSCREEN 0x1
+#define SM_CXSCREEN 0x0
+#define 4294966784 0xfffffe00
+#define 4294966912 0xfffffe80
+#define WM_LBUTTONDOWN 0x201
+#define WM_MOUSEMOVE 0x200
 
-typedef pointer32 ImageBaseOffset32;
+typedef unsigned char   undefined;
 
 typedef unsigned char    bool;
 typedef unsigned char    byte;
 typedef unsigned int    dword;
+typedef pointer32 ImageBaseOffset32;
+
 typedef unsigned char    uchar;
 typedef unsigned int    uint;
 typedef unsigned long    ulong;
@@ -80,11 +116,11 @@ typedef ulong ULONG_PTR;
 
 typedef union _union_518 _union_518, *P_union_518;
 
-typedef void * HANDLE;
+typedef void *HANDLE;
 
 typedef struct _struct_519 _struct_519, *P_struct_519;
 
-typedef void * PVOID;
+typedef void *PVOID;
 
 typedef ulong DWORD;
 
@@ -107,7 +143,7 @@ struct _OVERLAPPED {
 
 typedef struct _SECURITY_ATTRIBUTES _SECURITY_ATTRIBUTES, *P_SECURITY_ATTRIBUTES;
 
-typedef void * LPVOID;
+typedef void *LPVOID;
 
 typedef int BOOL;
 
@@ -119,7 +155,7 @@ struct _SECURITY_ATTRIBUTES {
 
 typedef struct _TIME_ZONE_INFORMATION _TIME_ZONE_INFORMATION, *P_TIME_ZONE_INFORMATION;
 
-typedef struct _TIME_ZONE_INFORMATION * LPTIME_ZONE_INFORMATION;
+typedef struct _TIME_ZONE_INFORMATION *LPTIME_ZONE_INFORMATION;
 
 typedef long LONG;
 
@@ -152,19 +188,19 @@ struct _TIME_ZONE_INFORMATION {
     LONG DaylightBias;
 };
 
-typedef struct _OVERLAPPED * LPOVERLAPPED;
+typedef struct _OVERLAPPED *LPOVERLAPPED;
 
-typedef struct _SECURITY_ATTRIBUTES * LPSECURITY_ATTRIBUTES;
+typedef struct _SECURITY_ATTRIBUTES *LPSECURITY_ATTRIBUTES;
 
 typedef struct _STARTUPINFOA _STARTUPINFOA, *P_STARTUPINFOA;
 
 typedef char CHAR;
 
-typedef CHAR * LPSTR;
+typedef CHAR *LPSTR;
 
 typedef uchar BYTE;
 
-typedef BYTE * LPBYTE;
+typedef BYTE *LPBYTE;
 
 struct _STARTUPINFOA {
     DWORD cb;
@@ -187,9 +223,9 @@ struct _STARTUPINFOA {
     HANDLE hStdError;
 };
 
-typedef struct _STARTUPINFOA * LPSTARTUPINFOA;
+typedef struct _STARTUPINFOA *LPSTARTUPINFOA;
 
-typedef struct _SYSTEMTIME * LPSYSTEMTIME;
+typedef struct _SYSTEMTIME *LPSYSTEMTIME;
 
 typedef struct _CONTEXT _CONTEXT, *P_CONTEXT;
 
@@ -242,7 +278,7 @@ typedef struct _EXCEPTION_RECORD _EXCEPTION_RECORD, *P_EXCEPTION_RECORD;
 struct _EXCEPTION_RECORD {
     DWORD ExceptionCode;
     DWORD ExceptionFlags;
-    struct _EXCEPTION_RECORD * ExceptionRecord;
+    struct _EXCEPTION_RECORD *ExceptionRecord;
     PVOID ExceptionAddress;
     DWORD NumberParameters;
     ULONG_PTR ExceptionInformation[15];
@@ -252,18 +288,18 @@ typedef struct _EXCEPTION_POINTERS _EXCEPTION_POINTERS, *P_EXCEPTION_POINTERS;
 
 typedef struct _EXCEPTION_RECORD EXCEPTION_RECORD;
 
-typedef EXCEPTION_RECORD * PEXCEPTION_RECORD;
+typedef EXCEPTION_RECORD *PEXCEPTION_RECORD;
 
 typedef struct _CONTEXT CONTEXT;
 
-typedef CONTEXT * PCONTEXT;
+typedef CONTEXT *PCONTEXT;
 
 struct _EXCEPTION_POINTERS {
     PEXCEPTION_RECORD ExceptionRecord;
     PCONTEXT ContextRecord;
 };
 
-typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
+typedef BOOL (*PHANDLER_ROUTINE)(DWORD);
 
 typedef struct astruct astruct, *Pastruct;
 
@@ -359,13 +395,13 @@ typedef struct Dlist Dlist, *PDlist;
 typedef struct DlistNode DlistNode, *PDlistNode;
 
 struct Dlist {
-    struct DlistNode * head;
-    struct DlistNode * tail;
+    struct DlistNode *head;
+    struct DlistNode *tail;
 };
 
 struct DlistNode {
-    struct DlistNode * next;
-    struct DlistNode * prev;
+    struct DlistNode *next;
+    struct DlistNode *prev;
 };
 
 typedef struct Actor Actor, *PActor;
@@ -453,9 +489,9 @@ struct Actor {
     undefined field79_0x4f;
     undefined field80_0x50;
     undefined field81_0x51;
-    undefined * currentDynamics;
-    undefined * obverseDynamics;
-    undefined * reverseDynamics;
+    undefined *currentDynamics;
+    undefined *obverseDynamics;
+    undefined *reverseDynamics;
     undefined field85_0x5e;
     undefined field86_0x5f;
     undefined field87_0x60;
@@ -562,10 +598,10 @@ struct Room {
     undefined4 dEntityGroups?[6];
     short eEntityCounts?[6];
     undefined4 eEntityGroups?[6];
-    struct OtherEntity * structuralEntityGroups[4];
-    struct LadderEntity * ladderEntityGroups[4];
+    struct OtherEntity *structuralEntityGroups[4];
+    struct LadderEntity *ladderEntityGroups[4];
     short partEntityCount;
-    struct Dlist * partEntities;
+    struct Dlist *partEntities;
     undefined2 field13_0xa4[6];
     undefined2 field14_0xb0[6];
     undefined2 field15_0xbc[50];
@@ -728,7 +764,7 @@ typedef struct HeapNode HeapNode, *PHeapNode;
 
 struct HeapNode {
     struct DlistNode node;
-    void * heap;
+    void *heap;
 };
 
 typedef struct GameState GameState, *PGameState;
@@ -901,7 +937,7 @@ typedef LONG_PTR LRESULT;
 
 typedef struct HWND__ HWND__, *PHWND__;
 
-typedef struct HWND__ * HWND;
+typedef struct HWND__ *HWND;
 
 typedef uint UINT_PTR;
 
@@ -909,23 +945,23 @@ typedef UINT_PTR WPARAM;
 
 typedef LONG_PTR LPARAM;
 
-typedef LRESULT (* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
+typedef LRESULT (*WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 typedef struct HINSTANCE__ HINSTANCE__, *PHINSTANCE__;
 
-typedef struct HINSTANCE__ * HINSTANCE;
+typedef struct HINSTANCE__ *HINSTANCE;
 
 typedef struct HICON__ HICON__, *PHICON__;
 
-typedef struct HICON__ * HICON;
+typedef struct HICON__ *HICON;
 
 typedef HICON HCURSOR;
 
 typedef struct HBRUSH__ HBRUSH__, *PHBRUSH__;
 
-typedef struct HBRUSH__ * HBRUSH;
+typedef struct HBRUSH__ *HBRUSH;
 
-typedef CHAR * LPCSTR;
+typedef CHAR *LPCSTR;
 
 struct HBRUSH__ {
     int unused;
@@ -978,7 +1014,7 @@ struct tagMSG {
     POINT pt;
 };
 
-typedef struct tagMSG * LPMSG;
+typedef struct tagMSG *LPMSG;
 
 typedef struct tagWNDCLASSA WNDCLASSA;
 
@@ -1003,11 +1039,11 @@ struct tagWNDCLASSEXA {
 
 typedef struct tagPAINTSTRUCT tagPAINTSTRUCT, *PtagPAINTSTRUCT;
 
-typedef struct tagPAINTSTRUCT * LPPAINTSTRUCT;
+typedef struct tagPAINTSTRUCT *LPPAINTSTRUCT;
 
 typedef struct HDC__ HDC__, *PHDC__;
 
-typedef struct HDC__ * HDC;
+typedef struct HDC__ *HDC;
 
 typedef struct tagRECT tagRECT, *PtagRECT;
 
@@ -1035,11 +1071,11 @@ struct tagPAINTSTRUCT {
 
 typedef struct tagPAINTSTRUCT PAINTSTRUCT;
 
-typedef BOOL (* WNDENUMPROC)(HWND, LPARAM);
+typedef BOOL (*WNDENUMPROC)(HWND, LPARAM);
 
 typedef int INT_PTR;
 
-typedef INT_PTR (* DLGPROC)(HWND, UINT, WPARAM, LPARAM);
+typedef INT_PTR (*DLGPROC)(HWND, UINT, WPARAM, LPARAM);
 
 typedef struct tagPALETTEENTRY tagPALETTEENTRY, *PtagPALETTEENTRY;
 
@@ -1100,11 +1136,11 @@ struct tagLOGPALETTE {
     PALETTEENTRY palPalEntry[1];
 };
 
-typedef struct tagPALETTEENTRY * LPPALETTEENTRY;
+typedef struct tagPALETTEENTRY *LPPALETTEENTRY;
 
-typedef LONG * PLONG;
+typedef LONG *PLONG;
 
-typedef CHAR * LPCH;
+typedef CHAR *LPCH;
 
 typedef struct _OSVERSIONINFOA _OSVERSIONINFOA, *P_OSVERSIONINFOA;
 
@@ -1117,7 +1153,7 @@ struct _OSVERSIONINFOA {
     CHAR szCSDVersion[128];
 };
 
-typedef struct _OSVERSIONINFOA * LPOSVERSIONINFOA;
+typedef struct _OSVERSIONINFOA *LPOSVERSIONINFOA;
 
 typedef short SHORT;
 
@@ -1150,7 +1186,7 @@ typedef ULONG_PTR DWORD_PTR;
 
 typedef ULONG_PTR SIZE_T;
 
-typedef struct tagPOINT * LPPOINT;
+typedef struct tagPOINT *LPPOINT;
 
 typedef struct tagPOINTS tagPOINTS, *PtagPOINTS;
 
@@ -1169,17 +1205,17 @@ struct HPALETTE__ {
 
 typedef HINSTANCE HMODULE;
 
-typedef int (* FARPROC)(void);
+typedef int (*FARPROC)(void);
 
 typedef WORD ATOM;
 
-typedef struct tagRECT * LPRECT;
+typedef struct tagRECT *LPRECT;
 
-typedef void * HGDIOBJ;
+typedef void *HGDIOBJ;
 
 typedef struct HRSRC__ HRSRC__, *PHRSRC__;
 
-typedef struct HRSRC__ * HRSRC;
+typedef struct HRSRC__ *HRSRC;
 
 struct HRSRC__ {
     int unused;
@@ -1187,15 +1223,15 @@ struct HRSRC__ {
 
 typedef DWORD COLORREF;
 
-typedef DWORD * LPDWORD;
+typedef DWORD *LPDWORD;
 
-typedef struct HPALETTE__ * HPALETTE;
+typedef struct HPALETTE__ *HPALETTE;
 
-typedef void * LPCVOID;
+typedef void *LPCVOID;
 
 typedef struct HMENU__ HMENU__, *PHMENU__;
 
-typedef struct HMENU__ * HMENU;
+typedef struct HMENU__ *HMENU;
 
 struct HMENU__ {
     int unused;
@@ -1207,7 +1243,7 @@ typedef int HFILE;
 
 typedef HANDLE HGLOBAL;
 
-typedef BYTE * PBYTE;
+typedef BYTE *PBYTE;
 
 typedef struct IMAGE_OPTIONAL_HEADER32 IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;
 
@@ -1495,7 +1531,7 @@ struct timecaps_tag {
 
 typedef struct wavehdr_tag wavehdr_tag, *Pwavehdr_tag;
 
-typedef struct wavehdr_tag * LPWAVEHDR;
+typedef struct wavehdr_tag *LPWAVEHDR;
 
 struct wavehdr_tag {
     LPSTR lpData;
@@ -1504,19 +1540,19 @@ struct wavehdr_tag {
     DWORD_PTR dwUser;
     DWORD dwFlags;
     DWORD dwLoops;
-    struct wavehdr_tag * lpNext;
+    struct wavehdr_tag *lpNext;
     DWORD_PTR reserved;
 };
 
 typedef struct tWAVEFORMATEX WAVEFORMATEX;
 
-typedef WAVEFORMATEX * LPCWAVEFORMATEX;
+typedef WAVEFORMATEX *LPCWAVEFORMATEX;
 
 typedef DWORD MCIERROR;
 
-typedef struct HWAVEOUT__ * HWAVEOUT;
+typedef struct HWAVEOUT__ *HWAVEOUT;
 
-typedef HWAVEOUT * LPHWAVEOUT;
+typedef HWAVEOUT *LPHWAVEOUT;
 
 typedef struct tagMIDIOUTCAPSA tagMIDIOUTCAPSA, *PtagMIDIOUTCAPSA;
 
@@ -1536,9 +1572,9 @@ typedef UINT MMRESULT;
 
 typedef UINT MCIDEVICEID;
 
-typedef struct timecaps_tag * LPTIMECAPS;
+typedef struct timecaps_tag *LPTIMECAPS;
 
-typedef struct tagMIDIOUTCAPSA * LPMIDIOUTCAPSA;
+typedef struct tagMIDIOUTCAPSA *LPMIDIOUTCAPSA;
 
 
 
@@ -1570,7 +1606,7 @@ uint Is16Color(void);
 bool Is256Color(void);
 void __cdecl Game::SetDrawAreaXY(undefined2 param_1,undefined2 param_2);
 void __stdcall ActorUpdateDynamics(short actorIndex,short obverse);
-DlistNode * __stdcall DlistHead(DlistNode **param_1);
+DlistNode * __stdcall DlistHead(undefined4 *param_1);
 DlistNode * __stdcall DlistNext(DlistNode *param_1);
 void __stdcall DlistInsert(Dlist *list,DlistNode *node,short beforeIndex);
 void __stdcall DlistRemove(Dlist *list,DlistNode *node);
