@@ -1940,8 +1940,8 @@ void FUN_004128c8(void)
     pDVar2 = DlistHead(DAT_0046572c);
     while (pDVar2 != (DlistNode *)0x0) {
       pDVar3 = DlistNext(pDVar2);
-      FUN_00435302(pDVar2[1].next);
-      FUN_0043c2ba(pDVar2);
+      PoolFreeIfNotNull(pDVar2[1].next);
+      PoolFree(pDVar2);
       pDVar2 = pDVar3;
     }
     pDVar4 = DAT_00465728;
@@ -1953,13 +1953,13 @@ void FUN_004128c8(void)
       pDVar2 = DlistHead(DAT_00465728);
       uVar1 = extraout_EDX_00;
     }
-    FUN_00435302(DAT_0046572c);
-    FUN_00435302(DAT_00465724);
-    FUN_00435302(DAT_00465720);
-    FUN_00435302(DAT_00465728);
-    FUN_00435302(DAT_0046490c);
-    FUN_00435302(DAT_00465730);
-    FUN_00435302(DAT_00465734);
+    PoolFreeIfNotNull(DAT_0046572c);
+    PoolFreeIfNotNull(DAT_00465724);
+    PoolFreeIfNotNull(DAT_00465720);
+    PoolFreeIfNotNull(DAT_00465728);
+    PoolFreeIfNotNull(DAT_0046490c);
+    PoolFreeIfNotNull(DAT_00465730);
+    PoolFreeIfNotNull(DAT_00465734);
     _DAT_00460258 = 0;
   }
   return;
@@ -2163,7 +2163,7 @@ undefined4 FUN_00412d0c(uint param_1,undefined4 param_2,uint param_3,uint param_
   undefined extraout_DL_00;
   undefined extraout_DL_01;
   undefined uVar3;
-  undefined4 uVar4;
+  void *pvVar4;
   
   if (param_4 != 0) {
     if (*(short *)(param_4 + 0x1a) != 0) {
@@ -2173,20 +2173,20 @@ undefined4 FUN_00412d0c(uint param_1,undefined4 param_2,uint param_3,uint param_
     uVar2 = extraout_CL;
     uVar3 = extraout_DL;
     if (*(short *)(param_4 + 0x56) != 0) {
-      uVar4 = *(undefined4 *)(param_4 + 0x6a);
-      uVar1 = FUN_0043c2ba(uVar4);
-      uVar2 = (undefined)uVar4;
+      pvVar4 = *(void **)(param_4 + 0x6a);
+      uVar1 = PoolFree(pvVar4);
+      uVar2 = SUB41(pvVar4,0);
       uVar3 = extraout_DL_00;
     }
     if (_DAT_00462c38 == 0) {
       DlistRemove(DAT_0046490c,*(DlistNode **)(param_4 + 0x26));
-      uVar4 = *(undefined4 *)(param_4 + 0x26);
-      uVar1 = FUN_0043c2ba(uVar4);
-      uVar2 = (undefined)uVar4;
+      pvVar4 = *(void **)(param_4 + 0x26);
+      uVar1 = PoolFree(pvVar4);
+      uVar2 = SUB41(pvVar4,0);
       uVar3 = extraout_DL_01;
     }
     FUN_0041393c(uVar1,uVar3,uVar2,param_4);
-    FUN_0043c2ba(param_4);
+    PoolFree((void *)param_4);
   }
   return 0;
 }
@@ -2945,11 +2945,11 @@ void FUN_00413868(void)
     uVar1 = extraout_DL_00;
     pDVar3 = pDVar4;
   }
-  FUN_00435302(DAT_00465728);
+  PoolFreeIfNotNull(DAT_00465728);
   node = DlistHead(DAT_0046572c);
   DlistRemove(DAT_0046572c,node);
   DAT_00465728 = (Dlist *)node[1].next;
-  FUN_0043c2ba(node);
+  PoolFree(node);
   pDVar3 = DAT_00465728;
   pDVar2 = (Dlist *)DlistHead(DAT_00465728);
   uVar1 = extraout_DL_01;
@@ -3001,8 +3001,8 @@ void FUN_0041391c(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_0041393c(undefined param_1,undefined param_2,undefined param_3,int param_4)
 
 {
-  if (*(int *)(param_4 + 0x50) != 0) {
-    FUN_0043c2ba(*(int *)(param_4 + 0x50));
+  if (*(void **)(param_4 + 0x50) != (void *)0x0) {
+    PoolFree(*(void **)(param_4 + 0x50));
     *(undefined4 *)(param_4 + 0x50) = 0;
   }
   return;
@@ -3676,7 +3676,7 @@ void FUN_004143a5(void)
   
   for (sVar2 = 1; sVar2 < _RoomCount; sVar2 = sVar2 + 1) {
     in_ECX = _Rooms[sVar2]->partEntities;
-    in_AL = FUN_00435302(in_ECX);
+    in_AL = PoolFreeIfNotNull(in_ECX);
     in_DL = extraout_DL;
   }
   puVar3 = _RoomInitialPartsCounts;
@@ -4522,7 +4522,7 @@ void FUN_00415af1(void)
 {
   FUN_0041179f();
   Draw::DirtyRect(DAT_004605d4);
-  FUN_0043c2ba(DAT_004605d4);
+  PoolFree(DAT_004605d4);
   DAT_004605d4 = (Rect16 *)0x0;
   return;
 }
@@ -5724,9 +5724,9 @@ void FUN_00416c01(void)
 {
   if (_DAT_004605e0 != 0) {
     FUN_00416f98();
-    FUN_00435302(DAT_004605dc);
-    FUN_00435302(DAT_004605d8);
-    FUN_00435302(_HitTestThing);
+    PoolFreeIfNotNull(DAT_004605dc);
+    PoolFreeIfNotNull(DAT_004605d8);
+    PoolFreeIfNotNull(_HitTestThing);
     _DAT_004605e0 = 0;
   }
   return;
@@ -5851,7 +5851,7 @@ void FUN_00416e11(undefined param_1,undefined param_2,undefined param_3,DlistNod
 {
   if (param_4 != (DlistNode *)0x0) {
     DlistRemove(_HitTestThing,param_4);
-    FUN_0043c2ba(param_4);
+    PoolFree(param_4);
   }
   return;
 }
@@ -6002,8 +6002,8 @@ void FUN_00416ffd(void)
   short sVar1;
   
   FUN_00416f98();
-  FUN_00435302(DAT_004605dc);
-  FUN_00435302(DAT_004605d8);
+  PoolFreeIfNotNull(DAT_004605dc);
+  PoolFreeIfNotNull(DAT_004605d8);
   sVar1 = DAT_00466370;
   DAT_00466370 = DAT_00466370 + -1;
   DAT_004605d8 = *(undefined4 *)(&DAT_00466374 + DAT_00466370 * 4);
@@ -6318,7 +6318,7 @@ void FUN_004173aa(undefined param_1,undefined param_2,undefined param_3,undefine
     pDVar2 = DlistNext(pDVar1);
     if ((short)param_4 <= *(short *)&pDVar1[4].prev) {
       DlistRemove(_HitTestThing,pDVar1);
-      FUN_0043c2ba(pDVar1);
+      PoolFree(pDVar1);
     }
   }
   return;
@@ -6771,7 +6771,7 @@ void FUN_00417c57(void)
 
 {
   FUN_00417a84();
-  FUN_00435302(DAT_00466394);
+  PoolFreeIfNotNull(DAT_00466394);
   return;
 }
 
@@ -7715,8 +7715,8 @@ void FUN_00419d84(void)
 
 {
   undefined uVar1;
-  undefined2 *puVar2;
-  uint uVar3;
+  undefined2 *object;
+  uint uVar2;
   uint extraout_ECX;
   uint extraout_ECX_00;
   uint extraout_ECX_01;
@@ -7724,19 +7724,19 @@ void FUN_00419d84(void)
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   undefined4 extraout_EDX_01;
-  undefined uVar4;
+  undefined uVar3;
   
-  puVar2 = (undefined2 *)FUN_00419d3d();
-  FUN_004310d0((uint)puVar2,extraout_EDX,extraout_ECX,0);
-  uVar3 = FUN_00431348();
-  uVar4 = 0x38;
-  uVar1 = FUN_00431024(uVar3,extraout_EDX_00,extraout_ECX_00,19000);
-  *puVar2 = 19000;
-  puVar2[5] = 2;
-  FUN_00419aca(uVar1,extraout_DL,uVar4,puVar2);
-  FUN_0043c2ba(puVar2);
-  uVar3 = FUN_00431348();
-  FUN_004310d0(uVar3,extraout_EDX_01,extraout_ECX_01,1);
+  object = (undefined2 *)FUN_00419d3d();
+  FUN_004310d0((uint)object,extraout_EDX,extraout_ECX,0);
+  uVar2 = FUN_00431348();
+  uVar3 = 0x38;
+  uVar1 = FUN_00431024(uVar2,extraout_EDX_00,extraout_ECX_00,19000);
+  *object = 19000;
+  object[5] = 2;
+  FUN_00419aca(uVar1,extraout_DL,uVar3,object);
+  PoolFree(object);
+  uVar2 = FUN_00431348();
+  FUN_004310d0(uVar2,extraout_EDX_01,extraout_ECX_01,1);
   FUN_0043139c();
   FUN_00430de8(0,0,0x200,0x180);
   FUN_00430abc(0,0,0x200,0x180);
@@ -8571,6 +8571,7 @@ void FUN_0041af2d(void)
   short sVar4;
   undefined uVar5;
   uint uVar6;
+  void *pvVar7;
   
   DAT_00469544 = 0;
   uVar5 = 0x42;
@@ -8597,9 +8598,9 @@ void FUN_0041af2d(void)
     sVar4 = sVar4 + 1;
     uVar3 = extraout_EDX_02;
   } while (sVar4 < 6);
-  uVar3 = DAT_00466a40;
-  uVar1 = FUN_0043c2ba(DAT_00466a40);
-  FUN_0043b9d2(uVar1,extraout_DL_00,(char)uVar3,0,0);
+  pvVar7 = DAT_00466a40;
+  uVar1 = PoolFree(DAT_00466a40);
+  FUN_0043b9d2(uVar1,extraout_DL_00,(char)pvVar7,0,0);
   uVar3 = FUN_00416f98();
   FUN_0041f782(uVar3,extraout_EDX_03,extraout_ECX_00);
   FUN_004102d7();
@@ -12884,7 +12885,7 @@ void FUN_00421dfc(undefined param_1,undefined param_2,undefined param_3,short pa
   short sVar4;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00466a40);
+    PoolFree(DAT_00466a40);
   }
   DAT_00466a44 = 0;
   sVar4 = 0;
@@ -15455,7 +15456,7 @@ void FUN_00426714(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar6;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00467770);
+    PoolFree(DAT_00467770);
   }
   uVar6 = 0x10;
   puVar3 = (undefined2 *)PoolAlloc(0x10);
@@ -17746,7 +17747,7 @@ void FUN_0042ae0e(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar3;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_0046788c);
+    PoolFree(DAT_0046788c);
   }
   uVar3 = 0x10;
   puVar2 = (undefined2 *)PoolAlloc(0x10);
@@ -20254,7 +20255,7 @@ void FUN_0042f2ed(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar3;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00467c48);
+    PoolFree(DAT_00467c48);
   }
   uVar3 = 0x10;
   puVar2 = (undefined2 *)PoolAlloc(0x10);
@@ -20410,32 +20411,32 @@ bool FUN_0042fcd7(undefined param_1,undefined param_2,undefined param_3,ushort p
 
 {
   undefined uVar1;
-  undefined2 *puVar2;
-  void *pvVar3;
-  undefined4 uVar4;
+  undefined2 *object;
+  void *pvVar2;
+  undefined4 uVar3;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined2 *puVar5;
-  undefined4 uVar6;
+  undefined2 *puVar4;
+  undefined4 uVar5;
   char local_54 [80];
   
-  puVar2 = (undefined2 *)FUN_0044c2df();
-  *puVar2 = 0xffff;
-  puVar2[1] = 0xffff;
-  pvVar3 = Resource::Load(param_4,_pTEXT);
-  *(void **)(puVar2 + 0xd) = pvVar3;
+  object = (undefined2 *)FUN_0044c2df();
+  *object = 0xffff;
+  object[1] = 0xffff;
+  pvVar2 = Resource::Load(param_4,_pTEXT);
+  *(void **)(object + 0xd) = pvVar2;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00467cfa,local_54,&DAT_00461caf);
-  *(undefined **)(puVar2 + 0xf) = &DAT_00467cfa;
-  pvVar3 = Resource::Load(param_5,_pTEXT);
-  *(void **)(puVar2 + 0x11) = pvVar3;
-  puVar5 = puVar2;
-  uVar4 = FUN_0044c371(puVar2);
-  uVar6 = *(undefined4 *)(puVar2 + 0xd);
-  uVar1 = FUN_0044073c((char)uVar4,extraout_DL,(char)puVar5,uVar6);
-  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar6,*(undefined4 *)(puVar2 + 0x11));
-  FUN_0043c2ba(puVar2);
-  return (short)uVar4 != 0;
+  *(undefined **)(object + 0xf) = &DAT_00467cfa;
+  pvVar2 = Resource::Load(param_5,_pTEXT);
+  *(void **)(object + 0x11) = pvVar2;
+  puVar4 = object;
+  uVar3 = FUN_0044c371(object);
+  uVar5 = *(undefined4 *)(object + 0xd);
+  uVar1 = FUN_0044073c((char)uVar3,extraout_DL,(char)puVar4,uVar5);
+  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar5,*(undefined4 *)(object + 0x11));
+  PoolFree(object);
+  return (short)uVar3 != 0;
 }
 
 
@@ -20770,7 +20771,7 @@ void FUN_00430434(undefined param_1,undefined param_2,undefined param_3,short pa
   
   iVar1 = (int)param_4;
   if (DAT_00467db0 == 1) {
-    FUN_0043c2ba((&DAT_00467dd2)[iVar1 * 7]);
+    PoolFree((void *)(&DAT_00467dd2)[iVar1 * 7]);
     return;
   }
   if (DAT_00467db0 != 3) {
@@ -20980,7 +20981,7 @@ void FUN_0043078c(void)
       DeleteObject(DAT_0046811c);
     }
     if (DAT_00467db0 == 1) {
-      FUN_0043c2ba(DAT_00467dc4);
+      PoolFree(DAT_00467dc4);
     }
     PTR_FUN_0046021c = FUN_00412250;
     _DAT_00461cbc = 0;
@@ -22495,9 +22496,9 @@ void FUN_004323c3(void)
       uVar5 = extraout_EDX_03;
     }
     DlistRemove(DAT_00468462,node);
-    FUN_0043c2ba(node);
+    PoolFree(node);
   }
-  FUN_00435302(DAT_00468462);
+  PoolFreeIfNotNull(DAT_00468462);
   FUN_00440695(DAT_0046844c + 9000,&_HELP1);
   FUN_0041030c();
   FUN_00413868();
@@ -23546,7 +23547,7 @@ void FUN_00433ff3(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar3;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_004685c0);
+    PoolFree(DAT_004685c0);
   }
   uVar3 = 0x10;
   puVar2 = (undefined2 *)PoolAlloc(0x10);
@@ -24715,17 +24716,6 @@ int FUN_004352c9(undefined param_1,undefined param_2,undefined param_3,Dlist *pa
 
 
 
-void __stdcall FUN_00435302(int param_1)
-
-{
-  if (param_1 != 0) {
-    FUN_0043c2ba(param_1);
-  }
-  return;
-}
-
-
-
 void FUN_00435346(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4)
 
 {
@@ -24849,7 +24839,8 @@ void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3)
   undefined4 extraout_EDX_02;
   short sVar6;
   undefined uVar7;
-  uint uVar8;
+  void *pvVar8;
+  uint uVar9;
   
   if (DAT_0046976c != 0) {
     param_3 = CONCAT22((short)(param_1 >> 0x10),DAT_0046976c);
@@ -24859,9 +24850,9 @@ void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3)
   }
   DAT_00469544 = 0;
   FUN_004400eb(0,param_2,param_3);
-  uVar3 = DAT_00468f38;
-  uVar1 = FUN_0043c2ba(DAT_00468f38);
-  uVar2 = FUN_0043b9d2(uVar1,extraout_DL,(char)uVar3,0,0);
+  pvVar8 = DAT_00468f38;
+  uVar1 = PoolFree(DAT_00468f38);
+  uVar2 = FUN_0043b9d2(uVar1,extraout_DL,(char)pvVar8,0,0);
   uVar4 = DAT_00468f44;
   uVar3 = FUN_00412d0c(uVar2,extraout_EDX_00,extraout_ECX,DAT_00468f44);
   uVar2 = DAT_00468f48;
@@ -24878,10 +24869,10 @@ void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3)
     (&DAT_00468f88)[iVar5] = uVar4;
     sVar6 = sVar6 + 1;
   } while (sVar6 < 0xc);
-  uVar8 = DAT_00468f84;
+  uVar9 = DAT_00468f84;
   DAT_00468f84 = FUN_00412d0c(uVar4,iVar5,uVar2,DAT_00468f84);
   uVar3 = DAT_00468fb8;
-  DAT_00468fb8 = FUN_0043b69e((char)DAT_00468f84,extraout_DL_01,(char)uVar8,DAT_00468fb8);
+  DAT_00468fb8 = FUN_0043b69e((char)DAT_00468f84,extraout_DL_01,(char)uVar9,DAT_00468fb8);
   uVar7 = 0x42;
   uVar1 = FUN_0043ffba((char)DAT_00468fb8,extraout_DL_02,(char)uVar3,&DAT_00469742);
   FUN_0044c950(uVar1,extraout_DL_03,uVar7,0);
@@ -24889,7 +24880,7 @@ void FUN_0043551e(uint param_1,undefined4 param_2,uint param_3)
   uVar3 = FUN_00416f98();
   FUN_00435d07(uVar3,extraout_EDX_02,extraout_ECX_00);
   FUN_004102d7();
-  FUN_0043c2ba(DAT_00468f2c);
+  PoolFree(DAT_00468f2c);
   FUN_00440695(DAT_0046977e,&_TEXT22);
   FUN_00431348();
   return;
@@ -28151,7 +28142,7 @@ void FUN_0043a9ca(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar3;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00468f38);
+    PoolFree(DAT_00468f38);
   }
   uVar3 = 0x10;
   puVar2 = (undefined2 *)PoolAlloc(0x10);
@@ -28463,7 +28454,7 @@ short FUN_0043ad75(undefined param_1,undefined param_2,undefined param_3,ushort 
   *(HMENU *)((int)&node[2].next + 2) = hMenu;
   local_c = GetSubMenu(hMenu,0);
   if (local_c == (HMENU)0x0) {
-    FUN_0043c2ba(node);
+    PoolFree(node);
   }
   else {
     GetMenuStringA(hMenu,0,local_40,0x31,0x400);
@@ -28536,15 +28527,15 @@ undefined4 FUN_0043aed8(undefined4 param_1,undefined4 param_2,undefined4 param_3
       pDVar1 = DlistNext(node);
       DlistRemove((Dlist *)node_00[3].next,node);
       if ((*(byte *)&node[1].next & 1) == 0) {
-        FUN_0043c2ba(node);
+        PoolFree(node);
       }
     }
     if (node_00[3].prev != (DlistNode *)0x0) {
-      FUN_0043c2ba(node_00[3].prev);
+      PoolFree(node_00[3].prev);
     }
-    FUN_00435302(node_00[3].next);
+    PoolFreeIfNotNull(node_00[3].next);
     DlistRemove(DAT_00468ff8,node_00);
-    FUN_0043c2ba(node_00);
+    PoolFree(node_00);
     if (_DAT_0046276c != 0) {
       DrawMenuBar(Game::window);
     }
@@ -28585,7 +28576,7 @@ FUN_0043afac(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4
                         CONCAT22((short)((uint)iVar1 >> 0x10),param_5));
     DlistRemove(*(Dlist **)(iVar1 + 0x18),node);
     if ((*(byte *)&node[1].next & 1) == 0) {
-      FUN_0043c2ba(node);
+      PoolFree(node);
     }
     RemoveMenu(*(HMENU *)(iVar1 + 0xe),(int)uStack_8._2_2_,0x400);
     uVar2 = CONCAT22((short)((uint)node >> 0x10),1);
@@ -29082,12 +29073,12 @@ void FUN_0043b656(void)
 
 
 
-undefined4 FUN_0043b69e(undefined param_1,undefined param_2,undefined param_3,int param_4)
+undefined4 FUN_0043b69e(undefined param_1,undefined param_2,undefined param_3,void *param_4)
 
 {
   FUN_0043b656();
-  FUN_0043c2ba(*(undefined4 *)(param_4 + 0x1a));
-  FUN_0043c2ba(param_4);
+  PoolFree(*(void **)((int)param_4 + 0x1a));
+  PoolFree(param_4);
   return 0;
 }
 
@@ -29304,37 +29295,37 @@ void FUN_0043ba8c(undefined param_1,undefined param_2,undefined param_3,ushort p
 
 {
   undefined uVar1;
-  undefined2 *puVar2;
-  void *pvVar3;
-  undefined4 uVar4;
+  undefined2 *object;
+  void *pvVar2;
+  undefined4 uVar3;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined2 *puVar5;
-  undefined4 uVar6;
+  undefined2 *puVar4;
+  undefined4 uVar5;
   char local_54 [80];
   
-  puVar2 = (undefined2 *)FUN_0044c2df();
-  *puVar2 = 0xffff;
-  puVar2[1] = 0xffff;
-  pvVar3 = Resource::Load(param_4,_pTEXT);
-  *(void **)(puVar2 + 0xd) = pvVar3;
+  object = (undefined2 *)FUN_0044c2df();
+  *object = 0xffff;
+  object[1] = 0xffff;
+  pvVar2 = Resource::Load(param_4,_pTEXT);
+  *(void **)(object + 0xd) = pvVar2;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00469040,local_54,&DAT_0046278e);
-  *(undefined **)(puVar2 + 0xf) = &DAT_00469040;
+  *(undefined **)(object + 0xf) = &DAT_00469040;
   if (*param_7 != 0) {
     param_5 = param_6;
   }
-  pvVar3 = Resource::Load(param_5,_pTEXT);
-  *(void **)(puVar2 + 0x11) = pvVar3;
-  puVar5 = puVar2;
-  uVar4 = FUN_0044c371(puVar2);
-  if ((short)uVar4 != 0) {
+  pvVar2 = Resource::Load(param_5,_pTEXT);
+  *(void **)(object + 0x11) = pvVar2;
+  puVar4 = object;
+  uVar3 = FUN_0044c371(object);
+  if ((short)uVar3 != 0) {
     *param_7 = *param_7 ^ 1;
   }
-  uVar6 = *(undefined4 *)(puVar2 + 0xd);
-  uVar1 = FUN_0044073c((char)uVar4,extraout_DL,(char)puVar5,uVar6);
-  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar6,*(undefined4 *)(puVar2 + 0x11));
-  FUN_0043c2ba(puVar2);
+  uVar5 = *(undefined4 *)(object + 0xd);
+  uVar1 = FUN_0044073c((char)uVar3,extraout_DL,(char)puVar4,uVar5);
+  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar5,*(undefined4 *)(object + 0x11));
+  PoolFree(object);
   return;
 }
 
@@ -29695,23 +29686,6 @@ void FUN_0043c249(void)
 
 
 
-void __cdecl FUN_0043c2ba(DlistNode *param_1)
-
-{
-  DlistNode *node;
-  
-  for (node = DlistHead(_Pool_usedNodes); (node != (DlistNode *)0x0 && (param_1 != node[1].next));
-      node = DlistNext(node)) {
-  }
-  DlistRemove(_Pool_usedNodes,node);
-  TurboFree_(node[1].next);
-  Memset(node,0,0xc);
-  DlistInsert(_Pool_freeNodes,node,-1);
-  return;
-}
-
-
-
 void FUN_0043c323(void)
 
 {
@@ -29811,17 +29785,17 @@ void FUN_0043c382(undefined param_1,undefined param_2,undefined param_3,undefine
 
 
 
-void FUN_0043c412(undefined param_1,undefined param_2,undefined param_3,int param_4)
+void FUN_0043c412(undefined param_1,undefined param_2,undefined param_3,void *param_4)
 
 {
   undefined uVar1;
   undefined extraout_DL;
   undefined4 uVar2;
   
-  uVar2 = *(undefined4 *)(param_4 + 0x26);
+  uVar2 = *(undefined4 *)((int)param_4 + 0x26);
   uVar1 = FUN_0044073c(param_1,param_2,param_3,uVar2);
-  FUN_0044073c(uVar1,extraout_DL,(char)uVar2,*(undefined4 *)(param_4 + 0x22));
-  FUN_0043c2ba(param_4);
+  FUN_0044073c(uVar1,extraout_DL,(char)uVar2,*(undefined4 *)((int)param_4 + 0x22));
+  PoolFree(param_4);
   return;
 }
 
@@ -29881,42 +29855,42 @@ void FUN_0043c4ec(undefined param_1,undefined param_2,undefined param_3,undefine
 {
   undefined uVar1;
   short sVar2;
-  undefined2 *puVar3;
-  void *pvVar4;
-  undefined4 uVar5;
+  undefined2 *object;
+  void *pvVar3;
+  undefined4 uVar4;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined2 *puVar6;
-  undefined4 uVar7;
+  undefined2 *puVar5;
+  undefined4 uVar6;
   char local_54 [80];
   
   if ((DAT_00462790 == 0) && (*(short *)(_GameState->field43_0x40 + (short)param_4 * 2 + 2) == 0)) {
-    puVar3 = (undefined2 *)FUN_0044c32f();
-    *puVar3 = 0xffff;
-    puVar3[1] = 0xffff;
+    object = (undefined2 *)FUN_0044c32f();
+    *object = 0xffff;
+    object[1] = 0xffff;
     GetWinapiString(&DAT_004690e0,0x4e5a);
     GetWinapiString(local_54,0x4e5b);
     Sprintf_(&DAT_00469220,local_54,&DAT_00462794);
-    *(undefined **)(puVar3 + 0xd) = &DAT_004690e0;
-    *(undefined **)(puVar3 + 0xf) = &DAT_00469220;
-    pvVar4 = Resource::Load((short)param_4 + 0x4b0,&_TEXT27);
-    *(void **)(puVar3 + 0x11) = pvVar4;
+    *(undefined **)(object + 0xd) = &DAT_004690e0;
+    *(undefined **)(object + 0xf) = &DAT_00469220;
+    pvVar3 = Resource::Load((short)param_4 + 0x4b0,&_TEXT27);
+    *(void **)(object + 0x11) = pvVar3;
     sVar2 = FUN_0044714d();
     if (sVar2 == 0) {
-      *(undefined4 *)(puVar3 + 0x13) = 0;
+      *(undefined4 *)(object + 0x13) = 0;
     }
     else {
-      pvVar4 = Resource::Load((short)param_4 + 0x4b0,&_INTS3);
-      *(void **)(puVar3 + 0x13) = pvVar4;
+      pvVar3 = Resource::Load((short)param_4 + 0x4b0,&_INTS3);
+      *(void **)(object + 0x13) = pvVar3;
     }
-    puVar6 = puVar3;
-    uVar5 = FUN_0044c371(puVar3);
-    uVar7 = *(undefined4 *)(puVar3 + 0x11);
-    uVar1 = FUN_0044073c((char)uVar5,extraout_DL,(char)puVar6,uVar7);
-    if (*(int *)(puVar3 + 0x13) != 0) {
-      FUN_0044073c(uVar1,extraout_DL_00,(char)uVar7,*(undefined4 *)(puVar3 + 0x13));
+    puVar5 = object;
+    uVar4 = FUN_0044c371(object);
+    uVar6 = *(undefined4 *)(object + 0x11);
+    uVar1 = FUN_0044073c((char)uVar4,extraout_DL,(char)puVar5,uVar6);
+    if (*(int *)(object + 0x13) != 0) {
+      FUN_0044073c(uVar1,extraout_DL_00,(char)uVar6,*(undefined4 *)(object + 0x13));
     }
-    FUN_0043c2ba(puVar3);
+    PoolFree(object);
   }
   *(undefined2 *)(_GameState->field43_0x40 + (short)param_4 * 2 + 2) = 1;
   return;
@@ -30069,35 +30043,37 @@ void FUN_0043c729(uint param_1,undefined4 param_2,undefined *param_3)
 void FUN_0043c91a(uint param_1,undefined4 param_2,uint param_3)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
+  void *pvVar1;
+  undefined4 uVar2;
+  void *pvVar3;
   undefined4 extraout_EDX;
-  int iVar3;
-  short sVar4;
-  uint uVar5;
+  int iVar4;
+  short sVar5;
+  uint uVar6;
   
-  uVar5 = DAT_0046a874;
+  uVar6 = DAT_0046a874;
   DAT_0046a874 = FUN_00412d0c(param_1,param_2,param_3,DAT_0046a874);
-  uVar2 = DAT_0046a878;
-  DAT_0046a878 = FUN_00412d0c(DAT_0046a874,extraout_EDX,uVar5,DAT_0046a878);
-  sVar4 = 0;
+  pvVar3 = DAT_0046a878;
+  DAT_0046a878 = (void *)FUN_00412d0c(DAT_0046a874,extraout_EDX,uVar6,(uint)DAT_0046a878);
+  sVar5 = 0;
   do {
-    uVar1 = FUN_00412d0c((int)sVar4,DAT_004693d8,uVar2,*(uint *)(DAT_004693d8 + sVar4 * 4));
-    uVar2 = DAT_004693d8;
-    iVar3 = (int)sVar4;
-    *(undefined4 *)(DAT_004693d8 + iVar3 * 4) = uVar1;
-    sVar4 = sVar4 + 1;
-  } while (sVar4 < 8);
-  sVar4 = 0;
+    uVar2 = FUN_00412d0c((int)sVar5,DAT_004693d8,(uint)pvVar3,
+                         *(uint *)((int)DAT_004693d8 + sVar5 * 4));
+    pvVar3 = DAT_004693d8;
+    iVar4 = (int)sVar5;
+    *(undefined4 *)((int)DAT_004693d8 + iVar4 * 4) = uVar2;
+    sVar5 = sVar5 + 1;
+  } while (sVar5 < 8);
+  sVar5 = 0;
   do {
-    uVar5 = (&DAT_004693dc)[sVar4];
-    uVar1 = FUN_00412d0c((int)sVar4,iVar3,uVar2,(&DAT_004693dc)[sVar4]);
-    uVar2 = uVar5;
-    iVar3 = (int)sVar4;
-    (&DAT_004693dc)[iVar3] = uVar1;
-    sVar4 = sVar4 + 1;
-  } while (sVar4 < 4);
-  FUN_0043c2ba(DAT_004693d8);
+    pvVar1 = (void *)(&DAT_004693dc)[sVar5];
+    uVar2 = FUN_00412d0c((int)sVar5,iVar4,(uint)pvVar3,(uint)(&DAT_004693dc)[sVar5]);
+    pvVar3 = pvVar1;
+    iVar4 = (int)sVar5;
+    (&DAT_004693dc)[iVar4] = uVar2;
+    sVar5 = sVar5 + 1;
+  } while (sVar5 < 4);
+  PoolFree(DAT_004693d8);
   return;
 }
 
@@ -31581,19 +31557,19 @@ void FUN_0043f193(void)
 void FUN_0043f27a(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4)
 
 {
-  int iVar1;
+  void *object;
   undefined extraout_CL;
   undefined extraout_DL;
   
-  iVar1 = FUN_0043f193();
-  *(undefined4 *)(iVar1 + 0x26) = param_4;
+  object = (void *)FUN_0043f193();
+  *(undefined4 *)((int)object + 0x26) = param_4;
   GetWinapiString(&DAT_004696b0,0x4e5c);
-  *(undefined **)(iVar1 + 0x1e) = &DAT_004696b0;
-  *(undefined **)(iVar1 + 0x22) = &DAT_00462a9e;
-  *(undefined2 *)(iVar1 + 4) = 8;
-  *(undefined2 *)(iVar1 + 2) = 8;
-  FUN_0043ecaa((char)param_4,extraout_DL,extraout_CL,iVar1);
-  FUN_0043c2ba(iVar1);
+  *(undefined **)((int)object + 0x1e) = &DAT_004696b0;
+  *(undefined **)((int)object + 0x22) = &DAT_00462a9e;
+  *(undefined2 *)((int)object + 4) = 8;
+  *(undefined2 *)((int)object + 2) = 8;
+  FUN_0043ecaa((char)param_4,extraout_DL,extraout_CL,object);
+  PoolFree(object);
   return;
 }
 
@@ -32259,11 +32235,11 @@ void FUN_00440342(void)
         FUN_00410528((char)pDVar1,extraout_DL,(char)pDVar2,*(undefined4 *)((int)&node[3].prev + 2));
       }
       DlistRemove(DAT_00469918,node);
-      FUN_0043c2ba(node);
+      PoolFree(node);
       node = pDVar1;
     }
-    FUN_00435302(DAT_00462c34);
-    FUN_00435302(DAT_00469918);
+    PoolFreeIfNotNull(DAT_00462c34);
+    PoolFreeIfNotNull(DAT_00469918);
     _DAT_00462b20 = 0;
   }
   return;
@@ -32317,7 +32293,7 @@ void FUN_0044040c(undefined param_1,undefined param_2,undefined param_3,undefine
         FUN_00410528(0,extraout_DL_00,extraout_CL,*(undefined4 *)((int)&node[3].prev + 2));
       }
       DlistRemove(DAT_00469918,node);
-      FUN_0043c2ba(node);
+      PoolFree(node);
     }
   }
   return;
@@ -32367,7 +32343,7 @@ void * __cdecl Resource::Load(short id,LPCSTR fourcc)
     if (node == (Dlist *)0x0) {
 LAB_004405cb:
       if ((pDVar4[2].next == (DlistNode *)0x0) || (pDVar4[2].prev == (DlistNode *)0x0)) {
-        FUN_0043c2ba(pDVar4);
+        PoolFree(pDVar4);
         pDVar4 = (DlistNode *)0x0;
       }
       else {
@@ -32483,7 +32459,7 @@ void __cdecl FUN_00440695(short param_1,undefined *param_2)
           FUN_00410a30((char)BVar5,extraout_DL,(char)pDVar3,node[2].next);
         }
         DlistRemove(DAT_00462c34,node);
-        FUN_0043c2ba(node);
+        PoolFree(node);
         return;
       }
       _DAT_00462c38 = 1;
@@ -32529,7 +32505,7 @@ void FUN_0044073c(undefined param_1,undefined param_2,undefined param_3,DlistNod
           FUN_00410a30((char)BVar4,extraout_DL_00,(char)pDVar6,node[2].next);
         }
         DlistRemove(DAT_00462c34,node);
-        FUN_0043c2ba(node);
+        PoolFree(node);
       }
       else {
         _DAT_00462c38 = 1;
@@ -32623,7 +32599,7 @@ void FUN_0044086e(void)
       FUN_00410a30((char)BVar2,extraout_DL_00,(char)pDVar4,node[2].next);
     }
     DlistRemove(DAT_00462c34,node);
-    FUN_0043c2ba(node);
+    PoolFree(node);
     node = pDVar1;
   }
   return;
@@ -32848,7 +32824,8 @@ void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3)
   undefined4 extraout_EDX_05;
   int iVar6;
   short sVar7;
-  uint uVar8;
+  void *pvVar8;
+  uint uVar9;
   
   if (DAT_0046976c != 0) {
     param_3 = CONCAT22((short)(param_1 >> 0x10),DAT_0046976c);
@@ -32857,9 +32834,9 @@ void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3)
     param_2 = extraout_EDX;
   }
   FUN_004400eb(param_1,param_2,param_3);
-  uVar5 = DAT_00469a5c;
-  uVar1 = FUN_0043c2ba(DAT_00469a5c);
-  uVar2 = FUN_0043b9d2(uVar1,extraout_DL,(char)uVar5,0,0);
+  pvVar8 = DAT_00469a5c;
+  uVar1 = PoolFree(DAT_00469a5c);
+  uVar2 = FUN_0043b9d2(uVar1,extraout_DL,(char)pvVar8,0,0);
   uVar4 = DAT_00469930;
   uVar3 = FUN_00412d0c(uVar2,extraout_EDX_00,extraout_ECX,DAT_00469930);
   uVar5 = DAT_00469934;
@@ -32868,12 +32845,12 @@ void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3)
   FUN_0043ffba((char)uVar3,extraout_DL_01,(char)uVar5,&DAT_00469742);
   DAT_00469544 = 0;
   DAT_0046976a = DAT_00462c5c;
-  uVar8 = 0;
+  uVar9 = 0;
   uVar2 = FUN_0044c950((char)DAT_00462c5c,extraout_DL_02,uVar1,0);
   uVar4 = DAT_00469940;
-  uVar8 = FUN_00412d0c(uVar2,extraout_EDX_01,uVar8,DAT_00469940);
+  uVar9 = FUN_00412d0c(uVar2,extraout_EDX_01,uVar9,DAT_00469940);
   uVar2 = DAT_0046993c;
-  uVar4 = FUN_00412d0c(uVar8,extraout_EDX_02,uVar4,DAT_0046993c);
+  uVar4 = FUN_00412d0c(uVar9,extraout_EDX_02,uVar4,DAT_0046993c);
   FUN_00412d0c(uVar4,extraout_EDX_03,uVar2,DAT_00469938);
   FUN_00416f98();
   FUN_004102d7();
@@ -32883,11 +32860,11 @@ void FUN_00440e11(uint param_1,undefined4 param_2,uint param_3)
   do {
     uVar2 = (&DAT_00469978)[sVar7];
     FUN_00412d0c((int)sVar7,iVar6,uVar4,uVar2);
-    uVar8 = (&DAT_00469a60)[sVar7];
-    uVar5 = FUN_00412d0c((int)sVar7,extraout_EDX_05,uVar2,uVar8);
+    uVar9 = (&DAT_00469a60)[sVar7];
+    uVar5 = FUN_00412d0c((int)sVar7,extraout_EDX_05,uVar2,uVar9);
     (&DAT_00469a60)[sVar7] = uVar5;
     uVar4 = (&DAT_00469a78)[sVar7];
-    uVar5 = FUN_0043b69e((char)sVar7,(char)sVar7,(char)uVar8,uVar4);
+    uVar5 = FUN_0043b69e((char)sVar7,(char)sVar7,(char)uVar9,uVar4);
     iVar6 = (int)sVar7;
     (&DAT_00469a78)[iVar6] = uVar5;
     sVar7 = sVar7 + 1;
@@ -34271,7 +34248,7 @@ void FUN_00443878(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined uVar3;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00469a5c);
+    PoolFree(DAT_00469a5c);
   }
   uVar3 = 0x10;
   puVar2 = (undefined2 *)PoolAlloc(0x10);
@@ -35724,7 +35701,7 @@ void FUN_00445202(undefined4 param_1,undefined4 param_2,uint param_3)
     sVar2 = sVar2 + 1;
     param_2 = extraout_EDX;
   } while (sVar2 < 3);
-  FUN_0043c2ba(DAT_00469aac);
+  PoolFree(DAT_00469aac);
   return;
 }
 
@@ -35802,22 +35779,21 @@ void FUN_0044525f(void)
 undefined4 FUN_004456d2(void)
 
 {
-  int iVar1;
-  void *pvVar2;
-  undefined4 uVar3;
+  void *object;
+  void *pvVar1;
+  undefined4 uVar2;
   undefined extraout_DL;
-  int iVar4;
   
-  iVar1 = FUN_0044c2df();
-  pvVar2 = Resource::Load(0x3f1,_pTEXT);
-  *(void **)(iVar1 + 0x22) = pvVar2;
-  *(undefined2 *)(iVar1 + 0xe) = 0x3ee;
-  *(undefined2 *)(iVar1 + 0x10) = 0x3ef;
-  iVar4 = iVar1;
-  uVar3 = FUN_0044c371(iVar1);
-  FUN_0044073c((char)uVar3,extraout_DL,(char)iVar4,*(undefined4 *)(iVar1 + 0x22));
-  FUN_0043c2ba(iVar1);
-  return uVar3;
+  object = (void *)FUN_0044c2df();
+  pvVar1 = Resource::Load(0x3f1,_pTEXT);
+  *(void **)((int)object + 0x22) = pvVar1;
+  *(undefined2 *)((int)object + 0xe) = 0x3ee;
+  *(undefined2 *)((int)object + 0x10) = 0x3ef;
+  pvVar1 = object;
+  uVar2 = FUN_0044c371(object);
+  FUN_0044073c((char)uVar2,extraout_DL,(char)pvVar1,*(undefined4 *)((int)object + 0x22));
+  PoolFree(object);
+  return uVar2;
 }
 
 
@@ -35826,30 +35802,29 @@ undefined4 FUN_0044571b(void)
 
 {
   undefined uVar1;
-  int iVar2;
-  void *pvVar3;
-  undefined4 uVar4;
+  void *object;
+  void *pvVar2;
+  undefined4 uVar3;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  int iVar5;
-  undefined4 uVar6;
+  undefined4 uVar4;
   char local_54 [80];
   
-  iVar2 = FUN_0044c2df();
-  pvVar3 = Resource::Load(0x3fb,_pTEXT);
-  *(void **)(iVar2 + 0x1a) = pvVar3;
-  pvVar3 = Resource::Load(0x3fc,_pTEXT);
-  *(void **)(iVar2 + 0x22) = pvVar3;
+  object = (void *)FUN_0044c2df();
+  pvVar2 = Resource::Load(0x3fb,_pTEXT);
+  *(void **)((int)object + 0x1a) = pvVar2;
+  pvVar2 = Resource::Load(0x3fc,_pTEXT);
+  *(void **)((int)object + 0x22) = pvVar2;
   GetWinapiString(local_54,0x4e59);
   Sprintf_(&DAT_00469ad4,local_54,&DAT_00462f3c);
-  *(undefined **)(iVar2 + 0x1e) = &DAT_00469ad4;
-  iVar5 = iVar2;
-  uVar4 = FUN_0044c371(iVar2);
-  uVar6 = *(undefined4 *)(iVar2 + 0x1a);
-  uVar1 = FUN_0044073c((char)uVar4,extraout_DL,(char)iVar5,uVar6);
-  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar6,*(undefined4 *)(iVar2 + 0x22));
-  FUN_0043c2ba(iVar2);
-  return uVar4;
+  *(undefined **)((int)object + 0x1e) = &DAT_00469ad4;
+  pvVar2 = object;
+  uVar3 = FUN_0044c371(object);
+  uVar4 = *(undefined4 *)((int)object + 0x1a);
+  uVar1 = FUN_0044073c((char)uVar3,extraout_DL,(char)pvVar2,uVar4);
+  FUN_0044073c(uVar1,extraout_DL_00,(char)uVar4,*(undefined4 *)((int)object + 0x22));
+  PoolFree(object);
+  return uVar3;
 }
 
 
@@ -36178,16 +36153,16 @@ void __stdcall FUN_00445eea(void)
 {
   short sVar1;
   DlistNode *node;
-  DlistNode *pDVar2;
-  undefined4 uVar3;
-  MCIERROR MVar4;
+  DlistNode *next;
+  undefined4 uVar2;
+  MCIERROR MVar3;
   undefined local_8 [4];
   
   if (_DAT_00469d8a != 0) {
     FUN_00446ccc();
-    pDVar2 = DlistHead(DAT_00469d84);
-    while (node = pDVar2, node != (DlistNode *)0x0) {
-      pDVar2 = DlistNext(node);
+    next = DlistHead(DAT_00469d84);
+    while (node = next, node != (DlistNode *)0x0) {
+      next = DlistNext(node);
       sVar1 = *(short *)((int)&node[1].prev + 2);
       if (sVar1 == 1) {
         FUN_004462d4(*(undefined2 *)&node[1].prev);
@@ -36200,8 +36175,8 @@ void __stdcall FUN_00445eea(void)
       }
     }
     if (DAT_00462f48 == 1) {
-      uVar3 = (*_pWaveMixCloseChannel)(_WaveMixHandle,0,1);
-      FUN_004457b0(uVar3);
+      uVar2 = (*_pWaveMixCloseChannel)(_WaveMixHandle,0,1);
+      FUN_004457b0(uVar2);
       (*_pWaveMixCloseSession)();
       FreeLibraryForWAVEMIX();
     }
@@ -36210,12 +36185,12 @@ void __stdcall FUN_00445eea(void)
       DAT_00469e48 = (int *)0x0;
     }
     if (((byte)DAT_00469d88 & 2) != 0) {
-      MVar4 = mciSendCommandA(0xffffffff,0x804,2,(DWORD_PTR)local_8);
-      FUN_00445924((short)MVar4);
+      MVar3 = mciSendCommandA(0xffffffff,0x804,2,(DWORD_PTR)local_8);
+      FUN_00445924((short)MVar3);
     }
     DestroyWindow(dwCallback_00469e44);
     UnregisterClassA(lpClassName_00463068,_Module);
-    FUN_00435302(DAT_00469d84);
+    PoolFreeIfNotNull(DAT_00469d84);
     _DAT_00469d8a = 0;
   }
   return;
@@ -36256,7 +36231,7 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
     pDVar4 = (DlistNode *)Resource::Load(id,_pWAVE);
     node[1].next = pDVar4;
     if (node[1].next == (DlistNode *)0x0) {
-      FUN_0043c2ba(node);
+      PoolFree(node);
     }
     else {
       pDVar6 = node;
@@ -36388,7 +36363,7 @@ void __stdcall FUN_00446225(short param_1,ushort param_2)
   FUN_00440695(param_1,_pWAVE);
 LAB_004462ba:
   DlistRemove(DAT_00469d84,node);
-  FUN_0043c2ba(node);
+  PoolFree(node);
   return;
 }
 
@@ -36416,7 +36391,7 @@ void __stdcall FUN_004462e8(undefined4 param_1)
     if (node == DAT_00469d98) {
       DAT_00469d98 = (DlistNode *)0x0;
     }
-    FUN_0043c2ba(node);
+    PoolFree(node);
     DAT_0046305c = 0xffff;
   }
   return;
@@ -36764,13 +36739,13 @@ void FUN_004468a4(void)
   undefined2 uVar1;
   undefined in_CL;
   
-  if (DAT_00469e9c != 0) {
-    if (*(short *)(DAT_00469e9c + DAT_00469ea0 * 2) != -1) {
-      uVar1 = *(undefined2 *)(DAT_00469e9c + DAT_00469ea0 * 2);
+  if (DAT_00469e9c != (void *)0x0) {
+    if (*(short *)((int)DAT_00469e9c + DAT_00469ea0 * 2) != -1) {
+      uVar1 = *(undefined2 *)((int)DAT_00469e9c + DAT_00469ea0 * 2);
       FUN_00446c72((char)uVar1,(char)DAT_00469e9c,in_CL,CONCAT22(DAT_00469ea0 >> 0xf,uVar1));
     }
-    FUN_0043c2ba(DAT_00469e9c);
-    DAT_00469e9c = 0;
+    PoolFree(DAT_00469e9c);
+    DAT_00469e9c = (void *)0x0;
   }
   return;
 }
@@ -38107,7 +38082,7 @@ void FUN_00447bab(uint param_1,undefined4 param_2,uint param_3)
   FUN_0044868d(uVar3,extraout_EDX_03,extraout_ECX);
   FUN_004102d7();
   FUN_00440695(DAT_0046977e,&_TEXT37);
-  FUN_0043c2ba(DAT_00469ea4);
+  PoolFree(DAT_00469ea4);
   FUN_00431348();
   return;
 }
@@ -39944,7 +39919,7 @@ void FUN_0044b0dc(undefined param_1,undefined param_2,undefined param_3,short pa
   undefined2 *puVar5;
   
   if (param_4 == 0) {
-    FUN_0043c2ba(DAT_00469ea4);
+    PoolFree(DAT_00469ea4);
   }
   DAT_00469ea8 = 0;
   sVar2 = 0;
@@ -41018,17 +40993,17 @@ void FUN_0044c8c2(uint param_1,undefined4 param_2,uint param_3,ushort param_4)
 void __cdecl FUN_0044c8f3(undefined4 param_1,undefined2 param_2)
 
 {
-  int iVar1;
+  void *object;
   char local_54 [80];
   
-  iVar1 = FUN_0044c32f();
-  *(undefined4 *)(iVar1 + 0x22) = param_1;
+  object = (void *)FUN_0044c32f();
+  *(undefined4 *)((int)object + 0x22) = param_1;
   GetWinapiString(local_54,0x4e5d);
   Sprintf_(&DAT_0046a8bc,local_54,&DAT_004634dc);
-  *(undefined **)(iVar1 + 0x1e) = &DAT_0046a8bc;
-  *(undefined2 *)(iVar1 + 2) = param_2;
-  FUN_0044c371(iVar1);
-  FUN_0043c2ba(iVar1);
+  *(undefined **)((int)object + 0x1e) = &DAT_0046a8bc;
+  *(undefined2 *)((int)object + 2) = param_2;
+  FUN_0044c371(object);
+  PoolFree(object);
   return;
 }
 
@@ -41247,7 +41222,7 @@ void __stdcall Nfnt::Unload(undefined2 param_1)
     pNVar1 = node;
     DlistRemove(cache,&node->node);
     FUN_0044073c((char)pNVar1,extraout_DL,extraout_CL,node->inner);
-    FUN_0043c2ba(node);
+    PoolFree(node);
   }
   return;
 }
@@ -41939,7 +41914,7 @@ void FUN_0044d55a(void)
       Nfnt::Unload(*(undefined2 *)&node[5].prev);
       node = pDVar1;
     }
-    FUN_00435302(Nfnt::cache);
+    PoolFreeIfNotNull(Nfnt::cache);
     _DAT_004634e8 = 0;
   }
   return;
@@ -43273,27 +43248,26 @@ void FUN_0044eb32(void)
 
 {
   undefined uVar1;
-  uint uVar2;
+  void *pvVar2;
   undefined extraout_DL;
   short sVar3;
   uint uVar4;
-  undefined4 uVar5;
   
-  uVar2 = DAT_0046aa2a;
-  FUN_0043c2ba(DAT_0046aa2a);
+  pvVar2 = DAT_0046aa2a;
+  PoolFree(DAT_0046aa2a);
   for (sVar3 = 0; sVar3 < DAT_0046aa0c; sVar3 = sVar3 + 1) {
-    uVar4 = *(uint *)(DAT_0046aa1c + sVar3 * 4);
-    FUN_0043b69e((char)sVar3,(char)DAT_0046aa1c,(char)uVar2,uVar4);
-    uVar2 = *(uint *)(DAT_0046aa18 + sVar3 * 4);
-    FUN_00412d0c((int)sVar3,DAT_0046aa18,uVar4,uVar2);
+    uVar4 = *(uint *)((int)DAT_0046aa1c + sVar3 * 4);
+    FUN_0043b69e((char)sVar3,(char)DAT_0046aa1c,(char)pvVar2,uVar4);
+    pvVar2 = *(void **)((int)DAT_0046aa18 + sVar3 * 4);
+    FUN_00412d0c((int)sVar3,DAT_0046aa18,uVar4,(uint)pvVar2);
   }
-  FUN_0043c2ba(DAT_0046aa18);
-  FUN_0043c2ba(DAT_0046aa24);
-  FUN_0043c2ba(DAT_0046aa1c);
-  FUN_0043c2ba(DAT_0046aa20);
-  uVar5 = DAT_0046aa14;
-  uVar1 = FUN_0043c2ba(DAT_0046aa14);
-  FUN_0044073c(uVar1,extraout_DL,(char)uVar5,DAT_0046aa30);
+  PoolFree(DAT_0046aa18);
+  PoolFree(DAT_0046aa24);
+  PoolFree(DAT_0046aa1c);
+  PoolFree(DAT_0046aa20);
+  pvVar2 = DAT_0046aa14;
+  uVar1 = PoolFree(DAT_0046aa14);
+  FUN_0044073c(uVar1,extraout_DL,(char)pvVar2,DAT_0046aa30);
   return;
 }
 

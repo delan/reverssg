@@ -1022,6 +1022,17 @@ Dlist * DlistNew(void)
 
 
 
+void __stdcall PoolFreeIfNotNull(void *object)
+
+{
+  if (object != (void *)0x0) {
+    PoolFree(object);
+  }
+  return;
+}
+
+
+
 void __stdcall DlistInit(Dlist *list)
 
 {
@@ -1046,6 +1057,24 @@ void * __stdcall PoolAlloc(uint len)
   node->heap = result;
   DlistInsert(_Pool_usedNodes,(DlistNode *)node,-1);
   return node->heap;
+}
+
+
+
+void __cdecl PoolFree(void *object)
+
+{
+  HeapNode *node;
+  
+  for (node = (HeapNode *)DlistHead(_Pool_usedNodes);
+      (node != (HeapNode *)0x0 && (object != node->heap)); node = (HeapNode *)DlistNext(&node->node)
+      ) {
+  }
+  DlistRemove(_Pool_usedNodes,&node->node);
+  TurboFree_(node->heap);
+  Memset(node,0,0xc);
+  DlistInsert(_Pool_freeNodes,&node->node,-1);
+  return;
 }
 
 
