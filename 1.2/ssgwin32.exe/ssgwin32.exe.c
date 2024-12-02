@@ -36201,47 +36201,8 @@ void FUN_00445b97(void)
   undefined extraout_DL;
   
   if (DAT_00462f48 == 1) {
-    uVar1 = (*DAT_00469da4)();
+    uVar1 = (*_pWaveMixActivate)();
     FUN_004457b0((char)uVar1,extraout_DL,extraout_CL,uVar1);
-  }
-  return;
-}
-
-
-
-bool FUN_00445bd7(void)
-
-{
-  bool bVar1;
-  UINT uMode;
-  
-  uMode = SetErrorMode(0x8000);
-  hModule_0046306c = LoadLibraryA(s_WAVEMIX_DLL_0046308d);
-  SetErrorMode(uMode);
-  bVar1 = 0x1f < (int)hModule_0046306c;
-  if (bVar1) {
-    DAT_00469da0 = GetProcAddress(hModule_0046306c,s_WaveMixConfigureInit_00463099);
-    DAT_00469da4 = GetProcAddress(hModule_0046306c,s_WaveMixActivate_004630ae);
-    DAT_00469da8 = GetProcAddress(hModule_0046306c,s_WaveMixOpenWave_004630be);
-    DAT_00469dac = GetProcAddress(hModule_0046306c,s_WaveMixFlushChannel_004630ce);
-    DAT_00469db0 = GetProcAddress(hModule_0046306c,s_WaveMixOpenChannel_004630e2);
-    DAT_00469db4 = GetProcAddress(hModule_0046306c,s_WaveMixCloseChannel_004630f5);
-    DAT_00469db8 = GetProcAddress(hModule_0046306c,s_WaveMixFreeWave_00463109);
-    DAT_00469dbc = GetProcAddress(hModule_0046306c,s_WaveMixCloseSession_00463119);
-    DAT_00469dc0 = GetProcAddress(hModule_0046306c,s_WaveMixPlay_0046312d);
-    DAT_00469dc4 = GetProcAddress(hModule_0046306c,s_WaveMixPump_00463139);
-  }
-  return bVar1;
-}
-
-
-
-void FUN_00445cbc(void)
-
-{
-  if (hModule_0046306c != (HMODULE)0x0) {
-    FreeLibrary(hModule_0046306c);
-    hModule_0046306c = (HMODULE)0x0;
   }
   return;
 }
@@ -36311,10 +36272,10 @@ uint FUN_00445d1d(uint param_1)
       local_e = 3;
       local_a = 1;
       local_8 = 0x16;
-      DAT_00469df8 = (*DAT_00469da0)();
+      DAT_00469df8 = (*_pWaveMixConfigureInit)();
       _DAT_00469d96 = 5;
       FUN_00445b97();
-      uVar1 = (*DAT_00469db0)();
+      uVar1 = (*_pWaveMixOpenChannel)();
       FUN_004457b0((char)uVar1,extraout_DL,extraout_CL,uVar1);
     }
     else if (DAT_00462f48 == 2) {
@@ -36385,10 +36346,10 @@ void FUN_00445eea(undefined4 param_1,undefined4 param_2,undefined4 param_3)
       }
     }
     if (DAT_00462f48 == 1) {
-      uVar3 = (*DAT_00469db4)();
+      uVar3 = (*_pWaveMixCloseChannel)();
       FUN_004457b0((char)uVar3,extraout_DL_00,extraout_CL,uVar3);
-      (*DAT_00469dbc)();
-      FUN_00445cbc();
+      (*_pWaveMixCloseSession)();
+      FreeLibraryForWAVEMIX();
     }
     else if ((DAT_00462f48 == 2) && (DAT_00469e48 != (int *)0x0)) {
       (**(code **)(*DAT_00469e48 + 8))();
@@ -36455,10 +36416,10 @@ void FUN_0044600b(undefined param_1,undefined param_2,undefined param_3,undefine
         _DAT_00469e10 = GlobalSize(hMem);
         _DAT_00469e00 = 0x204d454d;
         *(undefined4 *)((int)&node[5].prev + 2) = 0;
-        (*DAT_00469da4)();
-        uVar5 = (*DAT_00469da8)();
+        (*_pWaveMixActivate)();
+        uVar5 = (*_pWaveMixOpenWave)();
         *(undefined4 *)((int)&node[5].prev + 2) = uVar5;
-        (*DAT_00469da4)();
+        (*_pWaveMixActivate)();
         if (*(int *)((int)&node[5].prev + 2) == 0) {
           message = GetWinapiStringAlloc(0x4e9d);
           ShowAlertMessage(message,unaff_DI);
@@ -36567,10 +36528,10 @@ void FUN_00446225(undefined param_1,undefined param_2,undefined param_3,undefine
   }
   if (DAT_00462f48 != 0) {
     if (DAT_00462f48 == 1) {
-      (*DAT_00469da4)();
-      uVar2 = (*DAT_00469db8)();
+      (*_pWaveMixActivate)();
+      uVar2 = (*_pWaveMixFreeWave)();
       FUN_004457b0((char)uVar2,extraout_DL_00,extraout_CL_00,uVar2);
-      (*DAT_00469da4)();
+      (*_pWaveMixActivate)();
       goto LAB_004462ba;
     }
     if (DAT_00462f48 != 2) goto LAB_004462ba;
@@ -36725,7 +36686,7 @@ void FUN_0044639c(undefined param_1,undefined param_2,undefined param_3,int para
     if (*(short *)(param_4 + 0x18) == 0) {
       local_16 = 0;
     }
-    uVar1 = (*DAT_00469dc0)();
+    uVar1 = (*_pWaveMixPlay)();
     FUN_004457b0((char)uVar1,extraout_DL,extraout_CL,uVar1);
   }
   else if (DAT_00462f48 == 2) {
@@ -37064,10 +37025,10 @@ void FUN_00446967(undefined param_1,undefined param_2,undefined param_3,int para
       } while (BVar2 != 0);
     }
     else if (DAT_00462f48 == 1) {
-      (*DAT_00469da4)();
-      uVar1 = (*DAT_00469dac)();
+      (*_pWaveMixActivate)();
+      uVar1 = (*_pWaveMixFlushChannel)();
       FUN_004457b0((char)uVar1,extraout_DL,extraout_CL,uVar1);
-      (*DAT_00469da4)();
+      (*_pWaveMixActivate)();
       do {
         BVar2 = PeekMessageA(&local_20,(HWND)0x0,0x3bd,0x3bd,3);
       } while (BVar2 != 0);
@@ -37321,7 +37282,7 @@ void FUN_00446d11(undefined param_1,undefined param_2,undefined param_3,int para
     FUN_004458d8((char)MVar1,extraout_DL_00,extraout_CL_00,MVar1);
   }
   else if (DAT_00462f48 == 1) {
-    uVar2 = (*DAT_00469da4)();
+    uVar2 = (*_pWaveMixActivate)();
     FUN_004457b0((char)uVar2,extraout_DL,extraout_CL,uVar2);
   }
   else if (DAT_00462f48 == 2) {
@@ -37360,7 +37321,7 @@ void FUN_00446dac(undefined param_1,undefined param_2,undefined param_3,int para
     (**(code **)(**(int **)(&DAT_00469e54 + iVar3) + 0x30))();
     return;
   }
-  uVar1 = (*DAT_00469da4)();
+  uVar1 = (*_pWaveMixActivate)();
   FUN_004457b0((char)uVar1,extraout_DL,extraout_CL,uVar1);
   return;
 }
@@ -37673,7 +37634,7 @@ uint FUN_0044727e(undefined param_1,undefined param_2,undefined param_3,short pa
       if (UVar4 != 0) {
         DAT_00469d88 = DAT_00469d88 | 1;
         DAT_00462f48 = 0;
-        bVar2 = FUN_00445bd7();
+        bVar2 = LoadProcsForWAVEMIX();
         if ((short)CONCAT31(extraout_var,bVar2) != 0) {
           DAT_00462f48 = 1;
         }
@@ -37853,7 +37814,7 @@ void FUN_00447578(undefined4 param_1,undefined4 param_2,int param_3)
   if (DAT_00462f48 != 0) {
     if (DAT_00462f48 == 1) {
       if ((_DAT_00469d8a != 0) && (_DAT_0046305a == 0)) {
-        (*DAT_00469dc4)();
+        (*_pWaveMixPump)();
       }
     }
     else if (DAT_00462f48 == 2) {
@@ -38222,10 +38183,10 @@ void FUN_004478cf(void)
     }
   }
   DAT_00462f48 = 1;
-  uVar4 = (*DAT_00469db4)();
+  uVar4 = (*_pWaveMixCloseChannel)();
   FUN_004457b0((char)uVar4,extraout_DL_01,extraout_CL_00,uVar4);
-  (*DAT_00469dbc)();
-  uVar2 = FUN_00445cbc();
+  (*_pWaveMixCloseSession)();
+  uVar2 = FreeLibraryForWAVEMIX();
   DAT_00462f48 = 0;
   FUN_0044b858(uVar2,extraout_DL_02,extraout_CL_01,0);
   return;

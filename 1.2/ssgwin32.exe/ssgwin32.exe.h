@@ -2323,8 +2323,6 @@ short FUN_00445a67(undefined param_1,undefined param_2,undefined param_3,short p
 void FUN_00445b16(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00445b61(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4,undefined4 param_5);
 void FUN_00445b97(void);
-bool FUN_00445bd7(void);
-void FUN_00445cbc(void);
 undefined4 FUN_00445cd8(void);
 uint FUN_00445d1d(uint param_1);
 void FUN_00445eea(undefined4 param_1,undefined4 param_2,undefined4 param_3);

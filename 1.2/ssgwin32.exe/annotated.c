@@ -1424,6 +1424,45 @@ void * __stdcall Resource::Load(ushort id,LPCSTR fourcc)
 
 
 
+bool LoadProcsForWAVEMIX(void)
+
+{
+  UINT uMode;
+  bool ok;
+  
+  uMode = SetErrorMode(0x8000);
+  _hModuleForWAVEMIX = LoadLibraryA(s_WAVEMIX_DLL_0046308d);
+  SetErrorMode(uMode);
+  ok = 0x1f < (int)_hModuleForWAVEMIX;
+  if (ok) {
+    _pWaveMixConfigureInit = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixConfigureInit_00463099);
+    _pWaveMixActivate = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixActivate_004630ae);
+    _pWaveMixOpenWave = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixOpenWave_004630be);
+    _pWaveMixFlushChannel = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixFlushChannel_004630ce);
+    _pWaveMixOpenChannel = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixOpenChannel_004630e2);
+    _pWaveMixCloseChannel = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixCloseChannel_004630f5);
+    _pWaveMixFreeWave = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixFreeWave_00463109);
+    _pWaveMixCloseSession = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixCloseSession_00463119);
+    _pWaveMixPlay = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixPlay_0046312d);
+    _pWaveMixPump = GetProcAddress(_hModuleForWAVEMIX,s_WaveMixPump_00463139);
+  }
+  return ok;
+}
+
+
+
+void FreeLibraryForWAVEMIX(void)
+
+{
+  if (_hModuleForWAVEMIX != (HMODULE)0x0) {
+    FreeLibrary(_hModuleForWAVEMIX);
+    _hModuleForWAVEMIX = (HMODULE)0x0;
+  }
+  return;
+}
+
+
+
 void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1)
 
 {

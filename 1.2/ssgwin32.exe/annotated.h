@@ -1628,6 +1628,8 @@ void __cdecl Puzzles::ComputeCandidatePuzzles(short category);
 void Puzzles::TurnAllOffCategoriesBackOn(void);
 Fourcc __cdecl Resource::ResolveFourcc(char *fourccString);
 void * __stdcall Resource::Load(ushort id,LPCSTR fourcc);
+bool LoadProcsForWAVEMIX(void);
+void FreeLibraryForWAVEMIX(void);
 void __stdcall Puzzles::SetVtableForGivenCategory(undefined4 param_1);
 Nfnt * __stdcall Nfnt::GetFromCache(short resourceId);
 short __stdcall SetCurrentColor(short color);
