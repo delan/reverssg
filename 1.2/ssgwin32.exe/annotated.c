@@ -900,21 +900,40 @@ void __stdcall ActorUpdateDynamics(short actorIndex,short obverse)
 
 
 
-DlistNode * __stdcall DlistHead(undefined4 *param_1)
+DlistNode * __stdcall DlistHead(Dlist *list)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
+  if (list == (Dlist *)0x0) {
     return (DlistNode *)0x0;
   }
-  return (DlistNode *)*param_1;
+  return list->head;
 }
 
 
 
-DlistNode * __stdcall DlistNext(DlistNode *param_1)
+undefined4 __stdcall DlistTail(Dlist *list)
 
 {
-  return param_1->next;
+  if (list == (Dlist *)0x0) {
+    return 0;
+  }
+  return list->tail;
+}
+
+
+
+DlistNode * __stdcall DlistNext(DlistNode *node)
+
+{
+  return node->next;
+}
+
+
+
+DlistNode * __stdcall DlistPrev(DlistNode *node)
+
+{
+  return node->prev;
 }
 
 
