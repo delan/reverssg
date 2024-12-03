@@ -155,6 +155,23 @@ void Game::MakeWindowAnnoying(void)
 
 
 
+bool __stdcall Rect16::intersects(Rect16 *p,Rect16 *q)
+
+{
+  bool bVar1;
+  
+  if (((((short)(q->x + q->w + -1) < p->x) || ((short)(p->x + p->w + -1) < q->x)) ||
+      ((short)(q->y + q->h + -1) < p->y)) || ((short)(p->y + p->h + -1) < q->y)) {
+    bVar1 = false;
+  }
+  else {
+    bVar1 = true;
+  }
+  return bVar1;
+}
+
+
+
 void InitEntities(void)
 
 {
@@ -379,7 +396,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         partCount = room->partEntityCount;
         partNode = (EntityNode *)DlistHead(room->partEntities);
         for (j = 0; (!bad && (j < partCount)); j = j + 1) {
-          collision = CheckCollision(&rect.inner,(Rect16 *)&partNode->inner);
+          collision = Rect16::checkCollision(&rect.inner,(Rect16 *)&partNode->inner);
           if ((short)collision != 0) {
             bad = true;
           }
@@ -390,7 +407,8 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         structuralCount = room->structuralEntityCounts[0];
         for (j = 0; (!bad && (j < structuralCount)); j = j + 1) {
           if ((3 < (entity->base).type) &&
-             (collision = CheckCollision(&rect.inner,(Rect16 *)entity), (short)collision != 0)) {
+             (collision = Rect16::checkCollision(&rect.inner,(Rect16 *)entity),
+             (short)collision != 0)) {
             bad = true;
           }
           entity = entity + 1;
@@ -399,7 +417,7 @@ ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId)
         ladderCount = room->ladderEntityCounts[0];
         ladder = room->ladderEntityGroups[0];
         for (j = 0; (!bad && (j < ladderCount)); j = j + 1) {
-          collision = CheckCollision(&rect.inner,(Rect16 *)ladder);
+          collision = Rect16::checkCollision(&rect.inner,(Rect16 *)ladder);
           if ((short)collision != 0) {
             bad = true;
           }
@@ -573,7 +591,7 @@ void __stdcall LoadEntities(char *puzzleEntityTypes,SavedPartEntity *partEntitie
 
 
 
-uint __stdcall CheckCollision(Rect16 *p,Rect16 *q)
+uint __stdcall Rect16::checkCollision(Rect16 *p,Rect16 *q)
 
 {
   uint result;

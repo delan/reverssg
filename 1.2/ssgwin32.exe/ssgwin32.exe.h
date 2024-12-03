@@ -742,6 +742,15 @@ struct EntityNode {
     struct OtherEntity inner;
 };
 
+typedef struct PushortWithNode PushortWithNode, *PPushortWithNode;
+
+struct PushortWithNode {
+    struct DlistNode node;
+    undefined *field1_0x8;
+    undefined2 field2_0xc;
+    undefined2 field3_0xe;
+};
+
 typedef struct BuildingState BuildingState, *PBuildingState;
 
 struct BuildingState {
@@ -1639,12 +1648,11 @@ undefined4 FUN_00412278(void);
 void FUN_0041227c(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 uint FUN_004122a8(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
 uint FUN_004122bc(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
-undefined4 FUN_004122d0(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
 uint FUN_0041233c(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
 int FUN_00412404(void);
 void FUN_00412434(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
 void FUN_00412468(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,short param_6);
-void FUN_00412490(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void __stdcall FUN_00412490(int param_1);
 void FUN_004125a8(void);
 undefined4 FUN_00412784(void);
 void FUN_004127bc(void);
@@ -1679,8 +1687,8 @@ void __stdcall FUN_0041395c(int param_1,undefined4 param_2,undefined4 param_3,sh
 void FUN_00413a24(void);
 void FUN_00413a2c(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_00413a54(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined4 param_6);
-void FUN_00413a88(undefined param_1,undefined param_2,undefined param_3,short *param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8);
-void FUN_00413acc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5,undefined2 param_6,undefined2 param_7);
+void __stdcall FUN_00413a88(short *param_1,short param_2,short param_3,short param_4,short param_5);
+void __stdcall FUN_00413acc(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4);
 void FUN_00413af4(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined2 param_5);
 void FUN_00413b08(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined2 param_6);
 void FUN_00413b24(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5,undefined2 param_6);

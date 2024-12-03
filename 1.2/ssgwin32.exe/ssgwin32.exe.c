@@ -1552,26 +1552,6 @@ uint FUN_004122bc(undefined param_1,undefined param_2,undefined param_3,int para
 
 
 
-undefined4
-FUN_004122d0(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5)
-
-{
-  undefined4 uVar1;
-  
-  if (((((short)(*param_5 + param_5[2] + -1) < *param_4) ||
-       ((short)(*param_4 + param_4[2] + -1) < *param_5)) ||
-      ((short)(param_5[1] + param_5[3] + -1) < param_4[1])) ||
-     ((short)(param_4[1] + param_4[3] + -1) < param_5[1])) {
-    uVar1 = 0;
-  }
-  else {
-    uVar1 = CONCAT22((short)((uint)param_4 >> 0x10),1);
-  }
-  return uVar1;
-}
-
-
-
 uint FUN_0041233c(undefined param_1,undefined param_2,undefined param_3,short *param_4,
                  short *param_5)
 
@@ -1636,12 +1616,12 @@ int FUN_00412404(void)
   undefined extraout_DL;
   Dlist *pDVar1;
   
-  pDVar1 = DAT_00465724;
-  node = DlistHead(DAT_00465724);
+  pDVar1 = Dlist_00465724;
+  node = DlistHead(Dlist_00465724);
   if (node == (DlistNode *)0x0) {
     FUN_0041227c(0,extraout_DL,(char)pDVar1,2);
   }
-  DlistRemove(DAT_00465724,node);
+  DlistRemove(Dlist_00465724,node);
   return (int)node;
 }
 
@@ -1651,8 +1631,8 @@ void FUN_00412434(undefined param_1,undefined param_2,undefined param_3,DlistNod
 
 {
   param_4[4].next = (DlistNode *)0x0;
-  DlistRemove(DAT_00465720,param_4);
-  DlistInsert(DAT_00465724,param_4,-1);
+  DlistRemove(Dlist_00465720,param_4);
+  DlistInsert(Dlist_00465724,param_4,-1);
   return;
 }
 
@@ -1669,79 +1649,70 @@ void FUN_00412468(undefined param_1,undefined param_2,undefined param_3,short pa
 
 
 
-void FUN_00412490(undefined param_1,undefined param_2,undefined param_3,int param_4)
+void __stdcall FUN_00412490(int param_1)
 
 {
   short sVar1;
-  undefined2 uVar2;
-  DlistNode *pDVar3;
-  DlistNode *pDVar4;
-  undefined4 uVar5;
-  DlistNode *pDVar6;
+  bool bVar2;
+  undefined3 extraout_var;
+  PushortWithNode *prev;
+  PushortWithNode *next;
+  undefined3 extraout_var_00;
+  PushortWithNode *pPVar3;
   undefined extraout_CL;
-  undefined uVar7;
+  undefined uVar4;
   undefined extraout_DL;
-  undefined uVar8;
-  undefined2 extraout_DX;
-  undefined2 extraout_DX_00;
-  undefined2 extraout_DX_02;
-  short *psVar9;
+  undefined extraout_DL_00;
+  undefined extraout_DL_01;
+  undefined uVar5;
+  short *psVar6;
+  DlistNode *node;
   DlistNode local_2c;
   ushort local_20;
   Rect16 local_1e [2];
   short local_8;
   short local_6;
-  undefined2 extraout_DX_01;
   
   local_8 = 0;
-  psVar9 = *(short **)(param_4 + 0x6a);
-  for (local_6 = 0; local_6 < *(short *)(param_4 + 0x58); local_6 = local_6 + 1) {
-    sVar1 = *psVar9;
+  psVar6 = *(short **)(param_1 + 0x6a);
+  for (local_6 = 0; local_6 < *(short *)(param_1 + 0x58); local_6 = local_6 + 1) {
+    sVar1 = *psVar6;
     Memcpy(&local_2c,&DAT_00464910 + sVar1 * 0x24,0x24);
-    pDVar3 = (DlistNode *)(uint)local_20;
-    uVar7 = extraout_CL;
-    uVar8 = extraout_DL;
+    next = (PushortWithNode *)(uint)local_20;
+    uVar4 = extraout_CL;
+    uVar5 = extraout_DL;
     if (((local_20 & 0x10) == 0) && ((local_20 & 0x106) != 0)) {
       FUN_00412086();
       Draw::DirtyRect(local_1e);
-      pDVar3 = &local_2c;
-      pDVar4 = (DlistNode *)DlistPrev(pDVar3);
-      uVar2 = extraout_DX;
-      while (pDVar6 = pDVar4, pDVar6 != (DlistNode *)0x0) {
-        uVar5 = FUN_004122d0((char)local_1e,(char)uVar2,(char)pDVar3,local_1e,
-                             (undefined *)((int)&pDVar6[1].prev + 2));
-        if ((short)uVar5 != 0) {
-          *(ushort *)&pDVar6[1].prev = *(ushort *)&pDVar6[1].prev | 0x40;
+      for (prev = (PushortWithNode *)DlistPrev(&local_2c); prev != (PushortWithNode *)0x0;
+          prev = (PushortWithNode *)DlistPrev(&prev->node)) {
+        bVar2 = Rect16::intersects(local_1e,(Rect16 *)&prev->field3_0xe);
+        if ((short)CONCAT31(extraout_var,bVar2) != 0) {
+          prev->field2_0xc = prev->field2_0xc | 0x40;
         }
-        pDVar4 = (DlistNode *)DlistPrev(pDVar6);
-        uVar2 = extraout_DX_00;
-        pDVar3 = pDVar6;
       }
-      pDVar4 = &local_2c;
-      pDVar6 = DlistNext(pDVar4);
-      uVar8 = (undefined)extraout_DX_01;
-      uVar7 = SUB41(pDVar4,0);
-      uVar2 = extraout_DX_01;
-      while (pDVar3 = pDVar6, pDVar3 != (DlistNode *)0x0) {
-        uVar5 = FUN_004122d0((char)local_1e,(char)uVar2,(char)pDVar4,local_1e,
-                             (undefined *)((int)&pDVar3[1].prev + 2));
-        if ((short)uVar5 != 0) {
-          *(ushort *)&pDVar3[1].prev = *(ushort *)&pDVar3[1].prev | 0x40;
+      node = &local_2c;
+      next = (PushortWithNode *)DlistNext(node);
+      uVar4 = SUB41(node,0);
+      uVar5 = extraout_DL_00;
+      while (next != (PushortWithNode *)0x0) {
+        bVar2 = Rect16::intersects(local_1e,(Rect16 *)&next->field3_0xe);
+        if ((short)CONCAT31(extraout_var_00,bVar2) != 0) {
+          next->field2_0xc = next->field2_0xc | 0x40;
         }
-        pDVar6 = DlistNext(pDVar3);
-        uVar8 = (undefined)extraout_DX_02;
-        uVar7 = SUB41(pDVar3,0);
-        uVar2 = extraout_DX_02;
-        pDVar4 = pDVar3;
+        pPVar3 = (PushortWithNode *)DlistNext(&next->node);
+        uVar4 = SUB41(next,0);
+        next = pPVar3;
+        uVar5 = extraout_DL_01;
       }
     }
     if ((local_20 & 10) != 0) {
-      FUN_00412434((char)pDVar3,uVar8,uVar7,&DAT_00464910 + sVar1 * 0x24);
+      FUN_00412434((char)next,uVar5,uVar4,&DAT_00464910 + sVar1 * 0x24);
       local_8 = local_8 + 1;
     }
-    psVar9 = psVar9 + 1;
+    psVar6 = psVar6 + 1;
   }
-  *(short *)(param_4 + 0x58) = *(short *)(param_4 + 0x58) - local_8;
+  *(short *)(param_1 + 0x58) = *(short *)(param_1 + 0x58) - local_8;
   return;
 }
 
@@ -1750,104 +1721,95 @@ void FUN_00412490(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_004125a8(void)
 
 {
-  undefined *puVar1;
-  ushort uVar2;
-  undefined2 uVar3;
-  Dlist *pDVar4;
-  undefined4 uVar5;
+  ushort uVar1;
+  undefined2 uVar2;
+  undefined4 uVar3;
+  bool bVar4;
+  Dlist *pDVar5;
+  DlistNode *pDVar6;
+  undefined3 extraout_var;
   undefined extraout_DL;
   undefined extraout_DL_00;
   undefined extraout_DL_01;
-  undefined uVar6;
-  undefined extraout_DL_02;
-  undefined extraout_DL_03;
-  undefined extraout_DL_04;
   undefined uVar7;
-  Dlist *pDVar8;
+  undefined extraout_DL_02;
+  undefined uVar8;
+  Dlist *pDVar9;
   Rect16 *rectOptional;
   Dlist *node;
-  Dlist *node_00;
-  DlistNode *pDVar9;
   
-  pDVar8 = DAT_00465720;
-  pDVar4 = (Dlist *)DlistHead(DAT_00465720);
-  uVar6 = extraout_DL;
-  while (node_00 = pDVar4, uVar7 = SUB41(pDVar8,0), node_00 != (Dlist *)0x0) {
-    uVar2 = *(ushort *)&node_00[1].tail;
-    if ((uVar2 & 0x45) != 0) {
-      if ((uVar2 & 0x200) != 0) {
+  pDVar9 = Dlist_00465720;
+  pDVar5 = (Dlist *)DlistHead(Dlist_00465720);
+  uVar7 = extraout_DL;
+  while (node = pDVar5, uVar8 = SUB41(pDVar9,0), node != (Dlist *)0x0) {
+    uVar1 = *(ushort *)&node[1].tail;
+    if ((uVar1 & 0x45) != 0) {
+      if ((uVar1 & 0x200) != 0) {
         DAT_00467dbc = DAT_004657da + DAT_004657de + -1;
         DAT_00467dc0 = DAT_004657dc + DAT_004657e0 + -1;
         DAT_00467dba = DAT_004657da;
         DAT_00467dbe = DAT_004657dc;
       }
-      if (*(int *)((int)&node_00[2].tail + 2) != 0) {
-        if ((uVar2 & 5) != 0) {
-          rectOptional = (Rect16 *)((int)&node_00[1].tail + 2);
+      if (*(int *)((int)&node[2].tail + 2) != 0) {
+        if ((uVar1 & 5) != 0) {
+          rectOptional = (Rect16 *)((int)&node[1].tail + 2);
           Draw::DirtyRect(rectOptional);
-          uVar7 = SUB41(rectOptional,0);
-          uVar6 = extraout_DL_00;
+          uVar8 = SUB41(rectOptional,0);
+          uVar7 = extraout_DL_00;
         }
-        if ((uVar2 & 0x400) != 0) {
-          pDVar9 = node_00[4].head;
-          (*(code *)pDVar9[6].next)();
-          uVar7 = SUB41(pDVar9,0);
-          uVar6 = extraout_DL_01;
+        if ((uVar1 & 0x400) != 0) {
+          pDVar6 = node[4].head;
+          (*(code *)pDVar6[6].next)();
+          uVar8 = SUB41(pDVar6,0);
+          uVar7 = extraout_DL_01;
         }
-        if ((uVar2 & 0xa0) == 0) {
+        if ((uVar1 & 0xa0) == 0) {
           FUN_004119e4();
         }
-        else if ((uVar2 & 0xa0) == 0x20) {
-          uVar5 = *(undefined4 *)((int)&node_00[2].tail + 2);
-          uVar3 = *(undefined2 *)((int)&node_00[3].head + 2);
-          FUN_004315b4((char)uVar3,uVar6,uVar7,uVar3,
-                       CONCAT22((short)((uint)uVar5 >> 0x10),*(undefined2 *)&node_00[3].tail),uVar5)
-          ;
+        else if ((uVar1 & 0xa0) == 0x20) {
+          uVar3 = *(undefined4 *)((int)&node[2].tail + 2);
+          uVar2 = *(undefined2 *)((int)&node[3].head + 2);
+          FUN_004315b4((char)uVar2,uVar7,uVar8,uVar2,
+                       CONCAT22((short)((uint)uVar3 >> 0x10),*(undefined2 *)&node[3].tail),uVar3);
         }
-        else if ((uVar2 & 0xa0) == 0x80) {
+        else if ((uVar1 & 0xa0) == 0x80) {
           FUN_00411ceb();
         }
-        if ((uVar2 & 8) != 0) {
+        if ((uVar1 & 8) != 0) {
           FUN_00431420();
-          if ((uVar2 & 0xa0) == 0) {
+          if ((uVar1 & 0xa0) == 0) {
             FUN_004119e4();
           }
-          else if (((uVar2 & 0xa0) != 0x20) && ((uVar2 & 0xa0) == 0x80)) {
+          else if (((uVar1 & 0xa0) != 0x20) && ((uVar1 & 0xa0) == 0x80)) {
             FUN_00411ceb();
           }
           FUN_004313d8();
         }
       }
-      if ((uVar2 & 0x800) != 0) {
-        (**(code **)((int)&node_00[4].head[6].prev + 2))();
+      if ((uVar1 & 0x800) != 0) {
+        (**(code **)((int)&node[4].head[6].prev + 2))();
       }
-      if ((uVar2 & 0x10) == 0) {
-        pDVar8 = node_00;
-        pDVar4 = (Dlist *)DlistNext((DlistNode *)node_00);
-        uVar6 = extraout_DL_02;
-        while (node = pDVar4, node != (Dlist *)0x0) {
-          puVar1 = (undefined *)((int)&node_00[1].tail + 2);
-          uVar5 = FUN_004122d0((char)puVar1,uVar6,(char)pDVar8,puVar1,
-                               (undefined *)((int)&node[1].tail + 2));
-          if ((short)uVar5 != 0) {
-            *(ushort *)&node[1].tail = *(ushort *)&node[1].tail | 0x40;
+      if ((uVar1 & 0x10) == 0) {
+        for (pDVar6 = DlistNext((DlistNode *)node); pDVar6 != (DlistNode *)0x0;
+            pDVar6 = DlistNext(pDVar6)) {
+          bVar4 = Rect16::intersects((Rect16 *)((int)&node[1].tail + 2),
+                                     (Rect16 *)((int)&pDVar6[1].prev + 2));
+          if ((short)CONCAT31(extraout_var,bVar4) != 0) {
+            *(ushort *)&pDVar6[1].prev = *(ushort *)&pDVar6[1].prev | 0x40;
           }
-          pDVar4 = (Dlist *)DlistNext((DlistNode *)node);
-          uVar6 = extraout_DL_03;
-          pDVar8 = node;
         }
       }
-      if ((uVar2 & 0x200) != 0) {
+      if ((uVar1 & 0x200) != 0) {
         DAT_00467dbe = 0;
         DAT_00467dba = 0;
         DAT_00467dbc = 0x1ff;
         DAT_00467dc0 = 0x17f;
       }
-      *(ushort *)&node_00[1].tail = *(ushort *)&node_00[1].tail & 0xffba;
+      *(ushort *)&node[1].tail = *(ushort *)&node[1].tail & 0xffba;
     }
-    pDVar4 = (Dlist *)DlistNext((DlistNode *)node_00);
-    uVar6 = extraout_DL_04;
-    pDVar8 = node_00;
+    pDVar5 = (Dlist *)DlistNext((DlistNode *)node);
+    uVar7 = extraout_DL_02;
+    pDVar9 = node;
   }
   return;
 }
@@ -1876,22 +1838,17 @@ void FUN_004127bc(void)
 
 {
   short *psVar1;
-  undefined2 extraout_var;
-  undefined extraout_CL;
-  undefined extraout_CL_00;
-  undefined extraout_DL;
-  undefined extraout_DL_00;
   short sVar2;
   DlistNode *node;
   
   if (_DAT_00460258 == 0) {
-    DAT_0046490c = DlistNew();
-    DAT_0046572c = DlistNew();
-    DAT_00465720 = DlistNew();
-    DAT_00465724 = DlistNew();
-    DAT_00465728 = DlistNew();
-    DAT_00465730 = DlistNew();
-    DAT_00465734 = DlistNew();
+    Dlist_0046490c = DlistNew();
+    Dlist_0046572c = DlistNew();
+    Dlist_00465720 = DlistNew();
+    Dlist_00465724 = DlistNew();
+    Dlist_00465728 = DlistNew();
+    Dlist_00465730 = DlistNew();
+    Dlist_00465734 = DlistNew();
     sVar2 = 0;
     psVar1 = &DAT_00465744;
     do {
@@ -1905,16 +1862,13 @@ void FUN_004127bc(void)
     do {
       *(short *)&node[1].next = sVar2;
       *(undefined2 *)&node[1].prev = 0;
-      DlistInsert(DAT_00465724,node,-1);
+      DlistInsert(Dlist_00465724,node,-1);
       node = (DlistNode *)&node[4].prev;
       sVar2 = sVar2 + 1;
     } while (sVar2 < 100);
     DAT_004657d8 = FUN_0044ca15();
-    FUN_00413a88((char)DAT_00467dba,extraout_DL,extraout_CL,&DAT_004657e2,
-                 CONCAT22(extraout_var,DAT_00467dba),CONCAT22(extraout_var,DAT_00467dbe),
-                 CONCAT22(extraout_var,DAT_00467dbc),CONCAT22(extraout_var,DAT_00467dc0));
-    FUN_00413acc((char)DAT_00467dba,extraout_DL_00,extraout_CL_00,DAT_00467dba,DAT_00467dbe,
-                 DAT_00467dbc,DAT_00467dc0);
+    FUN_00413a88(&DAT_004657e2,DAT_00467dba,DAT_00467dbe,DAT_00467dbc,DAT_00467dc0);
+    FUN_00413acc(DAT_00467dba,DAT_00467dbe,DAT_00467dbc,DAT_00467dc0);
     DAT_00460268 = 0;
     _DAT_00460258 = 1;
   }
@@ -1937,29 +1891,29 @@ void FUN_004128c8(void)
   
   if (_DAT_00460258 != 0) {
     FUN_00413a24();
-    pDVar2 = DlistHead(DAT_0046572c);
+    pDVar2 = DlistHead(Dlist_0046572c);
     while (pDVar2 != (DlistNode *)0x0) {
       pDVar3 = DlistNext(pDVar2);
       PoolFreeIfNotNull(pDVar2[1].next);
       PoolFree(pDVar2);
       pDVar2 = pDVar3;
     }
-    pDVar4 = DAT_00465728;
-    pDVar2 = DlistHead(DAT_00465728);
+    pDVar4 = Dlist_00465728;
+    pDVar2 = DlistHead(Dlist_00465728);
     uVar1 = extraout_EDX;
     while (pDVar2 != (DlistNode *)0x0) {
       FUN_00412d0c((uint)pDVar2,uVar1,(uint)pDVar4,(uint)pDVar2);
-      pDVar4 = DAT_00465728;
-      pDVar2 = DlistHead(DAT_00465728);
+      pDVar4 = Dlist_00465728;
+      pDVar2 = DlistHead(Dlist_00465728);
       uVar1 = extraout_EDX_00;
     }
-    PoolFreeIfNotNull(DAT_0046572c);
-    PoolFreeIfNotNull(DAT_00465724);
-    PoolFreeIfNotNull(DAT_00465720);
-    PoolFreeIfNotNull(DAT_00465728);
-    PoolFreeIfNotNull(DAT_0046490c);
-    PoolFreeIfNotNull(DAT_00465730);
-    PoolFreeIfNotNull(DAT_00465734);
+    PoolFreeIfNotNull(Dlist_0046572c);
+    PoolFreeIfNotNull(Dlist_00465724);
+    PoolFreeIfNotNull(Dlist_00465720);
+    PoolFreeIfNotNull(Dlist_00465728);
+    PoolFreeIfNotNull(Dlist_0046490c);
+    PoolFreeIfNotNull(Dlist_00465730);
+    PoolFreeIfNotNull(Dlist_00465734);
     _DAT_00460258 = 0;
   }
   return;
@@ -2103,7 +2057,7 @@ void * __stdcall FUN_00412ac4(ushort param_1)
     }
     *(ushort **)((int)&node[2].next + 2) = puVar8;
     *(ushort *)((int)&node[4].next + 2) = param_1;
-    DlistInsert(DAT_0046490c,node,-1);
+    DlistInsert(Dlist_0046490c,node,-1);
     local_c = 0;
     for (sVar9 = 0; sVar9 < *(short *)((int)&node[1].next + 2); sVar9 = sVar9 + 1) {
       iVar7 = *(int *)(*(int *)((int)&node[2].prev + 2) + sVar9 * 4) +
@@ -2119,7 +2073,7 @@ void * __stdcall FUN_00412ac4(ushort param_1)
     node[4].prev = (DlistNode *)(local_c + 8);
   }
   else {
-    node = DlistHead(DAT_0046490c);
+    node = DlistHead(Dlist_0046490c);
     while ((uint)*(ushort *)((int)&node[4].next + 2) != (int)(short)param_1) {
       node = DlistNext(node);
     }
@@ -2179,7 +2133,7 @@ undefined4 FUN_00412d0c(uint param_1,undefined4 param_2,uint param_3,uint param_
       uVar3 = extraout_DL_00;
     }
     if (_DAT_00462c38 == 0) {
-      DlistRemove(DAT_0046490c,*(DlistNode **)(param_4 + 0x26));
+      DlistRemove(Dlist_0046490c,*(DlistNode **)(param_4 + 0x26));
       pvVar4 = *(void **)(param_4 + 0x26);
       uVar1 = PoolFree(pvVar4);
       uVar2 = SUB41(pvVar4,0);
@@ -2204,16 +2158,16 @@ undefined4 FUN_00412d84(undefined param_1,undefined param_2,undefined param_3,un
   undefined4 uVar4;
   
   bVar1 = false;
-  pDVar3 = DAT_00465728;
-  pDVar2 = DlistHead(DAT_00465728);
+  pDVar3 = Dlist_00465728;
+  pDVar2 = DlistHead(Dlist_00465728);
   uVar4 = extraout_EDX;
   while ((pDVar2 != (DlistNode *)0x0 && (!bVar1))) {
     if ((short)param_4 == *(short *)((int)&pDVar2[8].next + 2)) {
       FUN_00412d0c((uint)pDVar2,uVar4,(uint)pDVar3,(uint)pDVar2);
       bVar1 = true;
     }
-    pDVar3 = DAT_00465728;
-    pDVar2 = DlistNext((DlistNode *)DAT_00465728);
+    pDVar3 = Dlist_00465728;
+    pDVar2 = DlistNext((DlistNode *)Dlist_00465728);
     uVar4 = extraout_EDX_00;
   }
   return 0;
@@ -2235,7 +2189,7 @@ void __stdcall FUN_00412dc8(int param_1)
     *(undefined2 *)(param_1 + 0x1c) = 0;
     *(undefined2 *)(param_1 + 0x10) = 0;
     *(undefined2 *)(param_1 + 0x1e) = 0;
-    FUN_00435151((char)DAT_00465728,extraout_DL,(char)iVar1,DAT_00465728,param_1,FUN_004122a8);
+    FUN_00435151((char)Dlist_00465728,extraout_DL,(char)iVar1,Dlist_00465728,param_1,FUN_004122a8);
     *(undefined2 *)(param_1 + 0x1a) = 1;
   }
   return;
@@ -2289,7 +2243,7 @@ void FUN_00412e70(undefined param_1,undefined param_2,undefined param_3,int para
     *(undefined2 *)(param_4 + 0x1c) = 0;
     *(undefined2 *)(param_4 + 0x10) = 0;
     *(undefined2 *)(param_4 + 0x1e) = 0;
-    FUN_00435151((char)DAT_00465728,extraout_DL,(char)iVar1,DAT_00465728,param_4,FUN_004122a8);
+    FUN_00435151((char)Dlist_00465728,extraout_DL,(char)iVar1,Dlist_00465728,param_4,FUN_004122a8);
     *(undefined2 *)(param_4 + 0x1a) = 1;
   }
   return;
@@ -2308,7 +2262,7 @@ void FUN_00412ec0(undefined param_1,undefined param_2,undefined param_3,int para
     FUN_00412a28(param_4);
     *(undefined2 *)(param_4 + 0x18) = 4;
     *(int *)(param_4 + 0x14) = DAT_00460264 + param_5;
-    FUN_00435151((char)DAT_00465728,extraout_DL,(char)iVar1,DAT_00465728,param_4,FUN_004122a8);
+    FUN_00435151((char)Dlist_00465728,extraout_DL,(char)iVar1,Dlist_00465728,param_4,FUN_004122a8);
     *(undefined2 *)(param_4 + 0x1a) = 1;
   }
   return;
@@ -2320,42 +2274,39 @@ void FUN_00412f04(undefined param_1,undefined param_2,undefined param_3,DlistNod
 
 {
   short sVar1;
-  Dlist *pDVar2;
-  undefined *puVar3;
-  undefined uVar4;
+  undefined *puVar2;
+  undefined uVar3;
   undefined *extraout_ECX;
-  undefined *puVar5;
+  undefined *puVar4;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined uVar6;
-  short sVar7;
-  short *psVar8;
+  undefined uVar5;
+  short sVar6;
+  short *psVar7;
   
   if ((param_4 != (DlistNode *)0x0) && (*(short *)((int)&param_4[3].next + 2) != 0)) {
     *(undefined2 *)&param_4[3].next = 1;
-    pDVar2 = DAT_00465728;
-    DlistRemove(DAT_00465728,param_4);
+    DlistRemove(Dlist_00465728,param_4);
     *(undefined2 *)((int)&param_4[3].next + 2) = 0;
-    psVar8 = *(short **)((int)&param_4[0xd].next + 2);
+    psVar7 = *(short **)((int)&param_4[0xd].next + 2);
     if ((*(byte *)((int)&param_4[9].prev + 2) & 2) == 0) {
-      for (sVar7 = 0; sVar7 < *(short *)&param_4[0xb].next; sVar7 = sVar7 + 1) {
-        pDVar2 = (Dlist *)(*psVar8 * 9);
-        (&DAT_0046491c)[*psVar8 * 0x12] = 2;
-        psVar8 = psVar8 + 1;
+      for (sVar6 = 0; sVar6 < *(short *)&param_4[0xb].next; sVar6 = sVar6 + 1) {
+        (&DAT_0046491c)[*psVar7 * 0x12] = 2;
+        psVar7 = psVar7 + 1;
       }
-      FUN_00412490((char)pDVar2,extraout_DL,(char)extraout_ECX,param_4);
+      FUN_00412490(param_4);
     }
     else {
-      puVar5 = extraout_ECX;
-      uVar6 = extraout_DL;
-      for (sVar7 = 0; sVar7 < *(short *)&param_4[0xb].next; sVar7 = sVar7 + 1) {
-        sVar1 = *psVar8;
-        psVar8 = psVar8 + 1;
-        puVar3 = &DAT_00464910 + sVar1 * 0x24;
-        uVar4 = SUB41(puVar5,0);
-        puVar5 = puVar3;
-        FUN_00412434((char)puVar3,uVar6,uVar4,puVar3);
-        uVar6 = extraout_DL_00;
+      puVar4 = extraout_ECX;
+      uVar5 = extraout_DL;
+      for (sVar6 = 0; sVar6 < *(short *)&param_4[0xb].next; sVar6 = sVar6 + 1) {
+        sVar1 = *psVar7;
+        psVar7 = psVar7 + 1;
+        puVar2 = &DAT_00464910 + sVar1 * 0x24;
+        uVar3 = SUB41(puVar4,0);
+        puVar4 = puVar2;
+        FUN_00412434((char)puVar2,uVar5,uVar3,puVar2);
+        uVar5 = extraout_DL_00;
       }
       *(undefined2 *)&param_4[0xb].next = 0;
     }
@@ -2376,8 +2327,8 @@ uint FUN_00412f98(undefined4 param_1,uint param_2,undefined4 param_3,int param_4
   uVar1 = CONCAT22((short)(param_2 >> 0x10),*(ushort *)(param_4 + 0xc));
   if ((param_5 != *(ushort *)(param_4 + 0xc)) &&
      (*(ushort *)(param_4 + 0xc) = param_5, unaff_ESI = uVar1, *(short *)(param_4 + 0x1a) != 0)) {
-    DlistRemove(DAT_00465728,(DlistNode *)param_4);
-    FUN_00435151((char)DAT_00465728,extraout_DL,extraout_CL,DAT_00465728,param_4,FUN_004122a8);
+    DlistRemove(Dlist_00465728,(DlistNode *)param_4);
+    FUN_00435151((char)Dlist_00465728,extraout_DL,extraout_CL,Dlist_00465728,param_4,FUN_004122a8);
   }
   return unaff_ESI;
 }
@@ -2403,17 +2354,17 @@ void FUN_00413004(void)
 {
   short sVar1;
   short sVar2;
+  ulonglong uVar3;
   DlistNode *node;
-  bool bVar3;
-  ushort uVar4;
-  undefined uVar5;
-  short sVar6;
+  bool bVar4;
+  ushort uVar5;
+  undefined uVar6;
   short sVar7;
-  DlistNode *pDVar8;
+  short sVar8;
   DlistNode *pDVar9;
   DlistNode *pDVar10;
-  short *psVar11;
-  int iVar12;
+  int iVar11;
+  short *psVar12;
   int iVar13;
   int iVar14;
   undefined uVar15;
@@ -2436,15 +2387,9 @@ void FUN_00413004(void)
   undefined extraout_DL_02;
   undefined extraout_DL_03;
   undefined2 uVar18;
-  DlistNode *pDVar19;
-  DlistNode *extraout_EDX;
-  DlistNode *extraout_EDX_00;
-  DlistNode *extraout_EDX_01;
-  DlistNode *extraout_EDX_02;
-  short sVar20;
-  uint uVar21;
-  DlistNode *pDVar22;
-  short *psVar23;
+  short sVar19;
+  uint uVar20;
+  short *psVar21;
   short sStack_48;
   short sStack_46;
   short sStack_28;
@@ -2460,70 +2405,66 @@ void FUN_00413004(void)
   if (DAT_00460260 != (code *)0x0) {
     (*DAT_00460260)();
   }
-  pDVar8 = (DlistNode *)FUN_0044ca04();
-  DAT_00460264 = pDVar8;
-  pDVar9 = DlistHead(DAT_00465728);
+  pDVar9 = (DlistNode *)FUN_0044ca04();
+  DAT_00460264 = pDVar9;
+  pDVar10 = DlistHead(Dlist_00465728);
 joined_r0x0041303b:
   do {
-    node = pDVar9;
+    node = pDVar10;
     if (node == (DlistNode *)0x0) {
-      for (pDVar9 = DlistHead(DAT_00465730); pDVar9 != (DlistNode *)0x0; pDVar9 = DlistNext(pDVar9))
-      {
-        (*(code *)pDVar9[1].next)();
+      for (pDVar10 = DlistHead(Dlist_00465730); pDVar10 != (DlistNode *)0x0;
+          pDVar10 = DlistNext(pDVar10)) {
+        (*(code *)pDVar10[1].next)();
       }
       FUN_004125a8();
       if (DAT_00460260 != (code *)0x0) {
         (*DAT_00460260)();
       }
-      for (pDVar9 = DlistHead(DAT_00465734); pDVar9 != (DlistNode *)0x0; pDVar9 = DlistNext(pDVar9))
-      {
-        (*(code *)pDVar9[1].next)();
+      for (pDVar10 = DlistHead(Dlist_00465734); pDVar10 != (DlistNode *)0x0;
+          pDVar10 = DlistNext(pDVar10)) {
+        (*(code *)pDVar10[1].next)();
       }
       return;
     }
-    pDVar9 = DlistNext(node);
+    pDVar10 = DlistNext(node);
     pDVar16 = node[2].prev;
-  } while (pDVar8 < pDVar16);
+  } while (pDVar9 < pDVar16);
   if (pDVar16 == (DlistNode *)0x0) {
-    node[2].prev = pDVar8;
-    pDVar16 = pDVar8;
+    node[2].prev = pDVar9;
+    pDVar16 = pDVar9;
   }
-  node[0xe].prev = pDVar8;
-  pDVar16 = (DlistNode *)((int)pDVar8 - (int)pDVar16);
-  pDVar10 = (DlistNode *)((int)&pDVar8->next + (uint)*(ushort *)((int)&node[2].next + 2));
-  node[2].prev = pDVar10;
+  node[0xe].prev = pDVar9;
+  pDVar16 = (DlistNode *)((int)pDVar9 - (int)pDVar16);
+  node[2].prev = (DlistNode *)((int)&pDVar9->next + (uint)*(ushort *)((int)&node[2].next + 2));
   if (*(short *)&node[10].prev == 0) {
-    pDVar22 = (DlistNode *)0x0;
-    pDVar19 = pDVar8;
+    iVar11 = 0;
   }
   else {
-    uVar21 = (uint)*(ushort *)((int)&node[2].next + 2);
-    pDVar10 = (DlistNode *)(ZEXT48(pDVar16) / (ulonglong)uVar21);
-    node[2].prev = (DlistNode *)((int)&pDVar8->next + uVar21);
-    pDVar19 = (DlistNode *)((uint)pDVar16 % uVar21);
-    pDVar22 = pDVar10;
-    if ((short)(ZEXT48(pDVar16) / (ulonglong)uVar21) != 0) {
-      pDVar22 = (DlistNode *)0x1;
+    uVar20 = (uint)*(ushort *)((int)&node[2].next + 2);
+    uVar3 = ZEXT48(pDVar16) / (ulonglong)uVar20;
+    iVar11 = (int)uVar3;
+    node[2].prev = (DlistNode *)((int)&pDVar9->next + uVar20);
+    if ((short)uVar3 != 0) {
+      iVar11 = 1;
     }
   }
-  bVar3 = true;
+  bVar4 = true;
 LAB_004130aa:
   if ((*(byte *)&node[3].next & 4) != 0) {
-    if (bVar3) {
-      uVar5 = SUB41(pDVar16,0);
+    if (bVar4) {
       pDVar16 = node;
-      FUN_00412490((char)pDVar10,(char)pDVar19,uVar5,node);
-      bVar3 = false;
+      FUN_00412490(node);
+      bVar4 = false;
     }
     sStack_46 = 1;
-    psVar23 = *(short **)((int)&node[5].next + 2);
-    sVar20 = *(short *)&node[2].next;
-    iVar12 = *(int *)((int)&node[4].prev + 2);
+    psVar21 = *(short **)((int)&node[5].next + 2);
+    sVar19 = *(short *)&node[2].next;
+    iVar13 = *(int *)((int)&node[4].prev + 2);
 LAB_004134c3:
-    iVar13 = (int)sVar20;
-    sVar6 = psVar23[iVar13 * 4 + 2];
-    if (-1 < sVar6) {
-      *(short *)&node[2].next = sVar20;
+    iVar14 = (int)sVar19;
+    sVar7 = psVar21[iVar14 * 4 + 2];
+    if (-1 < sVar7) {
+      *(short *)&node[2].next = sVar19;
       *(undefined2 *)&node[0xb].next = 0;
       sStack_1a = *(short *)&node[3].next;
       if (*(short *)((int)&node[0xd].prev + 2) == 0) {
@@ -2533,33 +2474,33 @@ LAB_004134c3:
         puStack_20 = &DAT_004657da;
       }
       sStack_48 = 0;
-      psVar23 = psVar23 + sVar20 * 4 + 2;
+      psVar21 = psVar21 + sVar19 * 4 + 2;
       if (0 < sStack_46) {
         do {
           uStack_1c = 0;
-          iVar13 = *(int *)(*(int *)(iVar12 + 0x16) + *psVar23 * 4);
-          *(int *)((int)&node[4].next + 2) = iVar13;
-          iVar13 = *(int *)(*(int *)((int)&node[4].prev + 2) + 0x12) + iVar13;
-          sVar6 = *(short *)&node[1].next + psVar23[-2];
-          sVar7 = *(short *)((int)&node[1].next + 2) + psVar23[-1];
-          uStack_24 = *(undefined2 *)(iVar13 + 2);
-          uStack_22 = *(undefined2 *)(iVar13 + 4);
-          sStack_28 = sVar6;
-          sStack_26 = sVar7;
-          uVar21 = FUN_0041233c((char)puStack_20,(char)iVar13,(char)pDVar16,puStack_20,&sStack_28);
-          uStack_16 = (ushort)uVar21;
+          iVar11 = *(int *)(*(int *)(iVar13 + 0x16) + *psVar21 * 4);
+          *(int *)((int)&node[4].next + 2) = iVar11;
+          iVar11 = *(int *)(*(int *)((int)&node[4].prev + 2) + 0x12) + iVar11;
+          sVar7 = *(short *)&node[1].next + psVar21[-2];
+          sVar8 = *(short *)((int)&node[1].next + 2) + psVar21[-1];
+          uStack_24 = *(undefined2 *)(iVar11 + 2);
+          uStack_22 = *(undefined2 *)(iVar11 + 4);
+          sStack_28 = sVar7;
+          sStack_26 = sVar8;
+          uVar20 = FUN_0041233c((char)puStack_20,(char)iVar11,(char)pDVar16,puStack_20,&sStack_28);
+          uStack_16 = (ushort)uVar20;
           pDVar16 = extraout_ECX_05;
           if (uStack_16 != 0) {
             Memcpy((void *)((int)&node[7].next + 2),&sStack_28,8);
-            if ((*(byte *)(psVar23 + 1) & 1) != 0) {
+            if ((*(byte *)(psVar21 + 1) & 1) != 0) {
               uStack_1c = uStack_1c | 0x80;
             }
             iVar14 = FUN_00412404();
             pDVar16 = extraout_ECX_06;
             if (iVar14 != 0) {
-              *(int *)(iVar14 + 0x16) = iVar13;
-              *(short *)(iVar14 + 0x1a) = sVar6;
-              *(short *)(iVar14 + 0x1c) = sVar7;
+              *(int *)(iVar14 + 0x16) = iVar11;
+              *(short *)(iVar14 + 0x1a) = sVar7;
+              *(short *)(iVar14 + 0x1c) = sVar8;
               Memcpy((void *)(iVar14 + 0xe),&sStack_28,8);
               *(undefined2 *)(iVar14 + 10) = *(undefined2 *)&node[1].prev;
               if (*(short *)((int)&node[0xd].prev + 2) != 0) {
@@ -2571,15 +2512,15 @@ LAB_004134c3:
               if (*(int *)((int)&node[6].prev + 2) != 0) {
                 uStack_1c = uStack_1c | 0x800;
               }
-              uVar4 = uStack_1c | 1;
+              uVar5 = uStack_1c | 1;
               if ((uStack_16 & 2) != 0) {
-                uVar4 = uStack_1c | 0x21;
+                uVar5 = uStack_1c | 0x21;
               }
-              uStack_1c = uVar4;
+              uStack_1c = uVar5;
               if (((int)sStack_1a & 0x8010U) == 0) {
                 uStack_1c = uStack_1c | 2;
               }
-              uVar5 = extraout_CL;
+              uVar6 = extraout_CL;
               uVar15 = extraout_DL_01;
               if (*(short *)&node[9].next != 0) {
                 uStack_1c = uStack_1c & 0xfffd | 8;
@@ -2588,7 +2529,7 @@ LAB_004134c3:
                   FUN_0041172c((char)&sStack_28,extraout_DL_02,extraout_CL_00,&sStack_28,
                                node[10].next);
                   FUN_004313d8();
-                  uVar5 = extraout_CL_01;
+                  uVar6 = extraout_CL_01;
                   uVar15 = extraout_DL_03;
                 }
                 *(undefined2 *)&node[9].next = 0;
@@ -2598,15 +2539,15 @@ LAB_004134c3:
               }
               *(ushort *)(iVar14 + 0xc) = uStack_1c;
               *(DlistNode **)(iVar14 + 0x20) = node;
-              FUN_00435151((char)DAT_00465720,uVar15,uVar5,DAT_00465720,iVar14,FUN_004122bc);
+              FUN_00435151((char)Dlist_00465720,uVar15,uVar6,Dlist_00465720,iVar14,FUN_004122bc);
               pDVar16 = (DlistNode *)(uint)*(ushort *)(iVar14 + 8);
               *(ushort *)(*(int *)((int)&node[0xd].next + 2) + sStack_48 * 2) =
                    *(ushort *)(iVar14 + 8);
               *(short *)&node[0xb].next = *(short *)&node[0xb].next + 1;
             }
           }
-          sVar20 = sVar20 + 1;
-          psVar23 = psVar23 + 4;
+          sVar19 = sVar19 + 1;
+          psVar21 = psVar21 + 4;
           sStack_48 = sStack_48 + 1;
         } while (sStack_48 < sStack_46);
       }
@@ -2614,170 +2555,167 @@ LAB_004134c3:
         *(undefined2 *)&node[3].next = 2;
       }
 LAB_004136f1:
-      *(short *)&node[2].next = sVar20;
+      *(short *)&node[2].next = sVar19;
       goto LAB_004136f5;
     }
-    sVar7 = psVar23[iVar13 * 4];
-    sVar1 = psVar23[iVar13 * 4 + 1];
-    sVar2 = psVar23[iVar13 * 4 + 3];
+    sVar8 = psVar21[iVar14 * 4];
+    sVar1 = psVar21[iVar14 * 4 + 1];
+    sVar2 = psVar21[iVar14 * 4 + 3];
     uVar17 = (undefined)sVar1;
-    uVar5 = (undefined)(sVar6 + 0x16);
+    uVar6 = (undefined)(sVar7 + 0x16);
     uVar15 = SUB41(pDVar16,0);
-    switch(sVar6 + 0x16) {
+    switch(sVar7 + 0x16) {
     case 0:
-      if (sVar7 == 0) {
+      if (sVar8 == 0) {
         *(undefined2 *)&node[9].next = 2;
       }
       else {
         *(undefined2 *)&node[9].next = 1;
         pDVar16 = node;
-        FUN_0041391c(uVar5,uVar17,uVar15,node);
+        FUN_0041391c(uVar6,uVar17,uVar15,node);
       }
-      sVar20 = sVar20 + 1;
-      pDVar22 = (DlistNode *)0x0;
+      sVar19 = sVar19 + 1;
+      iVar11 = 0;
       break;
     case 1:
-      if (sVar1 == sVar7) {
-        iVar12 = 0;
+      if (sVar1 == sVar8) {
+        iVar11 = 0;
       }
       else {
-        iVar12 = Random();
-        iVar12 = iVar12 % ((int)sVar1 - (int)sVar7);
+        iVar11 = Random();
+        iVar11 = iVar11 % ((int)sVar1 - (int)sVar8);
       }
-      node[2].prev = (DlistNode *)((int)&(node[2].prev)->next + iVar12 + sVar7);
-      sVar20 = sVar20 + 1;
+      node[2].prev = (DlistNode *)((int)&(node[2].prev)->next + iVar11 + sVar8);
+      sVar19 = sVar19 + 1;
       goto LAB_004136f1;
     case 2:
-      psVar11 = (short *)((int)&node[3].prev + 2);
-      *psVar11 = *psVar11 + -1;
+      psVar12 = (short *)((int)&node[3].prev + 2);
+      *psVar12 = *psVar12 + -1;
       if (*(short *)((int)&node[3].prev + 2) == 0) {
-        sVar20 = sVar20 + 1;
+        sVar19 = sVar19 + 1;
       }
       else {
-        sVar20 = *(short *)((int)&node[8].prev + 2);
+        sVar19 = *(short *)((int)&node[8].prev + 2);
       }
       break;
     case 3:
-      *(short *)((int)&node[3].prev + 2) = sVar7;
-      sVar20 = sVar20 + 1;
+      *(short *)((int)&node[3].prev + 2) = sVar8;
+      sVar19 = sVar19 + 1;
       break;
     case 4:
       if (node[10].next == (DlistNode *)0x0) {
         pDVar16 = (DlistNode *)0x6;
-        FUN_0041227c(uVar5,uVar17,uVar15,6);
+        FUN_0041227c(uVar6,uVar17,uVar15,6);
       }
       else {
         FUN_00431420();
         FUN_0041179f();
-        uVar5 = FUN_004313d8();
+        uVar6 = FUN_004313d8();
         pDVar16 = extraout_ECX_03;
-        if (sVar7 != 0) {
+        if (sVar8 != 0) {
           pDVar16 = node;
-          FUN_0041393c(uVar5,extraout_DL_00,(char)extraout_ECX_03,node);
+          FUN_0041393c(uVar6,extraout_DL_00,(char)extraout_ECX_03,node);
         }
       }
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 5:
-      *(short *)(*(int *)((int)&node[9].next + 2) + 8) = *(short *)&node[1].next + sVar7;
-      iVar13 = *(int *)((int)&node[9].next + 2);
-      *(short *)(iVar13 + 10) = *(short *)((int)&node[1].next + 2) + sVar1;
+      *(short *)(*(int *)((int)&node[9].next + 2) + 8) = *(short *)&node[1].next + sVar8;
+      iVar14 = *(int *)((int)&node[9].next + 2);
+      *(short *)(iVar14 + 10) = *(short *)((int)&node[1].next + 2) + sVar1;
       pDVar16 = *(DlistNode **)((int)&node[9].next + 2);
-      FUN_00413ed0((char)pDVar16,(char)iVar13,uVar15,pDVar16);
-      sVar20 = sVar20 + 1;
+      FUN_00413ed0((char)pDVar16,(char)iVar14,uVar15,pDVar16);
+      sVar19 = sVar19 + 1;
       break;
     case 6:
       pDVar16 = *(DlistNode **)((int)&node[9].next + 2);
       FUN_00412fe4((char)pDVar16,uVar17,uVar15,pDVar16);
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 7:
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 8:
       pDVar16 = *(DlistNode **)((int)&node[9].next + 2);
       FUN_00412f04((char)pDVar16,uVar17,uVar15,pDVar16);
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 9:
       pDVar16 = *(DlistNode **)((int)&node[9].next + 2);
       FUN_00412e18((char)pDVar16,uVar17,uVar15,pDVar16);
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 10:
       if (*(short *)((int)&node[5].prev + 2) != 0) {
         (*(code *)node[6].next)();
       }
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       goto LAB_004136f1;
     case 0xb:
-      sVar20 = sVar7;
+      sVar19 = sVar8;
       break;
     case 0xc:
-      pDVar22 = (DlistNode *)0x0;
-      if (sVar7 == 1) {
-        if (*(short *)(iVar12 + 8) == 0) {
+      iVar11 = 0;
+      if (sVar8 == 1) {
+        if (*(short *)(iVar13 + 8) == 0) {
           uVar18 = 0;
         }
         else {
-          iVar13 = Random();
-          uVar18 = (undefined2)(iVar13 % (int)*(short *)(iVar12 + 8));
+          iVar14 = Random();
+          uVar18 = (undefined2)(iVar14 % (int)*(short *)(iVar13 + 8));
         }
-        pDVar10 = (DlistNode *)FUN_004129d4(node,uVar18);
+        FUN_004129d4(node,uVar18);
         pDVar16 = extraout_ECX;
-        pDVar19 = extraout_EDX;
         goto LAB_004130aa;
       }
-      if (sVar7 == 2) {
+      if (sVar8 == 2) {
         sStack_48 = *(short *)((int)&node[1].prev + 2) + 1;
-        if (sStack_48 == *(short *)(iVar12 + 8)) {
+        if (sStack_48 == *(short *)(iVar13 + 8)) {
           sStack_48 = 0;
         }
-        pDVar10 = (DlistNode *)FUN_004129d4(node,sStack_48);
+        FUN_004129d4(node,sStack_48);
         pDVar16 = extraout_ECX_00;
-        pDVar19 = extraout_EDX_00;
         goto LAB_004130aa;
       }
-      if (sVar7 == 3) {
-        pDVar10 = (DlistNode *)FUN_004129d4(node,sVar1);
+      if (sVar8 == 3) {
+        FUN_004129d4(node,sVar1);
         pDVar16 = extraout_ECX_01;
-        pDVar19 = extraout_EDX_01;
         goto LAB_004130aa;
       }
-      if (sVar7 == 4) goto LAB_004132f8;
+      if (sVar8 == 4) goto LAB_004132f8;
       break;
     case 0xd:
-      psVar11 = (short *)((int)&node[1].next + 2);
-      *psVar11 = *psVar11 + sVar7;
-      sVar20 = sVar20 + 1;
+      psVar12 = (short *)((int)&node[1].next + 2);
+      *psVar12 = *psVar12 + sVar8;
+      sVar19 = sVar19 + 1;
       break;
     case 0xe:
-      *(short *)&node[1].next = *(short *)&node[1].next + sVar7;
-      sVar20 = sVar20 + 1;
+      *(short *)&node[1].next = *(short *)&node[1].next + sVar8;
+      sVar19 = sVar19 + 1;
       break;
     case 0xf:
-      *(short *)&node[8].prev = sVar7;
-      *(short *)((int)&node[8].prev + 2) = sVar20 + 1;
-      sVar20 = sVar20 + 1;
+      *(short *)&node[8].prev = sVar8;
+      *(short *)((int)&node[8].prev + 2) = sVar19 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 0x10:
-      if (sVar7 != -0x8000) {
-        *(short *)&node[1].next = sVar7;
+      if (sVar8 != -0x8000) {
+        *(short *)&node[1].next = sVar8;
       }
       if (sVar1 != -0x8000) {
         *(short *)((int)&node[1].next + 2) = sVar1;
       }
-      sVar20 = sVar20 + 1;
+      sVar19 = sVar19 + 1;
       break;
     case 0x11:
-      if (sVar7 == *(short *)&node[8].prev) {
-        sVar20 = *(short *)((int)&node[8].prev + 2);
+      if (sVar8 == *(short *)&node[8].prev) {
+        sVar19 = *(short *)((int)&node[8].prev + 2);
       }
       else {
         sStack_48 = 0;
-        for (psVar11 = psVar23; psVar11[2] != -1; psVar11 = psVar11 + 4) {
-          if ((psVar11[2] == -7) || (*psVar11 == sVar7)) {
-            sVar20 = sStack_48;
+        for (psVar12 = psVar21; psVar12[2] != -1; psVar12 = psVar12 + 4) {
+          if ((psVar12[2] == -7) || (*psVar12 == sVar8)) {
+            sVar19 = sStack_48;
           }
           sStack_48 = sStack_48 + 1;
         }
@@ -2785,56 +2723,55 @@ LAB_004136f1:
       break;
     case 0x12:
       *(undefined2 *)&node[3].next = 0x10;
-      pDVar22 = (DlistNode *)0x0;
-      sVar20 = sVar20 + 1;
+      iVar11 = 0;
+      sVar19 = sVar19 + 1;
       break;
     case 0x13:
-      sVar20 = sVar20 + 1;
-      sStack_46 = sVar7;
+      sVar19 = sVar19 + 1;
+      sStack_46 = sVar8;
       break;
     case 0x14:
       *(short *)&node[3].prev = *(short *)&node[3].prev + 1;
-      sVar20 = 0;
+      sVar19 = 0;
       break;
     case 0x15:
       *(undefined2 *)&node[3].next = 1;
       *(undefined2 *)&node[3].prev = 1;
       pDVar16 = node;
-      uVar5 = FUN_00412fe4(uVar5,uVar17,uVar15,node);
-      FUN_00412f04(uVar5,extraout_DL,(char)pDVar16,node);
+      uVar6 = FUN_00412fe4(uVar6,uVar17,uVar15,node);
+      FUN_00412f04(uVar6,extraout_DL,(char)pDVar16,node);
       goto joined_r0x0041303b;
     default:
-      if (sVar6 < -499) {
+      if (sVar7 < -499) {
         uStack_14 = 0;
         if ((DAT_0046025c != (code *)0x0) &&
            (uStack_14 = (*DAT_0046025c)(), pDVar16 = extraout_ECX_04, (uStack_14 & 1) != 0)) {
-          sVar20 = *(short *)&node[2].next;
+          sVar19 = *(short *)&node[2].next;
         }
         if (uStack_14 == 0) {
-          sVar20 = sVar20 + 1;
+          sVar19 = sVar19 + 1;
         }
       }
     }
-    if ((short)pDVar22 != 0) {
-      sVar20 = sVar20 + sStack_46;
-      pDVar22 = (DlistNode *)((int)&pDVar22[-1].prev + 3);
+    if ((short)iVar11 != 0) {
+      sVar19 = sVar19 + sStack_46;
+      iVar11 = iVar11 + -1;
     }
     goto LAB_004134c3;
   }
 LAB_004136f5:
-  pDVar9 = DlistNext(node);
+  pDVar10 = DlistNext(node);
   goto joined_r0x0041303b;
 LAB_004132f8:
   if (sVar2 == 0) {
-    sVar20 = 0;
+    sVar19 = 0;
   }
   else {
-    iVar12 = Random();
-    sVar20 = (short)(iVar12 % (int)sVar2);
+    iVar13 = Random();
+    sVar19 = (short)(iVar13 % (int)sVar2);
   }
-  pDVar10 = (DlistNode *)FUN_004129d4(node,sVar20 + sVar1);
+  FUN_004129d4(node,sVar19 + sVar1);
   pDVar16 = extraout_ECX_02;
-  pDVar19 = extraout_EDX_02;
   goto LAB_004130aa;
 }
 
@@ -2915,9 +2852,9 @@ void FUN_00413838(void)
   DlistNode *node;
   
   node = (DlistNode *)PoolAlloc(0xc);
-  node[1].next = (DlistNode *)DAT_00465728;
-  DlistInsert(DAT_0046572c,node,0);
-  DAT_00465728 = DlistNew();
+  node[1].next = (DlistNode *)Dlist_00465728;
+  DlistInsert(Dlist_0046572c,node,0);
+  Dlist_00465728 = DlistNew();
   return;
 }
 
@@ -2936,8 +2873,8 @@ void FUN_00413868(void)
   Dlist *pDVar3;
   Dlist *pDVar4;
   
-  pDVar3 = DAT_00465728;
-  pDVar2 = (Dlist *)DlistHead(DAT_00465728);
+  pDVar3 = Dlist_00465728;
+  pDVar2 = (Dlist *)DlistHead(Dlist_00465728);
   uVar1 = extraout_DL;
   while (pDVar4 = pDVar2, pDVar4 != (Dlist *)0x0) {
     FUN_00412f04((char)pDVar4,uVar1,(char)pDVar3,pDVar4);
@@ -2945,13 +2882,13 @@ void FUN_00413868(void)
     uVar1 = extraout_DL_00;
     pDVar3 = pDVar4;
   }
-  PoolFreeIfNotNull(DAT_00465728);
-  node = DlistHead(DAT_0046572c);
-  DlistRemove(DAT_0046572c,node);
-  DAT_00465728 = (Dlist *)node[1].next;
+  PoolFreeIfNotNull(Dlist_00465728);
+  node = DlistHead(Dlist_0046572c);
+  DlistRemove(Dlist_0046572c,node);
+  Dlist_00465728 = (Dlist *)node[1].next;
   PoolFree(node);
-  pDVar3 = DAT_00465728;
-  pDVar2 = (Dlist *)DlistHead(DAT_00465728);
+  pDVar3 = Dlist_00465728;
+  pDVar2 = (Dlist *)DlistHead(Dlist_00465728);
   uVar1 = extraout_DL_01;
   while (pDVar4 = pDVar2, pDVar4 != (Dlist *)0x0) {
     FUN_00413e20((char)pDVar4,uVar1,(char)pDVar3,pDVar4);
@@ -3013,17 +2950,15 @@ void FUN_0041393c(undefined param_1,undefined param_2,undefined param_3,int para
 void __stdcall FUN_0041395c(int param_1,undefined4 param_2,undefined4 param_3,short param_4)
 
 {
-  ushort uVar1;
-  undefined2 uVar2;
-  uint uVar3;
+  undefined2 uVar1;
   int extraout_ECX;
-  int iVar4;
+  int iVar2;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
-  undefined4 uVar5;
-  short sVar6;
-  short *psVar7;
-  undefined2 *puVar8;
+  undefined4 uVar3;
+  short sVar4;
+  short *psVar5;
+  undefined2 *puVar6;
   short local_8;
   short local_6;
   
@@ -3043,25 +2978,22 @@ void __stdcall FUN_0041395c(int param_1,undefined4 param_2,undefined4 param_3,sh
     if (param_4 != -0x8000) {
       *(short *)(param_1 + 0xc) = param_4;
     }
-    uVar1 = *(ushort *)(param_1 + 0x18);
-    uVar3 = (uint)uVar1;
-    if ((uVar1 == 2) || (uVar1 == 0x10)) {
-      psVar7 = *(short **)(param_1 + 0x6a);
-      for (sVar6 = 0; sVar6 < *(short *)(param_1 + 0x58); sVar6 = sVar6 + 1) {
-        uVar3 = *psVar7 * 9;
-        (&DAT_0046491c)[*psVar7 * 0x12] = (&DAT_0046491c)[*psVar7 * 0x12] | 4;
-        psVar7 = psVar7 + 1;
+    if ((*(short *)(param_1 + 0x18) == 2) || (*(short *)(param_1 + 0x18) == 0x10)) {
+      psVar5 = *(short **)(param_1 + 0x6a);
+      for (sVar4 = 0; sVar4 < *(short *)(param_1 + 0x58); sVar4 = sVar4 + 1) {
+        (&DAT_0046491c)[*psVar5 * 0x12] = (&DAT_0046491c)[*psVar5 * 0x12] | 4;
+        psVar5 = psVar5 + 1;
       }
-      iVar4 = param_1;
-      FUN_00412490((char)uVar3,(char)(short)param_3,(char)local_6,param_1);
-      puVar8 = *(undefined2 **)(param_1 + 0x6a);
-      uVar5 = extraout_EDX;
-      for (sVar6 = 0; sVar6 < *(short *)(param_1 + 0x58); sVar6 = sVar6 + 1) {
-        uVar2 = *puVar8;
-        puVar8 = puVar8 + 1;
-        FUN_00412468((char)uVar2,(char)uVar5,(char)iVar4,uVar2,local_6,local_8);
-        iVar4 = extraout_ECX;
-        uVar5 = extraout_EDX_00;
+      iVar2 = param_1;
+      FUN_00412490(param_1);
+      puVar6 = *(undefined2 **)(param_1 + 0x6a);
+      uVar3 = extraout_EDX;
+      for (sVar4 = 0; sVar4 < *(short *)(param_1 + 0x58); sVar4 = sVar4 + 1) {
+        uVar1 = *puVar6;
+        puVar6 = puVar6 + 1;
+        FUN_00412468((char)uVar1,(char)uVar3,(char)iVar2,uVar1,local_6,local_8);
+        iVar2 = extraout_ECX;
+        uVar3 = extraout_EDX_00;
       }
     }
   }
@@ -3109,37 +3041,31 @@ void FUN_00413a54(undefined param_1,undefined param_2,undefined param_3,int para
 
 
 
-void FUN_00413a88(undefined param_1,undefined param_2,undefined param_3,short *param_4,
-                 undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
+void __stdcall FUN_00413a88(short *param_1,short param_2,short param_3,short param_4,short param_5)
 
 {
-  if (-1 < (short)param_5) {
-    *param_4 = (short)param_5;
+  if (-1 < param_2) {
+    *param_1 = param_2;
   }
-  if (-1 < (short)param_7) {
-    param_4[2] = ((short)param_7 - *param_4) + 1;
+  if (-1 < param_4) {
+    param_1[2] = (param_4 - *param_1) + 1;
   }
-  if (-1 < (short)param_6) {
-    param_4[1] = (short)param_6;
+  if (-1 < param_3) {
+    param_1[1] = param_3;
   }
-  if (-1 < (short)param_8) {
-    param_4[3] = ((short)param_8 - param_4[1]) + 1;
+  if (-1 < param_5) {
+    param_1[3] = (param_5 - param_1[1]) + 1;
   }
   return;
 }
 
 
 
-void FUN_00413acc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,
-                 undefined2 param_5,undefined2 param_6,undefined2 param_7)
+void __stdcall
+FUN_00413acc(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4)
 
 {
-  undefined3 in_register_00000001;
-  undefined2 uVar1;
-  
-  uVar1 = (undefined2)((uint3)in_register_00000001 >> 8);
-  FUN_00413a88((char)param_4,param_2,param_3,&DAT_004657da,CONCAT22(uVar1,param_4),
-               CONCAT22(uVar1,param_5),CONCAT22(uVar1,param_6),CONCAT22(uVar1,param_7));
+  FUN_00413a88(&DAT_004657da,param_1,param_2,param_3,param_4);
   return;
 }
 
@@ -3201,25 +3127,22 @@ uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *
 
 {
   undefined uVar1;
-  undefined2 *puVar2;
-  Rect16 *pRVar3;
-  undefined4 uVar4;
+  bool bVar2;
+  undefined2 *puVar3;
+  undefined3 extraout_var;
   undefined extraout_CL;
   undefined extraout_CL_00;
   undefined extraout_DL;
   undefined extraout_DL_00;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  int iVar5;
-  Rect16 *pRVar6;
+  int iVar4;
   Rect16 local_10;
   ushort local_8;
   undefined2 local_6;
   
   local_6 = 0;
   if ((param_4 != (Rect16 *)0x0) &&
-     (iVar5 = *(int *)&param_4[4].h, param_7 < *(short *)(iVar5 + 10))) {
-    iVar5 = *(int *)(*(int *)(iVar5 + 0x16) + param_7 * 4) + *(int *)(iVar5 + 0x12);
+     (iVar4 = *(int *)&param_4[4].h, param_7 < *(short *)(iVar4 + 10))) {
+    iVar4 = *(int *)(*(int *)(iVar4 + 0x16) + param_7 * 4) + *(int *)(iVar4 + 0x12);
     if ((short)param_5 == -0x8000) {
       param_5._0_2_ = param_4[1].x;
     }
@@ -3227,16 +3150,16 @@ uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *
       param_6 = CONCAT22((short)((uint)param_6 >> 0x10),param_4[1].y);
     }
     local_10.y = (short)param_6;
-    local_10.w = *(short *)(iVar5 + 2);
-    local_10.h = *(short *)(iVar5 + 4);
+    local_10.w = *(short *)(iVar4 + 2);
+    local_10.h = *(short *)(iVar4 + 4);
     if (param_4[0xd].h == 0) {
-      puVar2 = (undefined2 *)&DAT_004657e2;
+      puVar3 = (undefined2 *)&DAT_004657e2;
     }
     else {
-      puVar2 = &DAT_004657da;
+      puVar3 = &DAT_004657da;
     }
     local_10.x = (short)param_5;
-    param_4 = (Rect16 *)FUN_0041233c((char)puVar2,(char)local_10.h,(char)param_7,puVar2,&local_10);
+    param_4 = (Rect16 *)FUN_0041233c((char)puVar3,(char)local_10.h,(char)param_7,puVar3,&local_10);
     local_8 = (ushort)param_4;
     if (local_8 != 0) {
       local_6 = 1;
@@ -3249,7 +3172,7 @@ uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *
         }
       }
       else {
-        FUN_004315b4((char)param_4,extraout_DL,extraout_CL,(short)param_5,param_6,iVar5);
+        FUN_004315b4((char)param_4,extraout_DL,extraout_CL,(short)param_5,param_6,iVar4);
       }
       param_4 = &local_10;
       Draw::DirtyRect(param_4);
@@ -3264,23 +3187,18 @@ uint FUN_00413b88(undefined param_1,undefined param_2,undefined param_3,Rect16 *
           }
         }
         else {
-          FUN_004315b4(uVar1,extraout_DL_00,extraout_CL_00,(short)param_5,param_6,iVar5);
+          FUN_004315b4(uVar1,extraout_DL_00,extraout_CL_00,(short)param_5,param_6,iVar4);
         }
         param_4 = (Rect16 *)FUN_004313d8();
       }
     }
     if ((param_8 & 4) == 0) {
-      pRVar6 = DAT_00465720;
-      pRVar3 = (Rect16 *)DlistHead((Dlist *)DAT_00465720);
-      uVar4 = extraout_EDX;
-      while (param_4 = pRVar3, param_4 != (Rect16 *)0x0) {
-        uVar4 = FUN_004122d0((char)&local_10,(char)uVar4,(char)pRVar6,&local_10,&param_4[1].h);
-        if ((short)uVar4 != 0) {
+      for (param_4 = (Rect16 *)DlistHead(Dlist_00465720); param_4 != (Rect16 *)0x0;
+          param_4 = (Rect16 *)DlistNext((DlistNode *)param_4)) {
+        bVar2 = Rect16::intersects(&local_10,(Rect16 *)&param_4[1].h);
+        if ((short)CONCAT31(extraout_var,bVar2) != 0) {
           param_4[1].w = param_4[1].w | 0x40;
         }
-        pRVar3 = (Rect16 *)DlistNext((DlistNode *)param_4);
-        uVar4 = extraout_EDX_00;
-        pRVar6 = param_4;
       }
     }
   }
@@ -3475,14 +3393,14 @@ uint FUN_00413ee8(undefined param_1,undefined param_2,undefined param_3,DlistNod
   }
   uVar4 = (undefined2)(unaff_EBX >> 0x10);
   if (param_5 == 1) {
-    list = DAT_00465730;
+    list = Dlist_00465730;
     if ((unaff_EBX & 1) != 0) {
       unaff_EBX = CONCAT22(uVar4,DAT_0046025a);
       DAT_0046025a = DAT_0046025a + 1;
     }
   }
   else {
-    list = DAT_00465734;
+    list = Dlist_00465734;
     if ((unaff_EBX & 1) == 0) {
       unaff_EBX = CONCAT22(uVar4,DAT_0046025a);
       DAT_0046025a = DAT_0046025a + 1;
@@ -3502,9 +3420,9 @@ void FUN_00413f88(undefined param_1,undefined param_2,undefined param_3,undefine
   DlistNode *node;
   Dlist *list;
   
-  list = DAT_00465730;
+  list = Dlist_00465730;
   if (((ushort)param_4 & 1) != 0) {
-    list = DAT_00465734;
+    list = Dlist_00465734;
   }
   node = DlistHead(list);
   while( true ) {
@@ -3525,51 +3443,38 @@ DlistNode *
 FUN_00413fdc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5)
 
 {
-  short sVar1;
-  Dlist *node;
-  undefined4 uVar2;
+  bool bVar1;
+  short sVar2;
   DlistNode *pDVar3;
+  undefined3 extraout_var;
   undefined extraout_CL;
-  Dlist *pDVar4;
   undefined extraout_DL;
-  undefined extraout_DL_00;
-  undefined extraout_DL_01;
-  undefined uVar5;
-  short sVar6;
-  short local_c;
-  short local_a;
-  undefined2 local_8;
-  undefined2 local_6;
+  short sVar4;
+  Rect16 local_c;
   
-  local_c = param_4;
-  local_a = param_5;
-  local_8 = 1;
-  local_6 = 1;
-  pDVar4 = DAT_00465720;
-  node = (Dlist *)DlistTail(DAT_00465720);
-  uVar5 = extraout_DL;
-  while (node != (Dlist *)0x0) {
-    uVar2 = FUN_004122d0((char)&local_c,uVar5,(char)pDVar4,&local_c,
-                         (undefined *)((int)&node[1].tail + 2));
-    if ((short)uVar2 != 0) {
-      sVar6 = param_4 - *(short *)((int)&node[1].tail + 2);
-      if ((*(byte *)&node[1].tail & 0x80) != 0) {
-        sVar6 = *(short *)((int)&node[2].head + 2) - sVar6;
+  local_c.x = param_4;
+  local_c.y = param_5;
+  local_c.w = 1;
+  local_c.h = 1;
+  for (pDVar3 = (DlistNode *)DlistTail(Dlist_00465720); pDVar3 != (DlistNode *)0x0;
+      pDVar3 = (DlistNode *)DlistPrev(pDVar3)) {
+    bVar1 = Rect16::intersects(&local_c,(Rect16 *)((int)&pDVar3[1].prev + 2));
+    if ((short)CONCAT31(extraout_var,bVar1) != 0) {
+      sVar4 = param_4 - *(short *)((int)&pDVar3[1].prev + 2);
+      if ((*(byte *)&pDVar3[1].prev & 0x80) != 0) {
+        sVar4 = *(short *)((int)&pDVar3[2].next + 2) - sVar4;
       }
-      sVar1 = param_5 - *(short *)&node[2].head;
-      sVar6 = FUN_00431bcc((char)sVar1,extraout_DL_00,extraout_CL,sVar6,sVar1,
-                           *(undefined4 *)((int)&node[2].tail + 2));
-      if (sVar6 != 0) break;
+      sVar2 = param_5 - *(short *)&pDVar3[2].next;
+      sVar4 = FUN_00431bcc((char)sVar2,extraout_DL,extraout_CL,sVar4,sVar2,
+                           *(undefined4 *)((int)&pDVar3[2].prev + 2));
+      if (sVar4 != 0) break;
     }
-    pDVar4 = node;
-    node = (Dlist *)DlistPrev((DlistNode *)node);
-    uVar5 = extraout_DL_01;
   }
-  if (node == (Dlist *)0x0) {
+  if (pDVar3 == (DlistNode *)0x0) {
     pDVar3 = (DlistNode *)0x0;
   }
   else {
-    pDVar3 = node[4].head;
+    pDVar3 = pDVar3[4].next;
   }
   return pDVar3;
 }
@@ -3587,29 +3492,17 @@ void FUN_00414088(void)
 void FUN_0041408d(undefined param_1,undefined param_2,undefined param_3,Rect16 *param_4)
 
 {
-  undefined *puVar1;
-  undefined uVar2;
-  Dlist *pDVar3;
-  undefined4 uVar4;
-  undefined extraout_DL;
-  undefined extraout_DL_00;
-  Dlist *pDVar5;
-  Dlist *node;
+  bool bVar1;
+  DlistNode *node;
+  undefined3 extraout_var;
   
   FUN_00412086();
   Draw::DirtyRect(param_4);
-  pDVar5 = DAT_00465720;
-  pDVar3 = (Dlist *)DlistHead(DAT_00465720);
-  uVar2 = extraout_DL;
-  while (node = pDVar3, node != (Dlist *)0x0) {
-    puVar1 = (undefined *)((int)&node[1].tail + 2);
-    uVar4 = FUN_004122d0((char)puVar1,uVar2,(char)pDVar5,param_4,puVar1);
-    if ((short)uVar4 != 0) {
-      *(ushort *)&node[1].tail = *(ushort *)&node[1].tail | 0x40;
+  for (node = DlistHead(Dlist_00465720); node != (DlistNode *)0x0; node = DlistNext(node)) {
+    bVar1 = Rect16::intersects(param_4,(Rect16 *)((int)&node[1].prev + 2));
+    if ((short)CONCAT31(extraout_var,bVar1) != 0) {
+      *(ushort *)&node[1].prev = *(ushort *)&node[1].prev | 0x40;
     }
-    pDVar3 = (Dlist *)DlistNext((DlistNode *)node);
-    uVar2 = extraout_DL_00;
-    pDVar5 = node;
   }
   return;
 }
@@ -7094,7 +6987,7 @@ uint FUN_00418ea1(undefined param_1,undefined param_2,undefined param_3,short pa
   sVar2 = *(short *)(pbVar5 + sVar2 * 2 + 0x12);
   sVar8 = 0;
   while ((sVar8 < sVar2 && (!bVar1))) {
-    uVar6 = CheckCollision(param_5,q);
+    uVar6 = Rect16::checkCollision(param_5,q);
     if ((ushort)uVar6 != 0) {
       uVar7 = (ushort)uVar6 & 3;
       switch(uVar7) {
@@ -7191,7 +7084,7 @@ LAB_00419140:
                      &local_c->ladderEntityGroups[uVar2 & 3][(int)(uVar2 & 0x3fff) >> 2].collision_,
                      10);
             }
-            uVar5 = CheckCollision(&local_18,param_5);
+            uVar5 = Rect16::checkCollision(&local_18,param_5);
             if (((short)uVar5 != 0) && (local_e = local_e | local_10, (local_10 & 0x780) != 0)) {
               *(short *)&local_8->field_0x38 = (short)((int)(uVar2 & 0x3fff) >> 2);
             }
@@ -7202,7 +7095,7 @@ LAB_00419140:
       }
       return local_e;
     }
-    uVar5 = CheckCollision((Rect16 *)&node[1].prev,param_5);
+    uVar5 = Rect16::checkCollision((Rect16 *)&node[1].prev,param_5);
     if ((short)uVar5 != 0) {
       *(undefined2 *)&local_8->field_0x48 = 0x800;
       local_e = 0x800;
@@ -7249,7 +7142,7 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
   node = DlistHead(pRVar1->partEntities);
   for (sVar2 = 0; sVar2 < pRVar1->partEntityCount; sVar2 = sVar2 + 1) {
     local_c = (OtherEntity *)&node[1].prev;
-    uVar7 = CheckCollision((Rect16 *)local_c,(Rect16 *)q);
+    uVar7 = Rect16::checkCollision((Rect16 *)local_c,(Rect16 *)q);
     if ((short)uVar7 != 0) {
       *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 | 0x800;
       *(short *)&_Actors[iVar6].field_0x40 = sVar2;
@@ -7273,7 +7166,8 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
            (*(short *)&_Actors[sVar2].field_0x30 != 0)) &&
           (*(short *)&_Actors[sVar2].field_0x1a == *(short *)&_Actors[iVar6].field_0x1a)) &&
          ((*(short *)&_Actors[sVar2].field_0x1c == *(short *)&_Actors[iVar6].field_0x1c &&
-          (uVar7 = CheckCollision((Rect16 *)q,(Rect16 *)(_Actors + sVar2)), (short)uVar7 != 0)))) {
+          (uVar7 = Rect16::checkCollision((Rect16 *)q,(Rect16 *)(_Actors + sVar2)),
+          (short)uVar7 != 0)))) {
         uVar3 = 0x1000;
         if (-1 < *(short *)&_Actors[sVar2].field_0x4c) {
           uVar3 = 0x2000;
@@ -7298,7 +7192,7 @@ void FUN_00419223(undefined param_1,undefined param_2,undefined param_3,short pa
           Memcpy(&local_18,
                  &pRVar1->ladderEntityGroups[uVar3 & 3][(int)(uVar3 & 0x3fff) >> 2].collision_,10);
         }
-        uVar7 = CheckCollision(&local_18,(Rect16 *)q);
+        uVar7 = Rect16::checkCollision(&local_18,(Rect16 *)q);
         sVar4 = (short)uVar7;
         if (sVar4 != 0) {
           *(ushort *)&_Actors[iVar6].field_0x48 = *(ushort *)&_Actors[iVar6].field_0x48 | local_10;
@@ -43519,17 +43413,15 @@ void FUN_0044efb6(void)
   undefined extraout_DL_18;
   undefined extraout_DL_19;
   undefined extraout_DL_20;
-  undefined extraout_DL_21;
   undefined4 extraout_EDX;
   undefined4 extraout_EDX_00;
   int iVar4;
   short sVar5;
   undefined uVar6;
-  undefined uVar7;
-  int iVar8;
-  undefined4 uVar9;
-  DlistNode *pDVar10;
-  undefined2 *puVar11;
+  int iVar7;
+  undefined4 uVar8;
+  DlistNode *pDVar9;
+  undefined2 *puVar10;
   short local_6;
   
   FUN_00411599();
@@ -43538,11 +43430,10 @@ void FUN_0044efb6(void)
   uVar1 = FUN_004102ee();
   uVar6 = 0x85;
   uVar1 = FUN_0041029e(uVar1,extraout_DL,extraout_CL,&LAB_0044ef85);
-  uVar7 = 0x40;
-  uVar1 = FUN_00413828(uVar1,extraout_DL_00,uVar6,FUN_0042f440);
+  FUN_00413828(uVar1,extraout_DL_00,uVar6,FUN_0042f440);
   _DAT_00461ab0 = 0;
   _DAT_00461aae = 1;
-  FUN_00413acc(uVar1,extraout_DL_01,uVar7,0x94,0xffff,0x16b,0xffff);
+  FUN_00413acc(0x94,0xffff,0x16b,0xffff);
   DAT_00469544 = &LAB_0044e799;
   DAT_0046a9e4 = 0;
   DlistInit(DAT_0046aa04);
@@ -43556,9 +43447,9 @@ void FUN_0044efb6(void)
   do {
     local_6 = (&DAT_00463504)[sVar5];
     for (iVar4 = 0; (short)iVar4 <= _GameState->buildingCompletedLevels[sVar5]; iVar4 = iVar4 + 1) {
-      iVar8 = iVar4 + 0x7d8;
-      uVar3 = FUN_00412ac4((ushort)iVar8);
-      uVar2 = FUN_00413cf4((char)(&DAT_004634fa)[(short)iVar4],extraout_DL_02,(char)iVar8,uVar3,
+      iVar7 = iVar4 + 0x7d8;
+      uVar3 = FUN_00412ac4((ushort)iVar7);
+      uVar2 = FUN_00413cf4((char)(&DAT_004634fa)[(short)iVar4],extraout_DL_01,(char)iVar7,uVar3,
                            (&DAT_004634fa)[(short)iVar4],local_6,0);
       FUN_00412d0c(uVar2,extraout_EDX,extraout_ECX,uVar3);
       local_6 = local_6 + -4;
@@ -43578,37 +43469,37 @@ void FUN_0044efb6(void)
   DAT_00461aa8 = iVar4;
   DAT_0046a97c = iVar4;
   FUN_00446186(0x1792);
-  uVar1 = FUN_004466f9((char)iVar4,extraout_DL_03,uVar1,0x1792,1);
-  uVar1 = FUN_0044db81(uVar1,extraout_DL_04,extraout_CL_00,1,0x100);
+  uVar1 = FUN_004466f9((char)iVar4,extraout_DL_02,uVar1,0x1792,1);
+  uVar1 = FUN_0044db81(uVar1,extraout_DL_03,extraout_CL_00,1,0x100);
   DAT_004605b6 = 0x20;
-  FUN_004165c3(uVar1,extraout_DL_05,extraout_CL_01,0);
+  FUN_004165c3(uVar1,extraout_DL_04,extraout_CL_01,0);
   FUN_0044e3e3();
   FUN_0044e33f();
   uVar1 = 0xd3;
   DAT_0046a9f0 = FUN_00412ac4(0x7d3);
-  uVar9 = DAT_0046a9f0;
-  uVar1 = FUN_00412e70((char)DAT_0046a9f0,extraout_DL_06,uVar1,DAT_0046a9f0);
-  FUN_00413b88(uVar1,extraout_DL_07,(char)uVar9,DAT_0046a9f0,0xffff8000,0xffff8000,0,6);
+  uVar8 = DAT_0046a9f0;
+  uVar1 = FUN_00412e70((char)DAT_0046a9f0,extraout_DL_05,uVar1,DAT_0046a9f0);
+  FUN_00413b88(uVar1,extraout_DL_06,(char)uVar8,DAT_0046a9f0,0xffff8000,0xffff8000,0,6);
   uVar1 = 0xd4;
   DAT_0046a9f4 = FUN_00412ac4(0x7d4);
-  uVar3 = FUN_00413b88((char)DAT_0046a9f4,extraout_DL_08,uVar1,DAT_0046a9f4,0xffff8000,0xffff8000,0,
+  uVar3 = FUN_00413b88((char)DAT_0046a9f4,extraout_DL_07,uVar1,DAT_0046a9f4,0xffff8000,0xffff8000,0,
                        6);
-  FUN_00412e70((char)uVar3,extraout_DL_09,extraout_CL_02,DAT_0046a9f4);
+  FUN_00412e70((char)uVar3,extraout_DL_08,extraout_CL_02,DAT_0046a9f4);
   uVar1 = 0xd1;
   DAT_0046a9f8 = FUN_00412ac4(0x7d1);
-  FUN_00412e70((char)DAT_0046a9f8,extraout_DL_10,uVar1,DAT_0046a9f8);
+  FUN_00412e70((char)DAT_0046a9f8,extraout_DL_09,uVar1,DAT_0046a9f8);
   uVar1 = 0xd2;
   DAT_0046a9fc = FUN_00412ac4(0x7d2);
-  FUN_00412e70((char)DAT_0046a9fc,extraout_DL_11,uVar1,DAT_0046a9fc);
+  FUN_00412e70((char)DAT_0046a9fc,extraout_DL_10,uVar1,DAT_0046a9fc);
   _DAT_0046a944 = 0;
   DAT_0046a950 = FUN_00412ac4(0x7de);
   DAT_0046a95c = FUN_00412ac4(0x7e5);
   uVar1 = 0xe6;
   DAT_0046a960 = FUN_00412ac4(0x7e6);
-  FUN_0044d92c((char)DAT_0046a960,extraout_DL_12,uVar1,0);
+  FUN_0044d92c((char)DAT_0046a960,extraout_DL_11,uVar1,0);
   DAT_004634f4 = FUN_00412ac4(0x7dd);
   uVar1 = FUN_004129d4(DAT_004634f4,1);
-  FUN_00412e18(uVar1,extraout_DL_13,extraout_CL_03,DAT_004634f4);
+  FUN_00412e18(uVar1,extraout_DL_12,extraout_CL_03,DAT_004634f4);
   DAT_0046a978 = PickapuzzleHitTest_(0x93,0x56,0xda,0x89,7,(ClickHandler *)&LAB_0044e799);
   PickapuzzleHitTest_(0xb5,0x49,0x36,0x1b,7,FUN_0044ed39);
   PickapuzzleHitTest_(0x115,0x49,0x36,0x1b,7,FUN_0044ee27);
@@ -43619,23 +43510,23 @@ void FUN_0044efb6(void)
   DAT_0046a980 = 0;
   _DAT_0046350a = 0xffff;
   _DAT_0046aa34 = 0;
-  uVar9 = _Actors[0]._114_4_;
+  uVar8 = _Actors[0]._114_4_;
   DAT_0046a98c = DlistHead((Dlist *)_Actors[0]._114_4_);
-  pDVar10 = DAT_0046a98c;
-  DAT_0046a988 = FUN_0044da67((char)DAT_0046a98c,extraout_DL_14,(char)uVar9,DAT_0046a98c);
-  uVar1 = FUN_004171a7((char)DAT_0046a988,extraout_DL_15,(char)pDVar10,DAT_0046a978,1);
-  pDVar10 = DAT_0046a98c;
-  uVar1 = FUN_0044e66a(uVar1,extraout_DL_16,extraout_CL_04,DAT_0046a98c);
+  pDVar9 = DAT_0046a98c;
+  DAT_0046a988 = FUN_0044da67((char)DAT_0046a98c,extraout_DL_13,(char)uVar8,DAT_0046a98c);
+  uVar1 = FUN_004171a7((char)DAT_0046a988,extraout_DL_14,(char)pDVar9,DAT_0046a978,1);
+  pDVar9 = DAT_0046a98c;
+  uVar1 = FUN_0044e66a(uVar1,extraout_DL_15,extraout_CL_04,DAT_0046a98c);
   uVar6 = 0x90;
-  FUN_0044da2d(uVar1,extraout_DL_17,(char)pDVar10,&DAT_0046a990);
-  puVar11 = &_GameState->field34_0x28;
+  FUN_0044da2d(uVar1,extraout_DL_16,(char)pDVar9,&DAT_0046a990);
+  puVar10 = &_GameState->field34_0x28;
   uVar1 = 8;
-  iVar4 = FUN_0044ca1c((char)puVar11,extraout_DL_18,uVar6,8);
-  uVar1 = FUN_0043c382((char)iVar4,extraout_DL_19,uVar1,3,(short)iVar4,puVar11);
-  uVar9 = _Actors[0]._114_4_;
-  iVar4 = FUN_004352c9(uVar1,extraout_DL_20,extraout_CL_05,_Actors[0]._114_4_);
+  iVar4 = FUN_0044ca1c((char)puVar10,extraout_DL_17,uVar6,8);
+  uVar1 = FUN_0043c382((char)iVar4,extraout_DL_18,uVar1,3,(short)iVar4,puVar10);
+  uVar8 = _Actors[0]._114_4_;
+  iVar4 = FUN_004352c9(uVar1,extraout_DL_19,extraout_CL_05,_Actors[0]._114_4_);
   if ((short)iVar4 != 0) {
-    FUN_0043c382((char)iVar4,extraout_DL_21,(char)uVar9,2,0,0);
+    FUN_0043c382((char)iVar4,extraout_DL_20,(char)uVar8,2,0,0);
   }
   _DAT_0046a9e2 = DAT_0046a9ee + -1;
   FUN_0043139c();

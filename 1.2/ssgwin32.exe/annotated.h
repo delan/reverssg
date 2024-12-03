@@ -742,6 +742,15 @@ struct EntityNode {
     struct OtherEntity inner;
 };
 
+typedef struct PushortWithNode PushortWithNode, *PPushortWithNode;
+
+struct PushortWithNode {
+    struct DlistNode node;
+    undefined *field1_0x8;
+    undefined2 field2_0xc;
+    undefined2 field3_0xe;
+};
+
 typedef struct BuildingState BuildingState, *PBuildingState;
 
 struct BuildingState {
@@ -1585,6 +1594,7 @@ void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *value);
 void __cdecl Game::ShowTaskbar(short shouldShow);
 ATOM __cdecl Game::CreateWindow(undefined4 param_1);
 void Game::MakeWindowAnnoying(void);
+bool __stdcall Rect16::intersects(Rect16 *p,Rect16 *q);
 void InitEntities(void);
 void StartLevel(void);
 ushort __stdcall RoomIsObverse(short roomIndex);
@@ -1592,7 +1602,7 @@ EntityNode * NextAvailableEntityNode(void);
 ushort __stdcall PlacePartEntity(Room *room,short count,PartId partId);
 void __stdcall LoadPartEntity(short roomIndex,short x,short row,short partId,short param_5);
 void __stdcall LoadEntities(char *puzzleEntityTypes,SavedPartEntity *partEntities);
-uint __stdcall CheckCollision(Rect16 *p,Rect16 *q);
+uint __stdcall Rect16::checkCollision(Rect16 *p,Rect16 *q);
 void __stdcall Draw::Integer(short x,short y,short value,short color);
 int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category);
 void Puzzles::Customization::Draw(void);
