@@ -33,6 +33,7 @@
 #define 4294966912 0xfffffe80
 #define WM_LBUTTONDOWN 0x201
 #define WM_MOUSEMOVE 0x200
+#define 0x2 0x2
 
 typedef unsigned char   undefined;
 
@@ -301,6 +302,115 @@ struct _EXCEPTION_POINTERS {
 
 typedef BOOL (*PHANDLER_ROUTINE)(DWORD);
 
+typedef struct BigThing6Eh BigThing6Eh, *PBigThing6Eh;
+
+struct BigThing6Eh {
+    undefined field0_0x0;
+    undefined field1_0x1;
+    undefined field2_0x2;
+    undefined field3_0x3;
+    undefined field4_0x4;
+    undefined field5_0x5;
+    undefined field6_0x6;
+    undefined field7_0x7;
+    undefined field8_0x8;
+    undefined field9_0x9;
+    undefined field10_0xa;
+    undefined field11_0xb;
+    undefined field12_0xc;
+    undefined field13_0xd;
+    undefined field14_0xe;
+    undefined field15_0xf;
+    undefined field16_0x10;
+    undefined field17_0x11;
+    undefined field18_0x12;
+    undefined field19_0x13;
+    undefined field20_0x14;
+    undefined field21_0x15;
+    undefined field22_0x16;
+    undefined field23_0x17;
+    undefined2 field24_0x18;
+    undefined2 field25_0x1a;
+    undefined field26_0x1c;
+    undefined field27_0x1d;
+    undefined field28_0x1e;
+    undefined field29_0x1f;
+    undefined field30_0x20;
+    undefined field31_0x21;
+    undefined field32_0x22;
+    undefined field33_0x23;
+    undefined field34_0x24;
+    undefined field35_0x25;
+    undefined field36_0x26;
+    undefined field37_0x27;
+    undefined field38_0x28;
+    undefined field39_0x29;
+    undefined field40_0x2a;
+    undefined field41_0x2b;
+    undefined field42_0x2c;
+    undefined field43_0x2d;
+    undefined field44_0x2e;
+    undefined field45_0x2f;
+    undefined field46_0x30;
+    undefined field47_0x31;
+    undefined field48_0x32;
+    undefined field49_0x33;
+    undefined field50_0x34;
+    undefined field51_0x35;
+    undefined field52_0x36;
+    undefined field53_0x37;
+    undefined field54_0x38;
+    undefined field55_0x39;
+    undefined field56_0x3a;
+    undefined field57_0x3b;
+    undefined field58_0x3c;
+    undefined field59_0x3d;
+    undefined field60_0x3e;
+    undefined field61_0x3f;
+    undefined field62_0x40;
+    undefined field63_0x41;
+    undefined field64_0x42;
+    undefined field65_0x43;
+    undefined field66_0x44;
+    undefined field67_0x45;
+    undefined field68_0x46;
+    undefined field69_0x47;
+    undefined field70_0x48;
+    undefined field71_0x49;
+    undefined field72_0x4a;
+    undefined field73_0x4b;
+    undefined field74_0x4c;
+    undefined field75_0x4d;
+    undefined field76_0x4e;
+    undefined field77_0x4f;
+    undefined field78_0x50;
+    undefined field79_0x51;
+    undefined field80_0x52;
+    undefined field81_0x53;
+    undefined field82_0x54;
+    undefined field83_0x55;
+    undefined field84_0x56;
+    undefined field85_0x57;
+    short count58h;
+    undefined field87_0x5a;
+    undefined field88_0x5b;
+    undefined field89_0x5c;
+    undefined field90_0x5d;
+    undefined field91_0x5e;
+    undefined field92_0x5f;
+    undefined field93_0x60;
+    undefined field94_0x61;
+    undefined field95_0x62;
+    undefined field96_0x63;
+    undefined field97_0x64;
+    undefined field98_0x65;
+    undefined field99_0x66;
+    undefined field100_0x67;
+    undefined field101_0x68;
+    undefined field102_0x69;
+    short *indices6Ah;
+};
+
 typedef struct astruct astruct, *Pastruct;
 
 typedef enum PuzzleCategory {
@@ -350,6 +460,42 @@ struct astruct {
     undefined field32_0x21;
 };
 
+typedef struct BigNode24h BigNode24h, *PBigNode24h;
+
+typedef struct DlistNode DlistNode, *PDlistNode;
+
+typedef struct Rect16 Rect16, *PRect16;
+
+struct Rect16 {
+    short x;
+    short y;
+    short w;
+    short h;
+};
+
+struct DlistNode {
+    struct DlistNode *next;
+    struct DlistNode *prev;
+};
+
+struct BigNode24h {
+    struct DlistNode node;
+    undefined *field1_0x8;
+    undefined2 flags?0Ch;
+    struct Rect16 rect0Eh;
+    undefined field4_0x16;
+    undefined field5_0x17;
+    undefined field6_0x18;
+    undefined field7_0x19;
+    undefined field8_0x1a;
+    undefined field9_0x1b;
+    undefined field10_0x1c;
+    undefined field11_0x1d;
+    undefined field12_0x1e;
+    undefined field13_0x1f;
+    undefined4 field14_0x20;
+};
+
 typedef struct astruct_1 astruct_1, *Pastruct_1;
 
 struct astruct_1 {
@@ -392,16 +538,9 @@ typedef enum AsciiProperties { // bitflags
 
 typedef struct Dlist Dlist, *PDlist;
 
-typedef struct DlistNode DlistNode, *PDlistNode;
-
 struct Dlist {
     struct DlistNode *head;
     struct DlistNode *tail;
-};
-
-struct DlistNode {
-    struct DlistNode *next;
-    struct DlistNode *prev;
 };
 
 typedef struct Actor Actor, *PActor;
@@ -586,8 +725,6 @@ typedef struct EntityBaseBase? EntityBaseBase?, *PEntityBaseBase?;
 
 typedef short EntityType;
 
-typedef struct Rect16 Rect16, *PRect16;
-
 struct Room {
     ushort flags; // bit 0 obverse
     short structuralEntityCounts[4];
@@ -612,13 +749,6 @@ struct Area {
     short roomCount;
     struct Room rooms[16];
     undefined field2_0x2f42[32928];
-};
-
-struct Rect16 {
-    short x;
-    short y;
-    short w;
-    short h;
 };
 
 struct RectEx {
@@ -740,15 +870,6 @@ struct EntityNode {
     undefined field2_0xa;
     undefined field3_0xb;
     struct OtherEntity inner;
-};
-
-typedef struct PushortWithNode PushortWithNode, *PPushortWithNode;
-
-struct PushortWithNode {
-    struct DlistNode node;
-    undefined *field1_0x8;
-    undefined2 field2_0xc;
-    undefined2 field3_0xe;
 };
 
 typedef struct BuildingState BuildingState, *PBuildingState;
@@ -1626,7 +1747,7 @@ void FUN_004116a2(undefined param_1,undefined param_2,undefined param_3,LPCSTR p
 void FUN_004116e1(undefined param_1,undefined param_2,undefined param_3,short param_4,LPSTR param_5,short param_6);
 int FUN_00411700(int param_1);
 int FUN_0041170c(short param_1);
-void FUN_0041172c(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4,undefined2 *param_5);
+void __stdcall FUN_0041172c(undefined2 *param_1,undefined2 *param_2);
 void FUN_0041179f(void);
 void FUN_00411838(void);
 void FUN_0041187c(void);
@@ -1645,14 +1766,14 @@ void FUN_00412268(void);
 void FUN_0041226d(void);
 void FUN_00412272(void);
 undefined4 FUN_00412278(void);
-void FUN_0041227c(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
+void __stdcall FUN_0041227c(undefined2 param_1);
 uint FUN_004122a8(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
 uint FUN_004122bc(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
-uint FUN_0041233c(undefined param_1,undefined param_2,undefined param_3,short *param_4,short *param_5);
+uint __stdcall FUN_0041233c(short *param_1,short *param_2);
 int FUN_00412404(void);
-void FUN_00412434(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
+void __stdcall BigNode24h::switchLists?(BigNode24h *node);
 void FUN_00412468(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,short param_6);
-void __stdcall FUN_00412490(int param_1);
+void __stdcall BigThing6Eh::drainNodesAndCheckNodeSiblingIntersects(BigThing6Eh *this);
 void FUN_004125a8(void);
 undefined4 FUN_00412784(void);
 void FUN_004127bc(void);
@@ -1664,13 +1785,13 @@ void * __stdcall FUN_00412ac4(ushort param_1);
 undefined4 FUN_00412d0c(uint param_1,undefined4 param_2,uint param_3,uint param_4);
 undefined4 FUN_00412d84(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void __stdcall FUN_00412dc8(int param_1);
-void FUN_00412e18(undefined param_1,undefined param_2,undefined param_3,int param_4);
+void __stdcall FUN_00412e18(int param_1);
 void FUN_00412e70(undefined param_1,undefined param_2,undefined param_3,int param_4);
 void FUN_00412ec0(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
-void FUN_00412f04(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4);
+void __stdcall BigThing6Eh::processNodes?(BigThing6Eh *this);
 uint FUN_00412f98(undefined4 param_1,uint param_2,undefined4 param_3,int param_4,ushort param_5);
-void FUN_00412fe4(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_00413004(void);
+void __stdcall FUN_00412fe4(int param_1);
+void DoSomethingBig(void);
 ushort __stdcall FUN_00413774(int param_1,short param_2);
 ushort __stdcall FUN_00413794(int param_1,short param_2);
 short FUN_004137b4(undefined param_1,undefined param_2,undefined param_3,int param_4);
@@ -1681,9 +1802,9 @@ void FUN_00413838(void);
 void FUN_00413868(void);
 void FUN_004138f0(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
 void FUN_00413904(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_0041391c(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void FUN_0041393c(undefined param_1,undefined param_2,undefined param_3,int param_4);
-void __stdcall FUN_0041395c(int param_1,undefined4 param_2,undefined4 param_3,short param_4);
+void __stdcall FUN_0041391c(int param_1);
+void __stdcall FUN_0041393c(int param_1);
+void __stdcall FUN_0041395c(BigThing6Eh *param_1,undefined4 param_2,undefined4 param_3,short param_4);
 void FUN_00413a24(void);
 void FUN_00413a2c(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_00413a54(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5,undefined4 param_6);
@@ -1700,7 +1821,7 @@ void FUN_00413e20(undefined param_1,undefined param_2,undefined param_3,int para
 void FUN_00413e74(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 uint FUN_00413e84(undefined param_1,undefined param_2,undefined param_3,int param_4);
 int FUN_00413ebc(undefined param_1,undefined param_2,undefined param_3,int param_4);
-undefined2 FUN_00413ed0(undefined param_1,undefined param_2,undefined param_3,int param_4);
+undefined2 __stdcall FUN_00413ed0(int param_1);
 uint FUN_00413ee8(undefined param_1,undefined param_2,undefined param_3,DlistNode *param_4,short param_5);
 void FUN_00413f88(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 DlistNode *FUN_00413fdc(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5);
@@ -1854,7 +1975,7 @@ void FUN_0041a954(void);
 void FUN_0041aab9(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,short param_5);
 void FUN_0041abd6(void);
 void FUN_0041ac6b(undefined param_1,undefined param_2,undefined param_3,short param_4,short param_5,char *param_6,undefined param_7);
-void FUN_0041acce(undefined param_1,undefined param_2,undefined param_3,char *param_4,undefined param_5);
+void __stdcall FUN_0041acce(char *param_1,undefined param_2);
 void Puzzles::SetParametersForElectricity'(void);
 void FUN_0041af2d(void);
 void FUN_0041b115(void);
@@ -2106,7 +2227,7 @@ void FUN_00435017(undefined param_1,undefined param_2,undefined param_3,int para
 void __stdcall FUN_00435050(int param_1);
 void FUN_004350be(void);
 undefined4 *FUN_00435122(undefined param_1,undefined param_2,undefined param_3,undefined4 *param_4,undefined4 param_5);
-void FUN_00435151(undefined param_1,undefined param_2,undefined param_3,Dlist *param_4,DlistNode *param_5,code *param_6);
+void __stdcall FUN_00435151(Dlist *param_1,DlistNode *param_2,code *param_3);
 int ** FUN_0043527b(undefined param_1,undefined param_2,undefined param_3,int *param_4,undefined4 param_5);
 int FUN_004352c9(undefined param_1,undefined param_2,undefined param_3,Dlist *param_4);
 void FUN_00435346(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
@@ -2228,7 +2349,7 @@ void FUN_0043da06(undefined param_1,undefined param_2,undefined param_3,undefine
 void __stdcall ezFUN_0043da4e(ushort *param_1);
 void FUN_0043daa4(undefined4 param_1,undefined4 param_2,uint param_3);
 void FUN_0043dae8(undefined param_1,undefined param_2,undefined param_3,int param_4,short *param_5);
-void FUN_0043de85(undefined param_1,byte param_2,byte param_3,int param_4,undefined4 param_5);
+void FUN_0043de85(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5);
 void FUN_0043df27(undefined param_1,undefined param_2,undefined param_3,int param_4);
 uint FUN_0043df75(uint param_1,undefined4 param_2,uint param_3,int param_4);
 void FUN_0043e088(void);
@@ -2293,7 +2414,7 @@ void FUN_004438e0(void);
 void FUN_004438e9(undefined4 param_1,undefined4 param_2,uint param_3,short param_4);
 void FUN_004439cf(void);
 void FUN_004439dc(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4,undefined2 param_5);
-void FUN_004439fb(undefined param_1,byte param_2,byte param_3,undefined2 *param_4);
+void FUN_004439fb(undefined param_1,undefined param_2,undefined param_3,undefined2 *param_4);
 void FUN_00443ae0(undefined param_1,undefined param_2,undefined param_3,int param_4,undefined4 param_5);
 void FUN_00443b15(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
 void FUN_00443b4a(undefined param_1,undefined param_2,undefined param_3,short *param_4,undefined param_5,undefined param_6,undefined param_7,undefined param_8,undefined param_9,undefined param_10,byte param_11);

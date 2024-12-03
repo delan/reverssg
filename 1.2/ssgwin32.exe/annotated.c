@@ -155,19 +155,21 @@ void Game::MakeWindowAnnoying(void)
 
 
 
-bool __stdcall Rect16::intersects(Rect16 *p,Rect16 *q)
+// bool
+
+short __stdcall Rect16::intersects(Rect16 *p,Rect16 *q)
 
 {
-  bool bVar1;
+  short sVar1;
   
   if (((((short)(q->x + q->w + -1) < p->x) || ((short)(p->x + p->w + -1) < q->x)) ||
       ((short)(q->y + q->h + -1) < p->y)) || ((short)(p->y + p->h + -1) < q->y)) {
-    bVar1 = false;
+    sVar1 = 0;
   }
   else {
-    bVar1 = true;
+    sVar1 = 1;
   }
-  return bVar1;
+  return sVar1;
 }
 
 
