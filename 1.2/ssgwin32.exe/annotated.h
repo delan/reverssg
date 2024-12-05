@@ -34,6 +34,21 @@
 #define WM_LBUTTONDOWN 0x201
 #define WM_MOUSEMOVE 0x200
 #define 0x2 0x2
+#define WM_LBUTTONUP 0x202
+#define WM_MENUSELECT 0x11f
+#define WM_VSCROLL 0x115
+#define WM_INITMENU 0x116
+#define WM_CHAR 0x102
+#define WM_INITMENUPOPUP 0x117
+#define WM_SYSCOMMAND 0x112
+#define WM_NCACTIVATE 0x86
+#define WM_DISPLAYCHANGE 0x7e
+#define WM_ACTIVATEAPP 0x1c
+#define WM_WINDOWPOSCHANGED 0x47
+#define WM_ERASEBKGND 0x14
+#define WM_KEYUP 0x101
+#define WM_COMMAND 0x111
+#define WM_USER 0x400
 
 typedef unsigned char   undefined;
 

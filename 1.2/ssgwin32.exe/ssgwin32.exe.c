@@ -876,10 +876,10 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
   
                     // 0x10f44  2  MainWndProc
   local_8 = IsIconic(window);
-  if ((int)uMsg < 0x102) {
-    if (uMsg != 0x101) {
-      if ((int)uMsg < 0x15) {
-        if (uMsg == 0x14) {
+  if ((int)uMsg < WM_KEYUP + 1) {
+    if (uMsg != WM_KEYUP) {
+      if ((int)uMsg < WM_ERASEBKGND + 1) {
+        if (uMsg == WM_ERASEBKGND) {
           return 1;
         }
         switch(uMsg) {
@@ -921,9 +921,9 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
           return (int)sVar2;
         }
       }
-      else if ((int)uMsg < 0x7f) {
-        if (uMsg != 0x7e) {
-          if (uMsg == 0x1c) {
+      else if ((int)uMsg < WM_DISPLAYCHANGE + 1) {
+        if (uMsg != WM_DISPLAYCHANGE) {
+          if (uMsg == WM_ACTIVATEAPP) {
             if (wParam == 0) {
               if (_DAT_00464874 != 0) {
                 Game::ShowTaskbar(1);
@@ -932,12 +932,12 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
               _DAT_00464874 = 0;
             }
           }
-          else if (uMsg == 0x47) {
+          else if (uMsg == WM_WINDOWPOSCHANGED) {
             return 0;
           }
         }
       }
-      else if ((uMsg != 0x86) && (uMsg == 0x100)) {
+      else if ((uMsg != WM_NCACTIVATE) && (uMsg == 0x100)) {
         GetAsyncKeyState(0x10);
         DAT_00464878 = 0;
         if ((lParam & 0x40000000) == 0) {
@@ -955,10 +955,10 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       }
     }
   }
-  else if ((int)uMsg < 0x118) {
-    if (uMsg != 0x117) {
-      if ((int)uMsg < 0x113) {
-        if (uMsg == 0x112) {
+  else if ((int)uMsg < WM_INITMENUPOPUP + 1) {
+    if (uMsg != WM_INITMENUPOPUP) {
+      if ((int)uMsg < WM_SYSCOMMAND + 1) {
+        if (uMsg == WM_SYSCOMMAND) {
           uVar3 = wParam & 0xfff0;
           if (uVar3 == 2000) {
             (*(code *)PTR_FUN_0046024c)();
@@ -974,7 +974,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
             return 0;
           }
         }
-        else if (uMsg == 0x102) {
+        else if (uMsg == WM_CHAR) {
           uVar1 = GetAsyncKeyState(0x11);
           if (((uVar1 & 0x8000) != 0) && (sVar2 = (*(code *)PTR_FUN_00460240)(), sVar2 != 0)) {
             return 0;
@@ -983,15 +983,15 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
           DAT_00464878 = 0;
           (*(code *)PTR_FUN_00460228)();
         }
-        else if (uMsg == 0x111) {
+        else if (uMsg == WM_COMMAND) {
           (*(code *)PTR_FUN_00460250)();
         }
       }
       else {
-        if (uMsg == 0x115) {
+        if (uMsg == WM_VSCROLL) {
           return 0;
         }
-        if (uMsg == 0x116) {
+        if (uMsg == WM_INITMENU) {
           hMenu = GetSystemMenu(window,0);
           uEnable = 0;
           if (local_8 == 0) {
@@ -1019,7 +1019,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       (*(code *)PTR_FUN_00460220)();
       _DAT_004601ba = 1;
     }
-    else if (uMsg == 0x11f) {
+    else if (uMsg == WM_MENUSELECT) {
       if (((lParam == 0) && ((short)(wParam >> 0x10) == -1)) && (local_8 == 0)) {
         (*(code *)PTR_FUN_00460248)();
       }
@@ -1030,10 +1030,10 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       return 0;
     }
   }
-  else if (uMsg == 0x202) {
+  else if (uMsg == WM_LBUTTONUP) {
     if (_DAT_004601ba != 0) {
       if (DAT_00460268 != 0) {
-        PostMessageA(window,0x202,wParam,lParam);
+        PostMessageA(window,WM_LBUTTONUP,wParam,lParam);
         return 0;
       }
       GetCursorPos(&local_18);
@@ -1045,7 +1045,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       _DAT_004601ba = 0;
     }
   }
-  else if (uMsg == 0x400) {
+  else if (uMsg == WM_USER) {
     if (local_8 == 0) {
       SetActiveWindow(window);
     }
