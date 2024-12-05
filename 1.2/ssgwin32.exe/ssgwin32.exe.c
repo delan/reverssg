@@ -7515,11 +7515,85 @@ undefined4 FUN_00419e02(undefined param_1,undefined param_2,undefined param_3,un
 
 
 
-void FUN_0041a068(undefined param_1,undefined param_2,undefined param_3,ushort param_4)
+undefined4 __stdcall Game::dialogProc(HWND dialog,short msg,ushort wparam)
 
 {
-  DialogBoxParamA(_Module,(LPCSTR)(uint)param_4,Game::window,(DLGPROC)&LAB_00419ec4,0);
-  return;
+  bool bVar1;
+  undefined extraout_CL;
+  short sVar2;
+  undefined extraout_DL;
+  short sVar3;
+  uint uVar4;
+  int iVar5;
+  CHAR local_64 [80];
+  tagRECT rect;
+  
+  if (msg == WM_DESTROY) {
+    if (*(short *)(DAT_00460be0 + 0x16) == 0) {
+      return 0;
+    }
+  }
+  else {
+    if (msg == WM_WINDOWPOSCHANGED) {
+      return 0;
+    }
+    if (msg == WM_INITDIALOG) {
+      GetWindowRect(dialog,&rect);
+      if (*(short *)(DAT_00460be0 + 10) == -1) {
+        uVar4 = 0x200 - (int)(short)(((short)rect.right - (short)rect.left) + 1);
+        iVar5 = (int)uVar4 >> 1;
+        if (iVar5 < 0) {
+          iVar5 = iVar5 + (uint)((uVar4 & 1) != 0);
+        }
+        sVar3 = (short)iVar5;
+      }
+      else {
+        sVar3 = *(short *)(DAT_00460be0 + 10);
+      }
+      if (*(short *)(DAT_00460be0 + 0xc) == -1) {
+        uVar4 = 0x180 - (int)(short)(((short)rect.bottom - (short)rect.top) + 1);
+        iVar5 = (int)uVar4 >> 1;
+        if (iVar5 < 0) {
+          iVar5 = iVar5 + (uint)((uVar4 & 1) != 0);
+        }
+        sVar2 = (short)iVar5;
+      }
+      else {
+        sVar2 = *(short *)(DAT_00460be0 + 0xc);
+      }
+      SetWindowPos(dialog,(HWND)0x0,(int)(short)(sVar3 + (short)mouseInputRect.left),
+                   (int)(short)(sVar2 + (short)mouseInputRect.top),0,0,5);
+      if ((*DAT_00460be0 & 1) != 0) {
+        bVar1 = false;
+        sVar3 = 1;
+        while (!bVar1) {
+          GetDlgItemTextA(dialog,(int)sVar3,local_64,3);
+          iVar5 = FUN_0044ff50((char)local_64,extraout_DL,extraout_CL,local_64,&DAT_00460be4);
+          if (iVar5 == 0) {
+            SetDlgItemTextA(dialog,(int)sVar3,*(LPCSTR *)(DAT_00460be0 + 6));
+            bVar1 = true;
+          }
+          sVar3 = sVar3 + 1;
+        }
+      }
+      return 1;
+    }
+    if (msg == WM_COMMAND) {
+      if (wparam == 1) {
+        EndDialog(dialog,1);
+        return 1;
+      }
+      if (wparam == 2) {
+        EndDialog(dialog,0);
+        return 1;
+      }
+      if ((ushort)(wparam - 3) < 3) {
+        EndDialog(dialog,(uint)wparam);
+        return 1;
+      }
+    }
+  }
+  return 0;
 }
 
 
@@ -7539,7 +7613,7 @@ void FUN_0041a08d(undefined param_1,undefined param_2,undefined param_3,undefine
   if ((_DAT_004667d0 & 8) == 0) {
     DAT_004667e6 = 0xffff;
   }
-  FUN_0041a068((char)param_4,param_2,param_3,param_4);
+  Game::createDialog(param_4);
   _DAT_004667d0 = 0;
   return;
 }

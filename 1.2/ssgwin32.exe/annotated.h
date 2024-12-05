@@ -49,6 +49,8 @@
 #define WM_KEYUP 0x101
 #define WM_COMMAND 0x111
 #define WM_USER 0x400
+#define WM_INITDIALOG 0x110
+#define WM_DESTROY 0x2
 
 typedef unsigned char   undefined;
 
@@ -1743,6 +1745,7 @@ uint __stdcall Rect16::checkCollision(Rect16 *p,Rect16 *q);
 void __stdcall Draw::Integer(short x,short y,short value,short color);
 int __stdcall Puzzles::CountSolvedInCategory(PuzzleCategory category);
 void Puzzles::Customization::Draw(void);
+void __stdcall Game::createDialog(ushort templateName);
 void __stdcall ShowAlertMessage(char *message,undefined param_2);
 void __stdcall DonkeyShuffle(short len,short *result);
 void __stdcall EnterBuilding(void);

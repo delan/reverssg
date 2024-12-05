@@ -700,6 +700,15 @@ void Puzzles::Customization::Draw(void)
 
 
 
+void __stdcall Game::createDialog(ushort templateName)
+
+{
+  DialogBoxParamA(_Module,(LPCSTR)(uint)templateName,window,dialogProc,0);
+  return;
+}
+
+
+
 void __stdcall ShowAlertMessage(char *message,undefined param_2)
 
 {

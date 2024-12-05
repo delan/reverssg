@@ -49,6 +49,8 @@
 #define WM_KEYUP 0x101
 #define WM_COMMAND 0x111
 #define WM_USER 0x400
+#define WM_INITDIALOG 0x110
+#define WM_DESTROY 0x2
 
 typedef unsigned char   undefined;
 
@@ -1968,7 +1970,7 @@ undefined2 FUN_00419aca(undefined param_1,undefined param_2,undefined param_3,us
 void FUN_00419d3d(void);
 void FUN_00419d84(void);
 undefined4 FUN_00419e02(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
-void FUN_0041a068(undefined param_1,undefined param_2,undefined param_3,ushort param_4);
+undefined4 __stdcall Game::dialogProc(HWND dialog,short msg,ushort wparam);
 void FUN_0041a08d(undefined param_1,undefined param_2,undefined param_3,undefined2 param_4);
 void FUN_0041a0d0(undefined param_1,undefined param_2,undefined param_3,undefined4 param_4);
 void FUN_0041a0dd(void);
