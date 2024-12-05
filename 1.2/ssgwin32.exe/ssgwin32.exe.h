@@ -1779,7 +1779,6 @@ undefined4 FUN_00412156(undefined4 param_1,undefined4 param_2,undefined4 param_3
 void FUN_00412250(undefined param_1,undefined param_2,undefined param_3,HDC param_4,RECT *param_5);
 void FUN_00412268(void);
 void FUN_0041226d(void);
-void FUN_00412272(void);
 undefined4 FUN_00412278(void);
 void __stdcall FUN_0041227c(undefined2 param_1);
 uint FUN_004122a8(undefined param_1,undefined param_2,undefined param_3,int param_4,int param_5);
@@ -2151,8 +2150,11 @@ void FUN_0042fcbd(undefined param_1,undefined param_2,undefined param_3,short pa
 bool FUN_0042fcd7(undefined param_1,undefined param_2,undefined param_3,ushort param_4,ushort param_5);
 undefined4 FUN_0042fe06(void);
 void FUN_0042fe4c(void);
+void FUN_0042fe9d(undefined param_1,undefined param_2,undefined param_3);
+void FUN_0042fee7(void);
 undefined4 FUN_0042ff2e(undefined param_1,undefined param_2,undefined param_3,short param_4);
 void FUN_0042ff68(undefined param_1,undefined param_2,undefined param_3,short param_4);
+void FUN_0042ff86(void);
 undefined4 FUN_0042ffd7(void);
 undefined4 FUN_0043013c(undefined4 param_1);
 void FUN_004301fc(void);

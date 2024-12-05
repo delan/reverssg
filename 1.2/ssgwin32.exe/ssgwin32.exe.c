@@ -217,7 +217,7 @@ void FUN_0041029e(undefined param_1,undefined param_2,undefined param_3,undefine
 
 {
   if (_DAT_004601a0 == 0) {
-    PTR_FUN_00460228 = FUN_0041026e;
+    Game::onWmNcactivateOrChar = FUN_0041026e;
     _DAT_004601a0 = 1;
   }
   *(undefined4 *)(&DAT_004646b8 + DAT_004601a8 * 4) = param_4;
@@ -884,9 +884,11 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
         }
         switch(uMsg) {
         case 1:
+                    // WM_CREATE
           PostMessageA(window,0x400,0,0);
           break;
         case 2:
+                    // WM_DESTROY
           PostQuitMessage(0);
           _DAT_004601b6 = 0xffff;
           return 0;
@@ -896,7 +898,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
             _DAT_00464874 = 1;
             Game::ShowTaskbar(0);
             Draw::DirtyRect((Rect16 *)0x0);
-            (*(code *)PTR_FUN_00460230)();
+            (*(code *)Game::onWmActivate)();
             Game::needToMakeGameAnnoying = 1;
             InvalidateRect(Game::window,(RECT *)0x0,0);
           }
@@ -910,14 +912,16 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
           FUN_00410f13(window);
           break;
         case 0x10:
-          (*(code *)PTR_FUN_00460254)();
+                    // WM_CLOSE
+          (*(code *)Game::onWmQueryendsessionOrSyscommandF060h)();
           return 0;
         case 0x11:
+                    // WM_QUERYENDSESSION
           if (local_8 != 0) {
             ShowWindow(window,9);
           }
           SetForegroundWindow(window);
-          sVar2 = (*(code *)PTR_FUN_00460254)();
+          sVar2 = (*(code *)Game::onWmQueryendsessionOrSyscommandF060h)();
           return (int)sVar2;
         }
       }
@@ -927,7 +931,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
             if (wParam == 0) {
               if (_DAT_00464874 != 0) {
                 Game::ShowTaskbar(1);
-                (*(code *)PTR_FUN_00460234)();
+                (*(code *)Game::onWmActivateapp)();
               }
               _DAT_00464874 = 0;
             }
@@ -943,12 +947,12 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
         if ((lParam & 0x40000000) == 0) {
           if ((0x20 < wParam) && (wParam < 0x29)) {
             DAT_00464878 = (short)wParam;
-            (*(code *)PTR_FUN_00460228)();
+            (*(code *)Game::onWmNcactivateOrChar)();
             return 0;
           }
           if ((0x6f < wParam) && (wParam < 0x88)) {
             DAT_00464878 = (short)wParam;
-            (*(code *)PTR_FUN_00460228)();
+            (*(code *)Game::onWmNcactivateOrChar)();
             return 0;
           }
         }
@@ -961,7 +965,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
         if (uMsg == WM_SYSCOMMAND) {
           uVar3 = wParam & 0xfff0;
           if (uVar3 == 2000) {
-            (*(code *)PTR_FUN_0046024c)();
+            (*(code *)Game::onWmSyscommand2000)();
             return 0;
           }
           if (uVar3 == 0xf010) {
@@ -970,21 +974,21 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
             }
           }
           else if (uVar3 == 0xf060) {
-            (*(code *)PTR_FUN_00460254)();
+            (*(code *)Game::onWmQueryendsessionOrSyscommandF060h)();
             return 0;
           }
         }
         else if (uMsg == WM_CHAR) {
           uVar1 = GetAsyncKeyState(0x11);
-          if (((uVar1 & 0x8000) != 0) && (sVar2 = (*(code *)PTR_FUN_00460240)(), sVar2 != 0)) {
+          if (((uVar1 & 0x8000) != 0) && (sVar2 = (*(code *)Game::onWmChar)(), sVar2 != 0)) {
             return 0;
           }
           _DAT_00464870 = wParam;
           DAT_00464878 = 0;
-          (*(code *)PTR_FUN_00460228)();
+          (*(code *)Game::onWmNcactivateOrChar)();
         }
         else if (uMsg == WM_COMMAND) {
-          (*(code *)PTR_FUN_00460250)();
+          (*(code *)Game::onWmCommand)();
         }
       }
       else {
@@ -999,7 +1003,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
           }
           EnableMenuItem(hMenu,0xf010,uEnable);
           if (local_8 == 0) {
-            (*(code *)PTR_FUN_00460244)();
+            (*(code *)Game::onWmInitmenu)();
           }
         }
       }
@@ -1016,12 +1020,12 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       DAT_00464868 = local_10.x - Game::mouseInputRect.left;
       DAT_0046486c = local_10.y - Game::mouseInputRect.top;
       DAT_00464878 = 0x8000;
-      (*(code *)PTR_FUN_00460220)();
+      (*(code *)Game::onWmLbuttondown)();
       _DAT_004601ba = 1;
     }
     else if (uMsg == WM_MENUSELECT) {
       if (((lParam == 0) && ((short)(wParam >> 0x10) == -1)) && (local_8 == 0)) {
-        (*(code *)PTR_FUN_00460248)();
+        (*(code *)Game::onWmMenuselect)();
       }
     }
     else if (uMsg == WM_MOUSEMOVE) {
@@ -1041,7 +1045,7 @@ LRESULT __cdecl MainWndProc(HWND window,UINT uMsg,uint wParam,uint lParam)
       DAT_00464868 = local_18.x - Game::mouseInputRect.left;
       DAT_0046486c = local_18.y - Game::mouseInputRect.top;
       DAT_00464878 = 0x8000;
-      (*(code *)PTR_FUN_00460224)();
+      (*(code *)Game::onWmLbuttonup)();
       _DAT_004601ba = 0;
     }
   }
@@ -1084,9 +1088,9 @@ int FUN_004114b6(void)
     }
   } while ((_DAT_00464874 == 0) || (sVar3 != 0));
   if ((short)iVar2 == 0) {
-    (*(code *)PTR_FUN_00460238)();
+    (*(code *)PTR_DoNothing_00460238)();
   }
-  (*(code *)PTR_FUN_0046023c)();
+  (*(code *)PTR_DoNothing_0046023c)();
   return iVar2;
 }
 
@@ -1496,14 +1500,6 @@ void FUN_00412268(void)
 
 
 void FUN_0041226d(void)
-
-{
-  return;
-}
-
-
-
-void FUN_00412272(void)
 
 {
   return;
@@ -5450,8 +5446,8 @@ void FUN_00416bad(void)
     DAT_004605dc = DlistNew();
     DAT_004605d8 = DlistNew();
     _HitTestThing = DlistNew();
-    PTR_FUN_00460220 = FUN_00416b73;
-    PTR_FUN_00460224 = FUN_00416b90;
+    Game::onWmLbuttondown = FUN_00416b73;
+    Game::onWmLbuttonup = FUN_00416b90;
   }
   return;
 }
@@ -15198,7 +15194,7 @@ void FUN_004267cc(void)
     DAT_004677de = 0;
     DAT_004677dc = 0;
     _DAT_004615a8 = 1;
-    PTR_FUN_00460228 = FUN_00426848;
+    Game::onWmNcactivateOrChar = FUN_00426848;
   }
   return;
 }
@@ -20104,6 +20100,59 @@ void FUN_0042fe4c(void)
 
 
 
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void FUN_0042fe9d(undefined param_1,undefined param_2,undefined param_3)
+
+{
+  undefined uVar1;
+  undefined extraout_CL;
+  undefined extraout_CL_00;
+  undefined extraout_DL;
+  undefined extraout_DL_00;
+  
+  if (_DAT_00467da0 == 0) {
+    FUN_0041161a(param_1,param_2,param_3,0);
+    uVar1 = FUN_0043ba1d();
+    FUN_00413a2c(uVar1,extraout_DL,extraout_CL,1);
+    uVar1 = FUN_0043b443();
+    FUN_00447634(uVar1,extraout_DL_00,extraout_CL_00,0);
+    _DAT_00467da0 = 1;
+    if (_DAT_00467da2 != 0) {
+      FUN_0043b47e();
+    }
+    FUN_0044ca89();
+  }
+  return;
+}
+
+
+
+// WARNING: Globals starting with '_' overlap smaller symbols at the same address
+
+void FUN_0042fee7(void)
+
+{
+  uint uVar1;
+  
+  if (_DAT_00467da0 != 0) {
+    FUN_0044ca7e();
+    if (DAT_00469544 != (code *)0x0) {
+      (*DAT_00469544)();
+    }
+    FUN_0043b9f5();
+    FUN_004476a9();
+    FUN_0043b427();
+    _DAT_00467da0 = 0;
+    FUN_00413a24();
+    uVar1 = FUN_0043b4a4();
+    _DAT_00467da2 = (undefined2)uVar1;
+  }
+  return;
+}
+
+
+
 undefined4 FUN_0042ff2e(undefined param_1,undefined param_2,undefined param_3,short param_4)
 
 {
@@ -20144,6 +20193,27 @@ void FUN_0042ff68(undefined param_1,undefined param_2,undefined param_3,short pa
     return;
   }
   FUN_0041161a(param_1,param_2,param_3,0);
+  return;
+}
+
+
+
+void FUN_0042ff86(void)
+
+{
+  PTR_DoNothing_0046023c = DoNothing;
+  Game::onWmActivate = DoNothing;
+  Game::onWmActivateapp = DoNothing;
+  FUN_00445eea();
+  FUN_004128c8();
+  FUN_004267f8();
+  FUN_0044d55a();
+  FUN_0044c9e9();
+  FUN_00416c01();
+  FUN_00440342();
+  FUN_0043078c();
+  FUN_0043abad();
+  FUN_0043c249();
   return;
 }
 
@@ -20205,18 +20275,18 @@ undefined4 FUN_0042ffd7(void)
   FUN_00445d1d(uVar3);
   FUN_0044d531();
   FUN_0043ab87();
-  uVar2 = FUN_004548e0(&LAB_0042ff86);
+  uVar2 = FUN_004548e0(FUN_0042ff86);
   uVar1 = (undefined)uVar2;
   GetWinapiString(&DAT_00467d4a,0x4e22);
   FUN_004116a2(uVar1,extraout_DL_01,extraout_CL,&DAT_00467d4a);
   FUN_0043bc68();
-  PTR_FUN_00460230 = &LAB_0042fe9d;
-  PTR_FUN_00460234 = &LAB_0042fee7;
-  PTR_FUN_00460254 = FUN_0042fe06;
-  PTR_FUN_00460240 = FUN_0042ff2e;
-  PTR_FUN_00460244 = &LAB_0042fee7;
-  PTR_FUN_00460248 = &LAB_0042fe9d;
-  PTR_FUN_00460250 = FUN_0043b1cc;
+  Game::onWmActivate = FUN_0042fe9d;
+  Game::onWmActivateapp = FUN_0042fee7;
+  Game::onWmQueryendsessionOrSyscommandF060h = FUN_0042fe06;
+  Game::onWmChar = FUN_0042ff2e;
+  Game::onWmInitmenu = FUN_0042fee7;
+  Game::onWmMenuselect = FUN_0042fe9d;
+  Game::onWmCommand = FUN_0043b1cc;
   Nfnt::LoadWithCache(200);
   SetCurrentFont(200);
   FUN_0042f4ab();
@@ -28919,7 +28989,7 @@ void FUN_0043bc68(void)
   if (_DAT_0046278c == 0) {
     DAT_00469090 = 1;
     DAT_00469092 = 1;
-    PTR_FUN_0046024c = &LAB_0043bc58;
+    Game::onWmSyscommand2000 = &LAB_0043bc58;
     uVar1 = 0xf4;
     sVar2 = FUN_0043ad75(1,in_DL,in_CL,500);
     uVar1 = FUN_0043b21c((char)sVar2,extraout_DL,uVar1,500,0,&LAB_0042fd90);

@@ -1730,6 +1730,7 @@ void __stdcall Draw::StringWithCurrentFontAndColor(short x,short y,char *value);
 void __cdecl Game::ShowTaskbar(short shouldShow);
 ATOM __cdecl Game::CreateWindow(undefined4 param_1);
 void Game::MakeWindowAnnoying(void);
+void DoNothing(void);
 short __stdcall Rect16::intersects(Rect16 *p,Rect16 *q);
 void InitEntities(void);
 void StartLevel(void);

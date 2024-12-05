@@ -155,6 +155,14 @@ void Game::MakeWindowAnnoying(void)
 
 
 
+void DoNothing(void)
+
+{
+  return;
+}
+
+
+
 // bool
 
 short __stdcall Rect16::intersects(Rect16 *p,Rect16 *q)
