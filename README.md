@@ -1,5 +1,5 @@
-reverssg
-========
+moved to <https://codeberg.org/shuppy/reverssg>
+===============================================
 
 The goal of this project is to create a decompilation of *Super Solvers: Gizmos & Gadgets!* that can ideally be recompiled.
 
